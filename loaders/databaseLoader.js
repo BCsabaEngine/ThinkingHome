@@ -1,8 +1,8 @@
 const logger = requireRoot("/lib/logger");
 const config = requireRoot('/lib/config');
-const mysql = require('mysql');
+const mysql = require('mysql-plus');
 
-module.exports = (cb) => {
+module.exports = (onready) => {
   const pool = mysql.createPool({
     connectionLimit: 10,
     host: config.database.server,
@@ -10,6 +10,11 @@ module.exports = (cb) => {
     user: config.database.username,
     password: config.database.password,
     database: config.database.schema,
+    plusOptions: {
+      migrationStrategy: 'alter',
+      allowAlterInProduction: true,
+      debug: true,
+    },
   });
   global.db = pool;
 
@@ -20,7 +25,14 @@ module.exports = (cb) => {
     }
     if (rows) {
       logger.info("[DB] Database engine started: %s", rows[0].Value);
-      cb();
+
+      requireRoot('/models')();
+      logger.debug("[DB] Models loaded");
+
+      db.sync((err) => {
+        if (err) throw err;
+        onready();
+      });
     }
     else {
       logger.info("[DB] Database engine: %s", "Unknown");
