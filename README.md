@@ -1,5 +1,5 @@
 # SmartHome
- ESP8266/ESP32 (Tasmota like) SmartHome system by NodeJS
+ ESP8266/ESP32 (Tasmota like) SmartHome system by NodeJS+MQTT
 
 # Version
  2020-06-15: v0.2 Initial version
