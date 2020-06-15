@@ -1,0 +1,35 @@
+// Main Sidebar Container
+aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
+  // Brand Logo
+  a.brand-link.navbar-orange(href='index3.html')
+    img.brand-image.img-circle.elevation-3(src='logo128.png', alt='AdminLTE Logo', style='opacity: .8')
+    span.brand-text.font-weight-light Smart HOME
+  // Sidebar
+  .sidebar
+    // Sidebar Menu
+    nav.mt-2
+      ul.nav.nav-pills.nav-sidebar.flex-column(data-widget='treeview', role='menu', data-accordion='false')
+        li.nav-item
+          a.nav-link(href='/')
+            i.nav-icon.fas.fa-tachometer-alt
+            p Dashboard
+        each item in devices.online
+          li.nav-item
+            a.nav-link(href=`/${item.Name}`)
+              i(class=`nav-icon fa ${item.Icon}`)
+              p= item.DisplayName
+
+        if devices.offline.length
+          li.nav-header OFFLINE
+          each item in devices.offline
+            li.nav-item
+              a.nav-link(href=`/${item.Name}`)
+                i(class=`nav-icon fa ${item.Icon}`)
+                p= item.DisplayName
+
+
+        li.nav-header SETTINGS
+        li.nav-item
+          a.nav-link(href='/settings/')
+            i.nav-icon.fa.fa-wrench
+            p Settings

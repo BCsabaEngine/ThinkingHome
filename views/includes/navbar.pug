@@ -1,0 +1,56 @@
+style.
+  .navbar-nav > .user-menu .user-image {
+  margin-top: -8px;
+  }
+
+// Navbar.start
+nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
+
+  // Left navbar links
+  ul.navbar-nav
+    li.nav-item
+      a.nav-link(data-widget='pushmenu', href='#', role='button')
+        i.fas.fa-bars
+    
+  ul.navbar-nav.ml-left
+    li.nav-item.dropdown.user-menu
+      a.nav-link(style='padding-left:0; padding-right:.5rem' onclick='alert("Emma v2.0!")', href='#')
+        img.user-image.img-circle.elevation-2(src='https://res-5.cloudinary.com/circa-lighting/image/upload/c_lpad,dpr_1.0,f_auto,h_480,q_auto,w_480/media/catalog/product/c/h/cha8663icbnp_5.png')
+        span.d-none.d-md-inline Terasz este
+
+  ul.navbar-nav.ml-left
+    li.nav-item.dropdown.user-menu
+      a.nav-link(style='padding-left:0; padding-right:.5rem' onclick='alert("Emma v2.0!")', href='#')
+        img.user-image.img-circle.elevation-2(src='https://i.pinimg.com/736x/a9/18/84/a91884ea9a63ec8fed044f887f4ea3ff.jpg')
+        span.d-none.d-md-inline Nappali 18h
+
+  ul.navbar-nav.ml-left
+    li.nav-item.dropdown.user-menu
+      a.nav-link(style='padding-left:0; padding-right:.5rem' onclick='alert("Emma v2.0!")', href='#')
+        img.user-image.img-circle.elevation-2(src='https://4.imimg.com/data4/QW/OY/MY-11124558/solar-garden-lamp-500x500.jpg')
+        span.d-none.d-md-inline Kert teljes
+
+  ul.navbar-nav.ml-auto
+    li.nav-item.dropdown
+      a.nav-link(data-toggle='dropdown', href='#')
+        i.far.fa-bell
+        span.badge.badge-warning.navbar-badge 15
+      .dropdown-menu.dropdown-menu-lg.dropdown-menu-right
+        span.dropdown-item.dropdown-header 15 értesítés
+        .dropdown-divider
+        a.dropdown-item(href='#')
+          i.fas.fa-envelope.mr-2
+          |  4 new messages
+          span.float-right.text-muted.text-sm 3 mins
+        .dropdown-divider
+        a.dropdown-item(href='#')
+          i.fas.fa-users.mr-2
+          |  8 friend requests
+          span.float-right.text-muted.text-sm 12 hours
+        .dropdown-divider
+        a.dropdown-item(href='#')
+          i.fas.fa-file.mr-2
+          |  3 new reports
+          span.float-right.text-muted.text-sm 2 days
+        .dropdown-divider
+        a.dropdown-item.dropdown-footer(href='#') Összes értesítés

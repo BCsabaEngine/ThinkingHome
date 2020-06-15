@@ -1,0 +1,14 @@
+@media (max-width: 767.98px)
+{
+  .small-box .icon {
+      display: inherit;
+  }
+
+  .small-box {
+      text-align: inherit;
+  }
+
+  .small-box p {
+      font-size: inherit;
+  }
+}
