@@ -7,6 +7,7 @@ module.exports = (app) => {
   //   ];
   // }
 
+  // available items in all pages (GET)
   app.get('/*', function (req, res, next) {
 
     res.locals.devices = {};
@@ -24,6 +25,6 @@ module.exports = (app) => {
       tilehtml += `<div class="col-md-${tile.Size}">${tile.Html}</div>`;
     });
 
-    res.render('main', { title: "Főoldal", content: tilehtml, /*menuItems: getMenuItems(),*/ });
+    res.render('main', { title: "Dashboard", content: tilehtml, /*menuItems: getMenuItems(),*/ });
   })
 }

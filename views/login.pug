@@ -1,0 +1,43 @@
+doctype html
+html(lang='en')
+
+  include includes/head.pug
+
+  body.hold-transition.lockscreen
+    section.content
+      block content
+        .lockscreen-wrapper
+          .lockscreen-logo
+            a(href='../../index2.html')
+              b Smart
+              | HOME
+          .lockscreen-name Home user
+          .lockscreen-item#bubble-panel
+            // lockscreen image
+            .lockscreen-image
+              img(src='../../dist/img/user1-128x128.jpg', alt='User Image')
+            div.lockscreen-credentials
+              .input-group
+                input#password.form-control(type='password', placeholder='password', onkeydown='if(event.key === "Enter") login();')
+                .input-group-append
+                  button.btn(type='button', onclick='login()')
+                    i.fas.fa-arrow-right.text-muted
+    include includes/scripts.pug
+    script(src='/plugins/jquery-ui/jquery-ui.min.js')
+    script(type='text/javascript').
+      function login()
+      {
+      var password = $('#password').val();
+      $.post('/login', { password: password}, 'json')
+      .done(function() {
+      window.location = "/";
+      })
+      .fail(function() {
+      $('#password').val('');
+      $("#bubble-panel").effect("shake");
+      $('#password').focus();
+      })
+      }
+      setTimeout(function() {
+      $('#password').focus();
+      }, 250);
