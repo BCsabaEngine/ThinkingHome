@@ -1,3 +1,5 @@
+const logger = requireRoot("/lib/logger");
+
 class MqttController {
   constructor() { }
 
@@ -49,18 +51,23 @@ class MqttController {
       db.query("INSERT INTO DeviceSys (Device) VALUES (?)", [deviceid], function (err, result) {
         const devicesysid = result.insertId;
 
-        const messagearray = Object.entries(JSON.parse(message));
-        messagearray.forEach((element) => {
-          const key = element[0];
-          const value = element[1];
-          if (typeof value === "object") {
-            for (let [subkey, subvalue] of Object.entries(value))
-              if (typeof subvalue !== "object")
-                db.query("INSERT INTO DeviceSysItem (DeviceSys, Name, Value) VALUES (?, ?, ?)", [devicesysid, `${key}.${subkey}`, subvalue]);
-          }
-          else
-            db.query("INSERT INTO DeviceSysItem (DeviceSys, Name, Value) VALUES (?, ?, ?)", [devicesysid, key, value]);
-        });
+        try {
+          const messagearray = Object.entries(JSON.parse(message));
+          messagearray.forEach((element) => {
+            const key = element[0];
+            const value = element[1];
+            if (typeof value === "object") {
+              for (let [subkey, subvalue] of Object.entries(value))
+                if (typeof subvalue !== "object")
+                  db.query("INSERT INTO DeviceSysItem (DeviceSys, Name, Value) VALUES (?, ?, ?)", [devicesysid, `${key}.${subkey}`, subvalue]);
+            }
+            else
+              db.query("INSERT INTO DeviceSysItem (DeviceSys, Name, Value) VALUES (?, ?, ?)", [devicesysid, key, value]);
+          });
+        }
+        catch (ex) {
+          logger.error("[MQQT StoreMqttStatSys] %s", ex.message);
+        }
 
       });
     });
@@ -75,19 +82,29 @@ class MqttController {
     this.FindOrCreateDevice(devicename, function (deviceid) {
       db.query("DELETE FROM DeviceCapability WHERE Device = ?", [deviceid], function (err, result) {
 
-        const messagearray = Object.entries(JSON.parse(message));
-        messagearray.forEach((element) => {
-          const key = element[0];
-          const value = element[1];
+        try {
+          const messagearray = Object.entries(JSON.parse(message));
+          messagearray.forEach((element) => {
+            const key = element[0];
+            const value = element[1];
 
-          let rows = [];
-          if (Array.isArray(value))
-            value.forEach((subvalue) => {
-              const valuestr = subvalue ? `${key}/[$]/${subvalue}` : `${key}/[$]`;
-              rows.push([deviceid, valuestr]);
-            });
-          db.query("INSERT IGNORE INTO DeviceCapability (Device, Value) VALUES ?", [rows]);
-        });
+            let rows = [];
+            if (Array.isArray(value))
+              value.forEach((subvalue) => {
+                let valuestr = `${key}/[$]`;
+                if (subvalue)
+                  if (subvalue.startsWith(":"))
+                    valuestr = `${key}/[$]${subvalue}`;
+                  else
+                    valuestr = `${key}/[$]/${subvalue}`;
+                rows.push([deviceid, valuestr]);
+              });
+            db.query("INSERT IGNORE INTO DeviceCapability (Device, Value) VALUES ?", [rows]);
+          });
+        }
+        catch (ex) {
+          logger.error("[MQQT StoreMqttStatCapability] %s", ex.message);
+        }
 
       });
     });

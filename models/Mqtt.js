@@ -7,7 +7,7 @@ const MqttTable = db.defineTable('Mqtt', {
     Payload: db.ColTypes.varchar(512),
   },
   keys: [
-    db.KeyTypes.foreignKey('Device').references('Device', 'Id'),
+    db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
   ],
 });
 

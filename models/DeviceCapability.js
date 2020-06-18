@@ -5,7 +5,7 @@ const DeviceCapabilityTable = db.defineTable('DeviceCapability', {
     Value: db.ColTypes.varchar(100).notNull(),
   },
   keys: [
-    db.KeyTypes.foreignKey('Device').references('Device', 'Id'),
+    db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
   ],
 });
 

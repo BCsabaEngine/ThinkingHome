@@ -6,7 +6,7 @@ const DeviceSysItemTable = db.defineTable('DeviceSysItem', {
     Value: db.ColTypes.varchar(100).notNull(),
   },
   keys: [
-    db.KeyTypes.foreignKey('DeviceSys').references('DeviceSys', 'Id'),
+    db.KeyTypes.foreignKey('DeviceSys').references('DeviceSys', 'Id').cascade(),
   ],
 });
 

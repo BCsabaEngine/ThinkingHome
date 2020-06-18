@@ -6,7 +6,7 @@ const DeviceLogTable = db.defineTable('DeviceLog', {
     Message: db.ColTypes.varchar(512),
   },
   keys: [
-    db.KeyTypes.foreignKey('Device').references('Device', 'Id'),
+    db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
   ],
 });
 
