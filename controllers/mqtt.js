@@ -30,6 +30,18 @@ class MqttController {
     }
   }
 
+  StoreMqttEvent(topic, message) {
+    const devicenameeventmatch = topic.match(/event\/([0-9a-z-_]*)\/([0-9a-z-_]*)/);
+    if (!devicenameeventmatch)
+      return;
+
+    const devicename = devicenameeventmatch[1];
+    const eventname = devicenameeventmatch[2];
+    this.FindOrCreateDevice(devicename, function (deviceid) {
+      db.query("INSERT INTO DeviceEvent (Device, Event, Data) VALUES (?, ?, ?)", [deviceid, eventname, message || null]);
+    });
+  }
+
   StoreMqttLog(topic, message) {
     const devicenamematch = topic.match(/log\/([0-9a-z-_]*)/);
     if (!devicenamematch)
