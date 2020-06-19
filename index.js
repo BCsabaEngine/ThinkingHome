@@ -35,6 +35,8 @@ const database = databaseLoader(() => {
     // Init scheduled jobs
     jobs();
 
+    context.RunContext();
+
     logger.info("Application started, waiting for subsystems start");
   });
 });

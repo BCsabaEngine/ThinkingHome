@@ -54,7 +54,7 @@ class MqttController {
   }
 
   StoreMqttStatSys(topic, message) {
-    const devicenamematch = topic.match(/stat\/([0-9a-z-_]*)\/sys/);
+    const devicenamematch = topic.match(/sys\/([0-9a-z-_]*)/);
     if (!devicenamematch)
       return;
 
@@ -86,7 +86,7 @@ class MqttController {
   }
 
   StoreMqttStatCapability(topic, message) {
-    const devicenamematch = topic.match(/stat\/([0-9a-z-_]*)\/capability/);
+    const devicenamematch = topic.match(/cap\/([0-9a-z-_]*)/);
     if (!devicenamematch)
       return;
 
