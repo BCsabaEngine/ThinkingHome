@@ -6,21 +6,30 @@ const rules = `
   console.log(nappali_elol.Name);
 
   nappali_elol.on("event.button", function(mode) {
-    nappali_elol.cmd("power", "on");
-    createTimeout("nappali_elol_after_2sec", 5000, () => { nappali_elol.cmd("power", "off"); });
+    if (mode == "short")
+    {
+      nappali_elol.cmd("power", "on");
+      nappali_hatul.cmd("power", "on");
+      //nappali_elol.ack("mid");
+    }
+    else if (mode == "long")
+    {
+      nappali_elol.cmd("power", "off");
+      nappali_hatul.cmd("power", "off");
+      //nappali_elol.ack("low");
+    }
+    // nappali_elol.cmd("power", "on");
+    // createTimeout("nappali_elol_after_2sec", 5000, () => { nappali_elol.cmd("power", "off"); });
 
     // if (nappali_elol.stat("power") == "off")
     // {
     //   nappali_elol.cmd("power", "on");
+    //   nappali_hatul.cmd("power", "on");
     //   nappali_elol.ack("mid");
-    // }
-    // else
-    // {
-    //   nappali_elol.cmd("power", "off");
-    //   nappali_elol.ack("low");
     // }
     // console.log("Mode: " + mode);
   });
+
   kisfahaz.on("event.button1", function(mode) {
     kisfahaz.cmd("power1", "on");
     createTimeout("kisfahaz_power1_after_6sec", 6000, () => { kisfahaz.cmd("power1", "off"); });
