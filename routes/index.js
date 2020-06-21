@@ -17,4 +17,8 @@ module.exports = (app) => {
     if (!file.endsWith("index.js"))
       require(path.resolve(file))(app);
   });
+
+  app.use(function (req, res, next) {
+    res.status(404).render('404', { title: "Oops 404!" });
+  })  
 }
