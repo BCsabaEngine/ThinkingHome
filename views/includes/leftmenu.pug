@@ -15,7 +15,7 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
             p Dashboard
         each item in devices.online
           li.nav-item
-            a.nav-link(href=`/${item.Name}`)
+            a.nav-link(href=`/device/${item.Name}`)
               i(class=`nav-icon fa ${item.Icon}`)
               p= item.DisplayName
 
@@ -23,7 +23,7 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
           li.nav-header OFFLINE
           each item in devices.offline
             li.nav-item
-              a.nav-link(href=`/${item.Name}`)
+              a.nav-link(href=`/device/${item.Name}`)
                 i(class=`nav-icon fa ${item.Icon}`)
                 p= item.DisplayName
 

@@ -2,18 +2,20 @@ const EventEmitter = require('events');
 const logger = requireRoot("/lib/logger");
 
 class DeviceState extends EventEmitter {
-  constructor(id, name, displayname) {
+  constructor(id, name, displayname, faicon) {
     super();
 
     this._id = id;
     this._name = name;
     this._displayname = displayname;
+    this._faicon = faicon;
     this.isonline = false;
   }
 
   get Id() { return this._id; }
   get Name() { return this._name; }
   get DisplayName() { return this._displayname || this._name; }
+  get Icon() { return this._faicon || "fa-globe" }
   get IsOnline() { return this.isonline; }
 
   ReleaseCode() {
