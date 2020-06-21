@@ -10,11 +10,12 @@ module.exports = (app) => {
   // available items in all pages (GET)
   app.get('/*', function (req, res, next) {
 
+    res.locals.moment = require('moment');
+
     res.locals.devices = {};
     res.locals.devices.all = context.GetDeviceList();
     res.locals.devices.online = res.locals.devices.all.filter(device => device.IsOnline) || [];
     res.locals.devices.offline = res.locals.devices.all.filter(device => !device.IsOnline) || [];
-    res.locals.moment = require('moment');
 
     next();
   });
@@ -30,7 +31,8 @@ module.exports = (app) => {
   })
 
   app.get('/device/:devicename', function (req, res) {
-    db.query("SELECT * FROM Device d WHERE d.Name = ? LIMIT 1", [req.params.devicename], function (err, devices) {
+    const devicename = req.params.devicename;
+    db.query("SELECT * FROM Device d WHERE d.Name = ? LIMIT 1", [devicename], function (err, devices) {
       if (err) throw err;
 
       const device = devices[0];
@@ -68,9 +70,14 @@ module.exports = (app) => {
             db.query("SELECT de.Event, de.Data, de.DateTime FROM DeviceEvent de WHERE de.Device = ? AND NOT EXISTS(SELECT 1 FROM DeviceEvent de2 WHERE de2.Device = de.Device AND de2.Event = de.Event AND de2.Id > de.Id) ORDER BY de.Event", [device.Id], function (err, devicelastevents) {
               if (err) throw err;
 
+              let ctxdevice = null;
+              if (ctxdevice = global.context.devices[devicename]) {
+              }
+
               res.render('device', {
                 title: device.DisplayName || device.Name,
                 device: device,
+                ctxdevice: ctxdevice,
                 devicesys: devicesys,
                 devicesysitems: devicesysitems,
                 devicecapabilities: devicecapabilities,
