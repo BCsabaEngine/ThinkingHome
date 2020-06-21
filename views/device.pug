@@ -1,0 +1,65 @@
+extends _base
+
+block content
+  .row
+
+    .col-md-4
+      .card.card-info
+        .card-header
+          h3.card-title Status
+            small
+              if devicesys
+                =" · "
+                = moment(devicesys.DateTime).fromNow()
+        .card-body
+          if !devicesys
+            | Not arrived yet...
+          else
+            each devicesysitem in devicesysitems
+              .row
+                .col-sm-4
+                  = devicesysitem.Name
+                .col-sm-8
+                  b
+                    = devicesysitem.Value
+
+    .col-md-4
+      .card.card-warning
+        .card-header
+          h3.card-title Last events
+        .card-body
+          if !devicelastevents
+            | No events
+          else
+            each devicelastevent in devicelastevents
+              .row
+                .col-sm-6
+                  .badge.badge-info
+                    = devicelastevent.Event
+                .col-sm-6
+                  b
+                    = devicelastevent.Data
+                  br
+                  small
+                    = moment(devicelastevent.DateTime).fromNow()
+
+    .col-md-4
+      .card.card-secondary
+        .card-header
+          h3.card-title MQTT Capability
+        .card-body
+          if !devicecapabilities
+            | Cannot determine yet...
+          else
+            each devicecapability in devicecapabilities
+              .row
+                .col-md-4
+                  = devicecapability.Value
+                .col-md-8
+                  if devicecapability.Items
+                    | &nbsp;&nbsp;
+                    each devicecapitem in devicecapability.Items
+                      span.badge.badge-info
+                        = devicecapitem
+                      | &nbsp;&nbsp;
+

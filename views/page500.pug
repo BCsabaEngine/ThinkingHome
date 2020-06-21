@@ -1,0 +1,26 @@
+doctype html
+html(lang='en')
+
+  include includes/head.pug
+
+  body.hold-transition.lockscreen
+    section.content
+      block content
+        section.content
+          br
+          br
+          .error-page
+            h2.headline.text-danger  500
+            .error-content
+              h2
+                i.fas.fa-ban.text-danger
+                |  Mayday-mayday...
+              p
+                | Somethings went wrong.
+                | Meanwhile, you may 
+                a(href='/') return to dashboard.
+            br
+            h4 This helps to find the reason...
+            code(style="white-space: pre-wrap")
+              =error
+    include includes/scripts.pug

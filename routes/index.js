@@ -19,6 +19,11 @@ module.exports = (app) => {
   });
 
   app.use(function (req, res, next) {
-    res.status(404).render('404', { title: "Oops 404!" });
-  })  
+    res.status(404).render('page404', { title: "Oops 404!" });
+  })
+
+  app.use(function (err, req, res, next) {
+    console.error(err.stack)
+    res.status(500).render('page500', { title: "Oops Error!", error: err.message });
+  })
 }
