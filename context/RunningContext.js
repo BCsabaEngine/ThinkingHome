@@ -11,7 +11,6 @@ const rules = `
       nappali_elol.cmd("power", "on");
       nappali_hatul.cmd("power", "on");
       //nappali_elol.ack("mid");
-      //XXXYYY
     }
     else if (mode == "long")
     {

@@ -1,7 +1,7 @@
 require('./lib/requireRoot'); //allow require relative to project root
 
-const logger = requireRoot("/lib/logger");
 const config = requireRoot('/lib/config');
+const logger = requireRoot("/lib/logger");
 
 const databaseLoader = requireRoot('/loaders/databaseLoader');
 const mqttLoader = requireRoot('/loaders/mqttLoader');
