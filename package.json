@@ -2,7 +2,6 @@
   "name": "smarthome",
   "version": "0.2.0",
   "description": "ESP8266/ESP32 (Tasmota like) SmartHome system by NodeJS+MQTT",
-  "private": true,
   "main": "index.js",
   "engines": {
     "node": ">=12.0.0"
