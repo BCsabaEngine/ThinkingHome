@@ -19,7 +19,7 @@ class MqttController {
   }
 
   StoreMqttAll(topic, message) {
-    const devicenamematch = topic.match(/[a-z]*\/([0-9a-z_]*)\/?[a-z]*/);
+    const devicenamematch = topic.match(/[a-z]*\/([0-9a-z_]*)\/?[0-9a-z_]*$/);
     if (!devicenamematch)
       db.query("INSERT INTO Mqtt (Device, Topic, Payload) VALUES (?, ?, ?)", [null, topic, message || null]);
     else {
@@ -31,7 +31,7 @@ class MqttController {
   }
 
   StoreMqttEvent(topic, message) {
-    const devicenameeventmatch = topic.match(/event\/([0-9a-z_]*)\/([0-9a-z_]*)/);
+    const devicenameeventmatch = topic.match(/event\/([0-9a-z_]*)\/([0-9a-z_]*)$/);
     if (!devicenameeventmatch)
       return;
 
@@ -43,7 +43,7 @@ class MqttController {
   }
 
   StoreMqttLog(topic, message) {
-    const devicenamematch = topic.match(/log\/([0-9a-z_]*)/);
+    const devicenamematch = topic.match(/log\/([0-9a-z_]*)$/);
     if (!devicenamematch)
       return;
 
@@ -54,7 +54,7 @@ class MqttController {
   }
 
   StoreMqttStatSys(topic, message) {
-    const devicenamematch = topic.match(/sys\/([0-9a-z_]*)/);
+    const devicenamematch = topic.match(/sys\/([0-9a-z_]*)$/);
     if (!devicenamematch)
       return;
 
@@ -86,7 +86,7 @@ class MqttController {
   }
 
   StoreMqttStatCapability(topic, message) {
-    const devicenamematch = topic.match(/cap\/([0-9a-z_]*)/);
+    const devicenamematch = topic.match(/cap\/([0-9a-z_]*)$/);
     if (!devicenamematch)
       return;
 

@@ -1,8 +1,25 @@
 extends _base
 
 block content
-  .row
+  each devicecomponent, key in devicecomponents
+    .row
+      .col-md-12
+        .card.card-lightblue
+          .card-header
+            h3.card-title
+              = key.toUpperCase()
+          .card-body
+            .row
+              .col-md-2
+                h1
+                  = (ctxdevice.stat(key) || "?").toUpperCase()
+              .col-md-10
+                if devicecomponent
+                  each command in devicecomponent
+                    button.btn.btn-lg.btn-success(onclick="$.post('/device/" + device.Name + "/" + key + "/" + command + "');")
+                      = command.toUpperCase()
 
+  .row
     .col-md-4
       .card.card-info
         .card-header
@@ -22,7 +39,6 @@ block content
                 .col-sm-8
                   b
                     = devicesysitem.Value
-
     .col-md-4
       .card.card-warning
         .card-header
@@ -42,7 +58,6 @@ block content
                   br
                   small
                     = moment(devicelastevent.DateTime).fromNow()
-
     .col-md-4
       .card.card-secondary
         .card-header
