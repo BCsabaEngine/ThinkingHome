@@ -11,6 +11,11 @@ module.exports = (app) => {
       return;
     }
 
+    if (!config.portal.password) {
+      next();
+      return;
+    }
+
     // must login
     if (req.method == "GET") {
       if (req.path != "/")
