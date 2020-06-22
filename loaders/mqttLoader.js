@@ -7,7 +7,7 @@ module.exports = () => {
   const options = {
     host: 'mqtt://' + mqttconfig.server,
     port: mqttconfig.port,
-    clientId: mqttconfig.clientid,
+    clientId: mqttconfig.clientid + Math.random().toString(16).substr(2, 8),
     username: mqttconfig.username,
     password: mqttconfig.password,
     keepalive: mqttconfig.keepalive,
