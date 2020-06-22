@@ -9,6 +9,19 @@ const DeviceTable = db.defineTable('Device', {
 });
 
 const Device = {
+  async FindById(id) {
+    const rows = await DeviceTable.select('*', 'WHERE Id = ?', [id]);
+    if (rows)
+      return rows[0];
+    return null;
+  },
+
+  async FindByName(name) {
+    const rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
+    if (rows)
+      return rows[0];
+    return null;
+  },
 };
 
 module.exports = Device;

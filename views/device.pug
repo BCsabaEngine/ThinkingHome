@@ -1,7 +1,7 @@
 extends _base
 
 block content
-  each devicecomponent, key in devicecomponents
+  each component, key in capabilitycomponents
     .row
       .col-md-12
         .card.card-lightblue
@@ -14,8 +14,8 @@ block content
                 h1
                   = (ctxdevice.stat(key) || "?").toUpperCase()
               .col-md-10
-                if devicecomponent
-                  each command in devicecomponent
+                if component
+                  each command in component
                     button.btn.btn-lg.btn-success(onclick="$.post('/device/" + device.Name + "/" + key + "/" + command + "');")
                       = command.toUpperCase()
 
@@ -32,13 +32,20 @@ block content
           if !devicesys
             | Not arrived yet...
           else
-            each devicesysitem in devicesysitems
+            each devicesysitem in devicesys.Items
               .row
                 .col-sm-4
                   = devicesysitem.Name
                 .col-sm-8
                   b
                     = devicesysitem.Value
+                  if (devicesysitem.SubValue)
+                    small
+                      = devicesysitem.SubValue
+                  if (devicesysitem.ValueLink)
+                    small
+                      a(target='_blank' href=devicesysitem.ValueLink) 
+                        i.fa.fa-external-link-alt
     .col-md-4
       .card.card-warning
         .card-header

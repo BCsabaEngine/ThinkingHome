@@ -1,3 +1,8 @@
+const Device = requireRoot('/models/Device');
+const DeviceCapability = requireRoot('/models/DeviceCapability');
+const DeviceSys = requireRoot('/models/DeviceSys');
+const DeviceEvent = requireRoot('/models/DeviceEvent');
+
 module.exports = (app) => {
 
   // function getMenuItems() {
@@ -30,89 +35,30 @@ module.exports = (app) => {
     res.render('main', { title: "Dashboard", content: tilehtml, /*menuItems: getMenuItems(),*/ });
   })
 
-  app.get('/device/:devicename', function (req, res) {
+  app.get('/device/:devicename', async function (req, res, next) {
     const devicename = req.params.devicename;
-    db.query("SELECT * FROM Device d WHERE d.Name = ? LIMIT 1", [devicename], function (err, devices) {
-      if (err) throw err;
+    try {
+      const device = await Device.FindByName(devicename);
+      if (!device)
+        throw new Error(`Device not found: ${devicename}`);
 
-      const device = devices[0];
-      if (!device) {
-        res.status(500).send("Device not found");
-        return;
-      }
-      //        throw new Error("Device not found");
+      const devicecapabilities = await DeviceCapability.GetByDeviceId(device.Id);
+      const capabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
+      const devicesys = await DeviceSys.FindLastByDeviceId(device.Id);
+      const devicelastevents = await DeviceEvent.GetLastByDeviceId(device.Id);
+      const ctxdevice = global.context.devices[devicename];
 
-      db.query("SELECT dc.Value FROM DeviceCapability dc WHERE dc.Device = ? ORDER BY dc.Id", [device.Id], function (err, devicecapabilities) {
-        if (err) throw err;
-
-        if (devicecapabilities)
-          devicecapabilities.forEach(devicecapability => {
-            if (devicecapability.Value.includes(":")) {
-              const parts = devicecapability.Value.split(":");
-              devicecapability.Value = parts[0];
-              devicecapability.Items = parts[1].split("/");
-            }
-          });
-
-        let devicecomponents = {};
-
-        if (devicecapabilities)
-          devicecapabilities.forEach(devicecapability => {
-            const devicecapabilityvalue = devicecapability.Value;
-            const devicecapmatch = devicecapabilityvalue.match(/stat\/\[\$\]\/?([a-z0-9]*)$/);
-            if (devicecapmatch) {
-              const componentname = devicecapmatch[1];
-              devicecomponents[componentname] = [];
-            }
-          });
-
-        if (devicecapabilities)
-          devicecapabilities.forEach(devicecapability => {
-            const devicecapabilityvalue = devicecapability.Value;
-            const devicecapmatch = devicecapabilityvalue.match(/cmd\/\[\$\]\/?([a-z0-9]*)$/);
-            if (devicecapmatch) {
-              const componentname = devicecapmatch[1];
-              devicecomponents[componentname] = [];
-
-              if (devicecapability.Items)
-                devicecapability.Items.forEach(capitem => {
-                  devicecomponents[componentname].push(capitem);
-                })
-            }
-          });
-
-        db.query("SELECT * FROM DeviceSys ds WHERE ds.Device = ? ORDER BY ds.Id DESC LIMIT 1", [device.Id], function (err, devicesyses) {
-          if (err) throw err;
-
-          const devicesys = devicesyses ? devicesyses[0] : null;
-          let devicesysid = 0;
-          if (devicesys)
-            devicesysid = devicesys.Id;
-
-          db.query("SELECT dsi.Name, dsi.Value FROM DeviceSysItem dsi WHERE dsi.DeviceSys = ? ORDER BY dsi.Name", [devicesysid], function (err, devicesysitems) {
-            if (err) throw err;
-
-            db.query("SELECT de.Event, de.Data, de.DateTime FROM DeviceEvent de WHERE de.Device = ? AND NOT EXISTS(SELECT 1 FROM DeviceEvent de2 WHERE de2.Device = de.Device AND de2.Event = de.Event AND de2.Id > de.Id) ORDER BY de.Event", [device.Id], function (err, devicelastevents) {
-              if (err) throw err;
-
-              let ctxdevice = global.context.devices[devicename];
-
-              res.render('device', {
-                title: device.DisplayName || device.Name,
-                device: device,
-                ctxdevice: ctxdevice,
-                devicecomponents: devicecomponents,
-                devicesys: devicesys,
-                devicesysitems: devicesysitems,
-                devicecapabilities: devicecapabilities,
-                devicelastevents: devicelastevents,
-              });
-
-            });
-          });
-        });
+      res.render('device', {
+        title: device.DisplayName || device.Name,
+        device: device,
+        ctxdevice: ctxdevice,
+        capabilitycomponents: capabilitycomponents,
+        devicesys: devicesys,
+        devicecapabilities: devicecapabilities,
+        devicelastevents: devicelastevents,
       });
-    });
+    }
+    catch (err) { next(err); }
   })
 
   app.post('/device/:devicename/:command/:message', function (req, res) {
@@ -120,13 +66,13 @@ module.exports = (app) => {
     const command = req.params.command;
     const message = req.params.message;
 
-    let ctxdevice = global.context.devices[devicename];
+    const ctxdevice = global.context.devices[devicename];
     if (!ctxdevice)
       throw new Error(`Device ${devicename} not found in context`);
 
     ctxdevice.cmd(command, message);
 
-    res.send(200);
+    res.send("OK");
   });
 
 }
