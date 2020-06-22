@@ -12,6 +12,7 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
 });
 
 const DeviceEvent = {
+
   async GetLastByDeviceId(deviceid) {
     const rows = await db.pquery(`
       SELECT de.Event, de.Data, de.DateTime
@@ -25,6 +26,11 @@ const DeviceEvent = {
       ORDER BY de.Event`, [deviceid]);
     return rows;
   },
+
+  async Insert(device, event, data) {
+    await DeviceEventTable.insert({ Device: device, Event: event, Data: data });
+  },
+
 };
 
 module.exports = DeviceEvent;

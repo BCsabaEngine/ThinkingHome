@@ -13,6 +13,10 @@ const DeviceSysItemTable = db.defineTable('DeviceSysItem', {
 });
 
 const DeviceSysItem = {
+  async Insert(devicesys, name, value) {
+    await DeviceSysItemTable.insert({ DeviceSys: devicesys, Name: name, Value: value });
+  },
+
   async GetByDeviceSysId(devicesysid) {
     const rows = await DeviceSysItemTable.select(['Name', 'Value'], 'WHERE DeviceSys = ? ORDER BY Name', [devicesysid]);
 

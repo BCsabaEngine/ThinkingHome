@@ -11,17 +11,34 @@ const DeviceTable = db.defineTable('Device', {
 const Device = {
   async FindById(id) {
     const rows = await DeviceTable.select('*', 'WHERE Id = ?', [id]);
-    if (rows)
+    if (rows.length)
       return rows[0];
     return null;
   },
 
   async FindByName(name) {
     const rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
-    if (rows)
+    if (rows.length)
       return rows[0];
     return null;
   },
+
+  async FindOrCreateByName(name) {
+    let rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
+    if (!rows.length) {
+      await db.pquery("INSERT IGNORE INTO Device (Name) VALUES (?)", [name]);
+      rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
+    }
+    if (rows.length)
+      return rows[0];
+    return null;
+  },
+
+  async GetAllPriorityOrder() {
+    const rows = await DeviceTable.select('*', 'ORDER BY Priority, Name');
+    return rows;
+  },
+
 };
 
 module.exports = Device;

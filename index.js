@@ -24,8 +24,7 @@ const database = databaseLoader(() => {
   const context = global.context = new contextHandler();
 
   // Init central manager devices
-  context.InitDevices(function () {
-
+  context.InitDevices(() => {
     // Init MQTT client: global.mqtt
     const mqttCli = mqttLoader();
 

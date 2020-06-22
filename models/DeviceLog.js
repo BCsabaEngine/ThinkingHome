@@ -11,6 +11,9 @@ const DeviceLogTable = db.defineTable('DeviceLog', {
 });
 
 const DeviceLog = {
+  async Insert(device, message) {
+    await DeviceLogTable.insert({ Device: device, Message: message });
+  },
 };
 
 module.exports = DeviceLog;

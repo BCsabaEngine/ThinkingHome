@@ -10,6 +10,32 @@ const DeviceCapabilityTable = db.defineTable('DeviceCapability', {
 });
 
 const DeviceCapability = {
+  async InsertJson(device, message) {
+    await db.pquery("DELETE FROM DeviceCapability WHERE Device = ?", [device]);
+
+    let rows = [];
+
+    const messagearray = Object.entries(JSON.parse(message));
+    messagearray.forEach((element) => {
+      const key = element[0];
+      const value = element[1];
+
+      if (Array.isArray(value))
+        value.forEach((subvalue) => {
+          let valuestr = `${key}/[$]`;
+          if (subvalue)
+            if (subvalue.startsWith(":"))
+              valuestr = `${key}/[$]${subvalue}`;
+            else
+              valuestr = `${key}/[$]/${subvalue}`;
+          rows.push(valuestr);
+        });
+    });
+
+    for (let i = 0; i < rows.length; i++)
+      await DeviceCapabilityTable.insert({ Device: device, Value: rows[i] });
+  },
+
   async GetByDeviceId(deviceid) {
     const rows = await DeviceCapabilityTable.select(['Value'], 'WHERE Device = ? ORDER BY Id', [deviceid]);
     rows.forEach(row => {
