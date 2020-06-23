@@ -18,7 +18,7 @@ class DeviceState extends EventEmitter {
   get Icon() { return this._faicon || "fa-globe" }
   get IsOnline() { return this.isonline; }
 
-  ReleaseCode() {
+  ReleaseListeners() {
     this.removeAllListeners();
   }
 

@@ -1,0 +1,42 @@
+extends _base
+
+block content
+  .row
+
+    .col-md-4
+      .small-box.bg-warning
+        .inner
+          h3 4
+          p Users
+          .d-flex.justify-content-center
+            .btn-group
+              button.btn.btn-success.float-right
+                i.fas.fa-plus
+                |  Add new
+              button.btn.btn-secondary.float-right
+                i.fas.fa-list-ol
+                |  View all
+        .icon
+          i.fas.fa-user
+
+    .col-md-4
+      div(class=runstatus ? 'small-box bg-danger' : 'small-box bg-info')
+        .inner
+          h3
+            if (runstatus)
+              | Error 
+              i.fa.fa-exclamation-triangle
+            else
+              | OK 
+              i.fa.fa-check
+          p
+            if (runstatus)
+              = runstatus
+            else
+              | Event processor works fine
+          .d-flex.justify-content-center
+            a.btn.btn-secondary.float-right(href="/settings/rulecode")
+              i.fa.fa-code
+              |  Edit rules
+        .icon
+          i.fas.fa-play-circle

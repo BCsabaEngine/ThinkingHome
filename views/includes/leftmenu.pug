@@ -5,7 +5,7 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
     img.brand-image.img-circle.elevation-3(src='/logo128.png', alt='Logo', style='opacity: .8')
     span.brand-text.font-weight-light Smart HOME
   // Sidebar
-  .sidebar
+  .sidebar#sidebar
     // Sidebar Menu
     nav.mt-2
       ul.nav.nav-pills.nav-sidebar.flex-column(data-widget='treeview', role='menu', data-accordion='false')
@@ -16,7 +16,7 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
         each item in devices.online
           li.nav-item
             a.nav-link(href=`/device/${item.Name}`)
-              i(class=`nav-icon fa ${item.Icon}`)
+              i(class=`nav-icon fas ${item.Icon}`)
               p= item.DisplayName
 
         if devices.offline.length
@@ -24,17 +24,17 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
           each item in devices.offline
             li.nav-item
               a.nav-link(href=`/device/${item.Name}`)
-                i(class=`nav-icon fa ${item.Icon}`)
+                i(class=`nav-icon fas ${item.Icon}`)
                 p= item.DisplayName
 
 
         li.nav-header SETTINGS
         li.nav-item
           a.nav-link(href='/settings')
-            i.nav-icon.fa.fa-wrench
+            i.nav-icon.fas.fa-wrench
             p Settings
 
         li.nav-item
           a.nav-link(href='/logout')
-            i.nav-icon.fa.fa-lock
+            i.nav-icon.fas.fa-lock
             p Logout

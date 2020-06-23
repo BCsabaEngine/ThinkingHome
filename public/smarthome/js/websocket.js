@@ -10,51 +10,47 @@ function socket_open()
 
     socket.onopen = function(event)
     {
-      setTimeout(function()
-      {
-        socket.send(JSON.stringify({ command: 'subscribe', channel: 'smart32' }));
-      }, 100);
+      if (typeof subscribes !== 'undefined')
+        setTimeout(function()
+        {
+          for (const [key, value] of Object.entries(subscribes))
+            socket.send(JSON.stringify({ command: 'subscribe', channel: key }));
+        }, 100);
     };
 
     socket.onclose = function(event)
     {
-//        $('#socketindicator').removeClass('btn');
-//        $('#socketicon').prop('title', evt.code);
-
         setTimeout(function() { socket_open(); }, 1000);
     };
 
-    socket.onerror = function(event)
-    {
-//        $('#socketindicator').removeClass('btn');
-//        $('#socketindicator').addClass('text-danger');
-    };               
-    
+    var timeout = null;
     socket.onmessage = function(event)
     {
         try
         {
           json = JSON.parse(event.data);
-          console.log(json);
-          switch(json.channel)
-          {
-              case 'smart32':
-                  setTimeout(function()
-                  { 
-                      divreload("smart32");
-                  }, 10);
-                  break;
-            }
-         }
-          catch(ex)
-          {
-            console.log(ex);
-          }
+          if (typeof subscribes !== 'undefined')
+            for (const [key, value] of Object.entries(subscribes))
+              if (key == json.channel)
+              {
+                clearTimeout(timeout);
+                timeout = setTimeout(function()
+                {
+                  if (typeof value === 'function')
+                    value(key);
+                  else
+                    divreload(value);
+                }, 100);
+              }
+        }
+        catch(ex)
+        {
+          console.log(ex);
+        }
     };
   }
   catch(ex)
   {
-    //$('#socketindicator').hide();
   }
 }
 

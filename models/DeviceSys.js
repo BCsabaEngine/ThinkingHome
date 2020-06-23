@@ -38,6 +38,7 @@ const DeviceSys = {
     }
     return null;
   },
+  
 };
 
 module.exports = DeviceSys;

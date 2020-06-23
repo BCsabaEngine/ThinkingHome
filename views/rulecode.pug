@@ -1,0 +1,39 @@
+extends _base
+
+block content
+  if (runstatus)
+    .row
+      .col-md-8
+        .alert.alert-danger
+          h5
+            i.icon.fas.fa-exclamation-triangle
+            p !{runstatus.replace(/\n/g, '<br/>')}
+
+  .row
+    .col-md-8
+      button.btn.btn-primary.float-right(onclick="savecode()")
+        i.fa.fa-upload
+        |  Save rules
+  br
+
+  .row
+    .col-md-8
+      .form-group
+        textarea.form-control.code(rows=30)#codeeditor
+          = rulecode
+
+  script(type='text/javascript').
+    function savecode()
+    {
+      var code = $('#codeeditor').val();
+      $.post('/settings/rulecode/update', { rulecode: code })
+       .done(function()
+       {
+         pagereload();
+       })
+       .fail(function(response)
+       {
+         toastr.error(response.responseText);
+       });
+    }
+    

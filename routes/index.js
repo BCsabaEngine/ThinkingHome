@@ -12,6 +12,8 @@ module.exports = (app) => {
   // early loading of login routes
   require(path.resolve('./routes/login.js'))(app);
 
+  require(path.resolve('./routes/common.js'))(app);
+
   // all other definition files
   glob.sync('./routes/*.js').forEach(function (file) {
     if (!file.endsWith("index.js"))

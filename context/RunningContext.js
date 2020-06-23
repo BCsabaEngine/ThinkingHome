@@ -56,6 +56,8 @@ const rules = `
 
 class RunningContext {
   _timers = {};
+  _intervals = {};
+  _devicestates = [];
 
   CreateTimeout(name, timeout, func) {
     if (this._timers[name])
@@ -67,30 +69,47 @@ class RunningContext {
     return id;
   }
 
-  MustClose() {
-    return true;
+  CreateInterval(name, timeout, func) {
+    if (this._intervals[name])
+      clearInterval(this._intervals[name]);
+
+    const id = setInterval(func, timeout);
+    this._intervals[name] = id;
+
+    return id;
   }
 
-  Run(devicestates) {
+  async Run(devicestates) {
+    this._devicestates = devicestates;
 
     let contextvars = {};
-    contextvars["setInterval"] = setInterval;
+    contextvars["setInterval"] = this.CreateInterval.bind(this);
     contextvars["createTimeout"] = this.CreateTimeout.bind(this);
     for (var key in devicestates)
       contextvars[key] = devicestates[key];
 
-    const context = vm.createContext(contextvars);
-    new vm.Script(rules).runInContext(context);
+    try {
+      const jscode = await requireRoot("/models/RuleCode").FindLastJsCode() || "";
 
-    // const t = this._timers;
-    // setTimeout(() => {
-    //   for (var key in devicestates)
-    //     devicestates[key].ReleaseCode();
-    //   Object.keys(t).forEach(function (key) {
-    //     clearTimeout(t[key]);
-    //   });
-    //   console.log("released...");
-    // }, 12000);
+      const context = vm.createContext(contextvars);
+      new vm.Script(jscode).runInContext(context);
+
+      return null;
+    }
+    catch (err) { console.log(err); return err.stack; }
+  }
+
+  Stop() {
+    for (var key in this._devicestates)
+      this._devicestates[key].ReleaseListeners();
+
+    Object.keys(this._timers).forEach(function (key) {
+      clearTimeout(this._timers[key]);
+    });
+
+    Object.keys(this._intervals).forEach(function (key) {
+      clearInterval(this._intervals[key]);
+    });
   }
 }
 

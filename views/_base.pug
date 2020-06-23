@@ -8,7 +8,7 @@ html(lang='en')
       include includes/navbar.pug
       include includes/leftmenu.pug
 
-      .content-wrapper
+      .content-wrapper#content-wrapper
         section.content-header
           .container-fluid
             .row.mb-2
@@ -18,7 +18,7 @@ html(lang='en')
         section.content
           block content
         
-        a#back-to-top.btn.btn-primary.back-to-top(href='#', role='button', aria-label='Oldal tetejére')
+        a#back-to-top.btn.btn-primary.back-to-top(href='#', role='button', aria-label='Page top')
           i.fas.fa-chevron-up
 
       include includes/footer.pug
