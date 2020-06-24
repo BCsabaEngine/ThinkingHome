@@ -38,10 +38,11 @@ module.exports = () => {
   routeInitializer(app);
 
   // Start HTTP server
-  const server = app.listen(config.http.port, () => {
-    logger.info("[HTTP] Webserver listening at http://%s:%s", server.address().address, server.address().port)
+  const httpserver = app.listen(config.http.port, () => {
+    logger.info("[HTTP] Webserver listening at http://%s:%s", httpserver.address().address, httpserver.address().port)
   })
 
+  global.httpserver = httpserver;
   global.app = app;
 
   return app;

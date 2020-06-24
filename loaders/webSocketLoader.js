@@ -1,11 +1,10 @@
 const logger = requireRoot("/lib/logger");
-const config = requireRoot('/lib/config');
 const WebSocket = require('ws');
 
-module.exports = () => {
+module.exports = (httpserver) => {
   // Start WebSocket server
-  const wss = new WebSocket.Server({ port: config.websocket.port }, () => {
-    logger.info("[WS] WebSocketServer listening on port %s", config.websocket.port)
+  const wss = new WebSocket.Server({ server: httpserver }, () => {
+    logger.info("[WS] WebSocketServer listening")
   });
 
   wss.BroadcastToChannel = function (channel, message = '') {

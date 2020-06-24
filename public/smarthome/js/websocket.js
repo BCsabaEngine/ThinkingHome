@@ -6,7 +6,7 @@ function socket_open()
     
   try
   {
-    socket = new WebSocket("ws://" + location.host + ":8080");
+    socket = new WebSocket("ws://" + location.host);
 
     socket.onopen = function(event)
     {

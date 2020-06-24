@@ -11,14 +11,15 @@ const contextHandler = requireRoot('/lib/contextHandler');
 const jobs = requireRoot('/jobs');
 
 logger.info("Application starting...");
+
 // Init storage: global.db and global.db.promise
 const database = databaseLoader(() => {
 
-  // Init WebSocket: global.wss
-  const ws = webSocketLoader();
-
-  // Init Express app and start: global.app
+  // Init Express app and start: global.app + global.httpserver
   const app = httpSrvLoader();
+
+  // Init WebSocket: global.wss
+  const ws = webSocketLoader(global.httpserver);
 
   // Create central manager: global.context
   const context = global.context = new contextHandler();
