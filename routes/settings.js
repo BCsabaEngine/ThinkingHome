@@ -9,7 +9,7 @@ module.exports = (app) => {
     try {
       res.render('settings', {
         title: "Settings",
-        runstatus: global.context.GetRunStatus(),
+        runerror: global.context.GetRunErrorMessage(),
       });
     }
     catch (err) { next(err); }
@@ -21,7 +21,8 @@ module.exports = (app) => {
       res.render('rulecode', {
         title: "Rule editor",
         rulecode: rulecode,
-        runstatus: global.context.GetRunStatus(),
+        runerrorstack: global.context.GetRunErrorStack(),
+        devicenames: global.context.GetDeviceList(),
       });
     }
     catch (err) { next(err); }
@@ -35,24 +36,23 @@ module.exports = (app) => {
       else {
         await requireRoot('/models/RuleCode').Insert(rulecode.trim());
 
+        global.context.RunContext();
+
         res.send("OK");
       }
     }
     catch (err) { next(err); }
   })
 
-  app.post('/device/:devicename/:command/:message', function (req, res) {
-    const devicename = req.params.devicename;
-    const command = req.params.command;
-    const message = req.params.message;
-
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
-
-    ctxdevice.cmd(command, message);
-
-    res.send("OK");
-  });
+  app.get('/settings/rulecode/log', async function (req, res, next) {
+    try {
+      const rulecodelogs = await requireRoot('/models/RuleCodeLog').GetLastLogs();
+      res.render('rulecodelog', {
+        title: "Rule logs",
+        rulecodelogs: rulecodelogs,
+      });
+    }
+    catch (err) { next(err); }
+  })
 
 }

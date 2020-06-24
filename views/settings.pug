@@ -20,18 +20,18 @@ block content
           i.fas.fa-user
 
     .col-md-4
-      div(class=runstatus ? 'small-box bg-danger' : 'small-box bg-info')
+      div(class=runerror ? 'small-box bg-danger' : 'small-box bg-info')
         .inner
           h3
-            if (runstatus)
+            if (runerror)
               | Error 
               i.fa.fa-exclamation-triangle
             else
               | OK 
               i.fa.fa-check
           p
-            if (runstatus)
-              = runstatus
+            if (runerror)
+              = runerror
             else
               | Event processor works fine
           .d-flex.justify-content-center

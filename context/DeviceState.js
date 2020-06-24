@@ -39,7 +39,7 @@ class DeviceState extends EventEmitter {
   //  .on("event.move", ("on") => )
 
   //  .on("tele", ("humidty", 12) => )
-  //  .on("tele.humidity", ("humidty", 12) => )
+  //  .on("tele.humidity", (12) => )
 
   cmd(command, message) {
     const name = this._name;

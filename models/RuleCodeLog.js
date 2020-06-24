@@ -13,7 +13,7 @@ const RuleCodeLog = {
   },
 
   async GetLastLogs(limit = 100) {
-    const rows = await RuleCodeLogTable.select('*', 'ORDER BY Id DESC, LIMIT ?', [limit]);
+    const rows = await RuleCodeLogTable.select('*', 'ORDER BY Id DESC LIMIT ?', [limit]);
     return rows;
   },
 

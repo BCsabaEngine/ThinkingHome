@@ -12,3 +12,7 @@
       font-size: inherit;
   }
 }
+
+.monospace {
+  font-family: Consolas, Lucida Console, monospace;
+}
