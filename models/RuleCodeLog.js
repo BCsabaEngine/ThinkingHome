@@ -2,7 +2,7 @@ const RuleCodeLogTable = db.defineTable('RuleCodeLog', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
-    Message: db.ColTypes.varchar(512),
+    Message: db.ColTypes.varchar(512).notNull(),
   },
 });
 

@@ -3,56 +3,66 @@ extends _base
 block content
   .row
 
-    .col-md-4
-      .small-box.bg-warning
-        .inner
-          h3 4
-          p Users
-          .d-flex.justify-content-center
-            .btn-group
-              button.btn.btn-success.float-right
-                i.fas.fa-plus
-                |  Add new
-              button.btn.btn-secondary.float-right
-                i.fas.fa-list-ol
-                |  View all
-        .icon
-          i.fas.fa-user
-
-    .col-md-4
-      div(class=runerror ? 'small-box bg-danger' : 'small-box bg-info')
-        .inner
-          h3
-            if (runerror)
-              | Error 
-              i.fa.fa-exclamation-triangle
+    if HasPermission('Users')
+      .col-md-4
+        .small-box.bg-warning
+          .inner
+            h3
+              if usercount
+                = usercount
+              else
+                | No users
+            if usercount
+              p Manage users
             else
-              | OK 
-              i.fa.fa-check
-          p
-            if (runerror)
-              = runerror
-            else
-              | Event processor works fine
-          .d-flex.justify-content-center
-            a.btn.btn-secondary.float-right(href="/settings/rulecode")
-              i.fa.fa-code
-              |  Edit rules
-        .icon
-          i.fas.fa-play-circle
+              p Create first user
+            .d-flex.justify-content-center
+              .btn-group
+                button.btn.btn-success.float-right
+                  i.fas.fa-plus
+                  |  Add new
+                button.btn.btn-secondary.float-right
+                  i.fas.fa-list-ol
+                  |  View all
+          .icon
+            i.fas.fa-user
 
-    .col-md-4
-      .small-box.bg-danger#restartbox
-        .inner
-          h3 Restart
-          p Quit + reload system core and settings
-          .d-flex.justify-content-center
-            .btn-group
-              button.btn.btn-secondary(onclick="restart()")
-                i.fas.fa-times
-                |  Restart now
-        .icon
-          i.fas.fa-window-close
+    if HasPermission('RuleCode')
+      .col-md-4
+        div(class=runerror ? 'small-box bg-danger' : 'small-box bg-info')
+          .inner
+            h3
+              if (runerror)
+                | Error 
+                i.fa.fa-exclamation-triangle
+              else
+                | OK 
+                i.fa.fa-check
+            p
+              if (runerror)
+                = runerror
+              else
+                | Event processor works fine
+            .d-flex.justify-content-center
+              a.btn.btn-secondary.float-right(href="/settings/rulecode")
+                i.fa.fa-code
+                |  Edit rules
+          .icon
+            i.fas.fa-play-circle
+
+    if HasPermission('Restart')
+      .col-md-4
+        .small-box.bg-danger#restartbox
+          .inner
+            h3 Restart
+            p Quit + reload system core and settings
+            .d-flex.justify-content-center
+              .btn-group
+                button.btn.btn-secondary(onclick="restart()")
+                  i.fas.fa-times
+                  |  Restart now
+          .icon
+            i.fas.fa-window-close
 
   script(type='text/javascript').
     function restart()

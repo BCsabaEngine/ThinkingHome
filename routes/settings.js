@@ -1,14 +1,16 @@
-const Device = requireRoot('/models/Device');
-const DeviceCapability = requireRoot('/models/DeviceCapability');
-const DeviceSys = requireRoot('/models/DeviceSys');
-const DeviceEvent = requireRoot('/models/DeviceEvent');
+const UserPermission = require("../models/UserPermission");
+
+const User = requireRoot('/models/User');
 
 module.exports = (app) => {
 
   app.get('/settings', async function (req, res, next) {
     try {
+      await req.RequirePermission(UserPermissions.RuleCode);
+
       res.render('settings', {
         title: "Settings",
+        usercount: await User.Count(),
         runerror: global.context.GetRunErrorMessage(),
       });
     }
@@ -17,6 +19,8 @@ module.exports = (app) => {
 
   app.get('/settings/rulecode', async function (req, res, next) {
     try {
+      await req.RequirePermission(UserPermissions.RuleCode);
+
       const rulecode = await requireRoot('/models/RuleCode').FindLastJsCode();
       res.render('rulecode', {
         title: "Rule editor",
@@ -30,6 +34,8 @@ module.exports = (app) => {
 
   app.post('/settings/rulecode/update', async function (req, res, next) {
     try {
+      await req.RequirePermission(UserPermissions.RuleCode);
+
       const rulecode = req.body.rulecode;
       if (!rulecode)
         res.status(411).send("Empty content");
@@ -46,6 +52,8 @@ module.exports = (app) => {
 
   app.get('/settings/rulecode/log', async function (req, res, next) {
     try {
+      await req.RequirePermission(UserPermissions.RuleCode);
+
       const rulecodelogs = await requireRoot('/models/RuleCodeLog').GetLastLogs();
       res.render('rulecodelog', {
         title: "Rule logs",
@@ -57,7 +65,10 @@ module.exports = (app) => {
 
   app.post('/settings/restart', async function (req, res, next) {
     try {
+      await req.RequirePermission(UserPermissions.Restart);
+
       res.send("OK");
+
       setTimeout(() => {
         process.exit();
       }, 500);

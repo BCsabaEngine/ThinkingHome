@@ -1,12 +1,8 @@
-// Main Sidebar Container
 aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
-  // Brand Logo
   a.brand-link.navbar-orange(href='/')
     img.brand-image.img-circle.elevation-3(src='/logo128.png', alt='Logo', style='opacity: .8')
     span.brand-text.font-weight-light Smart HOME
-  // Sidebar
   .sidebar#sidebar
-    // Sidebar Menu
     nav.mt-2
       ul.nav.nav-pills.nav-sidebar.flex-column(data-widget='treeview', role='menu', data-accordion='false')
         li.nav-item
@@ -28,11 +24,12 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
                 p= item.DisplayName
 
 
-        li.nav-header SETTINGS
-        li.nav-item
-          a.nav-link(href='/settings')
-            i.nav-icon.fas.fa-wrench
-            p Settings
+        li.nav-header SYSTEM
+        if HasPermission('Users') || HasPermission('RuleCode') || HasPermission('Restart')
+          li.nav-item
+            a.nav-link(href='/settings')
+              i.nav-icon.fas.fa-wrench
+              p Settings
 
         li.nav-item
           a.nav-link(href='/logout')

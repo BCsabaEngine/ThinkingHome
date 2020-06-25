@@ -65,7 +65,7 @@ class DeviceState extends EventEmitter {
       this.isonline = ["on", "true", "1"].includes(message);
       this.emit('online', this.isonline);
     }
-    else if (topicmatch = topic.match(`stat\/${name}\/([0-9a-z_]*)`)) {
+    else if (topicmatch = topic.match(`^stat\/${name}\/([0-9a-z_]*)$`)) {
       logger.debug(`[${name}] Stat message: ${topic}=${message}`);
 
       const statname = topicmatch[1];
@@ -74,7 +74,7 @@ class DeviceState extends EventEmitter {
       this.emit('stat', statname, message);
       this.emit(`stat.${statname}`, message);
     }
-    else if (topicmatch = topic.match(`event\/${name}\/([0-9a-z_]*)`)) {
+    else if (topicmatch = topic.match(`^event\/${name}\/([0-9a-z_]*)$`)) {
       logger.debug(`[${name}] Event message: ${topic}=${message}`);
 
       const eventname = topicmatch[1];

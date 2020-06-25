@@ -2,7 +2,7 @@ const DeviceLogTable = db.defineTable('DeviceLog', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
-    Device: db.ColTypes.int(11).index(),
+    Device: db.ColTypes.int(11).notNull().index(),
     Message: db.ColTypes.varchar(512),
   },
   keys: [

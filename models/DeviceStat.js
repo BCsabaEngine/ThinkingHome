@@ -1,9 +1,9 @@
-const DeviceEventTable = db.defineTable('DeviceEvent', {
+const DeviceStatTable = db.defineTable('DeviceStat', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
     Device: db.ColTypes.int(11).notNull().index(),
-    Event: db.ColTypes.varchar(100).notNull(),
+    Stat: db.ColTypes.varchar(100).notNull(),
     Data: db.ColTypes.varchar(512),
   },
   keys: [
@@ -11,8 +11,9 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
   ],
 });
 
-const DeviceEvent = {
+const DeviceStat = {
 
+/*
   async GetLastByDeviceId(deviceid) {
     const rows = await db.pquery(`
       SELECT de.Event, de.Data, de.DateTime
@@ -26,11 +27,12 @@ const DeviceEvent = {
       ORDER BY de.Event`, [deviceid]);
     return rows;
   },
+*/
 
-  async Insert(device, event, data) {
-    await DeviceEventTable.insert({ Device: device, Event: event, Data: data });
+  async Insert(device, stat, data) {
+    await DeviceStatTable.insert({ Device: device, Stat: stat, Data: data });
   },
 
 };
 
-module.exports = DeviceEvent;
+module.exports = DeviceStat;

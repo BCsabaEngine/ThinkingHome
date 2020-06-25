@@ -31,6 +31,10 @@ module.exports = (onready) => {
 
       db.sync((err) => {
         if (err) throw err;
+
+        const User = require('../models/User');
+        User.InsertAdminIfNotExists()
+
         onready();
       });
     }

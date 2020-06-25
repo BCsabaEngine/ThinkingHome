@@ -3,7 +3,7 @@ const moment = require('moment');
 const DeviceSysItemTable = db.defineTable('DeviceSysItem', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
-    DeviceSys: db.ColTypes.int(11).index(),
+    DeviceSys: db.ColTypes.int(11).notNull().index(),
     Name: db.ColTypes.varchar(100).notNull(),
     Value: db.ColTypes.varchar(100).notNull(),
   },

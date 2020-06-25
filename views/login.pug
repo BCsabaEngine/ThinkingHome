@@ -3,41 +3,46 @@ html(lang='en')
 
   include includes/head.pug
 
-  body.hold-transition.lockscreen
-    section.content
-      block content
-        .lockscreen-wrapper
-          .lockscreen-logo
-            a(href='../../index2.html')
-              b Smart
-              | HOME
-          .lockscreen-name Home user
-          .lockscreen-item#bubble-panel
-            // lockscreen image
-            .lockscreen-image
-              img(src='../../dist/img/user1-128x128.jpg', alt='User Image')
-            div.lockscreen-credentials
-              .input-group
-                input#password.form-control(type='password', placeholder='password', onkeydown='if(event.key === "Enter") login();')
-                .input-group-append
-                  button.btn(type='button', onclick='login()')
-                    i.fas.fa-arrow-right.text-muted
+  body.hold-transition.login-page
+    .login-box
+      .login-logo
+        img.brand-image.img-circle.elevation-2(src='/logo128.png', alt='Logo', style='opacity: .8')
+      .card#card
+        .card-body.login-card-body
+          p.login-box-msg Log in to access home devices NOW
+          .input-group.mb-3
+            input.form-control(type='text', placeholder='Username', onkeydown='if (event.keyCode == 13) login()')#username
+            .input-group-append
+              .input-group-text
+                span.fas.fa-user
+          .input-group.mb-3
+            input.form-control(type='password', placeholder='Password', onkeydown='if (event.keyCode == 13) login()')#password
+            .input-group-append
+              .input-group-text
+                span.fas.fa-lock
+          center
+            button.btn.btn-primary.btn-blockx(type='button', onclick='login()') Log In
+
     include includes/scripts.pug
     script(src='/plugins/jquery-ui/jquery-ui.min.js')
     script(type='text/javascript').
       function login()
       {
-      var password = $('#password').val();
-      $.post('/login', { password: password}, 'json')
-      .done(function() {
-      window.location = "/";
-      })
-      .fail(function() {
-      $('#password').val('');
-      $("#bubble-panel").effect("shake");
-      $('#password').focus();
-      })
+        var username = $('#username').val();
+        var password = $('#password').val();
+        $.post('/login', { username: username, password: password}, 'json')
+        .done(function() {
+          window.location = "/";
+        })
+        .fail(function() {
+          $('#password').val('');
+          $('#card').effect('shake');
+          $('#password').focus();
+        })
       }
       setTimeout(function() {
-      $('#password').focus();
+        if ($('#username').val())
+          $('#password').focus();
+        else
+          $('#username').focus();
       }, 250);

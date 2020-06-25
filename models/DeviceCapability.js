@@ -1,7 +1,7 @@
 const DeviceCapabilityTable = db.defineTable('DeviceCapability', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
-    Device: db.ColTypes.int(11).index(),
+    Device: db.ColTypes.int(11).notNull().index(),
     Value: db.ColTypes.varchar(100).notNull(),
   },
   keys: [
@@ -55,7 +55,7 @@ const DeviceCapability = {
     if (devicecapabilities)
       devicecapabilities.forEach(devicecapability => {
         const devicecapabilityvalue = devicecapability.Value;
-        const devicecapmatch = devicecapabilityvalue.match(/stat\/\[\$\]\/?([a-z0-9]*)$/);
+        const devicecapmatch = devicecapabilityvalue.match(/^stat\/\[\$\]\/?([a-z0-9]*)$/);
         if (devicecapmatch) {
           const componentname = devicecapmatch[1];
           devicecomponents[componentname] = [];
@@ -65,7 +65,7 @@ const DeviceCapability = {
     if (devicecapabilities)
       devicecapabilities.forEach(devicecapability => {
         const devicecapabilityvalue = devicecapability.Value;
-        const devicecapmatch = devicecapabilityvalue.match(/cmd\/\[\$\]\/?([a-z0-9]*)$/);
+        const devicecapmatch = devicecapabilityvalue.match(/^cmd\/\[\$\]\/?([a-z0-9]*)$/);
         if (devicecapmatch) {
           const componentname = devicecapmatch[1];
           devicecomponents[componentname] = [];
