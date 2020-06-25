@@ -40,3 +40,32 @@ block content
               |  Edit rules
         .icon
           i.fas.fa-play-circle
+
+    .col-md-4
+      .small-box.bg-danger#restartbox
+        .inner
+          h3 Restart
+          p Quit + reload system core and settings
+          .d-flex.justify-content-center
+            .btn-group
+              button.btn.btn-secondary(onclick="restart()")
+                i.fas.fa-times
+                |  Restart now
+        .icon
+          i.fas.fa-window-close
+
+  script(type='text/javascript').
+    function restart()
+    {
+      $.post('/settings/restart')
+       .done(function()
+       {
+         $('#restartbox').prepend("<div class='overlay'><i class='fas fa-3x fa-sync-alt fa-spin'></i></div>");
+         setTimeout(() => pagereload(), 5000);
+       })
+       .fail(function(response)
+       {
+         toastr.error(response.responseText);
+       });
+    }
+    

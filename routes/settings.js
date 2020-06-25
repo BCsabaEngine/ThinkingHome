@@ -55,4 +55,14 @@ module.exports = (app) => {
     catch (err) { next(err); }
   })
 
+  app.post('/settings/restart', async function (req, res, next) {
+    try {
+      res.send("OK");
+      setTimeout(() => {
+        process.exit();
+      }, 500);
+    }
+    catch (err) { next(err); }
+  })
+
 }
