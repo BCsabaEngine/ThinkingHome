@@ -39,7 +39,6 @@ class RunningContext {
     let contextvars = new class BaseContext {
       get now() {
         const d = new Date();
-
         return {
           y: d.getFullYear(),
           m: d.getMonth() + 1,

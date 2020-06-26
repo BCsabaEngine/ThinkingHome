@@ -2,6 +2,7 @@ require('./lib/requireRoot'); //allow require relative to project root
 
 const config = requireRoot('/lib/config');
 const logger = requireRoot("/lib/logger");
+const SystemSettings = requireRoot("/lib/systemSettings");
 
 const databaseLoader = requireRoot('/loaders/databaseLoader');
 const mqttLoader = requireRoot('/loaders/mqttLoader');
@@ -14,6 +15,10 @@ logger.info("Application starting...");
 
 // Init storage: global.db and global.db.promise
 const database = databaseLoader(() => {
+
+  // Preload SystemSettings: global.systemsettings
+  const systemsettings = global.systemsettings = new SystemSettings();
+  systemsettings.Init();
 
   // Init Express app and start: global.app + global.httpserver
   const app = httpSrvLoader();

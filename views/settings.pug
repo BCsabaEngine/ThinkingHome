@@ -5,6 +5,21 @@ block content
 
     if HasPermission('Users')
       .col-md-4
+        .small-box.bg-info
+          .inner
+            h3
+              | System settings
+            p Global configuration variables
+            .d-flex.justify-content-center
+              .btn-group
+                a.btn.btn-secondary.float-right(href="/settings/settings")
+                  i.fas.fa-list-ol
+                  |  View and set
+          .icon
+            i.fas.fa-wrench
+
+    if HasPermission('Users')
+      .col-md-4
         .small-box.bg-warning
           .inner
             h3
@@ -21,7 +36,7 @@ block content
                 button.btn.btn-success.float-right
                   i.fas.fa-plus
                   |  Add new
-                button.btn.btn-secondary.float-right
+                a.btn.btn-secondary.float-right(href="/settings/users")
                   i.fas.fa-list-ol
                   |  View all
           .icon

@@ -17,12 +17,35 @@ module.exports = (app) => {
     catch (err) { next(err); }
   })
 
+  app.get('/settings/settings', async function (req, res, next) {
+    try {
+      await req.RequirePermission(UserPermissions.RuleCode);
+
+      res.render('settings-settings', {
+        title: "System settings",
+        settings: global.systemsettings,
+      });
+    }
+    catch (err) { next(err); }
+  })
+
+  app.post('/settings/settings/update', async function (req, res, next) {
+    try {
+      await req.RequirePermission(UserPermissions.RuleCode);
+
+      global.systemsettings.AdaptFromObject(req.body);
+
+      res.send("OK");
+    }
+    catch (err) { next(err); }
+  })
+
   app.get('/settings/rulecode', async function (req, res, next) {
     try {
       await req.RequirePermission(UserPermissions.RuleCode);
 
       const rulecode = await requireRoot('/models/RuleCode').FindLastJsCode();
-      res.render('rulecode', {
+      res.render('settings-rulecode', {
         title: "Rule editor",
         rulecode: rulecode,
         runerrorstack: global.context.GetRunErrorStack(),
@@ -55,7 +78,7 @@ module.exports = (app) => {
       await req.RequirePermission(UserPermissions.RuleCode);
 
       const rulecodelogs = await requireRoot('/models/RuleCodeLog').GetLastLogs();
-      res.render('rulecodelog', {
+      res.render('settings-rulecodelog', {
         title: "Rule logs",
         rulecodelogs: rulecodelogs,
       });

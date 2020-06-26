@@ -1,0 +1,63 @@
+extends _base
+
+block content
+  .row
+    .col-md-12
+      button.btn.btn-primary.float-right(onclick="save()")
+        i.fa.fa-upload
+        |  Save settings
+  form#form
+    .row
+      .col-md-6
+        .card.card-warning
+          .card-header
+            h3.card-title GeoLocation
+          .card-body
+            .row
+              .col-sm-5
+                .form-group
+                  label Latitude
+                  input.form-control(type='text', name='latitude', value=systemsettings.Latitude)#latitude
+              .col-sm-5
+                .form-group
+                  label Longitude
+                  input.form-control(type='text', name='longitude', value=systemsettings.Longitude)#longitude
+              .col-sm-2
+                .form-group
+                  label &nbsp;
+                  button.btn.btn-default.form-control(onclick="geodetect();return false;")
+                    i.fa.fa-map-signs
+                    |  Detect 
+    
+  script(type='text/javascript').
+    function geodetect()
+    {
+      if (navigator.geolocation)
+      {
+        navigator.geolocation.getCurrentPosition(function(position)
+        {
+          $('#latitude').val(position.coords.latitude.toFixed(6));
+          $('#longitude').val(position.coords.longitude.toFixed(6));
+        });
+      }
+      else
+      {
+        alert("Geolocation is not supported by this browser.");
+      }
+    }
+
+    function save()
+    {
+      var formdata = $('#form').serialize();
+      $.post('/settings/settings/update', formdata)
+       .done(function()
+       {
+         window.location.href = "/";
+         //setTimeout(() => pagereload(), 100);
+       })
+       .fail(function(response)
+       {
+         toastr.error(response.responseText);
+       });
+    }
+    
