@@ -36,7 +36,22 @@ class RunningContext {
   async Run(devicestates) {
     this._devicestates = devicestates;
 
-    let contextvars = {};
+    let contextvars = new class BaseContext {
+      get now() {
+        const d = new Date();
+
+        return {
+          y: d.getFullYear(),
+          m: d.getMonth() + 1,
+          d: d.getDate(),
+          H: d.getHours(),
+          M: d.getMinutes(),
+          S: d.getSeconds(),
+          dow: d.getDay(),
+          time: d.getTime(),
+        }
+      }
+    };
     contextvars["log"] = this.Log.bind(this);
     contextvars["createInterval"] = this.CreateInterval.bind(this);
     contextvars["createTimeout"] = this.CreateTimeout.bind(this);
