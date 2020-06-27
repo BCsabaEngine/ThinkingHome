@@ -13,20 +13,16 @@ const DeviceTeleTable = db.defineTable('DeviceTele', {
 
 const DeviceTele = {
 
-  // async GetLastByDeviceId(deviceid, telemetry) {
-  //   const rows = await db.pquery(`
-  //     SELECT dt.Data, dt.DateTime
-  //     FROM DeviceTele dt
-  //     WHERE dt.Device = ? AND
-  //           dt.Telemetry = ? AND
-  //           NOT EXISTS(SELECT 1
-  //                      FROM DeviceTele dt2
-  //                      WHERE dt2.Device = dt.Device AND
-  //                            dt2.Telemetry = dt.Telemetry AND
-  //                            dt2.Id > dt.Id)
-  //     ORDER BY dt.Id DESC`, [deviceid, telemetry]);
-  //   return rows;
-  // },
+  async GetLastByDeviceId(deviceid, telemetry, days = 1) {
+    const rows = await db.pquery(`
+      SELECT dt.DateTime, dt.Data
+      FROM DeviceTele dt
+      WHERE dt.Device = ? AND
+            dt.Telemetry = ? AND
+            dt.DateTime >= NOW() - INTERVAL ? DAY
+      ORDER BY dt.DateTime, dt.Id`, [deviceid, telemetry, days]);
+    return rows;
+  },
 
   async Insert(device, telemetry, data) {
     await DeviceTeleTable.insert({ Device: device, Telemetry: telemetry, Data: data });

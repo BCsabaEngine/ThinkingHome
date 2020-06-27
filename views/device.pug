@@ -26,11 +26,18 @@ block content
           .card-header
             h3.card-title
               = key.toUpperCase()
+            .card-tools
+              .btn-group(id="mode_" + key, data-toggle='btn-toggle')
+                button.btn.btn-default.btn-sm.active(type='button', data-toggle='daily') Daily
+                button.btn.btn-default.btn-sm(type='button', data-toggle='weekly') Weekly
+                button.btn.btn-default.btn-sm(type='button', data-toggle='monthly') Monthly
           .card-body
             .row
               .col-md-2
                 h1
                   = ctxdevice.tele(key) || "?"
+              .col-md-10
+                div(style="height: 300px;", id=key)
 
   .row
     .col-md-4
@@ -102,7 +109,57 @@ block content
                   .col-md-12
                     = devicecapability.Value
 
+  script(type='text/javascript').
+    //subscribes = { #{devicename} : "content-wrapper" };
   script(type='text/javascript')
-    | subscribes = {
-    = devicename
-    | : "content-wrapper" };
+    | subscribes = { #{devicename} : function() { divreload('content-wrapper', () => {
+    each component, key in telecapabilitycomponents
+      | LoadGraph_#{key}();
+    |}) } };
+  script(src='/plugins/jquery/jquery.min.js')
+  script(src='/plugins/flot/jquery.flot.js')
+  script(src='/plugins/flot-old/jquery.flot.resize.min.js')
+
+  each component, key in telecapabilitycomponents
+    script(type='text/javascript').
+      function LoadGraph_#{key}() {
+        $.get("/device/#{device.Name}/graph/tele/#{key}/1", function(data)
+        {
+          var timeline = JSON.parse(data);
+
+          var interactive_plot = $.plot('##{key}',
+          [
+            {
+              data: timeline,
+            }
+          ],
+          {
+            grid: {
+              borderColor: '#f3f3f3',
+              borderWidth: 1,
+              tickColor: '#f3f3f3'
+            },
+            series: {
+              color: '#3c8dbc',
+              lines: {
+                lineWidth: 1,
+                show: true,
+                fill: false,
+              },
+            },
+            yaxis: {
+              show: true,
+            },
+            xaxis: {
+              show: true,
+              mode: "time",
+              timeBase: "milliseconds",
+              timeformat: "%y-%m-%d %H:%M"
+            }
+          });
+        })
+      };
+      
+      $(function () {
+        LoadGraph_#{key}();
+      });

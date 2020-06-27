@@ -2,6 +2,7 @@ const Device = requireRoot('/models/Device');
 const DeviceCapability = requireRoot('/models/DeviceCapability');
 const DeviceSys = requireRoot('/models/DeviceSys');
 const DeviceEvent = requireRoot('/models/DeviceEvent');
+const DeviceTele = requireRoot('/models/DeviceTele');
 
 module.exports = (app) => {
 
@@ -46,6 +47,26 @@ module.exports = (app) => {
     ctxdevice.cmd(command, message);
 
     res.send("OK");
+  });
+
+  app.get('/device/:devicename/graph/tele/:telename/:days', async function (req, res) {
+    const devicename = req.params.devicename;
+    const telename = req.params.telename;
+    let days = Number(req.params.days);
+
+    days = Math.max(1, Math.min(days, 31));
+
+    const ctxdevice = global.context.devices[devicename];
+    if (!ctxdevice)
+      throw new Error(`Device ${devicename} not found in context`);
+
+    const rows = await DeviceTele.GetLastByDeviceId(ctxdevice.Id, telename, days);
+
+    let json = [];
+    const tzoffset = new Date().getTimezoneOffset();
+    rows.forEach(row => json.push([row.DateTime.getTime() - tzoffset * 60000, row.Data]));
+
+    res.send(JSON.stringify(json));
   });
 
 }

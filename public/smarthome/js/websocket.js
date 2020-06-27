@@ -40,7 +40,7 @@ function socket_open()
                     value(key);
                   else
                     divreload(value);
-                }, 100);
+                }, 350);
               }
         }
         catch(ex)
