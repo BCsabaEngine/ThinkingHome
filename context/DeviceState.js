@@ -55,6 +55,10 @@ class DeviceState extends EventEmitter {
     mqtt.publish(`ack/${name}`, ackname);
   }
 
+  tele(telename) {
+    return this[`tele_${telename}`];
+  }
+
   ProcessMqttMessage(topic, message) {
     const name = this._name;
     let topicmatch = false;
@@ -82,6 +86,15 @@ class DeviceState extends EventEmitter {
 
       this.emit('event', eventname, message);
       this.emit(`event.${eventname}`, message);
+    }
+    else if (topicmatch = topic.match(`^tele\/${name}\/([0-9a-z_]*)$`)) {
+      logger.debug(`[${name}] Tele message: ${topic}=${message}`);
+
+      const telename = topicmatch[1];
+      this[`tele_${telename}`] = message;
+
+      this.emit('tele', telename, message);
+      this.emit(`tele.${telename}`, message);
     }
 
   }

@@ -1,7 +1,7 @@
 extends _base
 
 block content
-  each component, key in capabilitycomponents
+  each component, key in cmdcmdcapabilitycomponents
     .row
       .col-md-12
         .card.card-lightblue
@@ -18,6 +18,19 @@ block content
                   each command in component
                     button.btn.btn-lg.btn-success(onclick="$.post('/device/" + device.Name + "/" + key + "/" + command + "');")
                       = command.toUpperCase()
+
+  each component, key in telecapabilitycomponents
+    .row
+      .col-md-12
+        .card.card-lightblue
+          .card-header
+            h3.card-title
+              = key.toUpperCase()
+          .card-body
+            .row
+              .col-md-2
+                h1
+                  = ctxdevice.tele(key) || "?"
 
   .row
     .col-md-4

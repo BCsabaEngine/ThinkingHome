@@ -80,6 +80,23 @@ const DeviceCapability = {
     return devicecomponents;
   },
 
+  GetCapabilityComponentByTele(devicecapabilities) {
+
+    let devicecomponents = {};
+
+    if (devicecapabilities)
+      devicecapabilities.forEach(devicecapability => {
+        const devicecapabilityvalue = devicecapability.Value;
+        const devicecapmatch = devicecapabilityvalue.match(/^tele\/\[\$\]\/?([a-z0-9]*)$/);
+        if (devicecapmatch) {
+          const componentname = devicecapmatch[1];
+          devicecomponents[componentname] = [];
+        }
+      });
+
+    return devicecomponents;
+  },
+
 };
 
 module.exports = DeviceCapability;

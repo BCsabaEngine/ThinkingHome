@@ -13,7 +13,8 @@ module.exports = (app) => {
         throw new Error(`Device not found: ${devicename}`);
 
       const devicecapabilities = await DeviceCapability.GetByDeviceId(device.Id);
-      const capabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
+      const cmdcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
+      const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
       const devicesys = await DeviceSys.FindLastByDeviceId(device.Id);
       const devicelastevents = await DeviceEvent.GetLastByDeviceId(device.Id);
       const ctxdevice = global.context.devices[devicename];
@@ -23,7 +24,8 @@ module.exports = (app) => {
         devicename: devicename,
         device: device,
         ctxdevice: ctxdevice,
-        capabilitycomponents: capabilitycomponents,
+        cmdcmdcapabilitycomponents: cmdcapabilitycomponents,
+        telecapabilitycomponents: telecapabilitycomponents,
         devicesys: devicesys,
         devicecapabilities: devicecapabilities,
         devicelastevents: devicelastevents,
