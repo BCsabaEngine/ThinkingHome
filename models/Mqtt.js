@@ -8,6 +8,7 @@ const MqttTable = db.defineTable('Mqtt', {
   },
   keys: [
     db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
+    db.KeyTypes.index('DateTime', 'Device', 'Topic'),
   ],
 });
 

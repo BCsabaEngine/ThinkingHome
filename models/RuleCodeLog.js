@@ -4,6 +4,9 @@ const RuleCodeLogTable = db.defineTable('RuleCodeLog', {
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
     Message: db.ColTypes.varchar(512).notNull(),
   },
+  keys: [
+    db.KeyTypes.index('DateTime'),
+  ],
 });
 
 const RuleCodeLog = {

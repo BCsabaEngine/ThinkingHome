@@ -3,11 +3,12 @@ const DeviceTeleTable = db.defineTable('DeviceTele', {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
     Device: db.ColTypes.int(11).notNull().index(),
-    Telemetry: db.ColTypes.varchar(32).notNull().index(),
+    Telemetry: db.ColTypes.varchar(32).notNull(),
     Data: db.ColTypes.varchar(32),
   },
   keys: [
     db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
+    db.KeyTypes.index('DateTime', 'Device', 'Telemetry'),
   ],
 });
 

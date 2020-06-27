@@ -1,13 +1,14 @@
 const DeviceEventTable = db.defineTable('DeviceEvent', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
-    DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
+    DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp().index(),
     Device: db.ColTypes.int(11).notNull().index(),
     Event: db.ColTypes.varchar(100).notNull(),
     Data: db.ColTypes.varchar(512),
   },
   keys: [
     db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
+    db.KeyTypes.index('DateTime', 'Device', 'Event'),
   ],
 });
 
