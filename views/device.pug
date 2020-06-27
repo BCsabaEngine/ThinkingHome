@@ -75,15 +75,19 @@ block content
           else
             each devicecapability in devicecapabilities
               .row
-                .col-md-4
-                  = devicecapability.Value
-                .col-md-8
-                  if devicecapability.Items
-                    | &nbsp;&nbsp;
-                    each devicecapitem in devicecapability.Items
-                      span.badge.badge-info
-                        = devicecapitem
+                if devicecapability.Items
+                  .col-md-4
+                    = devicecapability.Value
+                  .col-md-8
+                    if devicecapability.Items
                       | &nbsp;&nbsp;
+                      each devicecapitem in devicecapability.Items
+                        span.badge.badge-info
+                          = devicecapitem
+                        | &nbsp;&nbsp;
+                else 
+                  .col-md-12
+                    = devicecapability.Value
 
   script(type='text/javascript')
     | subscribes = {
