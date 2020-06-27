@@ -1,6 +1,5 @@
 require('./lib/requireRoot'); //allow require relative to project root
 
-const config = requireRoot('/lib/config');
 const logger = requireRoot("/lib/logger");
 const SystemSettings = requireRoot("/lib/systemSettings");
 
