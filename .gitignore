@@ -101,6 +101,3 @@ typings/
 
 # VScode runtime config
 .vscode
-
-# npm lock
-package-lock.json
