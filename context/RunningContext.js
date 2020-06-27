@@ -1,4 +1,5 @@
 const logger = requireRoot("/lib/logger");
+const SunCalc = require('suncalc');
 const vm = require('vm');
 
 class RunningContext {
@@ -37,6 +38,7 @@ class RunningContext {
     this._devicestates = devicestates;
 
     let contextvars = new class BaseContext {
+
       get now() {
         const d = new Date();
         return {
@@ -48,8 +50,43 @@ class RunningContext {
           S: d.getSeconds(),
           dow: d.getDay(),
           time: d.getTime(),
+          HHMM: d.getHours() * 100 + d.getMinutes(),
         }
       }
+
+      get sunmoon() {
+        if (!systemsettings.Latitude && !systemsettings.Longitude)
+          throw new Error("Coordinates are not set, SunMoon not available");
+
+        const suncalc = SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
+        return {
+          dawn: {
+            date: suncalc.dawn,
+            H: suncalc.dawn.getHours(),
+            M: suncalc.dawn.getMinutes(),
+            HHMM: suncalc.dawn.getHours() * 100 + suncalc.dawn.getMinutes(),
+          },
+          sunrise: {
+            date: suncalc.sunrise,
+            H: suncalc.sunrise.getHours(),
+            M: suncalc.sunrise.getMinutes(),
+            HHMM: suncalc.sunrise.getHours() * 100 + suncalc.sunrise.getMinutes(),
+          },
+          sunset: {
+            date: suncalc.sunset,
+            H: suncalc.sunset.getHours(),
+            M: suncalc.sunset.getMinutes(),
+            HHMM: suncalc.sunset.getHours() * 100 + suncalc.sunset.getMinutes(),
+          },
+          dusk: {
+            date: suncalc.dusk,
+            H: suncalc.dusk.getHours(),
+            M: suncalc.dusk.getMinutes(),
+            HHMM: suncalc.sunset.getHours() * 100 + suncalc.sunset.getMinutes(),
+          },
+        }
+      }
+
     };
     contextvars["log"] = this.Log.bind(this);
     contextvars["createInterval"] = this.CreateInterval.bind(this);

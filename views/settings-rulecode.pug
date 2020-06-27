@@ -38,7 +38,9 @@ block content
           br
           | createTimeout("Alias", 60 * 000, () => { });
           br
-          | now.[y, m, d, H, M, S, dow, time]
+          | now.(y | m | d | H | M | S | dow | time | HHMM)
+          br
+          | sunmoon.(dawn|sunrise|sunset|dusk).(date | H | M | HHMM)]
 
       .card.card-outline.card-primary
         .card-header
