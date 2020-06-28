@@ -1,8 +1,31 @@
 const glob = require('glob');
 const path = require('path');
 const favicon = require('serve-favicon');
+const nGfirewall = requireRoot('/lib/nGfirewall');
+const IpBlacklist = requireRoot('/lib/IpBlacklist');
 
 module.exports = (app) => {
+
+  // filter private and public banned IPs
+  app.use(IpBlacklist.check({
+    blackLists: [
+      "blacklist.txt",
+      "https://sslbl.abuse.ch/blacklist/sslipblacklist.txt",
+      "https://myip.ms/files/blacklist/general/latest_blacklist.txt",
+    ],
+    whiteListLifeTimeMs: 10 * 60 * 1000,
+    onFailRequest: function (ipAddress) {
+      require('fs').appendFile('banned.ips', ipAddress + require('os').EOL, 'utf8', () => { });
+    }
+  }));
+
+  // filter malicious requests
+  app.use(nGfirewall.check({
+    onFailRequest: function (ipAddress, item, rule) {
+      console.log("[nGfirewall] %s from %s matched %s", item, ipAddress, rule);
+    }
+  }));
+
   // static folders for template
   app.use(require('express').static('public', { index: false, maxAge: '1h', redirect: false }));
 
