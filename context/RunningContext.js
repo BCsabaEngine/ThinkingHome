@@ -2,6 +2,22 @@ const logger = requireRoot("/lib/logger");
 const SunCalc = require('suncalc');
 const vm = require('vm');
 
+class SunCalcDate {
+  _date;
+
+  constructor(date) {
+    this._date = date;
+  }
+
+  get H() { return this._date.getHours(); }
+  get M() { return this._date.getMinutes(); }
+  get HHMM() { return this._date.getHours() * 100 + this._date.getMinutes(); }
+
+  addMinutes(minutes) {
+    return new SunCalcDate(new Date(this._date.getTime() + minutes * 60 * 1000));
+  }
+}
+
 class RunningContext {
   _timers = {};
   _intervals = {};
@@ -14,7 +30,7 @@ class RunningContext {
     const id = setTimeout(func, timeout);
     this._timers[name] = id;
 
-    return id;
+    return new Date().getTime() + timeout;
   }
 
   CreateInterval(name, timeout, func) {
@@ -23,8 +39,6 @@ class RunningContext {
 
     const id = setInterval(func, timeout);
     this._intervals[name] = id;
-
-    return id;
   }
 
   async Log(message) {
@@ -54,40 +68,21 @@ class RunningContext {
         }
       }
 
-      get sunmoon() {
+      getSunCalc() {
         if (!systemsettings.Latitude && !systemsettings.Longitude)
-          throw new Error("Coordinates are not set, SunMoon not available");
+          throw new Error("Coordinates are not set, Sun not available");
 
-        const suncalc = SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
-        return {
-          dawn: {
-            date: suncalc.dawn,
-            H: suncalc.dawn.getHours(),
-            M: suncalc.dawn.getMinutes(),
-            HHMM: suncalc.dawn.getHours() * 100 + suncalc.dawn.getMinutes(),
-          },
-          sunrise: {
-            date: suncalc.sunrise,
-            H: suncalc.sunrise.getHours(),
-            M: suncalc.sunrise.getMinutes(),
-            HHMM: suncalc.sunrise.getHours() * 100 + suncalc.sunrise.getMinutes(),
-          },
-          sunset: {
-            date: suncalc.sunset,
-            H: suncalc.sunset.getHours(),
-            M: suncalc.sunset.getMinutes(),
-            HHMM: suncalc.sunset.getHours() * 100 + suncalc.sunset.getMinutes(),
-          },
-          dusk: {
-            date: suncalc.dusk,
-            H: suncalc.dusk.getHours(),
-            M: suncalc.dusk.getMinutes(),
-            HHMM: suncalc.sunset.getHours() * 100 + suncalc.sunset.getMinutes(),
-          },
-        }
+        return SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
       }
 
+      get dawn() { return new SunCalcDate(this.getSunCalc().dawn); }
+      get sunrise() { return new SunCalcDate(this.getSunCalc().sunrise); }
+      get sunset() { return new SunCalcDate(this.getSunCalc().sunset); }
+      get dusk() { return new SunCalcDate(this.getSunCalc().dusk); }
+
     };
+
+    contextvars["SunCalcDate"] = SunCalcDate;
     contextvars["log"] = this.Log.bind(this);
     contextvars["createInterval"] = this.CreateInterval.bind(this);
     contextvars["createTimeout"] = this.CreateTimeout.bind(this);

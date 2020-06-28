@@ -16,7 +16,7 @@ const RuleCode = {
     const rows = await db.pquery("SELECT rc.JsCode FROM RuleCode rc ORDER BY rc.Id DESC LIMIT 1");
     if (rows.length)
       return rows[0].JsCode;
-    return null;
+    return '';
   },
 
 };

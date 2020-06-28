@@ -45,9 +45,15 @@ module.exports = (app) => {
       await req.RequirePermission(UserPermissions.RuleCode);
 
       const rulecode = await requireRoot('/models/RuleCode').FindLastJsCode();
+      let rulecodelinecount = rulecode.split(/\r\n|\r|\n/).length;
+      rulecodelinecount += 5;
+      if (rulecodelinecount < 30)
+        rulecodelinecount = 30;
+
       res.render('settings-rulecode', {
         title: "Rule editor",
         rulecode: rulecode,
+        rulecodelinecount: rulecodelinecount,
         runerrorstack: global.context.GetRunErrorStack(),
         devicenames: global.context.GetDeviceList(),
       });
@@ -73,7 +79,7 @@ module.exports = (app) => {
     catch (err) { next(err); }
   })
 
-  app.get('/settings/rulecode/log', async function (req, res, next) {
+  app.get('/settings/rulecode/loglist', async function (req, res, next) {
     try {
       await req.RequirePermission(UserPermissions.RuleCode);
 

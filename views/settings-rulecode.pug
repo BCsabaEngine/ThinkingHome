@@ -15,7 +15,7 @@ block content
         i.fa.fa-upload
         |  Upload rules
     .col-md-4
-      a.btn.btn-default(href="/settings/rulecode/log", target="_blank")
+      a.btn.btn-default(href="/settings/rulecode/loglist", target="_blank")
         i.fa.fa-list
         |  Show logs
   br
@@ -23,7 +23,7 @@ block content
   .row
     .col-md-8
       .form-group
-        textarea.form-control.monospace(rows=30)#codeeditor
+        textarea.form-control.monospace(rows=rulecodelinecount)#codeeditor
           = rulecode
 
     .col-md-4
@@ -34,13 +34,20 @@ block content
         .card-body.small.monospace
           | log("Any message");
           br
+          br
           | createInterval("Alias", 10 * 1000, () => { });
           br
           | createTimeout("Alias", 60 * 000, () => { });
           br
+          br
           | now.(y | m | d | H | M | S | dow | time | HHMM)
           br
-          | sunmoon.(dawn|sunrise|sunset|dusk).(date | H | M | HHMM)]
+          br
+          | (dawn|sunrise|sunset|dusk)
+          br
+          | .[addMinutes(+/-m)]
+          br
+          | .(date | H | M | HHMM)
 
       .card.card-outline.card-primary
         .card-header
