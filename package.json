@@ -1,8 +1,8 @@
 {
-  "name": "smarthome",
+  "name": "ThinkingHome",
   "version": "0.2.0",
-  "description": "ESP8266/ESP32 (Tasmota like) SmartHome system by NodeJS+MQTT",
-  "repository": "github:SymbolCsaba/SmartHome",
+  "description": "ESP8266/ESP32 (Tasmota like) Thinking Home system by NodeJS+MQTT",
+  "repository": "github:SymbolCsaba/ThinkingHome",
   "main": "index.js",
   "engines": {
     "node": ">=12.0.0"
@@ -32,9 +32,13 @@
     "start": "node index.js"
   },
   "keywords": [
+    "thinking",
+    "home",
     "smarthome",
     "mqtt",
-    "esp"
+    "tasmota",
+    "esp8266",
+    "esp32",
   ],
   "author": "Balázs Csaba",
   "license": "ISC"
