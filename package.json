@@ -1,5 +1,5 @@
 {
-  "name": "ThinkingHome",
+  "name": "thinkinghome",
   "version": "0.2.0",
   "description": "ESP8266/ESP32 (Tasmota like) Thinking home system by NodeJS+MQTT",
   "repository": "github:SymbolCsaba/ThinkingHome",
@@ -38,7 +38,7 @@
     "mqtt",
     "tasmota",
     "esp8266",
-    "esp32",
+    "esp32"
   ],
   "author": "Balázs Csaba",
   "license": "ISC"
