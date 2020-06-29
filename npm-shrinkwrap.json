@@ -1129,9 +1129,9 @@
       }
     },
     "mysql-plus": {
-      "version": "0.16.1",
-      "resolved": "https://registry.npmjs.org/mysql-plus/-/mysql-plus-0.16.1.tgz",
-      "integrity": "sha512-riK9PlGokCnrFyqFpw//pJJ3n9mZaogiH/GONFDt6gtNWKeKiAnfc5x+OMcbZbaJA44/6MPyUdKftURNNQ/Lwg==",
+      "version": "0.16.2",
+      "resolved": "https://registry.npmjs.org/mysql-plus/-/mysql-plus-0.16.2.tgz",
+      "integrity": "sha512-ka7FVvK6WgAGXXgakPwqLsO0h8wwoAUgqkuCjeLvmSweYl0wDM7K/BAT0JSdCGsw9kr0p/Csf52CkMEciQJ5Fg==",
       "requires": {
         "mysql": "^2.18.1"
       }
