@@ -4,7 +4,7 @@ const { permittedCrossDomainPolicies } = require('helmet');
 const UserTable = db.defineTable('User', {
   columns: {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
-    IsAdmin: db.ColTypes.tinyint(1).notNull().default(0),
+    IsAdmin: db.ColTypes.tinyint(1).notNull(),
     Username: db.ColTypes.varchar(100).notNull().unique(),
     Password: db.ColTypes.varchar(100).notNull(),
   },

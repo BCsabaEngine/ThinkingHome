@@ -4,7 +4,7 @@ const DeviceTable = db.defineTable('Device', {
     Name: db.ColTypes.varchar(100).notNull().unique(),
     DisplayName: db.ColTypes.varchar(100),
     FaIcon: db.ColTypes.varchar(20),
-    Priority: db.ColTypes.int(11).notNull().default(0),
+    Priority: db.ColTypes.int(11).notNull(),
   },
 });
 
