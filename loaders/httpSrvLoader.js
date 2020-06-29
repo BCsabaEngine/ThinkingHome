@@ -18,7 +18,7 @@ module.exports = () => {
 
   // sessions
   app.use(session({
-    secret: 'SmartHome',
+    secret: 'Thinking2020Home',
     resave: true,
     saveUninitialized: true
   }));

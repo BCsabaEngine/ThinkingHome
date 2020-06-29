@@ -123,7 +123,8 @@ block content
   each component, key in telecapabilitycomponents
     script(type='text/javascript').
       function LoadGraph_#{key}() {
-        $.get("/device/#{device.Name}/graph/tele/#{key}/1", function(data)
+        var url = "/device/#{device.Name}/graph/tele/#{key}/1"; 
+        $.get(url, function(data)
         {
           var timeline = JSON.parse(data);
 
