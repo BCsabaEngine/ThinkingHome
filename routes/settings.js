@@ -1,5 +1,7 @@
 const UserPermission = require.main.require("./models/UserPermission");
 const User = require.main.require('./models/User');
+const RuleCode = require.main.require('./models/RuleCode');
+const RuleCodeLog = require.main.require('./models/RuleCodeLog');
 
 module.exports = (app) => {
 
@@ -43,7 +45,7 @@ module.exports = (app) => {
     try {
       await req.RequirePermission(UserPermissions.RuleCode);
 
-      const rulecode = await require.main.require('./models/RuleCode').FindLastJsCode();
+      const rulecode = await RuleCode.FindLastJsCode();
       let rulecodelinecount = rulecode.split(/\r\n|\r|\n/).length;
       rulecodelinecount += 5;
       if (rulecodelinecount < 30)
@@ -68,7 +70,7 @@ module.exports = (app) => {
       if (!rulecode)
         res.status(411).send("Empty content");
       else {
-        await require.main.require('./models/RuleCode').Insert(rulecode.trim());
+        await RuleCode.Insert(rulecode.trim());
 
         global.context.RunContext();
 
@@ -82,7 +84,7 @@ module.exports = (app) => {
     try {
       await req.RequirePermission(UserPermissions.RuleCode);
 
-      const rulecodelogs = await require.main.require('./models/RuleCodeLog').GetLastLogs();
+      const rulecodelogs = await RuleCodeLog.GetLastLogs();
       res.render('settings-rulecodelog', {
         title: "Rule logs",
         rulecodelogs: rulecodelogs,

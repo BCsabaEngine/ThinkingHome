@@ -1,5 +1,6 @@
 const SunCalc = require('suncalc');
 const vm = require('vm');
+const RuleCodeLog = require.main.require("./models/RuleCodeLog");
 
 class SunCalcDate {
   _date;
@@ -41,7 +42,6 @@ class RunningContext {
   }
 
   async Log(message) {
-    const RuleCodeLog = require.main.require("./models/RuleCodeLog");
     await RuleCodeLog.Insert(message);
 
     global.wss.BroadcastToChannel("rulecodelog");
