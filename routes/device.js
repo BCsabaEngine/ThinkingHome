@@ -63,13 +63,12 @@ module.exports = (app) => {
 
     const rows = (await DeviceTele.GetLastByDeviceId(ctxdevice.Id, telename, days));
 
-    let timeline = [];
-    const tzoffset = new Date().getTimezoneOffset();
-    rows.forEach(row => timeline.push([row.DateTime.getTime() - tzoffset * 60000, row.Data]));
+    const timeline = [];
+    rows.forEach(row => timeline.push([row.DateTime.getTime(), row.Data]));
 
-    timeline = timelineConverter.moveAverage(timeline, 30);
+    const timelineAvg = timelineConverter.moveAverage(timeline, 30);
 
-    res.send(JSON.stringify(timeline));
+    res.send(JSON.stringify(timelineAvg));
   });
 
 }

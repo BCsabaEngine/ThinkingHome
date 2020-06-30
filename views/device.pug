@@ -35,7 +35,7 @@ block content
             .row
               .col-md-2
                 h1
-                  = ctxdevice.tele(key) || "?"
+                  = (ctxdevice.tele(key) !== undefined ? ctxdevice.tele(key) : "?") + " " + ctxdevice.metric(key)
               .col-md-10
                 div(style="height: 300px;", id=key)
 
@@ -138,7 +138,8 @@ block content
             grid: {
               borderColor: '#f3f3f3',
               borderWidth: 1,
-              tickColor: '#f3f3f3'
+              tickColor: '#f3f3f3',
+              autoHighlight: true,
             },
             series: {
               color: '#3c8dbc',
@@ -154,8 +155,10 @@ block content
             xaxis: {
               show: true,
               mode: "time",
+              timezone: "browser",
               timeBase: "milliseconds",
-              timeformat: "%H:%M"
+              timeformat: "%H:%M",
+              showTicks: true,
             }
           });
         })

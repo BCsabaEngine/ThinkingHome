@@ -73,6 +73,18 @@ class DeviceState extends EventEmitter {
       this[`teleavg_${telename}`].shift();
   }
 
+  metric(telename) {
+    telename = (telename || "").toLowerCase();
+
+    if (telename.startsWith("temp"))
+      return "°C";
+
+    if (telename.startsWith("lumi"))
+      return "lx";
+
+    return "";
+  }
+
   async ProcessMqttMessage(topic, message) {
     const name = this._name;
     let topicmatch = false;
