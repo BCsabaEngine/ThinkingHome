@@ -1,5 +1,4 @@
 const EventEmitter = require('events');
-const logger = requireRoot("/lib/logger");
 
 class DeviceState extends EventEmitter {
   constructor(id, name, displayname, faicon) {
@@ -110,7 +109,7 @@ class DeviceState extends EventEmitter {
       const telename = topicmatch[1];
 
       let value = Number(message);
-      const DeviceTeleScale = requireRoot('/models/DeviceTeleScale');
+      const DeviceTeleScale = require.main.require('./models/DeviceTeleScale');
       const scales = await DeviceTeleScale.FindByDeviceTelemetry(this._id, telename);
       if (scales) {
         const oldvalue = value;

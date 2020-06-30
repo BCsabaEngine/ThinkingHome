@@ -1,4 +1,3 @@
-const logger = requireRoot("/lib/logger");
 const SunCalc = require('suncalc');
 const vm = require('vm');
 
@@ -42,7 +41,7 @@ class RunningContext {
   }
 
   async Log(message) {
-    const RuleCodeLog = requireRoot("/models/RuleCodeLog");
+    const RuleCodeLog = require.main.require("./models/RuleCodeLog");
     await RuleCodeLog.Insert(message);
 
     global.wss.BroadcastToChannel("rulecodelog");
@@ -90,7 +89,7 @@ class RunningContext {
       contextvars[key] = devicestates[key];
 
     try {
-      const jscode = await requireRoot("/models/RuleCode").FindLastJsCode() || "";
+      const jscode = await require.main.require("./models/RuleCode").FindLastJsCode() || "";
 
       const context = vm.createContext(contextvars);
       new vm.Script(jscode, { filename: "rulecode.js" }).runInContext(context);

@@ -1,14 +1,12 @@
-require('./lib/requireRoot'); //allow require relative to project root
+const logger = global.logger = require.main.require("./lib/logger");
+const SystemSettings = require.main.require("./lib/systemSettings");
 
-const logger = requireRoot("/lib/logger");
-const SystemSettings = requireRoot("/lib/systemSettings");
-
-const databaseLoader = requireRoot('/loaders/databaseLoader');
-const mqttLoader = requireRoot('/loaders/mqttLoader');
-const webSocketLoader = requireRoot('/loaders/webSocketLoader');
-const httpSrvLoader = requireRoot('/loaders/httpSrvLoader');
-const contextHandler = requireRoot('/lib/contextHandler');
-const jobs = requireRoot('/jobs');
+const databaseLoader = require.main.require('./loaders/databaseLoader');
+const mqttLoader = require.main.require('./loaders/mqttLoader');
+const webSocketLoader = require.main.require('./loaders/webSocketLoader');
+const httpSrvLoader = require.main.require('./loaders/httpSrvLoader');
+const contextHandler = require.main.require('./lib/contextHandler');
+const jobs = require.main.require('./jobs');
 
 logger.info("Application starting...");
 

@@ -1,8 +1,8 @@
 const glob = require('glob');
 const path = require('path');
 const favicon = require('serve-favicon');
-const nGfirewall = requireRoot('/lib/nGfirewall');
-const IpBlacklist = requireRoot('/lib/IpBlacklist');
+const nGfirewall = require.main.require('./lib/nGfirewall');
+const IpBlacklist = require.main.require('./lib/IpBlacklist');
 
 module.exports = (app) => {
 

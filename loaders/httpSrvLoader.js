@@ -1,12 +1,11 @@
-const logger = requireRoot("/lib/logger");
-const config = requireRoot('/lib/config');
+const config = require.main.require('./lib/config');
 const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
 const pug = require('pug');
 const helmet = require('helmet')
-const routeInitializer = requireRoot('/routes');
+const routeInitializer = require.main.require('./routes');
 
 module.exports = () => {
   // Create Express app and init routes

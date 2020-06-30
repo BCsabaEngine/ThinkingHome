@@ -1,5 +1,4 @@
-const logger = requireRoot("/lib/logger");
-const config = requireRoot('/lib/config');
+const config = require.main.require('./lib/config');
 const mysql = require('mysql-plus');
 
 module.exports = (onready) => {
@@ -26,7 +25,7 @@ module.exports = (onready) => {
     if (rows) {
       logger.info("[DB] Database engine started: %s", rows[0].Value);
 
-      requireRoot('/models')();
+      require.main.require('./models')();
       logger.debug("[DB] Models loaded");
 
       db.sync((err) => {

@@ -1,6 +1,6 @@
-const config = requireRoot('/lib/config');
-const User = requireRoot('/models/User');
-const UserPermission = requireRoot('/models/UserPermission');
+const config = require.main.require('./lib/config');
+const User = require.main.require('./models/User');
+const UserPermission = require.main.require('./models/UserPermission');
 
 function SessionUserHasPermission(user, permissionneeded) {
 

@@ -1,4 +1,3 @@
-const logger = requireRoot("/lib/logger");
 const WebSocket = require('ws');
 
 module.exports = (httpserver) => {

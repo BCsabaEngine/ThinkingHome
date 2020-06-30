@@ -1,4 +1,3 @@
-const logger = requireRoot("/lib/logger");
 const schedule = require('node-schedule');
 
 // Every day at 2:00

@@ -26,7 +26,7 @@ const DeviceTele = {
   },
 
   async Insert(device, telemetry, data) {
-    const DeviceTeleScale = requireRoot('/models/DeviceTeleScale');
+    const DeviceTeleScale = require.main.require('./models/DeviceTeleScale');
     const scales = await DeviceTeleScale.FindByDeviceTelemetry(device, telemetry);
 
     data = Number(data);

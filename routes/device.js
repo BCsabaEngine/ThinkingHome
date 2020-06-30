@@ -1,9 +1,9 @@
-const Device = requireRoot('/models/Device');
-const DeviceCapability = requireRoot('/models/DeviceCapability');
-const DeviceSys = requireRoot('/models/DeviceSys');
-const DeviceEvent = requireRoot('/models/DeviceEvent');
-const DeviceTele = requireRoot('/models/DeviceTele');
-const timelineConverter = requireRoot('/lib/timelineConverter');
+const Device = require.main.require('./models/Device');
+const DeviceCapability = require.main.require('./models/DeviceCapability');
+const DeviceSys = require.main.require('./models/DeviceSys');
+const DeviceEvent = require.main.require('./models/DeviceEvent');
+const DeviceTele = require.main.require('./models/DeviceTele');
+const timelineConverter = require.main.require('./lib/timelineConverter');
 
 module.exports = (app) => {
 

@@ -1,4 +1,4 @@
-const DeviceSysItem = requireRoot('/models/DeviceSysItem');
+const DeviceSysItem = require.main.require('./models/DeviceSysItem');
 
 const DeviceSysTable = db.defineTable('DeviceSys', {
   columns: {

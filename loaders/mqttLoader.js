@@ -1,5 +1,4 @@
-const logger = requireRoot("/lib/logger");
-const config = requireRoot('/lib/config');
+const config = require.main.require('./lib/config');
 const mqtt = require('mqtt');
 
 module.exports = () => {
