@@ -4,7 +4,7 @@ const DeviceTeleTable = db.defineTable('DeviceTele', {
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
     Device: db.ColTypes.int(11).notNull().index(),
     Telemetry: db.ColTypes.varchar(32).notNull(),
-    Data: db.ColTypes.varchar(32),
+    Data: db.ColTypes.float(),
   },
   keys: [
     db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
@@ -26,6 +26,13 @@ const DeviceTele = {
   },
 
   async Insert(device, telemetry, data) {
+    const DeviceTeleScale = requireRoot('/models/DeviceTeleScale');
+    const scales = await DeviceTeleScale.FindByDeviceTelemetry(device, telemetry);
+
+    data = Number(data);
+    if (scales)
+      data = scales.Calc(data);
+
     await DeviceTeleTable.insert({ Device: device, Telemetry: telemetry, Data: data });
   },
 

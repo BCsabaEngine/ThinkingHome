@@ -1,5 +1,4 @@
 const md5 = require('md5');
-const { permittedCrossDomainPolicies } = require('helmet');
 
 const UserTable = db.defineTable('User', {
   columns: {

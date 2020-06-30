@@ -3,6 +3,7 @@ const DeviceCapability = requireRoot('/models/DeviceCapability');
 const DeviceSys = requireRoot('/models/DeviceSys');
 const DeviceEvent = requireRoot('/models/DeviceEvent');
 const DeviceTele = requireRoot('/models/DeviceTele');
+const timelineConverter = requireRoot('/lib/timelineConverter');
 
 module.exports = (app) => {
 
@@ -60,13 +61,15 @@ module.exports = (app) => {
     if (!ctxdevice)
       throw new Error(`Device ${devicename} not found in context`);
 
-    const rows = await DeviceTele.GetLastByDeviceId(ctxdevice.Id, telename, days);
+    const rows = (await DeviceTele.GetLastByDeviceId(ctxdevice.Id, telename, days));
 
-    let json = [];
+    let timeline = [];
     const tzoffset = new Date().getTimezoneOffset();
-    rows.forEach(row => json.push([row.DateTime.getTime() - tzoffset * 60000, row.Data]));
+    rows.forEach(row => timeline.push([row.DateTime.getTime() - tzoffset * 60000, row.Data]));
 
-    res.send(JSON.stringify(json));
+    timeline = timelineConverter.moveAverage(timeline, 30);
+
+    res.send(JSON.stringify(timeline));
   });
 
 }

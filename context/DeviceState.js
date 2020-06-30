@@ -58,8 +58,23 @@ class DeviceState extends EventEmitter {
   tele(telename) {
     return this[`tele_${telename}`];
   }
+  teleAvg(telename) {
+    if (this[`teleavg_${telename}`] === undefined)
+      return 0;
+    if (!this[`teleavg_${telename}`].length)
+      return 0;
+    return this[`teleavg_${telename}`].reduce((acc, curr) => acc + curr) / this[`teleavg_${telename}`].length;
+  }
+  addTeleAvg(telename, value) {
+    if (this[`teleavg_${telename}`] === undefined)
+      this[`teleavg_${telename}`] = [];
 
-  ProcessMqttMessage(topic, message) {
+    this[`teleavg_${telename}`].push(value);
+    while (this[`teleavg_${telename}`].length > 30)
+      this[`teleavg_${telename}`].shift();
+  }
+
+  async ProcessMqttMessage(topic, message) {
     const name = this._name;
     let topicmatch = false;
 
@@ -73,6 +88,7 @@ class DeviceState extends EventEmitter {
       logger.debug(`[${name}] Stat message: ${topic}=${message}`);
 
       const statname = topicmatch[1];
+
       this[`stat_${statname}`] = message;
 
       this.emit('stat', statname, message);
@@ -82,6 +98,7 @@ class DeviceState extends EventEmitter {
       logger.debug(`[${name}] Event message: ${topic}=${message}`);
 
       const eventname = topicmatch[1];
+
       this[`event_${eventname}`] = message;
 
       this.emit('event', eventname, message);
@@ -91,10 +108,22 @@ class DeviceState extends EventEmitter {
       logger.debug(`[${name}] Tele message: ${topic}=${message}`);
 
       const telename = topicmatch[1];
-      this[`tele_${telename}`] = message;
 
-      this.emit('tele', telename, message);
-      this.emit(`tele.${telename}`, message);
+      let value = Number(message);
+      const DeviceTeleScale = requireRoot('/models/DeviceTeleScale');
+      const scales = await DeviceTeleScale.FindByDeviceTelemetry(this._id, telename);
+      if (scales) {
+        const oldvalue = value;
+        value = scales.Calc(value);
+        logger.debug(`[${name}] Scaled telemetry ${telename} from ${oldvalue} to ${value}`);
+      }
+
+      this[`tele_${telename}`] = value;
+
+      this.addTeleAvg(telename, value);
+
+      this.emit('tele', telename, value);
+      this.emit(`tele.${telename}`, value);
     }
 
   }
