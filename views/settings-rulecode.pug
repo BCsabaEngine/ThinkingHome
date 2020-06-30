@@ -88,6 +88,8 @@ block content
           | device.stat("power") returns "on";
           br
           | device.tele("humidity") returns 12;
+          br
+          | device.teleAvg("humidity") returns 12.43;
 
   script(type='text/javascript').
     function savecode()
