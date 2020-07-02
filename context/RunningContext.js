@@ -12,6 +12,7 @@ class SunCalcDate {
   get H() { return this._date.getHours(); }
   get M() { return this._date.getMinutes(); }
   get HHMM() { return this._date.getHours() * 100 + this._date.getMinutes(); }
+  get HH_MM() { return this._date.getHours() + ":" + this._date.getMinutes(); }
 
   addMinutes(minutes) {
     return new SunCalcDate(new Date(this._date.getTime() + minutes * 60 * 1000));
@@ -64,6 +65,7 @@ class RunningContext {
           dow: d.getDay(),
           time: d.getTime(),
           HHMM: d.getHours() * 100 + d.getMinutes(),
+          HH_MM: d.getHours() + ":" + d.getMinutes(),
         }
       }
 

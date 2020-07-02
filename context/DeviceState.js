@@ -1,25 +1,32 @@
 const EventEmitter = require('events');
 
 class DeviceState extends EventEmitter {
-  constructor(id, name, displayname, faicon) {
+  constructor(id, name, displayname, locationname, faicon, color) {
     super();
 
     this._id = id;
     this._name = name;
     this._displayname = displayname;
+    this._locationname = locationname;
     this._faicon = faicon;
+    this._color = color;
     this.isonline = false;
+    this.nextop = {};
   }
 
   get Id() { return this._id; }
   get Name() { return this._name; }
   get DisplayName() { return this._displayname || this._name; }
-  get Icon() { return this._faicon || "fa-globe" }
+  get LocationName() { return this._locationname; }
+  get Icon() { return this._faicon || "fa-globe"; }
+  get Color() { return this._color; }
+
   get IsOnline() { return this.isonline; }
 
-  ReleaseListeners() {
-    this.removeAllListeners();
-  }
+  GetNextOp(component) { return this.nextop[component + '_' + this.stat(component)]; }
+  UpdateNextOp(component, stat, description) { this.nextop[component + '_' + stat] = description; }
+
+  ReleaseListeners() { this.removeAllListeners(); }
 
 
   //  cmd("power1", "on")

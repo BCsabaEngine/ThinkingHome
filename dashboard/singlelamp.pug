@@ -1,0 +1,14 @@
+.col-12.col-sm-6.col-md-4
+  .info-box
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:100px", onclick="$.post('/device/" + device.Name + "/power/toggle');")
+      i.fas.fa-lightbulb
+      span.badge.badge-default
+        = (device.stat('power') || "?").toUpperCase()
+    .info-box-content
+      span.info-box-text
+        = device.LocationName
+        span.badge.badge-default.float-right
+          = device.GetNextOp('power')
+      span.info-box-number
+        h4.text-bold
+          = device.DisplayName

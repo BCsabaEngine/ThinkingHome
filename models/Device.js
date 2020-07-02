@@ -3,7 +3,9 @@ const DeviceTable = db.defineTable('Device', {
     Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
     Name: db.ColTypes.varchar(100).notNull().unique(),
     DisplayName: db.ColTypes.varchar(100),
+    LocationName: db.ColTypes.varchar(100),
     FaIcon: db.ColTypes.varchar(20),
+    Color: db.ColTypes.varchar(6),
     Priority: db.ColTypes.int(11).notNull(),
   },
 });

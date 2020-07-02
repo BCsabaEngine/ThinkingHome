@@ -2,4 +2,11 @@ extends _base
 
 block content
   .row
-    != content
+    != panels
+
+  script(type='text/javascript')
+    | subscribes = {
+    each visibledevice in visibledevices
+      = visibledevice
+      | : "content-wrapper",
+    | };

@@ -1,0 +1,21 @@
+.col-12.col-sm-6.col-md-4
+  .info-box
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:100px", onclick="$.post('/device/" + device.Name + "/power1/toggle');")
+      i.fas.fa-lightbulb
+      span.badge.badge-default
+        = (device.stat('power1') || "?").toUpperCase()
+    | &nbsp;
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:100px", onclick="$.post('/device/" + device.Name + "/power2/toggle');")
+      i.fas.fa-lightbulb
+      span.badge.badge-default
+        = (device.stat('power2') || "?").toUpperCase()
+    .info-box-content
+      span.info-box-text
+        = device.LocationName
+        span.badge.badge-default.float-right
+          = device.GetNextOp('power1')
+          br
+          = device.GetNextOp('power2')
+      span.info-box-number
+        h4.text-bold
+          = device.DisplayName
