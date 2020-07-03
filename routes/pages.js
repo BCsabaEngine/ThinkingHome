@@ -1,10 +1,24 @@
 const Pug = require('pug');
-const device = require('./device');
+const SunCalc = require('suncalc');
+const Moment = require('moment');
+
 module.exports = (app) => {
 
   app.get('/', function (req, res) {
     let panels = "";
     let visibledevices = [];
+
+    if (!systemsettings.Latitude && !systemsettings.Longitude)
+      throw new Error("Coordinates are not set, Sun not available");
+    const suncalc = SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
+    panels += Pug.compileFile('dashboard/suntimes.pug', {})({ suncalc: suncalc, moment: Moment });
+
+    panels +="</div><div class='row'>";
+
+    const kert_szenzor = global.context.devices['kert_szenzor'];
+    if (!kert_szenzor) throw new Error(`Device kert_szenzor not found in context`);
+    visibledevices.push('kert_szenzor');
+    panels += Pug.compileFile('dashboard/sensor.pug', {})({ device: kert_szenzor });
 
     const nappali_elol = global.context.devices['nappali_elol'];
     if (!nappali_elol) throw new Error(`Device nappali_elol not found in context`);

@@ -1,0 +1,19 @@
+.col-12.col-sm-6.col-md-4
+  .info-box
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:120px")
+      i.fas.fa-thermometer-full
+      span.badge.badge-default
+        = device.tele('temperature') + " " + device.metric('temperature')
+    | &nbsp;
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:120px")
+      i.fas.fa-sun
+      span.badge.badge-default
+        = device.tele('luminance') + " " + device.metric('luminance')
+    .info-box-content
+      span.info-box-text
+        = device.LocationName
+        span.badge.badge-default.float-right
+          = device.GetNextOp('power')
+      span.info-box-number
+        h4.text-bold
+          = device.DisplayName
