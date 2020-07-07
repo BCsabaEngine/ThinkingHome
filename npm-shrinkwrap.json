@@ -1,6 +1,6 @@
 {
   "name": "thinkinghome",
-  "version": "0.2.0",
+  "version": "0.2.5",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -577,6 +577,11 @@
           "integrity": "sha512-fZEwUGbVl7kouZs1jCdMLdt95hdIv0ZeHg6L7qPeciMZhZ+/gdesW4wgTARkrFWEpspjEATAzUGPG8N2jJiwbg=="
         }
       }
+    },
+    "express-useragent": {
+      "version": "1.0.13",
+      "resolved": "https://registry.npmjs.org/express-useragent/-/express-useragent-1.0.13.tgz",
+      "integrity": "sha512-3RGcGuXbyr/t62yyu3CRLFS9Fc30tWiVd6TQ1/C7mdQU4Yv7UPfSvtAkYfqoaH2FMkQvrXD7V/FtpFhy6MfUcg=="
     },
     "ext": {
       "version": "1.4.0",

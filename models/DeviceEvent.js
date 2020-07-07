@@ -8,7 +8,7 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
   },
   keys: [
     db.KeyTypes.foreignKey('Device').references('Device', 'Id').cascade(),
-    db.KeyTypes.index('DateTime', 'Device', 'Event'),
+    db.KeyTypes.index('Device', 'Event', 'DateTime'),
   ],
 });
 
@@ -16,15 +16,13 @@ const DeviceEvent = {
 
   async GetLastByDeviceId(deviceid) {
     const rows = await db.pquery(`
-      SELECT de.Event, de.Data, de.DateTime
+      SELECT events.Event,
+          (SELECT de.Data FROM DeviceEvent de WHERE de.Event = events.Event AND de.Device = ? ORDER BY de.Id DESC LIMIT 1) AS Data,
+          (SELECT de.DateTime FROM DeviceEvent de WHERE de.Event = events.Event AND de.Device = ? ORDER BY de.Id DESC LIMIT 1) AS DateTime
+      FROM
+      (SELECT DISTINCT de.Event
       FROM DeviceEvent de
-      WHERE de.Device = ? AND
-            NOT EXISTS(SELECT 1
-                       FROM DeviceEvent de2
-                       WHERE de2.Device = de.Device AND
-                             de2.Event = de.Event AND
-                             de2.Id > de.Id)
-      ORDER BY de.Event`, [deviceid]);
+      WHERE de.Device = ?) events`, [deviceid, deviceid, deviceid]);
     return rows;
   },
 

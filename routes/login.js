@@ -1,4 +1,3 @@
-const config = require.main.require('./lib/config');
 const User = require.main.require('./models/User');
 const UserPermission = require.main.require('./models/UserPermission');
 
@@ -59,7 +58,6 @@ module.exports = (app) => {
   app.post('/login', async function (req, res) {
     const user = await User.FindByEmailPassword(req.body.username, req.body.password);
     if (user) {
-
       const sessionuser = {};
       sessionuser.id = user.Id;
       sessionuser.isadmin = user.IsAdmin;
