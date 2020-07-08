@@ -11,8 +11,8 @@ const DeviceStatTable = db.defineTable('DeviceStat', {
     db.KeyTypes.index('DateTime', 'Device', 'Stat'),
   ],
   triggers: {
-    UpdateSeries: `
-      CREATE TRIGGER UpdateSeries
+    DeviceStat_UpdateSeries: `
+      CREATE TRIGGER DeviceStat_UpdateSeries
       AFTER INSERT ON DeviceStat
       FOR EACH ROW
       BEGIN
