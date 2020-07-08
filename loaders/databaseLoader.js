@@ -28,11 +28,24 @@ module.exports = (onready) => {
       require.main.require('./models')();
       logger.debug("[DB] Models loaded");
 
-      db.sync((err) => {
+      db.sync(async function (err) {
         if (err) throw err;
 
+        for (const tableDefinition of db._tables.values())
+          if (tableDefinition._schema.triggers)
+            Object.keys(tableDefinition._schema.triggers).forEach(async function (triggername) {
+
+              const triggercode = tableDefinition._schema.triggers[triggername];
+
+              logger.debug(`[DB] Drop trigger ${triggername}`);
+              await pool.query(`DROP TRIGGER IF EXISTS ${triggername};`);
+
+              logger.debug(`[DB] Create trigger ${triggername}`);
+              await pool.query(triggercode);
+            });
+
         const User = require('../models/User');
-        User.InsertAdminIfNotExists()
+        await User.InsertAdminIfNotExists();
 
         onready();
       });
