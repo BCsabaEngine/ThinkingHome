@@ -1,23 +1,37 @@
 extends _base
 
 block content
-  each component, key in cmdcmdcapabilitycomponents
+  each component, key in cmdcapabilitycomponents
     .row
       .col-md-12
         .card.card-lightblue
           .card-header
             h3.card-title
               = key.toUpperCase()
+            .card-tools
+              .btn-group
+                button.btn.btn-default.btn-sm(type='button', onclick='statmode.' + key + ' = 1; LoadStatGraph_' + key + '();') Daily
+                button.btn.btn-default.btn-sm(type='button', onclick='statmode.' + key + ' = 7; LoadStatGraph_' + key + '();') Weekly
+                button.btn.btn-default.btn-sm(type='button', onclick='statmode.' + key + ' = 30; LoadStatGraph_' + key + '();') Monthly
           .card-body
             .row
               .col-md-2
                 h1
                   = (ctxdevice.stat(key) || "?").toUpperCase()
-              .col-md-10
+              .col-md-4
                 if component
                   each command in component
                     button.btn.btn-lg.btn-success(onclick="$.post('/device/" + device.Name + "/" + key + "/" + command + "');")
                       = command.toUpperCase()
+            .row
+              .col-md-1
+                h5.float-right
+                  br
+                  .badge.badge-info(id="statpercent_" + key)
+                  br
+                  small(id="stattime_" + key)
+              .col-md-11
+                div(style="height: 120px;", id="stat_" + key)
 
   each component, key in telecapabilitycomponents
     .row
@@ -27,17 +41,17 @@ block content
             h3.card-title
               = key.toUpperCase()
             .card-tools
-              .btn-group(id="mode_" + key, data-toggle='btn-toggle')
-                button.btn.btn-default.btn-sm.active(type='button', data-toggle='daily') Daily
-                button.btn.btn-default.btn-sm(type='button', data-toggle='weekly') Weekly
-                button.btn.btn-default.btn-sm(type='button', data-toggle='monthly') Monthly
+              .btn-group
+                button.btn.btn-default.btn-sm(type='button', onclick='telemode.' + key + ' = 1; LoadTeleGraph_' + key + '();') Daily
+                button.btn.btn-default.btn-sm(type='button', onclick='telemode.' + key + ' = 7; LoadTeleGraph_' + key + '();') Weekly
+                button.btn.btn-default.btn-sm(type='button', onclick='telemode.' + key + ' = 30; LoadTeleGraph_' + key + '();') Monthly
           .card-body
             .row
               .col-md-2
                 h1
                   = (ctxdevice.tele(key) !== undefined ? ctxdevice.tele(key) : "?") + " " + ctxdevice.metric(key)
               .col-md-10
-                div(style="height: 300px;", id=key)
+                div(style="height: 300px;", id="tele_" + key)
 
   .row
     .col-md-4
@@ -109,26 +123,105 @@ block content
                   .col-md-12
                     = devicecapability.Value
 
-  script(type='text/javascript').
-    //subscribes = { #{devicename} : "content-wrapper" };
   script(type='text/javascript')
     | subscribes = { #{devicename} : function() { divreload('content-wrapper', () => {
+    each component, key in cmdcapabilitycomponents
+      | LoadStatGraph_#{key}();
     each component, key in telecapabilitycomponents
-      | LoadGraph_#{key}();
+      | LoadTeleGraph_#{key}();
     |}) } };
   script(src='/plugins/jquery/jquery.min.js')
   script(src='/plugins/flot/jquery.flot.js')
   script(src='/plugins/flot-old/jquery.flot.resize.min.js')
 
+  script(type='text/javascript')
+    | var statmode = 
+    | {
+    each component, key in cmdcapabilitycomponents
+      | #{key}: 1,
+    | };
+  script(type='text/javascript')
+    | var telemode = 
+    | {
+    each component, key in telecapabilitycomponents
+      | #{key}: 1,
+    | };
+
+  each component, key in cmdcapabilitycomponents
+    script(type='text/javascript').
+      
+      function LoadStatGraph_#{key}() {
+        var days = statmode.#{key};
+        var url = "/device/#{device.Name}/graph/stat/#{key}/" + days;
+        var timeformat = days > 1 ? "%b %d." : "%H:%M";
+        var minTickSize = days > 1 ? (days > 15 ? [7, "day"] : [1, "day"]) : null;
+        
+        $.get(url, function(data)
+        {
+          var data = JSON.parse(data);
+          
+          var timeline = data.timeline;
+          var time = data.time;
+          var percent = data.percent;
+          
+          $('#stattime_#{key}').html(time);
+          $('#statpercent_#{key}').html(percent + " %");
+
+          var interactive_plot = $.plot('#stat_#{key}',
+          [
+            {
+              data: timeline,
+            },
+          ],
+          {
+            grid: {
+              borderColor: '#f3f3f3',
+              borderWidth: 1,
+              tickColor: '#f3f3f3',
+              autoHighlight: true,
+            },
+            series: {
+              color: '#3c8dbc',
+              lines: {
+                lineWidth: 1,
+                show: true,
+                fill: true,
+              },
+            },
+            yaxis: {
+              show: false,
+            },
+            xaxis: {
+              show: true,
+              mode: "time",
+              timezone: "browser",
+              timeBase: "milliseconds",
+              timeformat: timeformat,
+              minTickSize: minTickSize,
+              showTicks: true,
+            }
+          });
+        })
+      };
+      
+      $(function () {
+        LoadStatGraph_#{key}();
+      });
+      
   each component, key in telecapabilitycomponents
     script(type='text/javascript').
-      function LoadGraph_#{key}() {
-        var url = "/device/#{device.Name}/graph/tele/#{key}/1"; 
+      
+      function LoadTeleGraph_#{key}() {
+        var days = telemode.#{key};
+        var url = "/device/#{device.Name}/graph/tele/#{key}/" + days;
+        var timeformat = days > 1 ? "%b %d." : "%H:%M";
+        var minTickSize = days > 1 ? (days > 15 ? [7, "day"] : [1, "day"]) : null;
+        
         $.get(url, function(data)
         {
           var timeline = JSON.parse(data);
 
-          var interactive_plot = $.plot('##{key}',
+          var interactive_plot = $.plot('#tele_#{key}',
           [
             {
               data: timeline,
@@ -157,7 +250,8 @@ block content
               mode: "time",
               timezone: "browser",
               timeBase: "milliseconds",
-              timeformat: "%H:%M",
+              timeformat: timeformat,
+              minTickSize: minTickSize,
               showTicks: true,
             }
           });
@@ -165,5 +259,5 @@ block content
       };
       
       $(function () {
-        LoadGraph_#{key}();
+        LoadTeleGraph_#{key}();
       });

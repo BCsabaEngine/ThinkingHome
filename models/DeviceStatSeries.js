@@ -15,21 +15,20 @@ const DeviceStatSeriesTable = db.defineTable('DeviceStatSeries', {
 
 const DeviceStatSeries = {
 
-/*
-  async GetLastByDeviceId(deviceid) {
+  async GetByDeviceId(deviceid, stat, days = 1) {
     const rows = await db.pquery(`
-      SELECT de.Event, de.Data, de.DateTime
-      FROM DeviceEvent de
-      WHERE de.Device = ? AND
-            NOT EXISTS(SELECT 1
-                       FROM DeviceEvent de2
-                       WHERE de2.Device = de.Device AND
-                             de2.Event = de.Event AND
-                             de2.Id > de.Id)
-      ORDER BY de.Event`, [deviceid]);
+      SELECT
+        dss.Data,
+        dss.DateTimeStart,
+        COALESCE(dss.DateTimeEnd, NOW()) AS DateTimeEnd,
+        TIMESTAMPDIFF(MINUTE, dss.DateTimeStart, COALESCE(dss.DateTimeEnd, NOW())) AS Minute
+      FROM DeviceStatSeries dss
+      WHERE dss.Device = ? AND
+            dss.Stat = ? AND
+            dss.DateTimeStart >= NOW() - INTERVAL ? DAY
+      ORDER BY dss.DateTimeStart, dss.Id`, [deviceid, stat, days]);
     return rows;
   },
-*/
 
 };
 

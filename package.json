@@ -1,6 +1,6 @@
 {
   "name": "thinkinghome",
-  "version": "0.2.7",
+  "version": "0.2.8",
   "description": "ESP8266/ESP32 (Tasmota like) Thinking home system by NodeJS+MQTT",
   "repository": "github:SymbolCsaba/ThinkingHome",
   "main": "index.js",
@@ -16,7 +16,7 @@
     "express-session": "^1.17.1",
     "express-useragent": "^1.0.13",
     "glob": "^7.1.6",
-    "got": "^11.4.0",
+    "got": "^11.5.0",
     "helmet": "^3.23.3",
     "md5": "^2.2.1",
     "moment": "^2.27.0",

@@ -14,7 +14,7 @@ const DeviceTeleTable = db.defineTable('DeviceTele', {
 
 const DeviceTele = {
 
-  async GetLastByDeviceId(deviceid, telemetry, days = 1) {
+  async GetByDeviceId(deviceid, telemetry, days = 1) {
     const rows = await db.pquery(`
       SELECT dt.DateTime, dt.Data
       FROM DeviceTele dt
