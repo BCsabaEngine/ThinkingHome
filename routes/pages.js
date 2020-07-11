@@ -1,6 +1,7 @@
 const Pug = require('pug');
 const SunCalc = require('suncalc');
 const Moment = require('moment');
+const openWeatherMap = require.main.require('./lib/openWeatherMap');
 
 module.exports = (app) => {
 
@@ -12,6 +13,11 @@ module.exports = (app) => {
       throw new Error("Coordinates are not set, Sun not available");
     const suncalc = SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
     panels += Pug.compileFile('dashboard/suntimes.pug', {})({ suncalc: suncalc, moment: Moment });
+
+    if (!systemsettings.Latitude && !systemsettings.Longitude)
+      throw new Error("Coordinates are not set, Sun not available");
+    const weather = openWeatherMap.analyzedweather;
+    panels += Pug.compileFile('dashboard/weather.pug', {})({ weather: weather, moment: Moment });
 
     panels +="</div><div class='row'>";
 
