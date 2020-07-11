@@ -6,6 +6,7 @@ const mqttLoader = require.main.require('./loaders/mqttLoader');
 const webSocketLoader = require.main.require('./loaders/webSocketLoader');
 const httpSrvLoader = require.main.require('./loaders/httpSrvLoader');
 const contextHandler = require.main.require('./lib/contextHandler');
+const openWeatherMap = require.main.require('./lib/openWeatherMap');
 const jobs = require.main.require('./jobs');
 
 logger.info("Application starting...");
@@ -36,6 +37,9 @@ const database = databaseLoader(() => {
 
     // Init scheduled jobs
     jobs();
+
+    // Start weather service
+    openWeatherMap.init();
 
     context.RunContext();
 

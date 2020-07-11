@@ -28,6 +28,16 @@ block content
                   button.btn.btn-default.form-control(onclick="geodetect();return false;")
                     i.fa.fa-map-signs
                     |  Detect 
+      .col-md-3
+        .card.card-warning
+          .card-header
+            h3.card-title Openweathermap
+          .card-body
+            .row
+              .col-sm-12
+                .form-group
+                  label API key
+                  input.form-control(type='text', name='openweathermapapikey', value=systemsettings.OpenweathermapApiKey)#latitude
     
   script(type='text/javascript').
     function geodetect()

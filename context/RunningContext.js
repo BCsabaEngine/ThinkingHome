@@ -2,6 +2,7 @@ const SunCalc = require('suncalc');
 const vm = require('vm');
 const RuleCodeLog = require.main.require("./models/RuleCodeLog");
 
+// Helper an calculator class
 class SunCalcDate {
   _date;
 
