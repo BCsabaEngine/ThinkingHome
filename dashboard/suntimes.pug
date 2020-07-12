@@ -1,26 +1,27 @@
-.col-12.col-sm-12.col-md-6.col-xl-4
-  .row
-    .col-5
-      center
-        h5
-          =moment().format("HH:mm")
-          br
-          small
-            =moment().format("YYYY. MM. DD.")
-    .col-2
-        if (new Date().getTime() > suncalc.sunrise.getTime() && new Date().getTime() < suncalc.sunset.getTime())
-          i.fa.fa-sun.fa-3x.text-warning.float-right
-        else
-          i.fa.fa-moon.fa-3x.text-warning.float-right
-    .col-5
-      center
-        h5
-          =moment(suncalc.sunrise.getTime()).format("HH:mm")
-          |  - 
-          =moment(suncalc.sunset.getTime()).format("HH:mm")
-          br
-          small
-            small
-              =moment(suncalc.dawn.getTime()).format("HH:mm")
+.col-12.col-sm-12.col-md-6.col-xl-6
+  .info-box(style="background-image: linear-gradient(to bottom right, #cef, #fec)")
+    .info-box-content
+      .row
+        .col-5
+          center
+            h5
+              =moment().format("MMM. DD.")
+              br
+              small
+                =moment().format("YYYY.")
+        .col-2
+            if (new Date().getTime() > suncalc.sunrise.getTime() && new Date().getTime() < suncalc.sunset.getTime())
+              i.fa.fa-sun.fa-3x.text-warning.float-right
+            else
+              i.fa.fa-moon.fa-3x.text-primary.float-right
+        .col-5
+          center
+            h5
+              =moment(suncalc.sunrise.getTime()).format("HH:mm")
               |  - 
-              =moment(suncalc.dusk.getTime()).format("HH:mm")
+              =moment(suncalc.sunset.getTime()).format("HH:mm")
+              br
+              small
+                =moment(suncalc.dawn.getTime()).format("HH:mm")
+                |  - 
+                =moment(suncalc.dusk.getTime()).format("HH:mm")

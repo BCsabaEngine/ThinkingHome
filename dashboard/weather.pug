@@ -1,46 +1,47 @@
-.col-12.col-sm-12.col-md-6.col-xl-4
-  .row
-    .col-4
-      h5
-        img(src=weather.icon)
-        =weather.temp
-        | °C 
-        small
-            | UV 
-            .badge.badge-info
-              =weather.uv
+.col-12.col-sm-12.col-md-6.col-xl-6
+  .info-box(style="background-image: linear-gradient(to bottom right, #8ab, #cef)")
+    .info-box-content
+      .row
+        .col-4
+          h5
+            img(src=weather.icon)
+            =weather.temp
+            | °C 
+            small
+                .badge(class="badge-" + weather.uvlevel)
+                  =weather.uv
 
-    .col-4
-      h5
-        =weather.title
-        br
-        small
-          small
-            =weather.description
+        .col-4
+          h5
+            =weather.title
+            br
+            small
+              small
+                =weather.description
 
-    .col-4
-      h5
+        .col-4
+          h5
 
-        if (weather.rainstart)
-          small
-            .badge.badge-warning.float-right
-              | Rain start at 
-              =weather.rainstart
+            if (weather.rainstart)
+              small
+                .badge.badge-warning.float-right
+                  | Rain start at 
+                  =weather.rainstart
 
-        if (weather.rainstop)
-          small
-            .badge.badge-info.float-right
-              | Rain stop at 
-              =weather.rainstop
+            if (weather.rainstop)
+              small
+                .badge.badge-info.float-right
+                  | Rain stop at 
+                  =weather.rainstop
 
-        if (weather.windstart)
-          small
-            .badge.badge-warning.float-right
-              | Wind start at 
-              =weather.windstart
+            if (weather.windstart)
+              small
+                .badge.badge-warning.float-right
+                  | Wind start at 
+                  =weather.windstart
 
-        if (weather.windstop)
-          small
-            .badge.badge-info.float-right
-              | Wind stop at 
-              =weather.windstop
+            if (weather.windstop)
+              small
+                .badge.badge-info.float-right
+                  | Wind stop at 
+                  =weather.windstop

@@ -1,7 +1,10 @@
+const consoleLogLevel = require("console-log-level");
+
 const UserPermission = require.main.require("./models/UserPermission");
 const User = require.main.require('./models/User');
 const RuleCode = require.main.require('./models/RuleCode');
 const RuleCodeLog = require.main.require('./models/RuleCodeLog');
+const OpenWeatherMap = require.main.require('./lib/openWeatherMap');
 
 module.exports = (app) => {
 
@@ -38,7 +41,23 @@ module.exports = (app) => {
 
       res.send("OK");
     }
-    catch (err) { next(err); }
+    catch (err) {
+      res.status(500).send(err.message);
+    }
+  })
+
+  app.post('/settings/settings/checkopenweatherapikey', async function (req, res, next) {
+    try {
+      const latitude = req.body.latitude;
+      const longitude = req.body.longitude;
+      const apikey = req.body.apikey;
+
+      const checkres = await OpenWeatherMap.check(latitude, longitude, apikey);
+      res.send(checkres);
+    }
+    catch (err) {
+      res.status(403).send(err.message);
+    }
   })
 
   app.get('/settings/rulecode', async function (req, res, next) {

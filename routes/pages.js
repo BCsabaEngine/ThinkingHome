@@ -17,9 +17,9 @@ module.exports = (app) => {
     if (!systemsettings.Latitude && !systemsettings.Longitude)
       throw new Error("Coordinates are not set, Sun not available");
     const weather = openWeatherMap.analyzedweather;
-    panels += Pug.compileFile('dashboard/weather.pug', {})({ weather: weather, moment: Moment });
+    panels += Pug.compileFile('dashboard/weather.pug', {})({ weather: weather || {}, moment: Moment });
 
-    panels +="</div><div class='row'>";
+    panels += "</div><div class='row'>";
 
     const kert_szenzor = global.context.devices['kert_szenzor'];
     if (!kert_szenzor) throw new Error(`Device kert_szenzor not found in context`);
