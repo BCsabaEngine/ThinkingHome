@@ -39,7 +39,7 @@ const database = databaseLoader(() => {
     jobs();
 
     // Start weather service
-    openWeatherMap.init();
+    context.InitWeather();
 
     context.RunContext();
 
