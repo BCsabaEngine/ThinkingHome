@@ -87,6 +87,14 @@ module.exports = (app) => {
 
     const rows = await DeviceStatSeries.GetByDeviceId(ctxdevice.Id, statname, days);
 
+    const startdate = new Date();
+    startdate.setDate(startdate.getDate() - days);
+
+    rows.forEach(row => {
+      if (row.DateTimeStart.getTime() < startdate.getTime())
+        row.DateTimeStart = startdate;
+    });
+
     const result = {
       timeline: [],
       time: '0:00',

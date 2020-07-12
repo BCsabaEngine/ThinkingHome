@@ -25,8 +25,10 @@ const DeviceStatSeries = {
       FROM DeviceStatSeries dss
       WHERE dss.Device = ? AND
             dss.Stat = ? AND
-            dss.DateTimeStart >= NOW() - INTERVAL ? DAY
-      ORDER BY dss.DateTimeStart, dss.Id`, [deviceid, stat, days]);
+            (dss.DateTimeStart >= NOW() - INTERVAL ? DAY
+             OR
+             dss.DateTimeEnd >= NOW() - INTERVAL ? DAY)
+      ORDER BY dss.DateTimeStart, dss.Id`, [deviceid, stat, days, days]);
     return rows;
   },
 
