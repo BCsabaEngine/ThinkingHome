@@ -1,7 +1,16 @@
 extends _base
 
 block content
-  .row
+  section.content-header
+    .container-fluid
+      button.btn.float-right(onclick="initEditorMode()")#initeditormode
+        i.fas.fa-cog.text-muted
+      button.btn.float-right(style="display:none", onclick="exitEditorMode()")#exiteditormode
+        i.fas.fa-check.text-success
+      h1
+        | Dashboard
+
+  .row.widgetrow
     != panels
 
   script(type='text/javascript')
@@ -10,3 +19,36 @@ block content
       = visibledevice
       | : "content-wrapper",
     | };
+
+  script(type='text/javascript').
+    function initEditorMode() {
+      this.dismisssubscribes = true;
+      $('#initeditormode').hide();
+      $('#exiteditormode').show();
+
+      $('.row').sortable({
+        connectWith: ".info-box",
+        handle: ".info-box",
+        placeholder: "dashboard-dragdrop-placeholder",
+        update: function(event, ui) {
+          if (!ui.item.length)
+            return;
+          var element = ui.item[0].id;
+          var prevelement = ui.item[0].previousElementSibling ? ui.item[0].previousElementSibling.id : null;
+          console.log(element + ' moved after ' + prevelement);
+        },
+      });
+      
+      $('.widgetrow').append("<div class='col-12 col-md-12'><center><button class='btn btn-default'><i class='fa fa-plus'></button></center><hr/></div>");
+
+      $('.info-box').on('mousemove', function(){ $(this).css('cursor', 'move'); });
+    }
+    function exitEditorMode() {
+      this.dismisssubscribes = false;
+      $('#exiteditormode').hide();
+      $('#initeditormode').show();
+
+      $(".row").sortable("destroy");
+
+      divreload("content-wrapper");
+    }

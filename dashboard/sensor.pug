@@ -1,4 +1,4 @@
-.col-12.col-sm-12.col-md-6.col-xl-4
+.col-12.col-sm-12.col-md-6.col-xl-4(id=device.Name)
   .info-box
     span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:110px")
       small
@@ -17,10 +17,12 @@
           = device.metric('luminance')
     .info-box-content
       span.info-box-number
+        a.black(href="/device/" + device.Name)
           = device.DisplayName
       span.info-box-text
         small
-          = device.LocationName
+          a.black(href="/device/" + device.Name)
+            = device.LocationName
         if device.GetNextOp('power')
           span.badge.badge-default.float-right
             = device.GetNextOp('power')

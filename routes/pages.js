@@ -9,18 +9,22 @@ module.exports = (app) => {
     let panels = "";
     let visibledevices = [];
 
-    if (!systemsettings.Latitude && !systemsettings.Longitude)
-      throw new Error("Coordinates are not set, Sun not available");
-    const suncalc = SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
-    panels += Pug.compileFile('dashboard/suntimes.pug', {})({ suncalc: suncalc, moment: Moment });
+    if (systemsettings.Latitude && systemsettings.Longitude) {
+      const suncalc = SunCalc.getTimes(new Date(), systemsettings.Latitude, systemsettings.Longitude);
+      panels += Pug.compileFile('dashboard/suntimes.pug', {})({ suncalc: suncalc, moment: Moment });
+    }
 
-    if (!systemsettings.Latitude && !systemsettings.Longitude)
-      throw new Error("Coordinates are not set, Sun not available");
-    visibledevices.push('weather');
-    const weather = context.Weather.analyzedweather;
-    panels += Pug.compileFile('dashboard/weather.pug', {})({ weather: weather || {}, moment: Moment });
+    if (systemsettings.Latitude && systemsettings.Longitude && systemsettings.OpenweathermapApiKey) {
+      visibledevices.push('weather');
+      const weather = context.Weather.analyzedweather;
+      panels += Pug.compileFile('dashboard/weather.pug', {})({ weather: weather || {}, moment: Moment });
+    }
 
-    panels += "</div><div class='row'>";
+    panels += "</div><div class='row widgetrow'>";
+
+    visibledevices.push('presence');
+    const presenceobjects = context.PresenceDetector.Objects;
+    panels += Pug.compileFile('dashboard/presence.pug', {})({ presenceobjects: presenceobjects });
 
     const kert_szenzor = global.context.devices['kert_szenzor'];
     if (!kert_szenzor) throw new Error(`Device kert_szenzor not found in context`);

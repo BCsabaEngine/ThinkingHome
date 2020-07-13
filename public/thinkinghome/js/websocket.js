@@ -28,6 +28,10 @@ function socket_open()
     {
         try
         {
+          if (typeof dismisssubscribes !== 'undefined')
+            if (dismisssubscribes)
+              return;
+          
           json = JSON.parse(event.data);
           if (typeof subscribes !== 'undefined')
             for (const [key, value] of Object.entries(subscribes))

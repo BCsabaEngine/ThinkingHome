@@ -16,3 +16,20 @@
 .monospace {
   font-family: Consolas, Lucida Console, monospace;
 }
+
+a.black:link,
+a.black:visited,
+a.black:active {
+  color: black;
+}
+
+a.black:hover {
+  color: #444;
+}
+
+.dashboard-dragdrop-placeholder {
+	border: 1px dotted black;
+	margin: 1em 1em 1em 1em;
+	height: 60px;
+	width: 25%;
+}

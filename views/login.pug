@@ -4,6 +4,7 @@ html(lang='en')
   include includes/head.pug
 
   body.hold-transition.login-page
+    include includes/scripts.pug
     .login-box
       .login-logo
         img.brand-image.img-circle.elevation-2(src='/logo128.png', width='32', alt='Logo', style='opacity: .8')
@@ -27,7 +28,7 @@ html(lang='en')
           center
             button.btn.btn-primary.btn-blockx(type='button', onclick='login()') Log In
 
-    include includes/scripts.pug
+    include includes/scriptsex.pug
     script(src='/plugins/jquery-ui/jquery-ui.min.js')
     script(type='text/javascript').
       function login()

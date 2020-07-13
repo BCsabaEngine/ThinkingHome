@@ -1,0 +1,9 @@
+.col-12.col-sm-12.col-md-6.col-xl-4#Presence
+  .info-box
+    each obj in presenceobjects
+      span.info-box-icon.elevation-1(class=(obj.Is ? "bg-info" : "bg-gray"), style="width:110px")
+        small
+          i(class="fa " + obj.FaIcon)
+          small 
+            =obj.DisplayName
+      | &nbsp;

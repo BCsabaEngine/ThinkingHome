@@ -1,6 +1,10 @@
 extends _base
 
 block content
+  section.content-header
+    .container-fluid
+      h1= title
+
   each component, key in cmdcapabilitycomponents
     .row
       .col-md-12

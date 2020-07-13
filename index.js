@@ -41,6 +41,9 @@ const database = databaseLoader(() => {
     // Start weather service
     context.InitWeather();
 
+    // Start presence service
+    context.InitPresenceDetector();
+
     context.RunContext();
 
     logger.info("Application started, waiting for subsystems start");
