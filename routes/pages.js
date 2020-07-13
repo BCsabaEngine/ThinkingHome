@@ -16,6 +16,7 @@ module.exports = (app) => {
 
     if (!systemsettings.Latitude && !systemsettings.Longitude)
       throw new Error("Coordinates are not set, Sun not available");
+    visibledevices.push('weather');
     const weather = context.Weather.analyzedweather;
     panels += Pug.compileFile('dashboard/weather.pug', {})({ weather: weather || {}, moment: Moment });
 
