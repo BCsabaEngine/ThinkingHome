@@ -34,6 +34,12 @@ class RunningContext {
 
     return new Date().getTime() + timeout;
   }
+  ClearTimeout(name, timeout, func) {
+    if (this._timers[name]) {
+      clearTimeout(this._timers[name]);
+      delete this._timers[name];
+    }
+  }
 
   CreateInterval(name, timeout, func) {
     if (this._intervals[name])
@@ -41,6 +47,12 @@ class RunningContext {
 
     const id = setInterval(func, timeout);
     this._intervals[name] = id;
+  }
+  ClearInterval(name, timeout, func) {
+    if (this._intervals[name]) {
+      clearInterval(this._intervals[name]);
+      delete this._intervals[name];
+    }
   }
 
   async Log(message) {
@@ -87,7 +99,9 @@ class RunningContext {
     contextvars["SunCalcDate"] = SunCalcDate;
     contextvars["log"] = this.Log.bind(this);
     contextvars["createInterval"] = this.CreateInterval.bind(this);
+    contextvars["clearInterval"] = this.ClearInterval.bind(this);
     contextvars["createTimeout"] = this.CreateTimeout.bind(this);
+    contextvars["clearTimeout"] = this.ClearTimeout.bind(this);
     for (var key in devicestates)
       contextvars[key] = devicestates[key];
 

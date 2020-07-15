@@ -41,7 +41,11 @@ block content
           br
           | createInterval("Alias", 10 * 1000, () => { });
           br
+          | clearInterval("Alias");
+          br
           | createTimeout("Alias", 60 * 000, () => { });
+          br
+          | clearTimeout("Alias");
           br
           br
           | now.(y | m | d | H | M | S | dow | time | HHMM)
@@ -71,7 +75,7 @@ block content
           br
           | device.on("event.button", ("short") => { })
           br
-          | device.on("event.move", ("start") => { })
+          | device.on("event.move", () => { })
           br
           | device.on("stat", ("power", "ob") => { })
           br
