@@ -16,7 +16,7 @@
     "express-session": "^1.17.1",
     "express-useragent": "^1.0.15",
     "glob": "^7.1.6",
-    "got": "^11.5.0",
+    "got": "^11.5.1",
     "helmet": "^3.23.3",
     "md5": "^2.2.1",
     "moment": "^2.27.0",
