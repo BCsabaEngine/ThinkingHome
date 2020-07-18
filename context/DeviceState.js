@@ -89,6 +89,15 @@ class DeviceState extends EventEmitter {
     if (telename.startsWith("lumi"))
       return "lx";
 
+    if (telename.startsWith("current"))
+      return "A";
+
+    if (telename.startsWith("volt"))
+      return "V";
+
+    if (telename.startsWith("power"))
+      return "W";
+
     return "";
   }
 
