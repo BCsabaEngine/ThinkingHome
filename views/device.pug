@@ -126,8 +126,10 @@ block content
                 .col-sm-4
                   = deviceconfig.Name
                 .col-sm-8
-                  b
+                  b(style='cursor:pointer', onclick='modifyConfig(' + deviceconfig.Id + ', "' + deviceconfig.Value + '")')
                     = deviceconfig.Value
+                  .float-right
+                    i.fa.fa-times.text-danger(style='cursor:pointer', onclick='deleteConfig(' + deviceconfig.Id + ', "' + deviceconfig.Name + '")')
 
   br
 
@@ -300,22 +302,81 @@ block content
     script(type='text/javascript').
       function addConfig()
       {
-        var dialog = bootbox.dialog({
-            title: 'Add new device config',
-            message: "<div class='form-group'><label>Email address</label><input type='email' class='form-control' id='exampleInputEmail1' placeholder='Enter email'></div>",
-            buttons: {
-              OK: {
-                    label: "OK",
-                    className: 'btn-primary',
-                    callback: function()
-                    {
-                        console.log('Custom cancel clicked');
-                    },
-              },
-              Cancel: {
-                    label: "Cancel",
-                    className: 'btn-default',
-              },
-            }
+        $.get('/device/form/config/add', function(form)
+        {
+          var dialog = bootbox.dialog({
+              title: 'Add new device config',
+              message: form,
+              buttons: {
+                Cancel: {
+                      label: "Cancel",
+                      className: 'btn-default',
+                },
+                OK: {
+                      label: "OK",
+                      className: 'btn-primary',
+                      callback: function()
+                      {
+                          var name = $('#name').val();
+                          var value = $('#value').val();
+                          
+                          if (name && value)
+                            $.post("/device/#{device.Name}/config/add", { name: name, value: value })
+                              .done(function() {
+                                bootbox.hideAll();
+                                divreload('content-wrapper');
+                              });
+                          return false;
+                      },
+                },
+              }
+          });
         });
       }
+
+      function modifyConfig(id, value)
+      {
+        $.get('/device/form/config/modify', function(form)
+        {
+          var dialog = bootbox.dialog({
+              title: 'Modify device config',
+              message: form,
+              buttons: {
+                Cancel: {
+                      label: "Cancel",
+                      className: 'btn-default',
+                },
+                OK: {
+                      label: "OK",
+                      className: 'btn-primary',
+                      callback: function()
+                      {
+                          var value = $('#value').val();
+
+                          $.post("/device/#{device.Name}/config/modify", { id: id, value: value })
+                            .done(function() {
+                              bootbox.hideAll();
+                              divreload('content-wrapper');
+                            });
+                          return false;
+                      },
+                },
+              }
+          });
+          $('#value').val(value);
+        });
+      }
+
+      function deleteConfig(id, name)
+      {
+        bootbox.confirm("Are you sure to delete <b>" + name + "</b>?", function(result) {
+          if (result)
+          {
+            $.post("/device/#{device.Name}/config/delete", { id: id })
+              .done(function() {
+                divreload('content-wrapper');
+              });
+          }
+        })
+      }
+      

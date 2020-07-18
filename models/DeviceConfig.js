@@ -12,13 +12,22 @@ const DeviceConfigTable = db.defineTable('DeviceConfig', {
 
 const DeviceConfig = {
   async GetAllByDeviceId(deviceid) {
-    const rows = await db.pquery("SELECT dc.Name, dc.Value FROM DeviceConfig dc WHERE dc.Device = ? ORDER BY dc.Name, dc.Value", [deviceid]);
+    const rows = await db.pquery("SELECT dc.Id, dc.Name, dc.Value FROM DeviceConfig dc WHERE dc.Device = ? ORDER BY dc.Name, dc.Value", [deviceid]);
     return rows;
   },
 
   async Insert(device, name, value) {
     await DeviceConfigTable.insert({ Device: device, Name: name, Value: value, });
   },
+
+  async Update(device, id, value) {
+    await DeviceConfigTable.update({ Value: value }, 'WHERE Device = ? AND Id = ?', [device, id]);
+  },
+
+  async Delete(device, id) {
+    await DeviceConfigTable.delete('WHERE Device = ? AND Id = ?', [device, id]);
+  },
+
 };
 
 module.exports = DeviceConfig;

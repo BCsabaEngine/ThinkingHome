@@ -1,3 +1,4 @@
+const Pug = require('pug');
 const Device = require.main.require('./models/Device');
 const DeviceConfig = require.main.require('./models/DeviceConfig');
 const DeviceCapability = require.main.require('./models/DeviceCapability');
@@ -58,6 +59,63 @@ module.exports = (app) => {
     }
     catch (err) { next(err); }
   })
+
+  app.get('/device/form/config/add', async function (req, res, next) {
+    try {
+      const form = Pug.compileFile('views/forms/device-config-add.pug', {})({});
+      res.send(form);
+    }
+    catch (err) { next(err); }
+  })
+
+  app.get('/device/form/config/modify', async function (req, res, next) {
+    try {
+      const form = Pug.compileFile('views/forms/device-config-modify.pug', {})({});
+      res.send(form);
+    }
+    catch (err) { next(err); }
+  })
+
+  app.post('/device/:devicename/config/add', function (req, res) {
+    const devicename = req.params.devicename;
+    const name = (req.body.name || "").trim();
+    const value = (req.body.value || "").trim();
+
+    const ctxdevice = global.context.devices[devicename];
+    if (!ctxdevice)
+      throw new Error(`Device ${devicename} not found in context`);
+
+    DeviceConfig.Insert(ctxdevice.Id, name, value);
+
+    res.send("OK");
+  });
+
+  app.post('/device/:devicename/config/modify', function (req, res) {
+    const devicename = req.params.devicename;
+    const id = req.body.id;
+    const value = (req.body.value || "").trim();
+
+    const ctxdevice = global.context.devices[devicename];
+    if (!ctxdevice)
+      throw new Error(`Device ${devicename} not found in context`);
+
+    DeviceConfig.Update(ctxdevice.Id, id, value);
+
+    res.send("OK");
+  });
+
+  app.post('/device/:devicename/config/delete', function (req, res) {
+    const devicename = req.params.devicename;
+    const id = req.body.id;
+
+    const ctxdevice = global.context.devices[devicename];
+    if (!ctxdevice)
+      throw new Error(`Device ${devicename} not found in context`);
+
+    DeviceConfig.Delete(ctxdevice.Id, id);
+
+    res.send("OK");
+  });
 
   app.post('/device/:devicename/:command/:message', function (req, res) {
     const devicename = req.params.devicename;
