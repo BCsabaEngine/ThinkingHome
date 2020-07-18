@@ -1,4 +1,5 @@
 const Device = require.main.require('./models/Device');
+const DeviceConfig = require.main.require('./models/DeviceConfig');
 const DeviceCapability = require.main.require('./models/DeviceCapability');
 const DeviceSys = require.main.require('./models/DeviceSys');
 const DeviceEvent = require.main.require('./models/DeviceEvent');
@@ -20,6 +21,7 @@ module.exports = (app) => {
       const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
       const devicesys = await DeviceSys.FindLastByDeviceId(device.Id);
       const devicelastevents = await DeviceEvent.GetLastByDeviceId(device.Id);
+      const deviceconfigs = await DeviceConfig.GetAllByDeviceId(device.Id);
       const ctxdevice = global.context.devices[devicename];
 
       res.render('device', {
@@ -32,6 +34,26 @@ module.exports = (app) => {
         devicesys: devicesys,
         devicecapabilities: devicecapabilities,
         devicelastevents: devicelastevents,
+        deviceconfigs: deviceconfigs,
+      });
+    }
+    catch (err) { next(err); }
+  })
+
+  app.get('/device/:devicename/events', async function (req, res, next) {
+    const devicename = req.params.devicename;
+    try {
+      const device = await Device.FindByName(devicename);
+      if (!device)
+        throw new Error(`Device not found: ${devicename}`);
+
+      const deviceallevents = await DeviceEvent.GetAllByDeviceId(device.Id);
+
+      res.render('device-events', {
+        title: "Events of " + (device.DisplayName || device.Name),
+        devicename: devicename,
+        device: device,
+        deviceallevents: timelineConverter.groupByDay(deviceallevents),
       });
     }
     catch (err) { next(err); }

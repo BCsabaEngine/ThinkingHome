@@ -1,0 +1,39 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h1= title
+
+    br
+    .row
+      .col-md-12
+        .timeline
+          each vals, key in deviceallevents
+
+            br
+            .time-label
+              span.bg-warning
+                =key
+
+            each val in vals
+              div
+                i.fa.fa-bolt.bg-green
+                .timeline-item
+                  span.time
+                    i.fas.fa-clock 
+                    = moment(val.DateTime.getTime()).format(" HH:mm")
+                  h3.timeline-header.no-border
+                    b
+                      =val.Event
+                    | &nbsp;
+                    small
+                      =val.Data
+
+          div
+            i.fas.fa-clock.bg-gray
+
+  script(type='text/javascript')
+    | subscribes = { 
+    =device.Name
+    |: "content-wrapper" }
