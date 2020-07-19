@@ -14,8 +14,8 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
 
 const DeviceEvent = {
 
-  async GetLastByDeviceId(deviceid) {
-    const rows = await db.pquery(`
+  GetLastByDeviceId(deviceid) {
+    return db.pquery(`
       SELECT events.Event,
           (SELECT de.Data FROM DeviceEvent de WHERE de.Event = events.Event AND de.Device = ? ORDER BY de.Id DESC LIMIT 1) AS Data,
           (SELECT de.DateTime FROM DeviceEvent de WHERE de.Event = events.Event AND de.Device = ? ORDER BY de.Id DESC LIMIT 1) AS DateTime
@@ -23,12 +23,10 @@ const DeviceEvent = {
       (SELECT DISTINCT de.Event
       FROM DeviceEvent de
       WHERE de.Device = ?) events`, [deviceid, deviceid, deviceid]);
-    return rows;
   },
 
-  async GetAllByDeviceId(deviceid) {
-    const rows = await db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? ORDER BY de.Id DESC LIMIT 100", [deviceid]);
-    return rows;
+  GetAllByDeviceId(deviceid) {
+    return db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? ORDER BY de.Id DESC LIMIT 100", [deviceid]);
   },
 
   async Insert(device, event, data) {

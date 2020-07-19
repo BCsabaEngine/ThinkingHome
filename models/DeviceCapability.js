@@ -36,16 +36,18 @@ const DeviceCapability = {
       await DeviceCapabilityTable.insert({ Device: device, Value: rows[i] });
   },
 
-  async GetByDeviceId(deviceid) {
-    const rows = await DeviceCapabilityTable.select(['Value'], 'WHERE Device = ? ORDER BY Id', [deviceid]);
-    rows.forEach(row => {
-      if (row.Value.includes(":")) {
-        const parts = row.Value.split(":");
-        row.Value = parts[0];
-        row.Items = parts[1].split("/");
-      }
-    });
-    return rows;
+  GetByDeviceId(deviceid) {
+    return DeviceCapabilityTable.select(['Value'], 'WHERE Device = ? ORDER BY Id', [deviceid])
+      .then(rows => {
+        rows.forEach(row => {
+          if (row.Value.includes(":")) {
+            const parts = row.Value.split(":");
+            row.Value = parts[0];
+            row.Items = parts[1].split("/");
+          }
+        });
+        return Promise.resolve(rows);
+      })
   },
 
   GetCapabilityComponentByStatAndCmd(devicecapabilities) {

@@ -15,8 +15,8 @@ const DeviceStatSeriesTable = db.defineTable('DeviceStatSeries', {
 
 const DeviceStatSeries = {
 
-  async GetByDeviceId(deviceid, stat, days = 1) {
-    const rows = await db.pquery(`
+  GetByDeviceId(deviceid, stat, days = 1) {
+    return db.pquery(`
       SELECT
         dss.Data,
         dss.DateTimeStart,
@@ -29,7 +29,54 @@ const DeviceStatSeries = {
              OR
              dss.DateTimeEnd >= NOW() - INTERVAL ? DAY)
       ORDER BY dss.DateTimeStart, dss.Id`, [deviceid, stat, days, days]);
+  },
+
+  NormalizeByStartDate(rows, startdate) {
+    rows.forEach(row => {
+      if (row.DateTimeStart.getTime() < startdate.getTime())
+        row.DateTimeStart = startdate;
+    });
     return rows;
+  },
+
+  GenerateTimelineStat(rows) {
+    const result = {
+      timeline: [],
+      time: '0:00',
+      percent: 0,
+    };
+
+    let onminutes = 0;
+    let allminutes = 0;
+    rows.forEach(row => {
+      result.timeline.push([row.DateTimeStart.getTime(), row.Data == 'on' ? 1 : 0]);
+      result.timeline.push([row.DateTimeEnd.getTime() - 1, row.Data == 'on' ? 1 : 0]);
+      if (row.Data == 'on')
+        onminutes += row.Minute;
+      allminutes += row.Minute;
+    });
+
+    if (allminutes > 0) {
+      const m = onminutes % 60;
+      const h = Math.floor(onminutes / 60);
+      let d = 0;
+      if (h >= 48) {
+        d = Math.floor(h / 24);
+        h = h - d * 24;
+      }
+
+      let time = '';
+      if (d > 0)
+        time += d.toString() + "d ";
+
+      time += h.toString().padStart(1, '0') + "h ";
+      time += m.toString().padStart(2, '0') + "m";
+
+      result.time = time;
+      result.percent = Math.round(100 * onminutes / allminutes);
+    }
+
+    return result;
   },
 
 };

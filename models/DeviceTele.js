@@ -14,26 +14,28 @@ const DeviceTeleTable = db.defineTable('DeviceTele', {
 
 const DeviceTele = {
 
-  async GetByDeviceId(deviceid, telemetry, days = 1) {
-    const rows = await db.pquery(`
+  GetByDeviceId(deviceid, telemetry, days = 1) {
+    return db.pquery(`
       SELECT dt.DateTime, dt.Data
       FROM DeviceTele dt
       WHERE dt.Device = ? AND
             dt.Telemetry = ? AND
             dt.DateTime >= NOW() - INTERVAL ? DAY
       ORDER BY dt.DateTime, dt.Id`, [deviceid, telemetry, days]);
-    return rows;
   },
 
-  async Insert(device, telemetry, data) {
+  Insert(device, telemetry, data) {
     const DeviceTeleScale = require.main.require('./models/DeviceTeleScale');
-    const scales = await DeviceTeleScale.FindByDeviceTelemetry(device, telemetry);
-
-    data = Number(data);
-    if (scales)
-      data = scales.Calc(data);
-
-    await DeviceTeleTable.insert({ Device: device, Telemetry: telemetry, Data: data });
+    return DeviceTeleScale.FindByDeviceTelemetry(device, telemetry)
+      .then(scales => {
+        data = Number(data);
+        if (scales)
+          data = scales.Calc(data);
+        return Promise.resolve(data);
+      })
+      .then(data => {
+        return DeviceTeleTable.insert({ Device: device, Telemetry: telemetry, Data: data });
+      });
   },
 
 };

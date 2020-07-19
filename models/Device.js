@@ -18,11 +18,13 @@ const Device = {
     return null;
   },
 
-  async FindByName(name) {
-    const rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
-    if (rows.length)
-      return rows[0];
-    return null;
+  FindByName(name) {
+    return DeviceTable.select('*', 'WHERE Name = ?', [name])
+      .then(rows => {
+        if (rows.length)
+          return Promise.resolve(rows[0]);
+        throw new Error(`Device not found: ${name}`);
+      });
   },
 
   async FindOrCreateByName(name) {

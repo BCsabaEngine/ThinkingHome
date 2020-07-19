@@ -40,22 +40,6 @@ const DeviceStatTable = db.defineTable('DeviceStat', {
 
 const DeviceStat = {
 
-  /*
-    async GetLastByDeviceId(deviceid) {
-      const rows = await db.pquery(`
-        SELECT de.Event, de.Data, de.DateTime
-        FROM DeviceEvent de
-        WHERE de.Device = ? AND
-              NOT EXISTS(SELECT 1
-                         FROM DeviceEvent de2
-                         WHERE de2.Device = de.Device AND
-                               de2.Event = de.Event AND
-                               de2.Id > de.Id)
-        ORDER BY de.Event`, [deviceid]);
-      return rows;
-    },
-  */
-
   async Insert(device, stat, data) {
     await DeviceStatTable.insert({ Device: device, Stat: stat, Data: data });
   },

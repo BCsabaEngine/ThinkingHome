@@ -16,47 +16,33 @@ const DeviceTeleScale = {
 
   _cache: {},
 
-  async FindByDeviceTelemetry(deviceid, telemetry) {
+  FindByDeviceTelemetry(deviceid, telemetry) {
 
     const cachekey = `${deviceid}` + telemetry;
 
-    if (this._cache[cachekey] !== undefined) {
-      return this._cache[cachekey];
-    }
+    if (this._cache[cachekey] !== undefined)
+      return Promise.resolve(this._cache[cachekey]);
 
-    let result = null;
+    return DeviceTeleScaleTable.select(['Scale', 'Diff'], 'WHERE Device = ? AND Telemetry = ?', [deviceid, telemetry])
+      .then(rows => {
+        let result = null;
+        if (rows.length) {
+          let scale = rows[0].Scale;
+          if (!scale)
+            scale = 1;
 
-    const rows = await DeviceTeleScaleTable.select(['Scale', 'Diff'], 'WHERE Device = ? AND Telemetry = ?', [deviceid, telemetry]);
-    if (rows.length) {
+          const diff = rows[0].Diff;
+          result = { Scale: scale, Diff: diff, Calc: (value) => value * scale + diff };
+        }
+        this._cache[cachekey] = result;
 
-      let scale = rows[0].Scale;
-      if (!scale)
-        scale = 1;
-
-      const diff = rows[0].Diff;
-
-      result = { Scale: scale, Diff: diff, Calc: (value) => value * scale + diff };
-    }
-
-    this._cache[cachekey] = result;
-
-    return result;
+        return Promise.resolve(result);
+      });
   },
 
-  async Find(deviceid, telemetry) {
-    const rows = await db.pquery(`
-      SELECT dt.DateTime, dt.Data
-      FROM DeviceTele dt
-      WHERE dt.Device = ? AND
-            dt.Telemetry = ? AND
-            dt.DateTime >= NOW() - INTERVAL ? DAY
-      ORDER BY dt.DateTime, dt.Id`, [deviceid, telemetry, days]);
-    return rows;
-  },
-
-  async Insert(device, telemetry, data) {
-    await DeviceTeleScale.insert({ Device: device, Telemetry: telemetry, Data: Number(data) });
+  Insert(device, telemetry, data) {
     this._cache = {};
+    DeviceTeleScale.insert({ Device: device, Telemetry: telemetry, Data: Number(data) });
   },
 
 };

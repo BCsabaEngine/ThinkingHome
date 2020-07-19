@@ -10,57 +10,64 @@ const timelineConverter = require.main.require('./lib/timelineConverter');
 
 module.exports = (app) => {
 
-  app.get('/device/:devicename', async function (req, res, next) {
+  app.get('/device/:devicename', function (req, res, next) {
     const devicename = req.params.devicename;
-    try {
-      const device = await Device.FindByName(devicename);
-      if (!device)
-        throw new Error(`Device not found: ${devicename}`);
+    Device.FindByName(devicename)
+      .then(device => {
+        DeviceCapability.GetByDeviceId(device.Id)
+          .then(devicecapabilities => {
+            const cmdcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
+            const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
 
-      const devicecapabilities = await DeviceCapability.GetByDeviceId(device.Id);
-      const cmdcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
-      const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
-      const devicesys = await DeviceSys.FindLastByDeviceId(device.Id);
-      const devicelastevents = await DeviceEvent.GetLastByDeviceId(device.Id);
-      const deviceconfigs = await DeviceConfig.GetAllByDeviceId(device.Id);
-      const ctxdevice = global.context.devices[devicename];
+            DeviceSys.FindLastByDeviceId(device.Id)
+              .then(devicesys => {
+                DeviceEvent.GetLastByDeviceId(device.Id)
+                  .then(devicelastevents => {
+                    DeviceConfig.GetAllByDeviceId(device.Id)
+                      .then(deviceconfigs => {
+                        const ctxdevice = global.context.devices[devicename];
+                        if (!ctxdevice)
+                          throw new Error(`Device ${devicename} not found in context`);
 
-      res.render('device', {
-        title: device.DisplayName || device.Name,
-        devicename: devicename,
-        device: device,
-        ctxdevice: ctxdevice,
-        cmdcapabilitycomponents: cmdcapabilitycomponents,
-        telecapabilitycomponents: telecapabilitycomponents,
-        devicesys: devicesys,
-        devicecapabilities: devicecapabilities,
-        devicelastevents: devicelastevents,
-        deviceconfigs: deviceconfigs,
-      });
-    }
-    catch (err) { next(err); }
+                        res.render('device', {
+                          title: device.DisplayName || device.Name,
+                          devicename: devicename,
+                          device: device,
+                          ctxdevice: ctxdevice,
+                          cmdcapabilitycomponents: cmdcapabilitycomponents,
+                          telecapabilitycomponents: telecapabilitycomponents,
+                          devicesys: devicesys,
+                          devicecapabilities: devicecapabilities,
+                          devicelastevents: devicelastevents,
+                          deviceconfigs: deviceconfigs,
+                        });
+
+                      });
+                  });
+              });
+          });
+      })
+      .catch(err => { next(err); });
   })
 
-  app.get('/device/:devicename/events', async function (req, res, next) {
+  app.get('/device/:devicename/events', function (req, res, next) {
     const devicename = req.params.devicename;
-    try {
-      const device = await Device.FindByName(devicename);
-      if (!device)
-        throw new Error(`Device not found: ${devicename}`);
-
-      const deviceallevents = await DeviceEvent.GetAllByDeviceId(device.Id);
-
-      res.render('device-events', {
-        title: "Events of " + (device.DisplayName || device.Name),
-        devicename: devicename,
-        device: device,
-        deviceallevents: timelineConverter.groupByDay(deviceallevents),
-      });
-    }
-    catch (err) { next(err); }
+    Device.FindByName(devicename)
+      .then(device => {
+        DeviceEvent.GetAllByDeviceId(device.Id)
+          .then(deviceallevents => {
+            res.render('device-events', {
+              title: "Events of " + (device.DisplayName || device.Name),
+              devicename: devicename,
+              device: device,
+              deviceallevents: timelineConverter.groupByDay(deviceallevents),
+            });
+          });
+      })
+      .catch(err => { next(err); });
   })
 
-  app.get('/device/form/config/add', async function (req, res, next) {
+  app.get('/device/form/config/add', function (req, res, next) {
     try {
       const form = Pug.compileFile('views/forms/device-config-add.pug', {})({});
       res.send(form);
@@ -68,7 +75,7 @@ module.exports = (app) => {
     catch (err) { next(err); }
   })
 
-  app.get('/device/form/config/modify', async function (req, res, next) {
+  app.get('/device/form/config/modify', function (req, res, next) {
     try {
       const form = Pug.compileFile('views/forms/device-config-modify.pug', {})({});
       res.send(form);
@@ -81,13 +88,12 @@ module.exports = (app) => {
     const name = (req.body.name || "").trim();
     const value = (req.body.value || "").trim();
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
-
-    DeviceConfig.Insert(ctxdevice.Id, name, value);
-
-    res.send("OK");
+    Device.FindByName(devicename)
+      .then(device => {
+        DeviceConfig.Insert(device.Id, name, value)
+      })
+      .then(() => { res.json('success'); })
+      .catch(err => { next(err); });
   });
 
   app.post('/device/:devicename/config/modify', function (req, res) {
@@ -95,38 +101,39 @@ module.exports = (app) => {
     const id = req.body.id;
     const value = (req.body.value || "").trim();
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
-
-    DeviceConfig.Update(ctxdevice.Id, id, value);
-
-    res.send("OK");
+    Device.FindByName(devicename)
+      .then(device => {
+        DeviceConfig.Update(device.Id, id, value)
+      })
+      .then(() => { res.json('success'); })
+      .catch(err => { next(err); });
   });
 
   app.post('/device/:devicename/config/delete', function (req, res) {
     const devicename = req.params.devicename;
     const id = req.body.id;
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
-
-    DeviceConfig.Delete(ctxdevice.Id, id);
-
-    res.send("OK");
+    Device.FindByName(devicename)
+      .then(device => {
+        DeviceConfig.Delete(device.Id, id)
+      })
+      .then(() => { res.json('success'); })
+      .catch(err => { next(err); });
   });
 
   app.post('/device/:devicename/config/push', function (req, res) {
     const devicename = req.params.devicename;
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
+    try {
+      const ctxdevice = global.context.devices[devicename];
+      if (!ctxdevice)
+        throw new Error(`Device ${devicename} not found in context`);
 
-    ctxdevice.SendTimeAndConfig();
+      ctxdevice.SendTimeAndConfig();
 
-    res.send("OK");
+      res.json('success');
+    }
+    catch (err) { next(err); }
   });
 
   app.post('/device/:devicename/:command/:message', function (req, res) {
@@ -134,96 +141,58 @@ module.exports = (app) => {
     const command = req.params.command;
     const message = req.params.message;
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
+    try {
+      const ctxdevice = global.context.devices[devicename];
+      if (!ctxdevice)
+        throw new Error(`Device ${devicename} not found in context`);
 
-    ctxdevice.cmd(command, message);
+      ctxdevice.cmd(command, message);
 
-    res.send("OK");
+      res.json('success');
+    }
+    catch (err) { next(err); }
   });
 
-  app.get('/device/:devicename/graph/tele/:telename/:days', async function (req, res) {
+  app.get('/device/:devicename/graph/tele/:telename/:days', function (req, res) {
     const devicename = req.params.devicename;
     const telename = req.params.telename;
     let days = Number(req.params.days);
 
     days = Math.max(1, Math.min(days, 30));
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
+    Device.FindByName(devicename)
+      .then(device => DeviceTele.GetByDeviceId(device.Id, telename, days))
+      .then(rows => {
+        let timeline = [];
+        rows.forEach(row => timeline.push([row.DateTime.getTime(), row.Data]));
 
-    const rows = await DeviceTele.GetByDeviceId(ctxdevice.Id, telename, days);
+        timeline = timelineConverter.moveAverage(timeline, 30);
+        timeline = timelineConverter.reduceTimeline(timeline, 1920);
 
-    const timeline = [];
-    rows.forEach(row => timeline.push([row.DateTime.getTime(), row.Data]));
-
-    const timelineConv =
-      timelineConverter.reduceTimeline(
-        timelineConverter.moveAverage(timeline, 30), 1920);
-
-    res.send(JSON.stringify(timelineConv));
+        res.send(JSON.stringify(timeline));
+      })
+      .catch(err => { next(err); });
   });
 
-  app.get('/device/:devicename/graph/stat/:statname/:days', async function (req, res) {
+  app.get('/device/:devicename/graph/stat/:statname/:days', function (req, res) {
     const devicename = req.params.devicename;
     const statname = req.params.statname;
     let days = Number(req.params.days);
 
     days = Math.max(1, Math.min(days, 30));
 
-    const ctxdevice = global.context.devices[devicename];
-    if (!ctxdevice)
-      throw new Error(`Device ${devicename} not found in context`);
+    Device.FindByName(devicename)
+      .then(device => DeviceStatSeries.GetByDeviceId(device.Id, statname, days))
+      .then(rows => {
+        const startdate = new Date();
+        startdate.setTime(startdate.getTime() - days * 86400000);
 
-    const rows = await DeviceStatSeries.GetByDeviceId(ctxdevice.Id, statname, days);
+        rows = DeviceStatSeries.NormalizeByStartDate(rows, startdate);
+        const stat = DeviceStatSeries.GenerateTimelineStat(rows);
 
-    const startdate = new Date();
-    startdate.setDate(startdate.getDate() - days);
-
-    rows.forEach(row => {
-      if (row.DateTimeStart.getTime() < startdate.getTime())
-        row.DateTimeStart = startdate;
-    });
-
-    const result = {
-      timeline: [],
-      time: '0:00',
-      percent: 0,
-    };
-
-    let onminutes = 0;
-    let allminutes = 0;
-    rows.forEach(row => {
-      result.timeline.push([row.DateTimeStart.getTime(), row.Data == 'on' ? 1 : 0]);
-      result.timeline.push([row.DateTimeEnd.getTime() - 1, row.Data == 'on' ? 1 : 0]);
-      if (row.Data == 'on')
-        onminutes += row.Minute;
-      allminutes += row.Minute;
-    });
-
-    if (allminutes > 0) {
-      const m = onminutes % 60;
-      const h = Math.floor(onminutes / 60);
-      let d = 0;
-      if (h >= 48) {
-        d = Math.floor(h / 24);
-        h = h - d * 24;
-      }
-
-      let time = '';
-      if (d > 0)
-        time += d.toString() + "d ";
-
-      time += h.toString().padStart(1, '0') + "h ";
-      time += m.toString().padStart(2, '0') + "m";
-
-      result.time = time;
-      result.percent = Math.round(100 * onminutes / allminutes);
-    }
-
-    res.send(JSON.stringify(result));
+        res.send(JSON.stringify(stat));
+      })
+      .catch(err => { next(err); });
   });
 
 }

@@ -31,15 +31,20 @@ const DeviceSys = {
     };
   },
 
-  async FindLastByDeviceId(deviceid) {
-    const rows = await db.pquery("SELECT * FROM DeviceSys ds WHERE ds.Device = ? ORDER BY ds.Id DESC LIMIT 1", [deviceid]);
-    if (rows.length) {
-      rows[0].Items = await DeviceSysItem.GetByDeviceSysId(rows[0].Id);
-      return rows[0];
-    }
-    return null;
+  FindLastByDeviceId(deviceid) {
+    return db.pquery("SELECT * FROM DeviceSys ds WHERE ds.Device = ? ORDER BY ds.Id DESC LIMIT 1", [deviceid])
+      .then(rows => {
+        if (rows.length) {
+          return DeviceSysItem.GetByDeviceSysId(rows[0].Id)
+            .then(items => {
+              rows[0].Items = items;
+              return Promise.resolve(rows[0]);
+            });
+          }
+        return Promise.resolve(null);
+      });
   },
-  
+
 };
 
 module.exports = DeviceSys;
