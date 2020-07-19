@@ -69,7 +69,7 @@ block content
                 =" · "
                 = moment(devicesys.DateTime).fromNow()
         .card-body
-          if !devicesys.Items || !devicesys.Items.length
+          if !devicesys || !devicesys.Items || !devicesys.Items.length
             | Not arrived yet...
           else
             each devicesysitem in devicesys.Items
@@ -164,12 +164,13 @@ block content
   br
 
   script(type='text/javascript')
-    | subscribes = { #{devicename} : function() { divreload('content-wrapper', () => {
+    | function pagereload() { divreload('content-wrapper', () => {
     each component, key in cmdcapabilitycomponents
       | LoadStatGraph_#{key}();
     each component, key in telecapabilitycomponents
       | LoadTeleGraph_#{key}();
-    |}) } };
+    |}) };
+    | subscribes = { #{devicename} : pagereload() }
   script(src='/plugins/jquery/jquery.min.js')
   script(src='/plugins/flot/jquery.flot.js')
   script(src='/plugins/flot-old/jquery.flot.resize.min.js')
@@ -327,7 +328,7 @@ block content
                             $.post("/device/#{device.Name}/config/add", { name: name, value: value })
                               .done(function() {
                                 bootbox.hideAll();
-                                divreload('content-wrapper');
+                                pagereload();
                               });
                           return false;
                       },
@@ -359,7 +360,7 @@ block content
                           $.post("/device/#{device.Name}/config/modify", { id: id, value: value })
                             .done(function() {
                               bootbox.hideAll();
-                              divreload('content-wrapper');
+                              pagereload();
                             });
                           return false;
                       },
@@ -377,7 +378,7 @@ block content
           {
             $.post("/device/#{device.Name}/config/delete", { id: id })
               .done(function() {
-                divreload('content-wrapper');
+                pagereload();
               });
           }
         })
