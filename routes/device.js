@@ -117,6 +117,18 @@ module.exports = (app) => {
     res.send("OK");
   });
 
+  app.post('/device/:devicename/config/push', function (req, res) {
+    const devicename = req.params.devicename;
+
+    const ctxdevice = global.context.devices[devicename];
+    if (!ctxdevice)
+      throw new Error(`Device ${devicename} not found in context`);
+
+    ctxdevice.SendTimeAndConfig();
+
+    res.send("OK");
+  });
+
   app.post('/device/:devicename/:command/:message', function (req, res) {
     const devicename = req.params.devicename;
     const command = req.params.command;

@@ -101,6 +101,38 @@ class DeviceState extends EventEmitter {
     return "";
   }
 
+  async SendTimeAndConfig() {
+    const name = this._name;
+
+    const DeviceConfig = require.main.require('./models/DeviceConfig');
+    const deviceconfigs = await DeviceConfig.GetAllByDeviceId(this._id);
+
+    const now = new Date();
+    const timevalue = Math.round(now.getTime() / 1000) - now.getTimezoneOffset() * 60;
+
+    const items = [];
+    items.push({ name: `cfg/${name}/time`, value: timevalue.toString() });
+    items.push({ name: `cfg/${name}/reset`, value: '' });
+    if (deviceconfigs && deviceconfigs.length) {
+      deviceconfigs.forEach(deviceconfig => {
+        items.push({ name: `cfg/${name}/set`, value: JSON.stringify({ name: deviceconfig.Name, value: deviceconfig.Value }) });
+      });
+      items.push({ name: `cfg/${name}/commit`, value: '' });
+    }
+
+    const MQTTDELAY_INIT = Math.floor(Math.random() * 1000);
+    const MQTTDELAY_STEP = Math.floor(Math.random() * 1000);
+    let index = 1;
+    items.forEach(item => {
+      const cfg_name = item.name;
+      const cfg_value = item.value;
+
+      setTimeout(() => { mqtt.publish(cfg_name, cfg_value); }, MQTTDELAY_INIT + index * MQTTDELAY_STEP);
+
+      index++;
+    });
+  }
+
   async ProcessMqttMessage(topic, message) {
     const name = this._name;
     let topicmatch = false;
@@ -110,6 +142,11 @@ class DeviceState extends EventEmitter {
 
       this.isonline = ["on", "true", "1"].includes(message);
       this.emit('online', this.isonline);
+
+      this.SendTimeAndConfig();
+
+      clearInterval(this.config_timer);
+      this.config_timer = setInterval(() => { this.SendTimeAndConfig(); }, 60 * 60 * 1000);
     }
     else if (topicmatch = topic.match(`^stat\/${name}\/([0-9a-z_]*)$`)) {
       logger.debug(`[${name}] Stat message: ${topic}=${message}`);

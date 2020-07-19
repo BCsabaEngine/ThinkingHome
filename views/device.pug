@@ -114,6 +114,9 @@ block content
           h3.card-title Config
           .card-tools
             .btn-group
+              button.btn.btn-default.btn-xs(onclick='$.post("/device/' + device.Name + '/config/push", null);')
+                i.fas.fa-retweet
+                |  Push to device
               button.btn.btn-primary.btn-xs(onclick='addConfig()')
                 i.fas.fa-plus
                 |  Add
