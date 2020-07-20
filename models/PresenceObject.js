@@ -11,13 +11,12 @@ const PresenceObjectTable = db.defineTable('PresenceObject', {
 
 const PresenceObject = {
 
-  async Insert(name, networkmac) {
-    await PresenceObjectTable.insert({ Name: name, NetworkMac: networkmac });
+  Insert(name, networkmac) {
+    return PresenceObjectTable.insert({ Name: name, NetworkMac: networkmac });
   },
 
-  async GetAllPriorityOrder() {
-    const rows = await PresenceObjectTable.select('*', 'ORDER BY Priority, Name');
-    return rows;
+  GetAllPriorityOrder() {
+    return PresenceObjectTable.select('*', 'ORDER BY Priority, Name');
   },
 
 };

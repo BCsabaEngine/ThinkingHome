@@ -45,9 +45,8 @@ module.exports = (onready) => {
             });
 
         const User = require('../models/User');
-        await User.InsertAdminIfNotExists();
-
-        onready();
+        User.InsertAdminIfNotExists()
+          .then(onready())
       });
     }
     else {

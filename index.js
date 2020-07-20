@@ -1,5 +1,3 @@
-require('pretty-error').start();
-
 const logger = global.logger = require.main.require("./lib/logger");
 const SystemSettings = require.main.require("./lib/systemSettings");
 
@@ -18,36 +16,36 @@ const database = databaseLoader(() => {
 
   // Preload SystemSettings: global.systemsettings
   const systemsettings = global.systemsettings = new SystemSettings();
-  systemsettings.Init();
+  systemsettings.Init(() => {
+    // Init Express app and start: global.app + global.httpserver
+    const app = httpSrvLoader();
 
-  // Init Express app and start: global.app + global.httpserver
-  const app = httpSrvLoader();
+    // Init WebSocket: global.wss
+    const ws = webSocketLoader(global.httpserver);
 
-  // Init WebSocket: global.wss
-  const ws = webSocketLoader(global.httpserver);
+    // Create central manager: global.context
+    const context = global.context = new contextHandler();
 
-  // Create central manager: global.context
-  const context = global.context = new contextHandler();
+    // Init central manager devices
+    context.InitDevices(() => {
+      // Init MQTT client: global.mqtt
+      const mqttCli = mqttLoader();
 
-  // Init central manager devices
-  context.InitDevices(() => {
-    // Init MQTT client: global.mqtt
-    const mqttCli = mqttLoader();
+      // Subscribe to MQTT
+      context.InitMqtt(mqttCli);
 
-    // Subscribe to MQTT
-    context.InitMqtt(mqttCli);
+      // Init scheduled jobs
+      jobs();
 
-    // Init scheduled jobs
-    jobs();
+      // Start weather service
+      context.InitWeather();
 
-    // Start weather service
-    context.InitWeather();
+      // Start presence service
+      context.InitPresenceDetector();
 
-    // Start presence service
-    context.InitPresenceDetector();
+      context.RunContext();
 
-    context.RunContext();
-
-    logger.info("Application started, waiting for subsystems start");
+      logger.info("Application started, waiting for subsystems start");
+    });
   });
 });

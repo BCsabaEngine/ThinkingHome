@@ -11,11 +11,13 @@ const DeviceTable = db.defineTable('Device', {
 });
 
 const Device = {
-  async FindById(id) {
-    const rows = await DeviceTable.select('*', 'WHERE Id = ?', [id]);
-    if (rows.length)
-      return rows[0];
-    return null;
+  FindById(id) {
+    DeviceTable.select('*', 'WHERE Id = ?', [id])
+      .then(rows => {
+        if (rows.length)
+          Promise.resolve(rows[0]);
+        Promise.resolve(null);
+      });
   },
 
   FindByName(name) {
@@ -27,20 +29,26 @@ const Device = {
       });
   },
 
-  async FindOrCreateByName(name) {
-    let rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
-    if (!rows.length) {
-      await db.pquery("INSERT IGNORE INTO Device (Name) VALUES (?)", [name]);
-      rows = await DeviceTable.select('*', 'WHERE Name = ?', [name]);
-    }
-    if (rows.length)
-      return rows[0];
-    return null;
+  FindOrCreateByName(name) {
+    return DeviceTable.select('*', 'WHERE Name = ?', [name])
+      .then(rows => {
+        if (rows.length)
+          return Promise.resolve(rows[0]);
+
+        db.pquery("INSERT IGNORE INTO Device (Name) VALUES (?)", [name])
+          .then(() => {
+            DeviceTable.select('*', 'WHERE Name = ?', [name])
+              .then(newrows => {
+                if (newrows.length)
+                  return Promise.resolve(newrows[0]);
+              });
+          });
+        return Promise.reject(`Cannot create device '${name}'`);
+      });
   },
 
-  async GetAllPriorityOrder() {
-    const rows = await DeviceTable.select('*', 'ORDER BY Priority, Name');
-    return rows;
+  GetAllPriorityOrder() {
+    return DeviceTable.select('*', 'ORDER BY Priority, Name');
   },
 
 };

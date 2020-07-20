@@ -14,8 +14,8 @@ const DeviceSysItemTable = db.defineTable('DeviceSysItem', {
 });
 
 const DeviceSysItem = {
-  async Insert(devicesys, name, value) {
-    await DeviceSysItemTable.insert({ DeviceSys: devicesys, Name: name, Value: value });
+  Insert(devicesys, name, value) {
+    return DeviceSysItemTable.insert({ DeviceSys: devicesys, Name: name, Value: value });
   },
 
   GetByDeviceSysId(devicesysid) {

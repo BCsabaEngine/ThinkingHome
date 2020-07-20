@@ -11,13 +11,12 @@ const RuleCodeLogTable = db.defineTable('RuleCodeLog', {
 
 const RuleCodeLog = {
 
-  async Insert(message) {
-    await RuleCodeLogTable.insert({ Message: message });
+  Insert(message) {
+    return RuleCodeLogTable.insert({ Message: message });
   },
 
-  async GetLastLogs(limit = 100) {
-    const rows = await RuleCodeLogTable.select('*', 'ORDER BY Id DESC LIMIT ?', [limit]);
-    return rows;
+  GetLastLogs(limit = 100) {
+    return RuleCodeLogTable.select('*', 'ORDER BY Id DESC LIMIT ?', [limit]);
   },
 
 };

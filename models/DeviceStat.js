@@ -40,8 +40,8 @@ const DeviceStatTable = db.defineTable('DeviceStat', {
 
 const DeviceStat = {
 
-  async Insert(device, stat, data) {
-    await DeviceStatTable.insert({ Device: device, Stat: stat, Data: data });
+  Insert(device, stat, data) {
+    return DeviceStatTable.insert({ Device: device, Stat: stat, Data: data });
   },
 
 };

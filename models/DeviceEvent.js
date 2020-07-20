@@ -29,8 +29,8 @@ const DeviceEvent = {
     return db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? ORDER BY de.Id DESC LIMIT 100", [deviceid]);
   },
 
-  async Insert(device, event, data) {
-    await DeviceEventTable.insert({ Device: device, Event: event, Data: data });
+  Insert(device, event, data) {
+    return DeviceEventTable.insert({ Device: device, Event: event, Data: data });
   },
 
 };

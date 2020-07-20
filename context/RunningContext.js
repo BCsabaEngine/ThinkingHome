@@ -55,10 +55,11 @@ class RunningContext {
     }
   }
 
-  async Log(message) {
-    await RuleCodeLog.Insert(message);
-
-    global.wss.BroadcastToChannel("rulecodelog");
+  Log(message) {
+    RuleCodeLog.Insert(message)
+      .then(() => {
+        global.wss.BroadcastToChannel("rulecodelog");
+      });
   }
 
   async Run(devicestates) {

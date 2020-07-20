@@ -8,16 +8,15 @@ const SystemSettingTable = db.defineTable('SystemSetting', {
 
 const SystemSetting = {
 
-  async StoreAll(rows) {
-    await SystemSettingTable.delete();
-    rows.forEach(async function (rowobj) {
-      await SystemSettingTable.insert(rowobj);
-    });
+  StoreAll(rows) {
+    return SystemSettingTable.delete()
+      .then(() => {
+        rows.forEach(row => SystemSettingTable.insert(row));
+      })
   },
 
-  async GetAll() {
-    const rows = await SystemSettingTable.select('*', '');
-    return rows;
+  GetAll() {
+    return SystemSettingTable.select('*', '');
   },
 };
 

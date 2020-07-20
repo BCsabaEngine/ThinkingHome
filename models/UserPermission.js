@@ -13,23 +13,22 @@ const UserPermissionTable = db.defineTable('UserPermission', {
 
 const UserPermission = {
 
-  async Insert(user, permission) {
+  Insert(user, permission) {
     if (UserPermissions.isDefined(permission)) {
       const up = UserPermissions.get(permissions);
-      await UserPermissionTable.insert({ User: user, Permission: up.key });
+      return UserPermissionTable.insert({ User: user, Permission: up.key });
     }
   },
 
-  async Delete(user, permission) {
+  Delete(user, permission) {
     if (UserPermissions.isDefined(permission)) {
       const up = UserPermissions.get(permissions);
-      await UserPermissionTable.delete({ User: user, Permission: up.key });
+      return UserPermissionTable.delete({ User: user, Permission: up.key });
     }
   },
 
-  async GetByUser(user) {
-    const rows = await UserPermissionTable.select(['Permission'], 'WHERE User = ? ORDER BY Permission', [user]);
-    return rows;
+  GetByUser(user) {
+    return UserPermissionTable.select(['Permission'], 'WHERE User = ? ORDER BY Permission', [user]);
   },
 
 };

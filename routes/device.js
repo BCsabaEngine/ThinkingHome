@@ -14,37 +14,36 @@ module.exports = (app) => {
     const devicename = req.params.devicename;
     Device.FindByName(devicename)
       .then(device => {
-        DeviceCapability.GetByDeviceId(device.Id)
-          .then(devicecapabilities => {
+
+        Promise
+          .all([
+            DeviceCapability.GetByDeviceId(device.Id),
+            DeviceSys.FindLastByDeviceId(device.Id),
+            DeviceEvent.GetLastByDeviceId(device.Id),
+            DeviceConfig.GetAllByDeviceId(device.Id),
+          ])
+          .then(([devicecapabilities, devicesys, devicelastevents, deviceconfigs]) => {
+
             const cmdcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
             const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
 
-            DeviceSys.FindLastByDeviceId(device.Id)
-              .then(devicesys => {
-                DeviceEvent.GetLastByDeviceId(device.Id)
-                  .then(devicelastevents => {
-                    DeviceConfig.GetAllByDeviceId(device.Id)
-                      .then(deviceconfigs => {
-                        const ctxdevice = global.context.devices[devicename];
-                        if (!ctxdevice)
-                          throw new Error(`Device ${devicename} not found in context`);
+            const ctxdevice = global.context.devices[devicename];
+            if (!ctxdevice)
+              throw new Error(`Device ${devicename} not found in context`);
 
-                        res.render('device', {
-                          title: device.DisplayName || device.Name,
-                          devicename: devicename,
-                          device: device,
-                          ctxdevice: ctxdevice,
-                          cmdcapabilitycomponents: cmdcapabilitycomponents,
-                          telecapabilitycomponents: telecapabilitycomponents,
-                          devicesys: devicesys,
-                          devicecapabilities: devicecapabilities,
-                          devicelastevents: devicelastevents,
-                          deviceconfigs: deviceconfigs,
-                        });
+            res.render('device', {
+              title: device.DisplayName || device.Name,
+              devicename: devicename,
+              device: device,
+              ctxdevice: ctxdevice,
+              cmdcapabilitycomponents: cmdcapabilitycomponents,
+              telecapabilitycomponents: telecapabilitycomponents,
+              devicesys: devicesys,
+              devicecapabilities: devicecapabilities,
+              devicelastevents: devicelastevents,
+              deviceconfigs: deviceconfigs,
+            });
 
-                      });
-                  });
-              });
           });
       })
       .catch(err => { next(err); });

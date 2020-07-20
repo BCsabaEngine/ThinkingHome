@@ -55,24 +55,28 @@ module.exports = (app) => {
       res.status(403).end();
   });
 
-  app.post('/login', async function (req, res) {
-    const user = await User.FindByEmailPassword(req.body.username, req.body.password);
-    if (user) {
-      const sessionuser = {};
-      sessionuser.id = user.Id;
-      sessionuser.isadmin = user.IsAdmin;
-      sessionuser.permissions = [];
-      const permissions = await UserPermission.GetByUser(user.Id);
-      permissions.forEach(perm => sessionuser.permissions.push(perm.Permission));
+  app.post('/login', function (req, res) {
+    User.FindByEmailPassword(req.body.username, req.body.password)
+      .then(user => {
+        if (user) {
+          const sessionuser = {};
+          sessionuser.id = user.Id;
+          sessionuser.isadmin = user.IsAdmin;
+          sessionuser.permissions = [];
+          UserPermission.GetByUser(user.Id)
+            .then(permissions => {
+              permissions.forEach(perm => sessionuser.permissions.push(perm.Permission));
 
-      req.session.user = sessionuser;
-      req.session.loggedin = true;
+              req.session.user = sessionuser;
+              req.session.loggedin = true;
 
-      res.end();
-    }
-    else {
-      res.status(403).end();
-    }
+              res.end();
+            });
+        }
+        else {
+          res.status(403).end();
+        }
+      });
   })
 
   app.get('/logout', function (req, res) {

@@ -12,13 +12,15 @@ const WeatherTable = db.defineTable('Weather', {
 
 const Weather = {
 
-  async Insert(data) {
+  Insert(data) {
     const date = new Date().toJSON().slice(0, 10);
     const hour = new Date().getHours();
 
-    const rows = await WeatherTable.select(['Id'], 'WHERE Date = ? AND Hour = ?', [date, hour]);
-    if (!rows.length || rows.length == 0)
-      WeatherTable.insert({ Date: date, Hour: hour, Data: data });
+    WeatherTable.select(['Id'], 'WHERE Date = ? AND Hour = ?', [date, hour])
+      .then(rows => {
+        if (!rows.length || rows.length == 0)
+          WeatherTable.insert({ Date: date, Hour: hour, Data: data });
+      });
   },
 
 };

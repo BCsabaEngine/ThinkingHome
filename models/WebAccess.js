@@ -17,7 +17,7 @@ const WebAccessTable = db.defineTable('WebAccess', {
 const WebAccess = {
 
   Insert(user, uri, session, remoteip, browser) {
-    WebAccessTable.insert({ User: user, Uri: uri, Session: session, RemoteIp: remoteip, Browser: browser });
+    return WebAccessTable.insert({ User: user, Uri: uri, Session: session, RemoteIp: remoteip, Browser: browser });
   },
 
 };

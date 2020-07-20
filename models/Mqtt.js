@@ -14,12 +14,12 @@ const MqttTable = db.defineTable('Mqtt', {
 
 const Mqtt = {
 
-  async Insert(device, topic, payload) {
-    await MqttTable.insert({ Device: device, Topic: topic, Payload: payload });
+  Insert(device, topic, payload) {
+    return MqttTable.insert({ Device: device, Topic: topic, Payload: payload });
   },
 
-  async InsertUnknownDevice(topic, payload) {
-    await MqttTable.insert({ Device: null, Topic: topic, Payload: payload });
+  InsertUnknownDevice(topic, payload) {
+    return MqttTable.insert({ Device: null, Topic: topic, Payload: payload });
   },
 
 };

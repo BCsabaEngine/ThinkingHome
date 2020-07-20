@@ -8,8 +8,8 @@ const RuleCodeTable = db.defineTable('RuleCode', {
 
 const RuleCode = {
 
-  async Insert(jscode) {
-    await RuleCodeTable.insert({ JsCode: jscode });
+  Insert(jscode) {
+    return RuleCodeTable.insert({ JsCode: jscode });
   },
 
   async FindLastJsCode() {

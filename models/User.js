@@ -11,29 +11,37 @@ const UserTable = db.defineTable('User', {
 
 const User = {
 
-  async Exists() {
-    return await UserTable.exists();
+  Exists() {
+    return UserTable.exists();
   },
 
-  async Count() {
-    const rows = await UserTable.select('COUNT(1) AS Count', '');
-    return rows[0].Count;
+  Count() {
+    return UserTable.select('COUNT(1) AS Count', '')
+      .then(rows => {
+        return Promise.resolve(rows[0].Count);
+      });
   },
 
-  async FindByEmailPassword(username, password) {
-    const rows = await UserTable.select(['Id', 'IsAdmin'], 'WHERE Username = ? AND Password = ?', [username, md5(password)]);
-    if (rows.length)
-      return rows[0];
-    return null;
+  FindByEmailPassword(username, password) {
+    return UserTable.select(['Id', 'IsAdmin'], 'WHERE Username = ? AND Password = ?', [username, md5(password)])
+      .then(rows => {
+        if (rows.length)
+          return Promise.resolve(rows[0]);
+        return Promise.resoleve(null);
+      });
   },
 
-  async Insert(username, password) {
-    await UserTable.insert({ Username: username, Password: md5(password) });
+  Insert(username, password) {
+    return UserTable.insert({ Username: username, Password: md5(password) });
   },
 
-  async InsertAdminIfNotExists() {
-    if (!await this.Exists())
-      await UserTable.insert({ IsAdmin: 1, Username: "admin", Password: md5("1234") });
+  InsertAdminIfNotExists() {
+    return this.Exists()
+      .then(exists => {
+        if (exists)
+          return Promise.resolve(true);
+        return UserTable.insert({ IsAdmin: 1, Username: "admin", Password: md5("1234") });
+      });
   },
 
 };

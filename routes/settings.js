@@ -12,11 +12,14 @@ module.exports = (app) => {
     try {
       await req.RequirePermission(UserPermissions.RuleCode);
 
-      res.render('settings', {
-        title: "Settings",
-        usercount: await User.Count(),
-        runerror: global.context.GetRunErrorMessage(),
-      });
+      User.Count()
+        .then(count => {
+          res.render('settings', {
+            title: "Settings",
+            usercount: count,
+            runerror: global.context.GetRunErrorMessage(),
+          });
+        });
     }
     catch (err) { next(err); }
   })
@@ -89,11 +92,12 @@ module.exports = (app) => {
       if (!rulecode)
         res.status(411).send("Empty content");
       else {
-        await RuleCode.Insert(rulecode.trim());
+        RuleCode.Insert(rulecode.trim())
+          .then(() => {
+            global.context.RunContext();
 
-        global.context.RunContext();
-
-        res.send("OK");
+            res.send("OK");
+          });
       }
     }
     catch (err) { next(err); }
@@ -103,11 +107,13 @@ module.exports = (app) => {
     try {
       await req.RequirePermission(UserPermissions.RuleCode);
 
-      const rulecodelogs = await RuleCodeLog.GetLastLogs();
-      res.render('settings-rulecodelog', {
-        title: "Rule logs",
-        rulecodelogs: rulecodelogs,
-      });
+      RuleCodeLog.GetLastLogs()
+        .then(rulecodelogs => {
+          res.render('settings-rulecodelog', {
+            title: "Rule logs",
+            rulecodelogs: rulecodelogs,
+          });
+        });
     }
     catch (err) { next(err); }
   })
