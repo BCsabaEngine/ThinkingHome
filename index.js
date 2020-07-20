@@ -1,3 +1,5 @@
+require('pretty-error').start();
+
 const logger = global.logger = require.main.require("./lib/logger");
 const SystemSettings = require.main.require("./lib/systemSettings");
 
