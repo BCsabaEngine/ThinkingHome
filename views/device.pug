@@ -303,84 +303,84 @@ block content
         LoadTeleGraph_#{key}();
       });
 
-    script(type='text/javascript').
-      function addConfig()
+  script(type='text/javascript').
+    function addConfig()
+    {
+      $.get('/device/form/config/add', function(form)
       {
-        $.get('/device/form/config/add', function(form)
-        {
-          var dialog = bootbox.dialog({
-              title: 'Add new device config',
-              message: form,
-              buttons: {
-                Cancel: {
-                      label: "Cancel",
-                      className: 'btn-default',
-                },
-                OK: {
-                      label: "OK",
-                      className: 'btn-primary',
-                      callback: function()
-                      {
-                          var name = $('#name').val();
-                          var value = $('#value').val();
-                          
-                          if (name && value)
-                            $.post("/device/#{device.Name}/config/add", { name: name, value: value })
-                              .done(function() {
-                                bootbox.hideAll();
-                                pagereload();
-                              });
-                          return false;
-                      },
-                },
-              }
-          });
-        });
-      }
-
-      function modifyConfig(id, value)
-      {
-        $.get('/device/form/config/modify', function(form)
-        {
-          var dialog = bootbox.dialog({
-              title: 'Modify device config',
-              message: form,
-              buttons: {
-                Cancel: {
-                      label: "Cancel",
-                      className: 'btn-default',
-                },
-                OK: {
-                      label: "OK",
-                      className: 'btn-primary',
-                      callback: function()
-                      {
-                          var value = $('#value').val();
-
-                          $.post("/device/#{device.Name}/config/modify", { id: id, value: value })
+        var dialog = bootbox.dialog({
+            title: 'Add new device config',
+            message: form,
+            buttons: {
+              Cancel: {
+                    label: "Cancel",
+                    className: 'btn-default',
+              },
+              OK: {
+                    label: "OK",
+                    className: 'btn-primary',
+                    callback: function()
+                    {
+                        var name = $('#name').val();
+                        var value = $('#value').val();
+                        
+                        if (name && value)
+                          $.post("/device/#{device.Name}/config/add", { name: name, value: value })
                             .done(function() {
                               bootbox.hideAll();
                               pagereload();
                             });
-                          return false;
-                      },
-                },
-              }
-          });
-          $('#value').val(value);
+                        return false;
+                    },
+              },
+            }
         });
-      }
+      });
+    }
 
-      function deleteConfig(id, name)
+    function modifyConfig(id, value)
+    {
+      $.get('/device/form/config/modify', function(form)
       {
-        bootbox.confirm("Are you sure to delete <b>" + name + "</b>?", function(result) {
-          if (result)
-          {
-            $.post("/device/#{device.Name}/config/delete", { id: id })
-              .done(function() {
-                pagereload();
-              });
-          }
-        })
-      }
-      
+        var dialog = bootbox.dialog({
+            title: 'Modify device config',
+            message: form,
+            buttons: {
+              Cancel: {
+                    label: "Cancel",
+                    className: 'btn-default',
+              },
+              OK: {
+                    label: "OK",
+                    className: 'btn-primary',
+                    callback: function()
+                    {
+                        var value = $('#value').val();
+
+                        $.post("/device/#{device.Name}/config/modify", { id: id, value: value })
+                          .done(function() {
+                            bootbox.hideAll();
+                            pagereload();
+                          });
+                        return false;
+                    },
+              },
+            }
+        });
+        $('#value').val(value);
+      });
+    }
+
+    function deleteConfig(id, name)
+    {
+      bootbox.confirm("Are you sure to delete <b>" + name + "</b>?", function(result) {
+        if (result)
+        {
+          $.post("/device/#{device.Name}/config/delete", { id: id })
+            .done(function() {
+              pagereload();
+            });
+        }
+      })
+    }
+    
