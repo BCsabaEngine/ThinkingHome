@@ -3,6 +3,7 @@ const path = require('path');
 const express = require('express');
 const session = require('express-session');
 const bodyParser = require('body-parser');
+const compression = require('compression');
 const pug = require('pug');
 const helmet = require('helmet')
 const routeInitializer = require.main.require('./routes');
@@ -19,11 +20,12 @@ module.exports = () => {
   app.use(session({
     secret: 'Thinking2020Home',
     resave: true,
-    saveUninitialized: true
+    saveUninitialized: true,
   }));
 
   app.use(bodyParser.urlencoded({ extended: true }));
   app.use(express.json());
+  app.use(compression());
 
   // template engine
   app.engine('pug', pug.__express)
