@@ -25,7 +25,7 @@ module.exports = (app) => {
 
     WebAccess.Insert(user, uri, session, remoteip, browser);
 
-    next();
+    return next();
   });
 
   // available items in all pages (GET)
@@ -38,7 +38,7 @@ module.exports = (app) => {
     res.locals.devices.online = res.locals.devices.all.filter(device => device.IsOnline) || [];
     res.locals.devices.offline = res.locals.devices.all.filter(device => !device.IsOnline) || [];
 
-    next();
+    return next();
   });
 
 }

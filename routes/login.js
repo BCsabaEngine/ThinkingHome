@@ -36,23 +36,21 @@ module.exports = (app) => {
     }
 
     // logged in
-    if (req.session.loggedin) {
-      next();
-      return;
-    }
+    if (req.session.loggedin)
+      return next();
+
+    // bypass login request
+    if (req.method == "POST" && req.path == "/login")
+      return next();
 
     // must login
-    if (req.method == "GET") {
+    if (req.method == "GET")
       if (req.path != "/")
-        res.redirect('/');
+        return res.redirect('/');
       else
-        res.render('login', { title: "Login" });
-    }
-    // bypass login request
-    else if (req.method == "POST" && req.path == "/login")
-      next();
-    else
-      res.status(403).end();
+        return res.render('login', { title: "Login" });
+
+    res.status(403).end();
   });
 
   app.post('/login', function (req, res) {
