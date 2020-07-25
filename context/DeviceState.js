@@ -47,6 +47,8 @@ class DeviceState extends EventEmitter {
   //  .on("tele", ("humidty", 12) => )
   //  .on("tele.humidity", (12) => )
 
+  //  .on("log", ("message") => )
+
   cmd(command, message) {
     const name = this._name;
     mqtt.publish(`cmd/${name}/${command}`, message, { retain: true });
@@ -148,6 +150,11 @@ class DeviceState extends EventEmitter {
 
       clearInterval(this.config_timer);
       this.config_timer = setInterval(() => { this.SendTimeAndConfig(); }, 60 * 60 * 1000);
+    }
+    else if (topic == `log/${name}`) {
+      logger.debug(`[${name}] Log message: ${message}`);
+
+      this.emit('log', message);
     }
     else if (topicmatch = topic.match(`^stat\/${name}\/([0-9a-z_]*)$`)) {
       logger.debug(`[${name}] Stat message: ${topic}=${message}`);
