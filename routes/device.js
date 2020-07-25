@@ -140,7 +140,7 @@ module.exports = (app) => {
 
   app.post('/device/:devicename/config/add', function (req, res, next) {
     const devicename = req.params.devicename;
-    const name = (req.body.name || "").trim();
+    const name = (req.body.name || "").trim().toUpperCase();
     const value = (req.body.value || "").trim();
 
     Device.FindByName(devicename)
