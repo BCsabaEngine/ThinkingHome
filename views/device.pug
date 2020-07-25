@@ -3,7 +3,7 @@ extends _base
 block content
   section.content-header
     .container-fluid
-      h1(onclick="renameDevice()")
+      h1(onclick="renameDevice()", style="cursor:pointer")
         = title
 
   each component, key in cmdcapabilitycomponents
