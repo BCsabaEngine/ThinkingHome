@@ -12,9 +12,15 @@ const DeviceLogTable = db.defineTable('DeviceLog', {
 });
 
 const DeviceLog = {
+
+  GetAllByDeviceId(deviceid) {
+    return db.pquery("SELECT dl.DateTime, dl.Message FROM DeviceLog dl WHERE dl.Device = ?  AND dl.DateTime > NOW() - INTERVAL 7 DAY", [deviceid]);
+  },
+
   Insert(device, message) {
     return DeviceLogTable.insert({ Device: device, Message: message });
   },
+
 };
 
 module.exports = DeviceLog;

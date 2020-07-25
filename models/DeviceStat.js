@@ -40,6 +40,10 @@ const DeviceStatTable = db.defineTable('DeviceStat', {
 
 const DeviceStat = {
 
+  GetAllByDeviceId(deviceid) {
+    return db.pquery("SELECT ds.DateTime, ds.Stat, ds.Data FROM DeviceStat ds WHERE ds.Device = ?  AND ds.DateTime > NOW() - INTERVAL 7 DAY", [deviceid]);
+  },
+
   Insert(device, stat, data) {
     return DeviceStatTable.insert({ Device: device, Stat: stat, Data: data });
   },

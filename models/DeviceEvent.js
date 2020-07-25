@@ -26,7 +26,7 @@ const DeviceEvent = {
   },
 
   GetAllByDeviceId(deviceid) {
-    return db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? ORDER BY de.Id DESC LIMIT 100", [deviceid]);
+    return db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? AND de.DateTime > NOW() - INTERVAL 7 DAY", [deviceid]);
   },
 
   Insert(device, event, data) {

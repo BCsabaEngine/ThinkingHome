@@ -9,7 +9,7 @@ block content
     .row
       .col-md-12
         .timeline
-          each vals, key in deviceallevents
+          each vals, key in allevents
 
             br
             .time-label
@@ -18,7 +18,7 @@ block content
 
             each val in vals
               div
-                i.fa.fa-bolt.bg-green
+                i.fa(class=val.Icon)(class="bg-" + val.IconBg)
                 .timeline-item
                   span.time
                     i.fas.fa-clock 

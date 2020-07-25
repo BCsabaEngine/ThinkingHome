@@ -4,6 +4,8 @@ const DeviceConfig = require.main.require('./models/DeviceConfig');
 const DeviceCapability = require.main.require('./models/DeviceCapability');
 const DeviceSys = require.main.require('./models/DeviceSys');
 const DeviceEvent = require.main.require('./models/DeviceEvent');
+const DeviceLog = require.main.require('./models/DeviceLog');
+const DeviceStat = require.main.require('./models/DeviceStat');
 const DeviceTele = require.main.require('./models/DeviceTele');
 const DeviceStatSeries = require.main.require('./models/DeviceStatSeries');
 const timelineConverter = require.main.require('./lib/timelineConverter');
@@ -51,20 +53,33 @@ module.exports = (app) => {
       .catch(err => { next(err); });
   })
 
-  app.get('/device/:devicename/events', function (req, res, next) {
+  app.get('/device/:devicename/timeline', function (req, res, next) {
     const devicename = req.params.devicename;
     Device.FindByName(devicename)
       .then(device => {
 
         if (!device) throw new Exception(`Device '${devicename}' not found`);
 
-        DeviceEvent.GetAllByDeviceId(device.Id)
-          .then(deviceallevents => {
-            res.render('device-events', {
-              title: "Events of " + (device.DisplayName || device.Name),
+        Promise
+          .all([
+            DeviceEvent.GetAllByDeviceId(device.Id),
+            DeviceLog.GetAllByDeviceId(device.Id),
+            DeviceStat.GetAllByDeviceId(device.Id),
+          ])
+          .then(([deviceallevents, deviceallog, deviceallstat]) => {
+
+            const allevents = [];
+            deviceallevents.forEach(e => allevents.push({ DateTime: e.DateTime, Icon: 'fa-bolt', IconBg: 'green', Event: e.Event, Data: e.Data }));
+            deviceallog.forEach(l => allevents.push({ DateTime: l.DateTime, Icon: 'fa-wrench', IconBg: 'warning', Event: l.Message, Data: null }));
+            deviceallstat.forEach(s => allevents.push({ DateTime: s.DateTime, Icon: 'fa-cogs', IconBg: 'primary', Event: s.Stat, Data: s.Data }));
+
+            allevents.sort(function (a, b) { return b.DateTime.getTime() - a.DateTime.getTime(); });
+
+            res.render('device-timeline', {
+              title: "Timeline of " + (device.DisplayName || device.Name),
               devicename: devicename,
               device: device,
-              deviceallevents: timelineConverter.groupByDay(deviceallevents),
+              allevents: timelineConverter.groupByDay(allevents),
             });
           });
       })
