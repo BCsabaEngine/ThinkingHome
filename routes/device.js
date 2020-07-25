@@ -15,6 +15,8 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
         Promise
           .all([
             DeviceCapability.GetByDeviceId(device.Id),
@@ -53,6 +55,9 @@ module.exports = (app) => {
     const devicename = req.params.devicename;
     Device.FindByName(devicename)
       .then(device => {
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
         DeviceEvent.GetAllByDeviceId(device.Id)
           .then(deviceallevents => {
             res.render('device-events', {
@@ -65,6 +70,37 @@ module.exports = (app) => {
       })
       .catch(err => { next(err); });
   })
+
+  app.post('/device/:devicename/setdisplayname', function (req, res, next) {
+    const devicename = req.params.devicename;
+    const displayname = (req.body.displayname || "").trim();
+
+    Device.FindByName(devicename)
+      .then(device => {
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return Device.SetDisplayName(devicename, displayname);
+      })
+      .then(() => { return context.ReInitDevices(); })
+      .then(() => { res.json('success'); })
+      .catch(err => { next(err); });
+  });
+
+  app.post('/device/:devicename/delete', function (req, res, next) {
+    const devicename = req.params.devicename;
+
+    Device.FindByName(devicename)
+      .then(device => {
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return Device.Delete(devicename);
+      })
+      .then(() => { return context.ReInitDevices(); })
+      .then(() => { res.json('success'); })
+      .catch(err => { next(err); });
+  });
 
   app.get('/device/form/config/add', function (req, res, next) {
     try {
@@ -82,45 +118,54 @@ module.exports = (app) => {
     catch (err) { next(err); }
   })
 
-  app.post('/device/:devicename/config/add', function (req, res) {
+  app.post('/device/:devicename/config/add', function (req, res, next) {
     const devicename = req.params.devicename;
     const name = (req.body.name || "").trim();
     const value = (req.body.value || "").trim();
 
     Device.FindByName(devicename)
       .then(device => {
-        DeviceConfig.Insert(device.Id, name, value)
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return DeviceConfig.Insert(device.Id, name, value)
       })
       .then(() => { res.json('success'); })
       .catch(err => { next(err); });
   });
 
-  app.post('/device/:devicename/config/modify', function (req, res) {
+  app.post('/device/:devicename/config/modify', function (req, res, next) {
     const devicename = req.params.devicename;
     const id = req.body.id;
     const value = (req.body.value || "").trim();
 
     Device.FindByName(devicename)
       .then(device => {
-        DeviceConfig.Update(device.Id, id, value)
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return DeviceConfig.Update(device.Id, id, value)
       })
       .then(() => { res.json('success'); })
       .catch(err => { next(err); });
   });
 
-  app.post('/device/:devicename/config/delete', function (req, res) {
+  app.post('/device/:devicename/config/delete', function (req, res, next) {
     const devicename = req.params.devicename;
     const id = req.body.id;
 
     Device.FindByName(devicename)
       .then(device => {
-        DeviceConfig.Delete(device.Id, id)
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return DeviceConfig.Delete(device.Id, id)
       })
       .then(() => { res.json('success'); })
       .catch(err => { next(err); });
   });
 
-  app.post('/device/:devicename/config/push', function (req, res) {
+  app.post('/device/:devicename/config/push', function (req, res, next) {
     const devicename = req.params.devicename;
 
     try {
@@ -135,7 +180,7 @@ module.exports = (app) => {
     catch (err) { next(err); }
   });
 
-  app.post('/device/:devicename/:command/:message', function (req, res) {
+  app.post('/device/:devicename/:command/:message', function (req, res, next) {
     const devicename = req.params.devicename;
     const command = req.params.command;
     const message = req.params.message;
@@ -152,7 +197,7 @@ module.exports = (app) => {
     catch (err) { next(err); }
   });
 
-  app.get('/device/:devicename/graph/tele/:telename/:days', function (req, res) {
+  app.get('/device/:devicename/graph/tele/:telename/:days', function (req, res, next) {
     const devicename = req.params.devicename;
     const telename = req.params.telename;
     let days = Number(req.params.days);
@@ -160,7 +205,12 @@ module.exports = (app) => {
     days = Math.max(1, Math.min(days, 30));
 
     Device.FindByName(devicename)
-      .then(device => DeviceTele.GetByDeviceId(device.Id, telename, days))
+      .then(device => {
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return DeviceTele.GetByDeviceId(device.Id, telename, days);
+      })
       .then(rows => {
         let timeline = [];
         rows.forEach(row => timeline.push([row.DateTime.getTime(), row.Data]));
@@ -173,7 +223,7 @@ module.exports = (app) => {
       .catch(err => { next(err); });
   });
 
-  app.get('/device/:devicename/graph/stat/:statname/:days', function (req, res) {
+  app.get('/device/:devicename/graph/stat/:statname/:days', function (req, res, next) {
     const devicename = req.params.devicename;
     const statname = req.params.statname;
     let days = Number(req.params.days);
@@ -181,7 +231,12 @@ module.exports = (app) => {
     days = Math.max(1, Math.min(days, 30));
 
     Device.FindByName(devicename)
-      .then(device => DeviceStatSeries.GetByDeviceId(device.Id, statname, days))
+      .then(device => {
+
+        if (!device) throw new Exception(`Device '${devicename}' not found`);
+
+        return DeviceStatSeries.GetByDeviceId(device.Id, statname, days);
+      })
       .then(rows => {
         const startdate = new Date();
         startdate.setTime(startdate.getTime() - days * 86400000);

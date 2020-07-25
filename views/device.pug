@@ -3,7 +3,8 @@ extends _base
 block content
   section.content-header
     .container-fluid
-      h1= title
+      h1(onclick="renameDevice()")
+        = title
 
   each component, key in cmdcapabilitycomponents
     .row
@@ -160,6 +161,11 @@ block content
                 else 
                   .col-md-12
                     = devicecapability.Value
+          center
+            button.btn.btn-danger.btn-sm(onclick='deleteDevice()')
+              i.fas.fa-ban
+              |  Delete device
+
 
   br
 
@@ -373,12 +379,41 @@ block content
 
     function deleteConfig(id, name)
     {
-      bootbox.confirm("Are you sure to delete <b>" + name + "</b>?", function(result) {
+      bootbox.confirm("Are you sure to delete config <b>" + name + "</b>?", function(result) {
         if (result)
         {
           $.post("/device/#{device.Name}/config/delete", { id: id })
             .done(function() {
               pagereload();
+            });
+        }
+      })
+    }
+    
+    function renameDevice()
+    {
+      bootbox.prompt({
+        title: "Rename device [#{device.Name}]",
+        value: "#{device.DisplayName || device.Name}",
+        callback: function(result)
+        {
+          if (result)
+            $.post("/device/#{device.Name}/setdisplayname", { displayname: result })
+              .done(function() {
+                pagereload();
+              });
+        }
+      });
+    }
+
+    function deleteDevice()
+    {
+      bootbox.confirm("All settings and history information will be lost permanently!<br/><br/>Are you sure to delete device <b>#{device.Name}</b>?", function(result) {
+        if (result)
+        {
+          $.post("/device/#{device.Name}/delete")
+            .done(function() {
+              window.location.href = '/';
             });
         }
       })

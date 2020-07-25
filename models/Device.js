@@ -25,30 +25,38 @@ const Device = {
       .then(rows => {
         if (rows.length)
           return Promise.resolve(rows[0]);
-        throw new Error(`Device not found: ${name}`);
+        Promise.resolve(null);
       });
   },
 
-  FindOrCreateByName(name) {
-    return DeviceTable.select('*', 'WHERE Name = ?', [name])
-      .then(rows => {
-        if (rows.length)
-          return Promise.resolve(rows[0]);
+  // FindOrCreateByName(name) {
+  //   return DeviceTable.select('*', 'WHERE Name = ?', [name])
+  //     .then(rows => {
+  //       if (rows.length)
+  //         return Promise.resolve(rows[0]);
 
-        db.pquery("INSERT IGNORE INTO Device (Name) VALUES (?)", [name])
-          .then(() => {
-            DeviceTable.select('*', 'WHERE Name = ?', [name])
-              .then(newrows => {
-                if (newrows.length)
-                  return Promise.resolve(newrows[0]);
-              });
-          });
-        return Promise.reject(`Cannot create device '${name}'`);
-      });
-  },
+  //       db.pquery("INSERT IGNORE INTO Device (Name) VALUES (?)", [name])
+  //         .then(() => {
+  //           DeviceTable.select('*', 'WHERE Name = ?', [name])
+  //             .then(newrows => {
+  //               if (newrows.length)
+  //                 return Promise.resolve(newrows[0]);
+  //             });
+  //         });
+  //       return Promise.reject(`Cannot create device '${name}'`);
+  //     });
+  // },
 
   GetAllPriorityOrder() {
     return DeviceTable.select('*', 'ORDER BY Priority, Name');
+  },
+
+  SetDisplayName(name, displayname) {
+    return DeviceTable.update({ DisplayName: displayname }, 'WHERE Name = ?', [name]);
+  },
+
+  Delete(name) {
+    return DeviceTable.delete('WHERE Name = ?', [name]);
   },
 
 };
