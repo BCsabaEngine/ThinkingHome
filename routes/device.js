@@ -17,7 +17,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         Promise
           .all([
@@ -58,7 +58,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         Promise
           .all([
@@ -98,7 +98,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return Device.SetDisplayName(devicename, displayname);
       })
@@ -113,7 +113,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return Device.Delete(devicename);
       })
@@ -146,7 +146,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return DeviceConfig.Insert(device.Id, name, value)
       })
@@ -162,7 +162,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return DeviceConfig.Update(device.Id, id, value)
       })
@@ -177,7 +177,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return DeviceConfig.Delete(device.Id, id)
       })
@@ -227,7 +227,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return DeviceTele.GetByDeviceId(device.Id, telename, days);
       })
@@ -253,7 +253,7 @@ module.exports = (app) => {
     Device.FindByName(devicename)
       .then(device => {
 
-        if (!device) throw new Exception(`Device '${devicename}' not found`);
+        if (!device) throw new Error(`Device '${devicename}' not found`);
 
         return DeviceStatSeries.GetByDeviceId(device.Id, statname, days);
       })
