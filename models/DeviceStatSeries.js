@@ -31,6 +31,21 @@ const DeviceStatSeries = {
       ORDER BY dss.DateTimeStart, dss.Id`, [deviceid, stat, days, days]);
   },
 
+  GetAllByDeviceId(deviceid, days) {
+    return db.pquery(`
+      SELECT
+        dss.Stat,
+        dss.Data,
+        dss.DateTimeStart,
+        COALESCE(dss.DateTimeEnd, NOW()) AS DateTimeEnd
+      FROM DeviceStatSeries dss
+      WHERE dss.Device = ? AND
+            (dss.DateTimeStart >= NOW() - INTERVAL ? DAY
+             OR
+             dss.DateTimeEnd >= NOW() - INTERVAL ? DAY)
+      ORDER BY dss.DateTimeStart, dss.Id`, [deviceid, days, days]);
+  },
+
   NormalizeByStartDate(rows, startdate) {
     rows.forEach(row => {
       if (row.DateTimeStart.getTime() < startdate.getTime())

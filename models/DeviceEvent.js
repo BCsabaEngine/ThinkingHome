@@ -25,8 +25,8 @@ const DeviceEvent = {
       WHERE de.Device = ?) events`, [deviceid, deviceid, deviceid]);
   },
 
-  GetAllByDeviceId(deviceid) {
-    return db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? AND de.DateTime > NOW() - INTERVAL 7 DAY", [deviceid]);
+  GetAllByDeviceId(deviceid, days) {
+    return db.pquery("SELECT de.DateTime, de.Event, de.Data FROM DeviceEvent de WHERE de.Device = ? AND de.DateTime > NOW() - INTERVAL ? DAY", [deviceid, days]);
   },
 
   Insert(device, event, data) {

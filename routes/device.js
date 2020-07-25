@@ -6,8 +6,8 @@ const DeviceSys = require.main.require('./models/DeviceSys');
 const DeviceEvent = require.main.require('./models/DeviceEvent');
 const DeviceLog = require.main.require('./models/DeviceLog');
 const DeviceStat = require.main.require('./models/DeviceStat');
-const DeviceTele = require.main.require('./models/DeviceTele');
 const DeviceStatSeries = require.main.require('./models/DeviceStatSeries');
+const DeviceTele = require.main.require('./models/DeviceTele');
 const timelineConverter = require.main.require('./lib/timelineConverter');
 
 module.exports = (app) => {
@@ -62,18 +62,23 @@ module.exports = (app) => {
 
         Promise
           .all([
-            DeviceEvent.GetAllByDeviceId(device.Id),
-            DeviceLog.GetAllByDeviceId(device.Id),
-            DeviceStat.GetAllByDeviceId(device.Id),
+            DeviceEvent.GetAllByDeviceId(device.Id, 7),
+            DeviceLog.GetAllByDeviceId(device.Id, 7),
+            DeviceStatSeries.GetAllByDeviceId(device.Id, 7),
           ])
-          .then(([deviceallevents, deviceallog, deviceallstat]) => {
+          .then(([deviceallevents, deviceallog, deviceallstatseries]) => {
 
             const allevents = [];
-            deviceallevents.forEach(e => allevents.push({ DateTime: e.DateTime, Icon: 'fa-bolt', IconBg: 'green', Event: e.Event, Data: e.Data }));
-            deviceallog.forEach(l => allevents.push({ DateTime: l.DateTime, Icon: 'fa-wrench', IconBg: 'warning', Event: l.Message, Data: null }));
-            deviceallstat.forEach(s => allevents.push({ DateTime: s.DateTime, Icon: 'fa-cogs', IconBg: 'primary', Event: s.Stat, Data: s.Data }));
+            deviceallevents.forEach(e => allevents.push({ Priority: 1, DateTime: e.DateTime, Icon: 'fa-bolt', IconBg: 'green', Event: e.Event, Data: e.Data }));
+            deviceallog.forEach(l => allevents.push({ Priority: 3, DateTime: l.DateTime, Icon: 'fa-wrench', IconBg: 'warning', Event: l.Message, Data: null }));
+            deviceallstatseries.forEach(s => allevents.push({ Priority: 2, DateTime: s.DateTimeStart, Icon: 'fa-cogs', IconBg: 'primary', Event: s.Stat, Data: s.Data }));
 
-            allevents.sort(function (a, b) { return b.DateTime.getTime() - a.DateTime.getTime(); });
+            allevents.sort(function (a, b) {
+              let result = b.DateTime.getTime() - a.DateTime.getTime();
+              if (!result)
+                result = b.Priority - a.Priority;
+              return result;
+            });
 
             res.render('device-timeline', {
               title: "Timeline of " + (device.DisplayName || device.Name),
