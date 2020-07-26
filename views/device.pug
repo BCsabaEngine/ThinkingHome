@@ -6,13 +6,34 @@ block content
       h1(onclick="renameDevice()", style="cursor:pointer")
         = title
 
-  each component, key in cmdcapabilitycomponents
+  if cmdonlycapabilitycomponents
+    .row
+      each component, key in cmdonlycapabilitycomponents
+        .col-md-4
+          .card.card-lightblue
+            .card-header
+              h3.card-title
+                = key.toUpperCase() 
+                small
+                  |  · command only
+            .card-body
+              each command in component
+                if command.includes("?")
+                  button.btn.btn-lg.btn-success(onclick="executeCmd('" + device.Name + "', '" + key + "')")
+                    = command.replace("?", " ...").toUpperCase()
+                else
+                  button.btn.btn-lg.btn-success(onclick="executeCmd('" + device.Name + "', '" + key + "', '" + command + "')")
+                    = command.toUpperCase()
+
+  each component, key in statcapabilitycomponents
     .row
       .col-md-12
         .card.card-lightblue
           .card-header
             h3.card-title
-              = key.toUpperCase()
+              = key.toUpperCase() 
+              small
+                |  · stat and command
             .card-tools
               .btn-group
                 button.btn.btn-default.btn-sm(type='button', onclick='statmode.' + key + ' = 1; LoadStatGraph_' + key + '();') Daily
@@ -26,7 +47,7 @@ block content
               .col-md-4
                 if component
                   each command in component
-                    button.btn.btn-lg.btn-success(onclick="$.post('/device/" + device.Name + "/" + key + "/" + command + "');")
+                    button.btn.btn-lg.btn-success(onclick="$.post('/device/" + device.Name + "/" + key + "', { command: '" + command + "' });")
                       = command.toUpperCase()
             .row
               .col-md-1
@@ -171,7 +192,7 @@ block content
 
   script(type='text/javascript')
     | function pagereload() { divreload('content-wrapper', () => {
-    each component, key in cmdcapabilitycomponents
+    each component, key in statcapabilitycomponents
       | LoadStatGraph_#{key}();
     each component, key in telecapabilitycomponents
       | LoadTeleGraph_#{key}();
@@ -184,7 +205,7 @@ block content
   script(type='text/javascript')
     | var statmode = 
     | {
-    each component, key in cmdcapabilitycomponents
+    each component, key in statcapabilitycomponents
       | #{key}: 1,
     | };
   script(type='text/javascript')
@@ -194,7 +215,7 @@ block content
       | #{key}: 1,
     | };
 
-  each component, key in cmdcapabilitycomponents
+  each component, key in statcapabilitycomponents
     script(type='text/javascript').
       
       function LoadStatGraph_#{key}() {
@@ -310,6 +331,21 @@ block content
       });
 
   script(type='text/javascript').
+    function executeCmd(devicename, key, command)
+    {
+      if (command)
+        $.post("/device/" + devicename + "/" + key, { command: command });
+      else
+        bootbox.prompt({
+          title: "Command param of " + key,
+          callback: function(result)
+          {
+            if (result)
+              $.post("/device/" + devicename + "/" + key, { command: result });
+          }
+        });
+    }
+    
     function addConfig()
     {
       $.get('/device/form/config/add', function(form)

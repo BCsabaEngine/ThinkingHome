@@ -28,7 +28,8 @@ module.exports = (app) => {
           ])
           .then(([devicecapabilities, devicesys, devicelastevents, deviceconfigs]) => {
 
-            const cmdcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
+            const statcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
+            const cmdonlycapabilitycomponents = DeviceCapability.GetCapabilityComponentByCmdOnly(devicecapabilities);
             const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
 
             const ctxdevice = global.context.devices[devicename];
@@ -40,7 +41,8 @@ module.exports = (app) => {
               devicename: devicename,
               device: device,
               ctxdevice: ctxdevice,
-              cmdcapabilitycomponents: cmdcapabilitycomponents,
+              statcapabilitycomponents: statcapabilitycomponents,
+              cmdonlycapabilitycomponents: cmdonlycapabilitycomponents,
               telecapabilitycomponents: telecapabilitycomponents,
               devicesys: devicesys,
               devicecapabilities: devicecapabilities,
@@ -200,10 +202,10 @@ module.exports = (app) => {
     catch (err) { next(err); }
   });
 
-  app.post('/device/:devicename/:command/:message', function (req, res, next) {
+  app.post('/device/:devicename/:command', function (req, res, next) {
     const devicename = req.params.devicename;
     const command = req.params.command;
-    const message = req.params.message;
+    const message = req.body.command;
 
     try {
       const ctxdevice = global.context.devices[devicename];

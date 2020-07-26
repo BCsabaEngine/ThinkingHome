@@ -70,16 +70,49 @@ const DeviceCapability = {
         const devicecapmatch = devicecapabilityvalue.match(/^cmd\/\[\$\]\/?([a-z0-9]*)$/);
         if (devicecapmatch) {
           const componentname = devicecapmatch[1];
-          devicecomponents[componentname] = [];
-
-          if (devicecapability.Items)
-            devicecapability.Items.forEach(capitem => {
-              devicecomponents[componentname].push(capitem);
-            })
+          if (componentname in devicecomponents)
+            if (devicecapability.Items)
+              devicecapability.Items.forEach(capitem => {
+                devicecomponents[componentname].push(capitem);
+              })
         }
       });
 
     return devicecomponents;
+  },
+
+  GetCapabilityComponentByCmdOnly(devicecapabilities) {
+
+    let devicecomponents = {};
+    let devicecomponentscmdonly = {};
+
+    if (devicecapabilities)
+      devicecapabilities.forEach(devicecapability => {
+        const devicecapabilityvalue = devicecapability.Value;
+        const devicecapmatch = devicecapabilityvalue.match(/^stat\/\[\$\]\/?([a-z0-9]*)$/);
+        if (devicecapmatch) {
+          const componentname = devicecapmatch[1];
+          devicecomponents[componentname] = [];
+        }
+      });
+
+    if (devicecapabilities)
+      devicecapabilities.forEach(devicecapability => {
+        const devicecapabilityvalue = devicecapability.Value;
+        const devicecapmatch = devicecapabilityvalue.match(/^cmd\/\[\$\]\/?([a-z0-9]*)$/);
+        if (devicecapmatch) {
+          const componentname = devicecapmatch[1];
+          if (!(componentname in devicecomponents)) {
+            devicecomponentscmdonly[componentname] = [];
+            if (devicecapability.Items)
+              devicecapability.Items.forEach(capitem => {
+                devicecomponentscmdonly[componentname].push(capitem);
+              })
+          }
+        }
+      });
+
+    return devicecomponentscmdonly;
   },
 
   GetCapabilityComponentByTele(devicecapabilities) {
