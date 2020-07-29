@@ -197,7 +197,7 @@ block content
     each component, key in telecapabilitycomponents
       | LoadTeleGraph_#{key}();
     |}) };
-    | subscribes = { #{devicename} : pagereload() }
+    | subscribes = { #{devicename} : pagereload, }
   script(src='/plugins/jquery/jquery.min.js')
   script(src='/plugins/flot/jquery.flot.js')
   script(src='/plugins/flot-old/jquery.flot.resize.min.js')

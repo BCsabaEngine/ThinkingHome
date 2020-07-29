@@ -1,12 +1,12 @@
 .col-12.col-sm-12.col-md-6.col-xl-4(id=device.Name)
   .info-box
-    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:110px;cursor: pointer", onclick="$.post('/device/" + device.Name + "/power1/toggle');")
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:110px;cursor: pointer", onclick="$.post('/device/" + device.Name + "/power1', { command: 'toggle' });")
       small
         i.fas.fa-lightbulb
       span.badge.badge-default
         = (device.stat('power1') || "?").toUpperCase()
     | &nbsp;&nbsp;
-    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:110px;cursor: pointer", onclick="$.post('/device/" + device.Name + "/power2/toggle');")
+    span.info-box-icon.bg-info.elevation-1(style="background-color:#" + device.Color + "!important;width:110px;cursor: pointer", onclick="$.post('/device/" + device.Name + "/power2', { command: 'toggle' });")
       small
         i.fas.fa-lightbulb
       span.badge.badge-default
