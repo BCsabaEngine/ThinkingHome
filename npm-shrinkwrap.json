@@ -20,7 +20,7 @@
       "integrity": "sha512-nZxaJhBXBQ8HVoIcGsf9qWep3Oh3jCENK54V4mRF7qaJabVsAYdbTtmSD8WmAp1R6ytPiu5apMwSXyxB1WlaBA==",
       "requires": {
         "@babel/helper-validator-identifier": "^7.10.3",
-        "lodash": "^4.17.13",
+        "lodash": "^4.17.19",
         "to-fast-properties": "^2.0.0"
       }
     },
