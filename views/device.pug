@@ -14,8 +14,6 @@ block content
             .card-header
               h3.card-title
                 = key.toUpperCase() 
-                small
-                  |  · command only
             .card-body
               each command in component
                 if command.includes("?")
@@ -32,8 +30,6 @@ block content
           .card-header
             h3.card-title
               = key.toUpperCase() 
-              small
-                |  · stat and command
             .card-tools
               .btn-group
                 button.btn.btn-default.btn-sm(type='button', onclick='statmode.' + key + ' = 1; LoadStatGraph_' + key + '();') Daily
