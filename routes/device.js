@@ -205,7 +205,7 @@ module.exports = (app) => {
   app.post('/device/:devicename/:command', function (req, res, next) {
     const devicename = req.params.devicename;
     const command = req.params.command;
-    const message = req.body.command;
+    const message = (req.body.command || "").trim();
 
     try {
       const ctxdevice = global.context.devices[devicename];

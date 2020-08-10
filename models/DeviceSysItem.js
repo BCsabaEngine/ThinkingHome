@@ -28,6 +28,14 @@ const DeviceSysItem = {
               row.Name = "Chip ID";
               break;
 
+            case "firmware":
+              row.Name = "Firmware";
+              break;
+
+            case "freemem":
+              row.Name = "Free memory";
+              break;
+
             case "uptime":
               row.Name = "Uptime";
               row.Value = moment(moment.now() - 1000 * row.Value).fromNow();
