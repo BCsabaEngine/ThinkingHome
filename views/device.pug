@@ -126,31 +126,33 @@ block content
                   br
                   small
                     = moment(devicelastevent.DateTime).fromNow()
-    .col-md-4
-      .card.card-olive.h-100
-        .card-header
-          h3.card-title Config
-          .card-tools
-            .btn-group
-              button.btn.btn-default.btn-xs(onclick='$.post("/device/' + device.Name + '/config/push", null);')
-                i.fas.fa-retweet
-                |  Push to device
-              button.btn.btn-primary.btn-xs(onclick='addConfig()')
-                i.fas.fa-plus
-                |  Add
-        .card-body
-          if !deviceconfigs || !deviceconfigs.length
-            | No special config
-          else
-            each deviceconfig in deviceconfigs
-              .row
-                .col-sm-4
-                  = deviceconfig.Name
-                .col-sm-8
-                  b(style='cursor:pointer', onclick='modifyConfig(' + deviceconfig.Id + ', "' + deviceconfig.Value + '")')
-                    = deviceconfig.Value
-                  .float-right
-                    i.fa.fa-times.text-danger(style='cursor:pointer', onclick='deleteConfig(' + deviceconfig.Id + ', "' + deviceconfig.Name + '")')
+
+    if (hasconfigcapability)
+      .col-md-4
+        .card.card-olive.h-100
+          .card-header
+            h3.card-title Config
+            .card-tools
+              .btn-group
+                button.btn.btn-default.btn-xs(onclick='$.post("/device/' + device.Name + '/config/push", null);')
+                  i.fas.fa-retweet
+                  |  Push to device
+                button.btn.btn-primary.btn-xs(onclick='addConfig()')
+                  i.fas.fa-plus
+                  |  Add
+          .card-body
+            if !deviceconfigs || !deviceconfigs.length
+              | No special config
+            else
+              each deviceconfig in deviceconfigs
+                .row
+                  .col-sm-4
+                    = deviceconfig.Name
+                  .col-sm-8
+                    b(style='cursor:pointer', onclick='modifyConfig(' + deviceconfig.Id + ', "' + deviceconfig.Value + '")')
+                      = deviceconfig.Value
+                    .float-right
+                      i.fa.fa-times.text-danger(style='cursor:pointer', onclick='deleteConfig(' + deviceconfig.Id + ', "' + deviceconfig.Name + '")')
 
   br
 

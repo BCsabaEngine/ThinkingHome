@@ -132,6 +132,18 @@ const DeviceCapability = {
     return devicecomponents;
   },
 
+  HasConfigCapability(devicecapabilities) {
+
+    let result = false;
+
+    if (devicecapabilities)
+      devicecapabilities.forEach(devicecapability => {
+        if (devicecapability.Value.startsWith("cfg"))
+          result = true;
+      });
+    return result;
+  },
+
 };
 
 module.exports = DeviceCapability;

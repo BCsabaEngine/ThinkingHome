@@ -23,7 +23,7 @@ module.exports = (app) => {
           .all([
             DeviceCapability.GetByDeviceId(device.Id),
             DeviceSys.FindLastByDeviceId(device.Id),
-            DeviceEvent.GetLastByDeviceId(device.Id),
+            DeviceEvent.GetLastByDeviceId(device.Id, 7),
             DeviceConfig.GetAllByDeviceId(device.Id),
           ])
           .then(([devicecapabilities, devicesys, devicelastevents, deviceconfigs]) => {
@@ -31,6 +31,7 @@ module.exports = (app) => {
             const statcapabilitycomponents = DeviceCapability.GetCapabilityComponentByStatAndCmd(devicecapabilities);
             const cmdonlycapabilitycomponents = DeviceCapability.GetCapabilityComponentByCmdOnly(devicecapabilities);
             const telecapabilitycomponents = DeviceCapability.GetCapabilityComponentByTele(devicecapabilities);
+            const hasconfigcapability = DeviceCapability.HasConfigCapability(devicecapabilities);
 
             const ctxdevice = global.context.devices[devicename];
             if (!ctxdevice)
@@ -46,6 +47,7 @@ module.exports = (app) => {
               telecapabilitycomponents: telecapabilitycomponents,
               devicesys: devicesys,
               devicecapabilities: devicecapabilities,
+              hasconfigcapability: hasconfigcapability,
               devicelastevents: devicelastevents,
               deviceconfigs: deviceconfigs,
             });

@@ -14,7 +14,7 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
 
 const DeviceEvent = {
 
-  GetLastByDeviceId(deviceid) {
+  GetLastByDeviceId(deviceid, days) {
     return db.pquery(`
       SELECT events.Event,
           (SELECT de.Data FROM DeviceEvent de WHERE de.Event = events.Event AND de.Device = ? ORDER BY de.Id DESC LIMIT 1) AS Data,
@@ -22,7 +22,8 @@ const DeviceEvent = {
       FROM
       (SELECT DISTINCT de.Event
       FROM DeviceEvent de
-      WHERE de.Device = ?) events`, [deviceid, deviceid, deviceid]);
+      WHERE de.Device = ? AND
+            de.DateTime > NOW() - INTERVAL ? DAY) events`, [deviceid, deviceid, deviceid, days]);
   },
 
   GetAllByDeviceId(deviceid, days) {
