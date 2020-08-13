@@ -34,6 +34,8 @@ const DeviceSysItem = {
 
             case "freemem":
               row.Name = "Free memory";
+              if (row.Value)
+                row.Value += " bytes";
               break;
 
             case "uptime":
