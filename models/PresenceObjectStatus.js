@@ -42,8 +42,8 @@ const PresenceObjectStatus = {
     return db.pquery("SELECT ds.DateTime, ds.Status FROM PresenceObjectStatus ds WHERE ds.PresenceObject = ?  AND ds.DateTime > NOW() - INTERVAL 7 DAY", [presenceobjectid]);
   },
 
-  Insert(presenceobjectid, status, reason) {
-    return PresenceObjectStatusTable.insert({ PresenceObject: presenceobjectid, Status: status ? 1 : 0, Reason: reason });
+  async Insert(presenceobjectid, status, reason) {
+    return await PresenceObjectStatusTable.insert({ PresenceObject: presenceobjectid, Status: status ? 1 : 0, Reason: reason });
   },
 
 };
