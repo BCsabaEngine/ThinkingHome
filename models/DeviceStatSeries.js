@@ -72,8 +72,8 @@ const DeviceStatSeries = {
     });
 
     if (allminutes > 0) {
-      const m = onminutes % 60;
-      const h = Math.floor(onminutes / 60);
+      let m = onminutes % 60;
+      let h = Math.floor(onminutes / 60);
       let d = 0;
       if (h >= 48) {
         d = Math.floor(h / 24);
