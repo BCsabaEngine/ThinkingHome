@@ -51,7 +51,7 @@ class DeviceState extends EventEmitter {
 
   cmd(command, message) {
     const name = this._name;
-    mqtt.publish(`cmd/${name}/${command}`, message, { retain: true });
+    mqtt.publish(`cmd/${name}/${command}`, message, { retain: false });
   }
 
   stat(statname) {
