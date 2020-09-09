@@ -17,7 +17,7 @@
     "express-session": "^1.17.1",
     "express-useragent": "^1.0.15",
     "glob": "^7.1.6",
-    "got": "^11.6.0",
+    "got": "^11.6.1",
     "helmet": "^4.1.0",
     "ip": "^1.1.5",
     "lodash": "^4.17.20",
