@@ -1,5 +1,5 @@
 # Thinking Home
- ESP8266/ESP32 (Tasmota like) Thinking home system by NodeJS+MQTT
+ ESP8266/ESP32 (Tasmota like and others...) Thinking home system by NodeJS+MQTT
 
 # Version
  2020-10-01: v0.7 ReInitial version
