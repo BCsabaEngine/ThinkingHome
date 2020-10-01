@@ -4,9 +4,11 @@
  apt-get update
  apt-get dist-upgrade
  raspi-config -> extend filesystem
+ raspi-config -> set timezone
  systemctl disable dphys-swapfile.service
  apt-get install -y mc zip unzip telnet git
- /boot/config.txt -> dtoverlay=disable-wifi & dtoverlay=disable-bt
+ /boot/config.txt -> dtoverlay=disable-wifi
+ /boot/config.txt -> dtoverlay=disable-bt
  /etc/dhcpcd.conf -> setup fix IP
  /etc/hostname -> any
  /etc/hosts -> same
