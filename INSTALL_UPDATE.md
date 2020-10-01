@@ -20,6 +20,9 @@
  apt-get install -y mariadb-server
  mysql_secure_installation
  [mysql:] CREATE DATABASE ThinkingHome;
+ [mysql:] CREATE USER 'root'@'%' IDENTIFIED BY '??????';
+ [mysql:] GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+ /etc/mariadb.conf -> bind_address 0.0.0.0
  apt-get install -y mosquitto mosquitto-clients
  echo "user:pass" /etc/mosquitto/mosquitto.passwd
  mosquitto_passwd -U /etc/mosquitto/mosquitto.passwd
@@ -34,6 +37,7 @@
  npm install --production --unsafe-perm
  cp ./config.js.sample ./config.js
  NODE_ENV=production pm2 start ./index.js --name ThinkingHome
+ pm2 save
  ```
 
 # Update system
