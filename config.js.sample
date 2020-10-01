@@ -1,13 +1,20 @@
 var config = {};
 
 config.database = {};
+config.mqtt = {};
 config.web = {};
 
-config.database.host = process.env.DATABASE_HOST || 'localhost';
+config.database.server = process.env.DATABASE_SERVER || 'localhost';
 config.database.port = process.env.DATABASE_PORT || '3306';
 config.database.username = process.env.DATABASE_USERNAME || 'th';
 config.database.password = process.env.DATABASE_PASSWORD || 'th1234';
 config.database.schema = process.env.DATABASE_SCHEMA || 'ThinkingHome';
+
+config.mqtt.server = process.env.MQTT_SERVER || 'localhost';
+config.mqtt.port = process.env.MQTT_PORT || '1883';
+config.mqtt.username = process.env.MQTT_USERNAME || 'th';
+config.mqtt.password = process.env.MQTT_PASSWORD || 'th1234';
+config.mqtt.clientid = process.env.MQTT_CLIENTID || 'ThinkingHome';
 
 config.web.port = process.env.WEB_PORT || 80;
 
