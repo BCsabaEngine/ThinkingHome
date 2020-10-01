@@ -78,6 +78,10 @@ typings/
 # Next.js build output
 .next
 
+# Nuxt.js build / generate output
+.nuxt
+dist
+
 # Gatsby files
 .cache/
 # Comment in the public line in if your project uses Gatsby and *not* Next.js
@@ -101,3 +105,6 @@ typings/
 
 # VScode runtime config
 .vscode
+
+# APP config
+config.js
