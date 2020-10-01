@@ -2,7 +2,7 @@
  ESP8266/ESP32 (Tasmota like) Thinking home system by NodeJS+MQTT
 
 # Version
- 2020-06-15: v0.2 Initial version
+ 2020-10-01: v0.7 ReInitial version
  
 # Thanks to
  AdminLTE template
