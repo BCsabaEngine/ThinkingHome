@@ -1,0 +1,57 @@
+doctype html
+html(lang='en')
+
+  include includes/head.pug
+
+  body.hold-transition.login-page
+    include includes/scripts.pug
+    .login-box
+      .login-logo
+        img.brand-image.img-circle.elevation-2(src='/logo128.png' width='64' alt='Logo' style='opacity: .8')
+        p
+          | Thinking 
+          b
+            | HOME
+      .card#card
+        .card-body.login-card-body
+          p.login-box-msg Log in to access your home now
+          .input-group.mb-3
+            input.form-control(type='email' placeholder='Email' onkeydown='if (event.keyCode == 13) login()')#email
+            .input-group-append
+              .input-group-text
+                span.fas.fa-user
+          .input-group.mb-3
+            input.form-control(type='password' placeholder='Password' onkeydown='if (event.keyCode == 13) login()')#password
+            .input-group-append
+              .input-group-text
+                span.fas.fa-lock
+          center
+            button.btn.btn-primary.btn-blockx(type='button' onclick='login()')#loginbutton
+              | Log In
+
+    include includes/scriptsex.pug
+    script(src='/plugins/jquery-ui/jquery-ui.min.js')
+    script(type='text/javascript').
+      function login()
+      {
+        var email = $('#email').val();
+        var password = $('#password').val();
+        $('#loginbutton').html("<i class='fas fa-sync-alt fa-spin'></i> Please wait...").addClass('disabled');
+        $.post('/login', { email: email, password: password}, 'json')
+        .done(function() {
+          window.location = "/";
+        })
+        .fail(function() {
+          $('#password').val('');
+          $('#loginbutton').html("Log in").removeClass('disabled');
+          $('#card').effect('shake');
+          $('#password').focus();
+        })
+      }
+
+      setTimeout(function() {
+        if ($('#email').val())
+          $('#password').focus();
+        else
+          $('#email').focus();
+      }, 250);

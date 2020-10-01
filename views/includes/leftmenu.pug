@@ -1,0 +1,40 @@
+aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
+  a.brand-link.navbar-orange(href='/')
+    img.brand-image.img-circle.elevation-3(src='/logo128.png' alt='Logo' style='opacity: .8')
+    span.brand-text.font-weight-light Thinking HOME
+  .sidebar#sidebar
+    nav.mt-2
+      ul.nav.nav-pills.nav-sidebar.flex-column(data-widget='treeview' role='menu' data-accordion='false')
+        li.nav-item
+          a.nav-link(href='/')
+            i.nav-icon.fas.fa-tachometer-alt
+            p Dashboard
+
+        li.nav-header SYSTEM
+          - var platformwarningcount = runningContext.GetWarningOrErrorPlatformCount()
+          li.nav-item
+            a.nav-link(href='/platform')
+              i.nav-icon.fas.fa-rss(class=platformwarningcount ? "text-warning" : "")
+              p Platforms
+                if (platformwarningcount)
+                  span.badge.badge-warning.right
+                    = platformwarningcount
+
+
+          - var rulecodeerror = runningContext.GetRuleCodeExecutorMessage()
+          li.nav-item
+            a.nav-link(href='/rulecode')
+              i.nav-icon.fa.fa-code(class=rulecodeerror ? "text-danger" : "")
+              p Rules
+                if (rulecodeerror)
+                  span.badge.badge-danger.right !
+
+          li.nav-item
+            a.nav-link(href='/settings')
+              i.nav-icon.fas.fa-wrench
+              p Settings
+
+        li.nav-item
+          a.nav-link(href='/logout')
+            i.nav-icon.fas.fa-lock
+            p Logout

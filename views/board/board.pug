@@ -1,0 +1,35 @@
+- var offset = 0;
+if columns.length == 1
+  - offset = 4;
+if columns.length == 2
+  - offset = 2;
+
+.row
+  each column in columns
+    .col-md-4(class="offset-md-" + offset)
+      - offset = 0
+      each panel of column
+        !=panel
+
+  script(type='text/javascript').
+
+    subscribes = {
+      board : function(p) 
+      {
+        var device = p.device;
+        var entity = p.entity;
+        if (device != '' && entity != '')
+          $('.ui_' + device + '_' + entity).trigger('valuechanged', { value: p.value });
+      }
+    };
+
+    $(function () {
+      $('.knob').knob({
+        draw : function () {
+          if(this.unit != undefined)
+          {
+            this.i.val(Math.round(this.i.val()) + this.unit);
+          }
+        }
+      });
+    });

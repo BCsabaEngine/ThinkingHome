@@ -1,0 +1,75 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      if board
+        h4.text-center#title
+          if (prevboardid)
+            small
+              a.gray(href="/board-" + prevboardid)
+                i.fa.fa-chevron-left
+          | &nbsp;&nbsp;&nbsp;
+
+          = board.Name
+
+          | &nbsp;&nbsp;&nbsp;
+          if (nextboardid)
+            small
+              a.gray(href="/board-" + nextboardid)
+                i.fa.fa-chevron-right
+      button.btn(style="position: fixed; top: 64px; right: 14px;" onclick="doFullscreen()" title="Press F")#fullscreen
+        i.fa.fa-expand
+
+    span#content
+      button.btn(style="position: fixed; top: 20px; left: 20px;" onclick="doRefresh()" title="Press R")#refresh
+        i.fa.fa-sync#refreshicon
+
+    if !board
+      center
+        h1.mt-5
+          i.fa.fa-eye-slash.fa-2x
+          br
+          | Sorry, no board to display
+    else if errorcontent
+      center
+        h1.mt-5
+          i.fa.fa-bug.fa-2x
+          br
+          span.text-danger
+            | Sorry, looks like an error occurred
+          br
+          small
+            != errorcontent
+    else
+      != content
+
+    if (prevboardid)
+      script(type='text/javascript').
+        Mousetrap.bind('left', function() { window.location.href = "/board-#{prevboardid}"; });
+    if (nextboardid)
+      script(type='text/javascript').
+        Mousetrap.bind('right', function() { window.location.href = "/board-#{nextboardid}"; });
+    script(type='text/javascript').
+      function doFullscreen()
+      {
+        $('body').css("background", $('.content-wrapper').css("background"));
+        $('body').removeClass('sidebar-mini').removeClass('sidebar-collapse');
+        $('.main-footer').removeClass('d-sm-block').hide();
+        $('.main-header').hide();
+        $('.main-sidebar').hide();
+        $('.content-wrapper').css("margin-left", 0);
+        $('#title').hide();
+        $('#fullscreen').hide();
+
+        openFullscreen();
+      };
+      Mousetrap.bind('f', doFullscreen);
+
+      function doRefresh()
+      {
+        $('#refreshicon').addClass('fa-pulse');
+        $('#refresh').append(' Refreshing...');
+        setTimeout(() => { divreload('content'); }, 350);
+      }
+      Mousetrap.bind('r', doRefresh);

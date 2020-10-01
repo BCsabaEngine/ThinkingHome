@@ -1,0 +1,23 @@
+doctype html
+html(lang='en')
+
+  include includes/head.pug
+
+  body.hold-transition.lockscreen
+    include includes/scripts.pug
+    section.content
+      block content
+        section.content
+          br
+          br
+          .error-page
+            h2.headline.text-warning  404
+            .error-content
+              h2
+                i.fas.fa-exclamation-triangle.text-warning
+                |  Oops! Page not found
+              p
+                | We could not find the page you were looking for.
+                | Meanwhile, you may 
+                a(href='/') return to dashboard.
+    include includes/scriptsex.pug

@@ -1,0 +1,8 @@
+.card.card-outline.card-info(style='border-top: 4px solid ' + (color || '#17a2b8'))
+  .card-header
+    h1.card-title(style="font-size:0.9rem")
+      if icon
+        i(class=icon style="color: " + (color || '#17a2b8'))
+        |  
+      = name
+  block panelbody

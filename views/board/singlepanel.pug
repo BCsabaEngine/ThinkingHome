@@ -1,0 +1,8 @@
+extends _panel
+
+block panelbody
+  .card-body.pl-1.pr-1.hidelastchild
+    each item in items
+      center
+        != item
+      hr(width='90%')

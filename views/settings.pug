@@ -1,0 +1,558 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h4
+        | System settings
+
+  .row
+    .col-md-10.offset-md-1
+      button.btn.btn-primary.float-right(onclick="save()")
+        i.fa.fa-upload
+        |  Save settings
+      a.btn.btn-default.float-left(href="/")
+        i.fa.fa-arrow-circle-left
+        |  Discard changes
+
+  br
+  form#form
+    .row
+      .col-md-2.offset-md-1
+        #vert-tabs-tab.nav.flex-column.nav-tabs.h-100(role='tablist' aria-orientation='vertical')
+
+          a#vt1t.nav-link.black(data-toggle='pill' href='#vt1' role='tab' aria-controls='vt1' aria-selected='true')
+            | Your living environment
+          a#vt2t.nav-link.black.active(data-toggle='pill' href='#vt2' role='tab' aria-controls='vt2' aria-selected='false')
+            | Dashboards
+          a#vt3t.nav-link.black(data-toggle='pill' href='#vt3' role='tab' aria-controls='vt3' aria-selected='false')
+            | Users
+          a#vt4t.nav-link.black(data-toggle='pill' href='#vt4' role='tab' aria-controls='vt4' aria-selected='false')
+            | System
+
+      .col-md-8
+        #vert-tabs-tabContent.tab-content
+
+          #vt1.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt1t')
+            .callout.callout-success
+              h5
+                i.fa.fa-globe-europe.text-success
+                |  Where are you?
+              p
+                small
+                  | By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily enter the values by pressing the My location button.
+              .row
+                .col-sm-2.offset-md-1
+                  .form-group
+                    label Latitude
+                    input.form-control(type='text' name='latitude', value=systemsettings.Latitude)#latitude
+                .col-sm-2
+                  .form-group
+                    label Longitude
+                    input.form-control(type='text' name='longitude', value=systemsettings.Longitude)#longitude
+                .col-sm-2
+                  .form-group
+                    label
+                      != "&nbsp;"
+                    button.form-control.btn.btn-default(onclick="geodetect();return false;")
+                      i.fa.fa-search-location
+                      |  My location
+            .callout.callout-warning
+              h5
+                i.fa.fa-cloud-sun.text-warning
+                |  What is the weather?
+                a.black.no-underline.btn-sm.float-right(href="https://openweathermap.org" target="_blank")
+                  |  Go to homepage
+              p
+                small
+                  | Create an OpenWeatherMap API key to get fast and accurate weather data. For each point on the globe, OpenWeatherMap provides historical, current and forecasted weather data via light-speed APIs. You can check the validity of the API key by pressing the button.
+              .row
+                .col-sm-4.offset-md-1
+                  .form-group
+                    label OpenWeatherMap API key
+                    input.form-control(type='text' name='openweathermapapikey', value=systemsettings.OpenweathermapApiKey)#openweathermapapikey
+                .col-sm-2
+                  .form-group
+                    label
+                      != "&nbsp;"
+                    button.form-control.btn.btn-default(onclick="checkopenweathermap();return false;")
+                      i.fa.fa-check
+                      |  Check API key
+
+          #vt2.tab-pane.text-left.fade.active.show(role='tabpanel' aria-labelledby='vt2t')
+            if boards.length == 0
+              p.text-warning
+                | At least one board must be created to see how the devices work.
+              .input-group
+                button.btn.btn-info.btn-sm(onclick="addboard();return false;")
+                  i.fa.fa-plus
+                  |  Create primary board
+            else if boards.length == 1
+              p.small
+                | Only the default board exists. By creating additional boards, users can scroll through different views.
+              .input-group
+                button.btn.btn-default.btn-sm(onclick="addboard();return false;")
+                  i.fa.fa-plus
+                  |  Add alternative board
+            else 
+              p.small
+                | The following is a list of boards that can be assigned to users.
+              .input-group
+                button.btn.btn-default.btn-sm(onclick="addboard();return false;")
+                  i.fa.fa-plus
+                  |  Add more board
+            if boards.length > 0
+              br
+              .table-responsive.p-0
+                table.table.table-hover.text-nowrap
+                  thead
+                    tr
+                      th
+                        |  
+                      th Name
+                      th Yaml
+                      th Users
+                      th
+                        |  
+                  tbody
+                    each board of boards
+                      tr
+                        td(width="10px")
+                          if board.IsPrimary
+                            | 
+                            i.fa.fa-star.text-warning
+                          else
+                            button.btn.btn-hover.btn-defaultx.btn-sm(onclick="setprimaryboard(" + board.Id + ");return false;")
+                              i.fa.fa-check.text-success
+                        td
+                          div(style="cursor:pointer" onclick="modifyboardname(" + board.Id + ", '" + board.Name + "')")
+                            = board.Name
+                        td
+                          a.btn.btn-info.btn-sm(href="/settings/board/edit/" + board.Id target="_blank")
+                            i.fa.fa-edit
+                        td
+                          div(style="cursor:pointer" onclick="associateuserstoboard(" + board.Id + ", '" + board.Name + "')")
+                            = board.Users || "Everybody"
+                        td(align="right")
+                          button.btn.btn-hover.btn-danger.btn-sm(onclick="deleteboard(" + board.Id + ", '" + board.Name + "');return false;")
+                            i.fa.fa-ban
+
+          #vt3.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt3t')
+            if users.length == 0
+              p.text-danger
+                | Without users, everyone on the local network is free to use the system. It is highly recommended that you create at least one Admin user!
+              .input-group
+                button.btn.btn-success.btn-sm(onclick="adduser();return false;")
+                  i.fa.fa-plus
+                  |  Create admin user
+            else if users.length == 1
+              p.text-warning
+                | Only the Admin user exists in the system. We recommend that you create individual users for family members!
+              .input-group
+                button.btn.btn-default.btn-sm(onclick="adduser();return false;")
+                  i.fa.fa-plus
+                  |  Add first family member
+            else 
+              p.small
+                | In the list you can see the users of the system. Simply create a new user with the Add button.
+              .input-group
+                button.btn.btn-default.btn-sm(onclick="adduser();return false;")
+                  i.fa.fa-plus
+                  |  Add more family member
+            if users.length > 0
+              br
+              .table-responsive.p-0
+                table.table.table-hover.text-nowrap
+                  thead
+                    tr
+                      th
+                        |  
+                      th Email
+                      th Name
+                      th Last activity
+                      th
+                        |  
+                  tbody
+                    each user of users
+                      tr
+                        td(width="10px")
+                          if user.IsAdmin
+                            | 
+                            i.fa.fa-user-shield
+                        td
+                          = user.Email
+                        td
+                          div(style="cursor:pointer" onclick="modifyuser('" + user.Name + "', '" + user.Email + "')")
+                            = user.Name || '[Not set]'
+                        td
+                          = user.LastActivity ? dayjs(user.LastActivity.getTime()).fromNow() : '-'
+                        td(align="right")
+                          if !user.IsAdmin
+                            button.btn.btn-hover.btn-danger.btn-sm(onclick="deleteuser('" + user.Email + "');return false;")
+                              i.fa.fa-ban
+
+          #vt4.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt4t')
+            .callout.callout-success
+              h5
+                i.fa.fa-cloud-upload-alt.text-success
+                |  Online backup
+              p
+                small
+                  | By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily enter the values by pressing the My location button.
+            .callout.callout-success
+              h5
+                i.fa.fa-sd-card.text-success
+                |  Backup
+              p
+                small
+                  | By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily enter the values by pressing the My location button.
+            .callout.callout-danger#restartbox
+              h5
+                i.fa.fa-power-off.text-danger
+                |  Restart
+              p
+                small
+                  | You can restart the ThinkingHome system by pressing the button. We will redirect you to the main page shortly, because wou will need to log in again after the reboot.
+              .row
+                .col-sm-2.offset-md-1
+                  button.btn.btn-danger.form-control(onclick="restart(); return false;")#restartbutton
+                    | Restart now
+
+
+  script(type='text/javascript').
+    function save()
+    {
+      var formdata = $('#form').serialize();
+      $.post('/settings/update', formdata)
+        .done(function()
+        {
+          window.location.href = "/";
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Save settings failed',
+            text: response.responseText,
+          });
+        })
+    }
+
+    function geodetect()
+    {
+      if (navigator.geolocation)
+      {
+        navigator.geolocation.getCurrentPosition(function(position)
+        {
+          $('#latitude').val(position.coords.latitude.toFixed(6));
+          $('#longitude').val(position.coords.longitude.toFixed(6));
+        });
+      }
+      else
+      {
+        swal.fire({
+          icon: 'error',
+          title: 'No Geo infos',
+          text: 'Geolocation is not supported by this browser',
+        });
+      }
+    }
+
+    function checkopenweathermap()
+    {
+      var latitude = $('#latitude').val();
+      var longitude = $('#longitude').val();
+      var apikey = $('#openweathermapapikey').val();
+
+      if (!apikey)
+        return;
+
+      $.post("/settings/checkopenweatherapikey", { apikey: apikey, latitude: latitude, longitude: longitude })
+        .done(function(data) {
+          swal.fire({
+            icon: 'success',
+            title: 'API key is OK',
+            text: 'Detected timezone: ' + data,
+          });
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'API key is wrong',
+            text: 'You may have typed it wrong. Try copy-paste!',
+          });
+        })
+    }
+
+    function adduser()
+    {
+      Swal.fire({
+        title: 'Add new user',
+        text: 'Type email address of user',
+        html:
+          '<b>Email</b><br/><input    id="swal-email"    type="email"    class="swal2-input" placeholder="Unique email address of new user">' +
+          '<b>Password</b><br/><input id="swal-password" type="password" class="swal2-input" placeholder="Strong pass: 8+ char, lower+upper">',
+        confirmButtonText: 'Create',
+        showCancelButton: true,
+        preConfirm: () => {
+          return [
+            document.getElementById('swal-email').value,
+            document.getElementById('swal-password').value
+          ]
+          }
+        })
+      .then((result) => {
+        if (result.isConfirmed)
+          if (result.value[0] && result.value[1])
+          {
+            $.post("/settings/user/add", {email: result.value[0], password: result.value[1]})
+              .done(function(data) {
+                divreload('vt3');
+              })
+              .fail(function(error) {
+                Swal.fire(
+                  'Error occured',
+                  error.responseText,
+                  'error'
+                )            
+              });
+          }
+      });
+    }
+
+    function modifyuser(name, email)
+    {
+      Swal.fire({
+        title: 'Modify user name',
+        text: "Type user real name",
+        input: 'text',
+        inputValue: name,
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post("/settings/user/update", {name: result.value, email: email})
+            .done(function(data) {
+              divreload('vt3');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+
+    function deleteuser(email)
+    {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "User '" + email + "' will be deleted permanently",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Delete'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post("/settings/user/delete", {email: email})
+            .done(function(data) {
+              divreload('vt3');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+
+    function addboard()
+    {
+      Swal.fire({
+        title: 'Add new board',
+        text: 'Type name of board',
+        input: 'text',
+        confirmButtonText: 'Create',
+        showCancelButton: true,
+        })
+      .then((result) => {
+        if (result.isConfirmed)
+          if (result.value)
+          {
+            $.post("/settings/board/add", {name: result.value})
+              .done(function(data) {
+                divreload('vt2');
+              })
+              .fail(function(error) {
+                Swal.fire(
+                  'Error occured',
+                  error.responseText,
+                  'error'
+                )            
+              });
+          }
+      });
+    }
+
+    function setprimaryboard(id)
+    {
+      $.post("/settings/board/setprimary", {id: id})
+        .done(function(data) {
+          divreload('vt2');
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
+    }
+
+    function associateuserstoboard()
+    {
+      var html = '<div align="left">';
+      html += "</div>";
+
+      Swal.fire({
+        title: 'Associate users',
+        text: 'Select which users can see the board',
+        html:
+          '<div align="left"><input id="swal-email" type="checkbox" class="swal2-checkbox"> <b>Email</b> <br/><br/>' +
+          '<b>Password</b><br/><input id="swal-password" type="password" class="swal2-input" placeholder="Strong pass: 8+ char, lower+upper">',
+        confirmButtonText: 'Create',
+        showCancelButton: true,
+        preConfirm: () => {
+          return [
+            document.getElementById('swal-email').value,
+            document.getElementById('swal-password').value
+          ]
+          }
+        })
+      .then((result) => {
+        if (result.isConfirmed)
+          if (result.value[0] && result.value[1])
+          {
+            $.post("/settings/user/add", {email: result.value[0], password: result.value[1]})
+              .done(function(data) {
+                divreload('vt3');
+              })
+              .fail(function(error) {
+                Swal.fire(
+                  'Error occured',
+                  error.responseText,
+                  'error'
+                )            
+              });
+          }
+      });
+    }
+
+    function modifyboardname(id, name)
+    {
+      Swal.fire({
+        title: 'Modify board name',
+        text: "Type board name",
+        input: 'text',
+        inputValue: name,
+        showCancelButton: true,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post("/settings/board/updatename", {id: id, name: result.value})
+            .done(function(data) {
+              divreload('vt2');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+
+    function modifyboardyaml(id, name, yaml)
+    {
+      Swal.fire({
+        title: "Edit '" + name + "' board YAML",
+        html: '<textarea id="swal-yaml" class="swal2-input" rows="15" height="400px">' + yaml + '</textarea>',
+        showCancelButton: true,
+        width: '80vw',
+        heightAuto: false,
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post("/settings/board/updateyaml", {id: id, yaml: result.value})
+            .done(function(data) {
+              divreload('vt2');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+
+    function deleteboard(id, name)
+    {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "Board '" + name + "' will be deleted permanently",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Delete'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post("/settings/board/delete", {id: id})
+            .done(function(data) {
+              divreload('vt2');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+
+    function restart()
+    {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "System will be restarted",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#d33',
+        confirmButtonText: 'Restart'
+      }).then((result) => {
+        if (result.isConfirmed) {
+          $.post("/settings/restart")
+            .done(function(data) {
+              $('#restartbutton').html("<i class='fas fa-sync-alt fa-spin'></i> Please wait...");
+              setTimeout(() => window.location.href = "/", 5000);
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }

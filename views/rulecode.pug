@@ -1,0 +1,201 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h4
+        | Rules
+
+  if (runerrormessage)
+    .row
+      .col-md-8
+        .callout.callout-danger
+          span.text-danger
+            i.icon.fa.fa-exclamation-triangle
+            |  Error in rules: 
+            b
+              = runerrormessage
+          p.monospace.small.pl-3.pt-3 !{runerrorstack.replace(/\n/g, '<br/>')}
+
+  .row
+    .col-md-8
+      .btn-group
+        button.btn.btn-primary(onclick="savecode()")
+          i.fa.fa-upload
+          |  Upload rules
+        button.btn.btn-default(onclick="formatcode()")
+          i.fa.fa-align-left
+          |  Reformat code
+    .col-md-4
+      center
+        a.btn.btn-default(href="/rulecode/loglist" target="_blank")
+          i.fa.fa-list
+          |  Show logs
+  br
+
+  .row
+    .col-md-8
+      .form-group
+        textarea.form-control.monospace(rows=rulecodelinecount onkeypress="editorkeypress(event)")#codeeditor
+          = rulecode
+
+    .col-md-4
+
+      .card.card-outline.card-success
+        .card-header
+          .custom-control.custom-switch.float-right
+            input#consoleautorefresh.custom-control-input(type='checkbox')
+            label.custom-control-label(for='consoleautorefresh') Autorefresh
+          button.btn.btn-default.btn-sm(onclick="refreshconsole(); return false;")
+            | Console
+            | 
+            small
+              i.fa.fa-sync.text-primary
+        .card-body.small.monospace(style="height:200px").p-0#consolearea
+          textarea.form-control(readonly style="background:#fffff0; width: 100%; height: 100%;")#consoletext
+            each line in runconsole
+              = line + "\n"
+
+      .card.card-outline.card-primary
+        .card-header
+          h3.card-title Context
+        .card-body.small.monospace
+          | console("Message to console window");
+          small
+            | 
+            | // debug purpose
+          br
+          | log("Message to database");
+          small
+            | 
+            | // long time purpose
+          br
+          br
+          | createInterval("Alias", 10 * 1000, () => { });
+          br
+          | clearInterval("Alias");
+          br
+          | createTimeout("Alias", 60 * 1000, () => { });
+          br
+          | clearTimeout("Alias");
+          br
+          br
+          | now.(y | m | d | H | M | S | dow | time | HHMM | HH_MM)
+          br
+          br
+          | (dawn|sunrise|sunset|dusk)
+          br
+          | .[addMinutes(+/-m)]
+          br
+          | .(date | H | M | HHMM | HH_MM)
+          br
+          br
+          | &lt;device&gt;.&lt;entity&gt;.&lt;property&gt;
+          br
+          | &lt;device&gt;.&lt;entity&gt;.&lt;command&gt;()
+          br
+          | &lt;device&gt;.&lt;entity&gt;.on('&lt;event&gt;', ([params, ...]) => { })
+          small.float-right
+            | &nbsp;&nbsp;&nbsp;see below...
+            i.fa.fa-arrow-down
+
+      .card.card-outline.card-primary
+        .card-header
+          h3.card-title
+            | Devices
+        .card-body.small.monospace
+          each device in devices
+            - var items = [];
+            - items.push(`<div style=\\'text-align:left\\'>`)
+            each key of Object.keys(device.entities)
+              each public of device.entities[key].publics
+                - var value = device.entities[key][public];
+                - value = (value == null) ? '' : ' = ' + value;
+                - items.push(`${device.name}.${key}.<b>${public}</b> ${value}`)
+              each action of device.entities[key].actions
+                - items.push(`${device.name}.${key}.<b>${action.code}</b>()`)
+              each emitkey of Object.keys(device.entities[key].emits)
+                - items.push(`${device.name}.${key}.on(<b>\\'${emitkey}\\'</b>, (${device.entities[key].emits[emitkey]}) => { })`)
+              - items.push('')
+            button.btn.btn-default.btn-xs.m-1(onclick="swal.fire({ icon: 'info', title: '" + device.name + "', html: 'Properties (= current values), commands and events<br/><br/>" + items.join("<br/>") + "', width: '800px', });")
+              b
+                = device.name
+              small
+                br
+                = device.platform.GetName()
+
+  script(type='text/javascript').
+    function formatcode()
+    {
+      var code = $('#codeeditor').val();
+      $.post('/rulecode/format', { rulecode: code })
+        .done(function(response)
+        {
+          $('#codeeditor').val(response);
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Format code failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function savecode()
+    {
+      var code = $('#codeeditor').val();
+      $.post('/rulecode/update', { rulecode: code })
+        .done(function()
+        {
+          setTimeout(() => pagereload(), 250);
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Save code failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function editorkeypress(e)
+    {
+      if (e.which == 13)
+      {
+        var editor = $('#codeeditor');
+        setTimeout(function()
+        {
+          var start = editor.prop('selectionStart');
+          var v = editor.val();
+
+          var prevLine = "";
+          for (var i = start - 2; i >= 0 && v[i] != "\n"; i--)
+            prevLine = v[i] + prevLine;
+
+          var indentation = 0;
+          for (var i = 0; i < prevLine.length && prevLine[i] == " "; i++)
+            indentation++;
+
+          editor.val(v.slice(0, start) + " ".repeat(indentation) + v.slice(start));
+          editor.prop({ selectionStart: start + indentation, selectionEnd: start + indentation });
+        }, 1);
+      }
+    }
+
+    function refreshconsole()
+    {
+      divreload('consolearea', scrolldownconsole);
+    }
+    function scrolldownconsole()
+    {
+      var textarea = $('#consoletext')[0];
+      textarea.scrollTop = textarea.scrollHeight;
+    }
+    setInterval(function() {
+      if ($('#consoleautorefresh').is(':checked'))
+        refreshconsole() 
+    }, 1000);
+    $(scrolldownconsole);

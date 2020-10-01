@@ -1,0 +1,20 @@
+- var unique = genUnique();
+
+case mode
+  when 'list'
+    block list
+      center
+        | Sorry, no #{mode} view
+  when 'group'
+    block group
+      center
+        | Sorry, no #{mode} view
+  when 'single'
+    block single
+      center
+        | Sorry, no #{mode} view
+  default
+    center
+      | Invalid view #{mode}
+
+block all

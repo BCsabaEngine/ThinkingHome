@@ -1,0 +1,66 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h4
+        | Platforms
+
+  if platforms.filter(p => p.enabled).length
+    hr
+    center
+      h5
+        | Running platforms
+    .row
+      each platform in platforms
+        if platform.enabled
+          .col-md-3
+            a.black(href="/platform/" + platform.code)
+              .info-box
+                span.info-box-icon.bg-default
+                  img(src="/platforms/" + platform.code + ".png")
+                .info-box-content
+                  span.info-box-number
+                    = platform.name
+                    if (platform.statusinfos || []).filter(si => si.warning).length
+                      i.fa.fa-exclamation-triangle.text-warning.float-right
+                    if (platform.statusinfos || []).filter(si => si.error).length
+                      i.fa.fa-times-circle.text-danger.float-right
+                  span.info-box-text
+                    = platform.devicecount 
+                    |  active device(s)
+
+  if platforms.filter(p => !p.enabled).length
+    hr
+    center
+      h5
+        | Available platforms
+    .row
+      each platform in platforms
+        if !platform.enabled
+          .col-md-3
+            .info-box
+              span.info-box-icon.bg-default
+                img(src="/platforms/" + platform.code + ".png" style="filter: grayscale(100%)")
+              .info-box-content
+                span.info-box-number
+                  = platform.name
+                span.info-box-text
+                  = platform.handlercount
+                  |  known device(s)
+              .btn.btn-success.btn-hover(onclick="enableplatform('" + platform.code + "')")
+                .i.fa.fa-play
+                br
+                b
+                  | Enable
+
+
+
+  script(type='text/javascript').
+    function enableplatform(code)
+    {
+      $.post("/platform/enable/", {code: code})
+        .done(function() {
+          window.location.href = '/platform/' + code;
+        });
+    }

@@ -1,0 +1,431 @@
+extends ../_base
+
+block content
+  section.content-header
+    .container-fluid
+      h5
+        a.black(href="/platform/" + device.platform.GetCode())
+          i.fa.fa-arrow-circle-left
+          | 
+          = device.platform.GetName()
+
+  .row#content
+    .col-md-3#settingpanel
+      .card.card-widget.widget-user
+        .widget-user-header.bg-info
+          h3.widget-user-username
+            = device.name
+          h5.widget-user-desc
+            = device.platform.GetName()
+          .btn.btn-sm.btn-danger.float-left(onclick="deletedevice(" + device.id + ")")
+            .fa.fa-stop
+            |  Delete
+        .widget-user-image
+          .img-box.elevation-3
+            center
+              br
+              i.fa.fa-3x(class=device.icon)
+        .card-footer
+          each statusinfo in (device.GetStatusInfos() || [])
+            if statusinfo.warning
+              i.fa.fa-exclamation-triangle.text-warning
+              | 
+            if statusinfo.error
+              i.fa.fa-times-circle.text-danger
+              | 
+            b
+              = statusinfo.message
+            if statusinfo.value
+              span.float-right.badge.bg-primary
+                = statusinfo.value
+            br
+
+          if (device.GetStatusInfos() || []).length
+            hr
+
+          if Object.keys(device.setting.toDisplayList() || {}).length
+            b
+              | Config
+          ul.nav.flex-column
+            each settingitem, index in device.setting.toDisplayList() || {}
+              li.nav-item.noborder.pt-2.pl-2
+                if settingitem.type == "text"
+                  - var onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
+                else if settingitem.type == "select"
+                  - var onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
+
+                = settingitem.title
+                if settingitem.canclear && settingitem.value
+                  | 
+                  a(href="#")
+                    i.fa.fa-backspace.text-gray(onclick="clearsetting('" + index + "')")
+                a(href="#")
+                  span.float-right.badge(class = settingitem.error ? "bg-red" : (settingitem.displayvalue || settingitem.value) ? "bg-primary" : "bg-gray", onclick=onclick)
+                    = settingitem.displayvalue || settingitem.value || 'Not set'
+
+
+    .col-md-9
+      .row
+        each entity in device.entities
+          .col-md-4
+            .info-box
+              span.info-box-icon.bg-info
+                - var defaultaction = entity.GetDefaultAction()
+                - var multiaction = entity.IsMultiAction()
+                if defaultaction
+                  a(onclick="executeaction('" + entity.code + "', '" + defaultaction.code + "')" style="cursor:pointer")
+                    i(class=entity.icon)
+                else
+                  i(class=entity.icon)
+
+              .info-box-content
+                span.info-box-text
+                  = entity.name
+                span.info-box-number
+                  = entity.toString()
+
+              if multiaction
+                a(id="dropdownMenuActions" data-toggle="dropdown" style="cursor:pointer")
+                  .btn.btn-hover
+                    br
+                    .i.fa.fa-ellipsis-h
+                  #context-menu.dropdown-menu.dropdown-menu-md(aria-labelledby="dropdownMenuActions")
+                    a.dropdown-item.disabled(href='#')
+                      != "Actions of <b>" + device.name + '.' + entity.code + "</b>"
+                    .dropdown-divider
+                    each action,index in entity.actions
+                      - var text = "." + action.code + "()"
+                      if !index
+                        - text = "<b>" + text + "</b>"
+                      if action instanceof ButtonAction
+                        a.dropdown-item(href='#' onclick="executeaction('" + entity.code + "', '" + action.code + "')")
+                          i.text-primary(class=action.icon)
+                          | 
+                          != text
+                      else if action instanceof SelectAction
+                        a.dropdown-item(href='#' onclick="selectaction('" + entity.code + "', '" + action.code + "', '" + action.name + "', " + action.lookup + ")")
+                          i.text-primary(class=action.icon)
+                          | 
+                          != text
+
+              if entity instanceof StateEntity
+                a(onclick="displaystate('" + entity.code + "', '" + entity.name + "')" style="cursor:pointer")
+                  .btn.btn-hover
+                    br
+                    .i.fa.fa-chevron-down
+              else if entity instanceof NumericValueEntity
+                a(onclick="displaytelemetry('" + entity.code + "', '" + entity.name + "', '" + entity.unit + "')" style="cursor:pointer")
+                  .btn.btn-hover
+                    br
+                    .i.fa.fa-chevron-down
+
+      .row(style="display:none")#telemetrypanel
+        .col-md-12
+          .card.card-info
+            .card-header
+              .card-title
+                b
+                  span#telemetrytitle
+              .card-tools
+                .btn-group
+                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 1; loadtelemetrygraph();') Today
+                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 7; loadtelemetrygraph();') Last week
+                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 30; loadtelemetrygraph();') Last month
+            .card-body
+              .row
+                .col-md-12
+                  div(style="height: 300px;" id="telemetrychart")
+
+      .row(style="display:none")#statepanel
+        .col-md-12
+          .card.card-info
+            .card-header
+              .card-title
+                b
+                  span#statetitle
+              .card-tools
+                .btn-group
+                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 1; loadstategraph();') Today
+                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 7; loadstategraph();') Last week
+                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 30; loadstategraph();') Last month
+            .card-body
+              .row
+                .col-md-1
+                  h5.float-right
+                    br
+                    .badge.badge-info#statepercent
+                    br
+                    small#statetime
+                .col-md-11
+                  div(style="height: 300px;" id="statechart")
+
+
+  script(src='/plugins/jquery/jquery.min.js')
+  script(src='/plugins/flot/jquery.flot.js')
+  script(type='text/javascript').
+
+    subscribes = { device_#{device.name} : "content" };
+
+    function executeaction(entity, action, actionparams)
+    {
+      actionparams = actionparams || {};
+      $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/entity/action`, {entity: entity, action: action, actionparams: actionparams})
+        .done(function(data) {
+          divreload('content', null, 350);
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
+    }
+    function selectaction(entity, action, title, lookup)
+    {
+      if (Object.keys(lookup).length == 0)
+        return;
+
+      Swal.fire({
+        title: title,
+        input: 'select',
+        inputPlaceholder: 'Select ' + title.toLowerCase(),
+        showCancelButton: true,
+        inputOptions: lookup,
+        inputValue: Object.keys(lookup)[0],
+      })
+      .then((result) => {
+        if (result.value)
+          executeaction(entity, action, result.value);
+      })
+    }
+
+    var currenttelemetryentitycode = null;
+    var currenttelemetryentityunit = null;
+    var telemetrydays = 1;
+    function displaytelemetry(entitycode, entityname, entityunit)
+    {
+      if (currenttelemetryentitycode == entitycode)
+      {
+        $('#telemetrypanel').fadeOut(250);
+        currenttelemetryentitycode = null;
+      }
+      else
+      {
+        currenttelemetryentitycode = entitycode;
+        currenttelemetryentityunit = entityunit;
+        $('#telemetrytitle').html(entityname + " <small>(" + entityunit + ")</small>");
+        cleartelemetrygraph();
+        loadtelemetrygraph();
+        $('#telemetrypanel').fadeIn(250);
+      }
+    }
+    function cleartelemetrygraph()
+    {
+      $.plot('#telemetrychart', [{}]);
+    }
+    function loadtelemetrygraph()
+    {
+      var url = "/platform/#{device.platform.GetCode()}/device/#{device.name}/graph/telemetry/" + currenttelemetryentitycode + "?days=" + telemetrydays;
+      var timeformat = telemetrydays > 1 ? "%b %d." : "%H:%M";
+      var minTickSize = telemetrydays > 1 ? (telemetrydays > 15 ? [7, "day"] : [1, "day"]) : null;
+
+      $.get(url, function(data)
+      {
+        var timeline = JSON.parse(data);
+
+        var interactive_plot = $.plot('#telemetrychart',
+        [
+          {
+            data: timeline,
+          },
+        ],
+        {
+          grid: {
+            borderColor: '#f3f3f3',
+            borderWidth: 1,
+            tickColor: '#f3f3f3',
+            autoHighlight: true,
+          },
+          series: {
+            color: '#3c8dbc',
+            lines: {
+              lineWidth: 1,
+              show: true,
+              fill: false,
+            },
+          },
+          yaxis: {
+            show: true,
+            tickFormatter: (function formatter(val, axis) { return val.toFixed(2) + " " + currenttelemetryentityunit; })
+          },
+          xaxis: {
+            show: true,
+            mode: "time",
+            timezone: "browser",
+            timeBase: "milliseconds",
+            timeformat: timeformat,
+            minTickSize: minTickSize,
+            showTicks: true,
+          }
+        });
+      })
+    };
+
+    var currentstateentitycode = null;
+    var statedays = 1;
+    function displaystate(entitycode, entityname)
+    {
+      if (currentstateentitycode == entitycode)
+      {
+        $('#statepanel').fadeOut(250);
+        currentstateentitycode = null;
+      }
+      else
+      {
+        currentstateentitycode = entitycode;
+        $('#statetitle').html(entityname);
+        clearstategraph();
+        loadstategraph();
+        $('#statepanel').fadeIn(250);
+      }
+    }
+    function clearstategraph()
+    {
+      $.plot('#statechart', [{}]);
+    }
+    function loadstategraph()
+    {
+      var url = "/platform/#{device.platform.GetCode()}/device/#{device.name}/graph/state/" + currentstateentitycode + "?days=" + statedays;
+      var timeformat = statedays > 1 ? "%b %d." : "%H:%M";
+      var minTickSize = statedays > 1 ? (statedays > 15 ? [7, "day"] : [1, "day"]) : null;
+
+      $.get(url, function(data)
+      {
+        var data = JSON.parse(data);
+        var timeline = data.timeline;
+        var time = data.time;
+        var percent = data.percent;
+
+        $('#statetime').html(time);
+        $('#statepercent').html(percent + " %");
+
+        var interactive_plot = $.plot('#statechart',
+        [
+          {
+            data: timeline,
+          },
+        ],
+        {
+          grid: {
+            borderColor: '#f3f3f3',
+            borderWidth: 1,
+            tickColor: '#f3f3f3',
+            autoHighlight: true,
+          },
+          series: {
+            color: '#3c8dbc',
+            lines: {
+              lineWidth: 1,
+              show: true,
+              fill: true,
+            },
+          },
+          yaxis: {
+            show: false,
+          },
+          xaxis: {
+            show: true,
+            mode: "time",
+            timezone: "browser",
+            timeBase: "milliseconds",
+            timeformat: timeformat,
+            minTickSize: minTickSize,
+            showTicks: true,
+          }
+        });
+      })
+    };
+
+    function deletedevice(id)
+    {
+      showconfirmdeletedialog("All device data, telemetry and setting will be deleted", function() 
+      {
+        $.post("/platform/#{device.platform.GetCode()}/deletedevice/", {id: id})
+          .done(function(data) {
+            window.location.href = '/platform/#{device.platform.GetCode()}/';
+          })
+          .fail(function(error) {
+            Swal.fire(
+              'Error occured',
+              error.responseText,
+              'error'
+            )            
+          });
+      });
+    }
+    function clearsetting(name)
+    {
+      $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/delete`, {name: name})
+        .done(function(data) {
+          divreload('settingpanel');
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
+    }
+    function showsetting_text(name, title, value)
+    {
+      Swal.fire({
+        title: title,
+        input: 'text',
+        inputValue: value, 
+        inputPlaceholder: 'Type ' + title.toLowerCase(),
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/update`, {name: name, value: result.value})
+            .done(function(data) {
+              divreload('settingpanel');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+    function showsetting_select(name, title, lookup, value)
+    {
+      Swal.fire({
+        title: title,
+        input: 'select',
+        inputValue: value, 
+        inputPlaceholder: 'Select ' + title.toLowerCase(),
+        showCancelButton: true,
+        inputOptions: lookup,
+      })
+      .then((result) => {
+        if (result.value) {
+          $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/update`, {name: name, value: result.value})
+            .done(function(data) {
+              divreload('settingpanel');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }

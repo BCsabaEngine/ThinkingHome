@@ -1,0 +1,196 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h4
+        b
+          = board.Name
+        | 
+        | board
+
+  .row
+    .col-md-8
+      .btn-group
+        button.btn.btn-primary(onclick="saveyaml(" + board.Id + ")")
+          i.fa.fa-upload
+          |  Update YAML
+        button.btn.btn-default(onclick="formatyaml()")
+          i.fa.fa-align-left
+          |  Reformat YAML
+        button.btn.btn-success(onclick="checkyaml()")
+          i.fa.fa-align-left
+          |  Check YAML
+  br
+
+  .row
+    .col-md-8
+      .form-group
+        textarea.form-control.monospace(rows=yamllinecount onkeypress="editorkeypress(event)" onkeydown="editorkeydown(event)")#yamleditor
+          = board.Yaml
+
+    .col-md-4
+
+      .card.card-outline.card-primary
+        .card-header
+          h3.card-title Context
+        .card-body.small.monospace
+          | console("Message to console window");
+          small
+            | 
+            | // debug purpose
+          br
+          | log("Message to database");
+          small
+            | 
+            | // long time purpose
+          br
+          br
+          | createInterval("Alias", 10 * 1000, () => { });
+          br
+          | clearInterval("Alias");
+          br
+          | createTimeout("Alias", 60 * 1000, () => { });
+          br
+          | clearTimeout("Alias");
+          br
+          br
+          | now.(y | m | d | H | M | S | dow | time | HHMM | HH_MM)
+          br
+          br
+          | (dawn|sunrise|sunset|dusk)
+          br
+          | .[addMinutes(+/-m)]
+          br
+          | .(date | H | M | HHMM | HH_MM)
+          br
+          br
+          | &lt;device&gt;.&lt;entity&gt;.&lt;property&gt;
+          br
+          | &lt;device&gt;.&lt;entity&gt;.&lt;command&gt;()
+          br
+          | &lt;device&gt;.&lt;entity&gt;.on('&lt;event&gt;', ([params, ...]) => { })
+          small.float-right
+            | &nbsp;&nbsp;&nbsp;see below...
+            i.fa.fa-arrow-down
+
+      .card.card-outline.card-primary
+        .card-header
+          h3.card-title
+            | Devices
+        .card-body.small.monospace
+          each device in devices
+            each key of Object.keys(device.entities)
+              button.btn.btn-default.btn-xs(onclick="inserttext('" + device.name + "." + key + "')")
+                = device.name + "." + key
+              br
+
+  script(type='text/javascript').
+    function formatyaml()
+    {
+      var yaml = $('#yamleditor').val();
+      $.post('/settings/board/formatyaml', { yaml: yaml })
+        .done(function(response)
+        {
+          $('#yamleditor').val(response);
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Format YAML failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function checkyaml()
+    {
+      var yaml = $('#yamleditor').val();
+      $.post('/settings/board/checkyaml', { yaml: yaml })
+        .done(function(response)
+        {
+          console.log(response);
+          swal.fire({
+            title: 'YAML is OK',
+            html: 'Here you can see what the #{board.Name} board will look like...<br/><br/><span style="text-align:left">' + response + '</span>',
+            showConfirmButton: true,
+            width: '100vw',
+          });
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Format YAML failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function saveyaml(id)
+    {
+      var yaml = $('#yamleditor').val();
+      $.post('/settings/board/updateyaml', { id: id, yaml: yaml })
+        .done(function()
+        {
+          swal.fire({
+            icon: 'success',
+            title: 'YAML updated',
+            text: 'Board YAML descriptor updated successfully',
+            showConfirmButton: false,
+            timer: 1200,
+          });
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Save YAML failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function inserttext(text)
+    {
+      const v = $('#yamleditor').val();
+      var cursorPos = $('#yamleditor').prop('selectionStart');
+      const textBefore = v.substring(0,  cursorPos);
+      const textAfter  = v.substring(cursorPos, v.length);
+
+      $('#yamleditor').val(textBefore + text + textAfter);
+
+      cursorPos += text.length;
+      $('#yamleditor').prop({ selectionStart: cursorPos, selectionEnd: cursorPos });
+      $('#yamleditor').focus();
+    }
+
+    function editorkeydown(e)
+    {
+
+    }
+
+    function editorkeypress(e)
+    {
+      if (e.which == 13)
+      {
+        var editor = $('#yamleditor');
+        setTimeout(function()
+        {
+          var start = editor.prop('selectionStart');
+          var v = editor.val();
+
+          var prevLine = "";
+          for (var i = start - 2; i >= 0 && v[i] != "\n"; i--)
+            prevLine = v[i] + prevLine;
+
+          var indentation = 0;
+          for (var i = 0; i < prevLine.length && prevLine[i] == " "; i++)
+            indentation++;
+
+          editor.val(v.slice(0, start) + " ".repeat(indentation) + v.slice(start));
+          editor.prop({ selectionStart: start + indentation, selectionEnd: start + indentation });
+        }, 1);
+      }
+    }

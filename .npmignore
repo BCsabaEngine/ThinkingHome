@@ -1,0 +1,9 @@
+# dotenv environment variables file
+.env
+.env.test 
+
+# VScode runtime config
+.vscode 
+
+# APP config
+config.js

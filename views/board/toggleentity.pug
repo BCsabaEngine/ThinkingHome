@@ -1,0 +1,70 @@
+extends _entity
+
+block list
+  .row
+    .col-md-12
+      span.pointer(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'toggle'})")
+        = name
+        if showtime && entity.lastchangetime
+          small.ml-3
+            small
+              = dayjs(entity.lastchangetime).fromNow()
+      span.float-right.custom-control.custom-switch.pointer(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'toggle'})")
+        input.custom-control-input.pointer(id=unique + "_li" class="ui_" + entity.device.name + "_" + entity.code type='checkbox' checked=entity.state)
+        label.custom-control-label.pointer
+
+block group
+  button.btn.btn-app.m-2(id=unique + "_gr" class="ui_" + entity.device.name + "_" + entity.code class=(entity.state ? "btn-border-info" : "") onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'toggle'})")
+    if showtime && entity.lastchangetime
+      .badge.badge-success
+        = dayjs(entity.lastchangetime).fromNow(true)
+    i(class=entity.device.icon)
+    = name
+
+block single
+  script(type='text/javascript').
+    var stateiconon = '#{entity.stateiconon}';
+    var stateiconoff = '#{entity.stateiconoff}';
+
+  i.fa-2x.pointer(id=unique + "_s_i" class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-primary" : "text-default" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'toggle'})")
+  h4
+    = name
+  .col-md-4(id=unique + "_s" class="ui_" + entity.device.name + "_" + entity.code)
+    .btn-group
+      button.btn(id=unique + "_s_on" class=entity.state ? "btn-info" : "btn-default" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'on'})")
+        | ON
+      button.btn(id=unique + "_s_off" class=entity.state ? "btn-default" : "btn-info" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'off'})")
+        | OFF
+
+block all
+  script(type='text/javascript').
+    $('##{unique}_li').on('valuechanged', function (e, data) 
+    {
+      $('##{unique}_li').prop('checked', data.value ? true : false);
+    });
+    $('##{unique}_gr').on('valuechanged', function (e, data) 
+    {
+      if (data.value)
+        $('##{unique}_gr').addClass("btn-border-info");
+      else
+        $('##{unique}_gr').removeClass("btn-border-info");
+    });
+    $('##{unique}_s').on('valuechanged', function (e, data) 
+    {
+      if (data.value)
+      {
+        $('##{unique}_s_i').removeClass('text-default').addClass('text-primary');
+        $('##{unique}_s_i').removeClass(stateiconoff).addClass(stateiconon);
+
+        $('##{unique}_s_on').removeClass('btn-default').addClass('btn-success');
+        $('##{unique}_s_off').removeClass('btn-info').addClass('btn-default');
+      }
+      else
+      {
+        $('##{unique}_s_i').removeClass('text-primary').addClass('text-default');
+        $('##{unique}_s_i').removeClass(stateiconon).addClass(stateiconoff);
+
+        $('##{unique}_s_off').removeClass('btn-default').addClass('btn-info');
+        $('##{unique}_s_on').removeClass('btn-success').addClass('btn-default');
+      }
+    });

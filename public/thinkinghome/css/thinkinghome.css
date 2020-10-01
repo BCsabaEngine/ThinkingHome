@@ -1,0 +1,175 @@
+@media (max-width: 767.98px) {
+  .small-box .icon {
+    display: inherit;
+  }
+  .small-box {
+    text-align: inherit;
+  }
+  .small-box p {
+    font-size: inherit;
+  }
+}
+
+.pointer {
+  cursor: pointer;
+}
+
+.arrow {
+  cursor: default;
+}
+
+.hidelastchild> :last-child {
+  display: none;
+}
+
+.login-page {
+  height: 75vh;
+}
+
+.monospace {
+  font-family: Consolas, Lucida Console, monospace;
+}
+
+a.no-underline {
+  text-decoration: none;
+}
+
+a.black:link, a.black:visited, a.black:active {
+  color: black;
+}
+
+a.black:hover {
+  color: #444;
+}
+
+a.gray:link, a.gray:visited, a.gray:active {
+  color: #777;
+}
+
+a.gray:hover {
+  color: #aaa;
+}
+
+a.white:link, a.white:visited, a.white:active {
+  color: white;
+}
+
+a.white:hover {
+  color: #fff;
+}
+
+.dashboard-dragdrop-placeholder {
+  border: 1px dotted black;
+  margin: 1em 1em 1em 1em;
+  height: 60px;
+  width: 25%;
+}
+
+.info-box .btn-hover {
+  transition: .3s;
+  opacity: 0;
+}
+
+.info-box:hover .btn-hover {
+  transition: .3s;
+  opacity: 1;
+}
+
+tr .btn-hover {
+  transition: .3s;
+  opacity: 0;
+}
+
+tr:hover .btn-hover {
+  transition: .3s;
+  opacity: 1;
+}
+
+.widget-user .widget-user-image>.img-box {
+  border: 3px solid #fff;
+  background: #eee;
+  height: 90px;
+  width: 90px;
+}
+
+.widget-user .widget-user-image>.img-box>i {
+  margin-left: 1.15rem;
+  margin-top: 1.15rem;
+}
+
+.card .nav.flex-column>li.noborder {
+  border: none;
+}
+
+.mi.mi-50 {
+  font-size: 12px;
+}
+
+.mi.mi-75 {
+  font-size: 18px;
+}
+
+.mi.mi-1x {
+  font-size: 24px;
+}
+
+.mi.mi-150 {
+  font-size: 36px;
+}
+
+.mi.mi-2x {
+  font-size: 48px;
+}
+
+.mi.mi-200 {
+  font-size: 48px;
+}
+
+.mi.mi-3x {
+  font-size: 72px;
+}
+
+.mi.mi-300 {
+  font-size: 72px;
+}
+
+.mi.mi-4x {
+  font-size: 96px;
+}
+
+.mi.mi-400 {
+  font-size: 96px;
+}
+
+.mi.mi-inactive {
+  color: rgba(0, 0, 0, 0.26);
+}
+
+.mi.mi-light {
+  color: rgba(255, 255, 255, 1);
+}
+
+.btn-app-wide {
+  min-width: 120px;
+}
+
+.btn-app-placeholder {
+  color: #6c757d;
+  font-size: 12px;
+  height: 60px;
+  margin: 0 0 10px 10px;
+  min-width: 80px;
+  padding: 15px 5px;
+  position: relative;
+  text-align: center;
+}
+
+.btn-app-placeholder>.fa, .btn-app-placeholder>.fab, .btn-app-placeholder>.far, .btn-app-placeholder>.fas, .btn-app-placeholder>.glyphicon, .btn-app-placeholder>.ion {
+  display: block;
+  font-size: 20px;
+}
+
+.btn-border-info {
+  border-color: #17a2b8;
+  border-width: 3px;
+}
