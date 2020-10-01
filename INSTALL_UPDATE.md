@@ -6,7 +6,7 @@
  raspi-config -> extend filesystem
  raspi-config -> set timezone
  systemctl disable dphys-swapfile.service
- apt-get install -y mc zip unzip telnet git
+ apt-get install -y mc zip unzip telnet git nmap
  /boot/config.txt -> dtoverlay=disable-wifi
  /boot/config.txt -> dtoverlay=disable-bt
  /etc/dhcpcd.conf -> setup fix IP
@@ -22,8 +22,9 @@
  apt-get install -y mariadb-server
  mysql_secure_installation
  [mysql:] CREATE DATABASE ThinkingHome;
- [mysql:] CREATE USER 'root'@'%' IDENTIFIED BY '??????';
+ [mysql:] CREATE USER 'root'@'%' IDENTIFIED WITH mysql_native_password USING '*1111...2222'; =PASSWORD('???')
  [mysql:] GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' WITH GRANT OPTION;
+ [mysql:] DROP USER 'root'@'localhost';
  /etc/mariadb.conf -> bind_address 0.0.0.0
  apt-get install -y mosquitto mosquitto-clients
  echo "user:pass" /etc/mosquitto/mosquitto.passwd
