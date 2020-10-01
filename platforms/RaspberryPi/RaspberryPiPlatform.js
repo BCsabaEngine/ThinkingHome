@@ -82,7 +82,7 @@ class RaspberryPiPlatform extends Platform {
   }
 
   WebMainPage(req, res, next) {
-    res.render('platforms/RaspberryPi/main', {
+    res.render('platforms/raspberrypi/main', {
       title: "RaspberryPI platform",
       platform: this,
       devicecount: this.GetDeviceCount(),

@@ -60,7 +60,7 @@ class Device {
   }
 
   WebMainPage(req, res, next) {
-    res.render('platforms/Device', {
+    res.render('platforms/device', {
       title: this.name,
       device: this,
 
