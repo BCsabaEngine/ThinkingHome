@@ -1,4 +1,4 @@
-global.noop = () => { };
+global.noop = () => {   };
 global.IsProduction = (process.env.NODE_ENV == 'production');
 global.config = require('./config');
 global.logger = require("./lib/logger");
