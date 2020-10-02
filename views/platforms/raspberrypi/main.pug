@@ -85,7 +85,7 @@ block content
               i(class=handler.icon)
               = handler.displayname
 
-        if autodevices.length
+        if autodevices && autodevices.length
           .card-footer.p-3
             | Attach discovered sensor
           .card-footer.p-0
