@@ -1,6 +1,6 @@
 {
   "name": "thinkinghome",
-  "version": "1.0.0",
+  "version": "0.7.0",
   "lockfileVersion": 1,
   "requires": true,
   "dependencies": {
@@ -3166,9 +3166,9 @@
       "integrity": "sha512-HkpPZVMYsnhFUBLdy/LvkU9snggKP3VAuSVnPhVXjxdg02lWbFx0W8H3m7A+WMWw2diXZS1wIa4m67XkNxdvew=="
     },
     "systeminformation": {
-      "version": "4.27.5",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.27.5.tgz",
-      "integrity": "sha512-EysogxKqREk54ZYDEFcsCODv8GymKZcyiSfegYit8dKhPjzuQr+KX4GFHjssWjYrWFEIM2bYNsFrZX5eufeAXg=="
+      "version": "4.27.6",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.27.6.tgz",
+      "integrity": "sha512-uFs6VAt/hhsBqb+2i9oH+tXm/uCP6e6lw4olfor5s5OkkZxYqisGvtSNXsLnSe27anF+tzyXte764MNJqXU9eg=="
     },
     "tempusdominus-bootstrap-4": {
       "version": "5.1.2",
