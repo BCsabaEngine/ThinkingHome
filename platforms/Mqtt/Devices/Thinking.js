@@ -7,7 +7,7 @@ const { ButtonAction, SelectAction, RangeAction, } = require('../../Action');
 const { ToggleBoardItem, PushBoardItem, } = require('../../BoardItem');
 
 class Thinking extends MqttDevice {
-  get icon() { return this.setting.icon || "fa fa-code-branch"; }
+  get icon() { return "fa fa-code-branch"; }
   entities = {};
   starttime = new Date().getTime();
   thinking_Time = '';

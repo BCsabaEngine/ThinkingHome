@@ -1,6 +1,6 @@
 const PresenceMachine = require('./Machine');
 
 class PresenceTv extends PresenceMachine {
-  icon = "fa fa-tv";
+  get icon() { return "fa fa-tv" };
 }
 module.exports = PresenceTv;

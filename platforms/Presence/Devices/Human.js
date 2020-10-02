@@ -41,7 +41,7 @@ class PresenceHuman extends PresenceDevice {
     toTitle: function () { return this.entities.home; }.bind(this),
     toSubTitle: function () { return ""; }.bind(this),
   };
-  icon = "fa fa-user-circle";
+  get icon() { return "fa fa-user-circle" };
   entities = {
     home: new BoolStateEntity(this, "home", "At home", "fa fa-user-circle")
       .InitStateNames("Away", "Home")

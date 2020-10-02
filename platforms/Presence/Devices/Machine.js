@@ -39,7 +39,7 @@ class PresenceMachine extends PresenceDevice {
     toTitle: function () { return this.entities.home; }.bind(this),
     toSubTitle: function () { return this.setting.macaddress; }.bind(this),
   };
-  icon = "fa fa-laptop";
+  get icon() { return "fa fa-laptop" };
   entities = {
     home: new BoolStateEntity(this, "home", "At home", "fa fa-laptop-house")
       .InitStateNames("Away", "Home")

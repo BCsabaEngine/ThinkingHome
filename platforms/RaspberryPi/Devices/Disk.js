@@ -24,7 +24,7 @@ class RaspberryPiDisk extends RaspberryPiDevice {
     toTitle: function () { return "Used: " + this.entities.usagepercent; }.bind(this),
     toSubTitle: function () { return this.setting.diskname; }.bind(this),
   };
-  icon = "fa fa-hdd";
+  get icon() { return "fa fa-hdd" };
   entities = {
     free: new NumericValueGaugeEntity(this, "free", "Free space", "fa fa-chart-pie")
       .InitUnit("GB")

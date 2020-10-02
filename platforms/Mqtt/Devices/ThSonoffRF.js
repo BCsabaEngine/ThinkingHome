@@ -5,7 +5,7 @@ const { ButtonAction, SelectAction, RangeAction, } = require('../../Action');
 const { ToggleBoardItem, PushBoardItem, } = require('../../BoardItem');
 
 class ThSonoffRF extends Thinking {
-  get icon() { return this.setting.icon || "fa fa-broadcast-tower"; }
+  get icon() { return "fa fa-broadcast-tower"; }
   entities = {};
   setting = {
     toDisplayList: function () { }.bind(this),

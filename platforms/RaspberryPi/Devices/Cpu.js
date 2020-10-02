@@ -4,7 +4,7 @@ const { NumericValueGaugeEntity, PercentValueEntity } = require('../../Entity');
 const { NumericValueGaugeBoardItem } = require('../../BoardItem');
 
 class RaspberryPiCpu extends RaspberryPiDevice {
-  icon = "fa fa-microchip";
+  get icon() { return "fa fa-microchip" };
   entities = {
     temp: new NumericValueGaugeEntity(this, "temp", "Temperature", "fa fa-thermometer-half")
       .InitUnit("°C")

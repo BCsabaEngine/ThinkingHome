@@ -1,6 +1,6 @@
 const PresenceMachine = require('./Machine');
 
 class PresenceConsole extends PresenceMachine {
-  icon = "fa fa-gamepad";
+  get icon() { return "fa fa-gamepad" }
 }
 module.exports = PresenceConsole;
