@@ -292,6 +292,18 @@ class InputEntity extends Entity {
 
 class SwitchEntity extends Entity { }
 
+class PushButtonEntity extends Entity {
+  publics = ['lastpresstime'];
+  emits = {
+    press: 'entity',
+  };
+  lastpresstime = null;
+  DoPress() {
+    this.lastpresstime = new Date().getTime();
+    this.emit('press', this);
+  }
+}
+
 class ButtonEntity extends Entity {
   publics = ['lastpresstime'];
   emits = {
@@ -339,5 +351,6 @@ module.exports = {
 
   InputEntity,
   SwitchEntity,
+  PushButtonEntity,
   ButtonEntity,
 }
