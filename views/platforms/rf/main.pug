@@ -77,6 +77,10 @@ block content
                     span.float-right.badge(class = settingitem.error ? "bg-red" : (settingitem.displayvalue || settingitem.value) ? "bg-primary" : "bg-gray", onclick=onclick)
                       = settingitem.displayvalue || settingitem.value || 'Not set'
 
+            center
+              button.btn.btn-default(onclick="sendrfcode()")
+                | Send custom RF code
+
         .card-footer.p-3
           | Create new device
         .card-footer.p-0
@@ -242,6 +246,30 @@ block content
       .then((result) => {
         if (result.value) {
           $.post(`/platform/#{platform.GetCode()}/setting/update`, {name: name, value: result.value})
+            .done(function(data) {
+              divreload('settingpanel');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
+    function sendrfcode()
+    {
+      Swal.fire({
+        title: 'Send custom RF code',
+        input: 'text',
+        inputPlaceholder: 'Type RF code 0x??????#24',
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          $.post(`/platform/#{platform.GetCode()}/sendrfcode`, {rfcode: result.value})
             .done(function(data) {
               divreload('settingpanel');
             })
