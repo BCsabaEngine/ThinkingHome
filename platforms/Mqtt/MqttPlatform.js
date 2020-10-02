@@ -24,13 +24,6 @@ class MqttPlatform extends Platform {
     },
   };
 
-  setting = {
-    netinterface: '',
-    toDisplayList: function () {
-      const result = {};
-      return result;
-    }.bind(this),
-  };
   GetStatusInfos() {
     let result = [];
     if (!this.mqtt.connected)
@@ -47,12 +40,6 @@ class MqttPlatform extends Platform {
         if (statusinfo.error || statusinfo.warning)
           result.push(statusinfo);
     return result;
-  }
-  Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
-
-    super.Tick(seconds);
   }
 
   SendMessage(topic, message) {
