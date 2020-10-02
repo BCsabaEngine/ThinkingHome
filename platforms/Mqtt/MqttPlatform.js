@@ -147,19 +147,39 @@ class MqttPlatform extends Platform {
     }
   }
 
-  GetAutoDiscoveredDevices() {
+  async GetAutoDiscoveredDevices() {
+    const typeselect = {};
+    const types = MqttDevice.GetTypes();
+    for (const type of Object.keys(types))
+      typeselect[type] = types[type].displayname.replace(" ", "&nbsp;");
+
     const result = [];
+
+    for (const mqttdevice of await MqttModel.GetUnknownDevices(6)) {
+      let exists = false;
+      for (const device of this.devices)
+        if (device.name == mqttdevice)
+          exists = true;
+      if (!exists)
+        result.push({
+          type: JSON.stringify(typeselect).replace(/["]/g, "\'"),
+          displayname: mqttdevice,
+          devicename: mqttdevice.toLowerCase(),
+          icon: 'fa fa-question',
+          setting: JSON.stringify({ name: mqttdevice }).replace(/["]/g, "\'"),
+        });
+    }
     return result;
   }
 
-  WebMainPage(req, res, next) {
+  async WebMainPage(req, res, next) {
     res.render('platforms/mqtt/main', {
       title: "MQTT platform",
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
       handlers: MqttDevice.GetTypes(),
-      autodevices: this.GetAutoDiscoveredDevices(),
+      autodevices: await this.GetAutoDiscoveredDevices(),
     });
   }
 

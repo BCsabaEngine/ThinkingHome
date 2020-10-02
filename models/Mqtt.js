@@ -27,6 +27,13 @@ const MqttModel = {
     return MqttTable.insert({ Topic: topic, Payload: payload });
   },
 
+  async GetUnknownDevices(hours = 12) {
+    const devices = [];
+    for (const row of await db.pquery("SELECT DISTINCT m.UnknownDevice FROM Mqtt m WHERE m.UnknownDevice IS NOT NULL AND m.DateTime > DATE_SUB(NOW(), INTERVAL ? HOUR) ORDER BY 1", [hours]))
+      devices.push(row.UnknownDevice)
+    return devices;
+  },
+
 };
 
 module.exports = MqttModel;
