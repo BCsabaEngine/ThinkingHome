@@ -91,8 +91,9 @@ block content
           .card-footer.p-0
             each autodevice in autodevices
               button.btn.btn-app.btn-app-wide(onclick="showcreatenewdevice(" + autodevice.type + ", '" + autodevice.devicename + "', " + autodevice.setting + ")")
-                .badge.bg-danger
-                  =autodevice.badge
+                if (autodevice.badge)
+                  .badge.bg-danger
+                    =autodevice.badge
                 i(class=autodevice.icon)
                 = truncate(autodevice.displayname, 20)
 
