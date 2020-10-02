@@ -24,17 +24,14 @@ class Tasmota extends MqttDevice {
     topic: '',
     powercount: 1,
     buttoncount: 1,
+    icon: '',
     toDisplayList: function () {
       const result = {};
       result['topic'] = {
         type: 'text',
         title: `MQTT topic`,
         value: this.setting.topic,
-        displayvalue: function () {
-          if (this.setting.topic)
-            return this.setting.topic;
-          return `${this.name} (default)`;
-        }.bind(this)(),
+        displayvalue: function () { return this.setting.topic || `${this.name} (default)`; }.bind(this)(),
         error: false,
         canclear: true,
       };
@@ -54,12 +51,28 @@ class Tasmota extends MqttDevice {
         error: false,
         canclear: false,
       };
+      result["icon"] = {
+        type: 'text',
+        title: 'Device icon',
+        value: this.setting.icon,
+        displayvalue: function () { return this.setting.icon || `fa fa-sliders-h (default)`; }.bind(this)(),
+        error: false,
+        canclear: true,
+      };
       return result;
     }.bind(this),
     toTitle: function () { return this.constructor.name; }.bind(this),
-    toSubTitle: function () { return ""; }.bind(this),
+    toSubTitle: function () {
+      const result = [];
+      if (this.setting.powercount > 0)
+        result.push(`${this.setting.powercount}pow`);
+      if (this.setting.buttoncount > 0)
+        result.push(`${this.setting.buttoncount}btn`);
+      return result.join('+');
+    }.bind(this),
   };
-  icon = "fa fa-sliders-h";
+  //icon = "fa fa-sliders-h";
+  get icon() { return this.setting.icon || "fa fa-sliders-h"; }
   entities = {};
   starttime = new Date().getTime();
   tasmota_Time = '';
