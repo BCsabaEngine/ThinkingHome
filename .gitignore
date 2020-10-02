@@ -107,4 +107,4 @@ dist
 .vscode
 
 # APP config
-config.js
+config*.js
