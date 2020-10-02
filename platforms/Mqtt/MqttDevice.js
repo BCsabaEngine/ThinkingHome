@@ -4,7 +4,6 @@ class MqttDevice extends Device {
   static GetTypes() {
     return {
       'ThSonoffRF': { displayname: 'Thinking Sonoff RF', devicename: 'thinking_'.toLowerCase(), icon: 'fa fa-broadcast-tower' },
-      // 'Thinking': { displayname: 'Thinking', devicename: 'thinking_'.toLowerCase(), icon: 'fa fa-code-branch' },
       'Tasmota': { displayname: 'Tasmota', devicename: 'Tasmota_'.toLowerCase(), icon: 'fa fa-sliders-h' },
     }
   }

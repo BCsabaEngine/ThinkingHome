@@ -7,6 +7,11 @@ const { ToggleBoardItem, PushBoardItem, } = require('../../BoardItem');
 class ThSonoffRF extends Thinking {
   get icon() { return this.setting.icon || "fa fa-broadcast-tower"; }
   entities = {};
+  setting = {
+    toDisplayList: function () { }.bind(this),
+    toTitle: function () { return this.constructor.name; }.bind(this),
+    toSubTitle: function () { }.bind(this),
+  };
   last5rfcode = [];
   GetStatusInfos() {
     const result = super.GetStatusInfos();
