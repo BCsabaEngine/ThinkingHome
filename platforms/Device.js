@@ -11,7 +11,7 @@ class Device {
   id = null;
   platform = null;
   name = null;
-  icon = null;
+  get icon() { return null }
   approuter = express.Router();
   setting = {
     toDisplayList: function () { return {} }.bind(this),

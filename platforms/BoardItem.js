@@ -30,6 +30,7 @@ class NumericValueGaugeBoardItem extends BoardItem {
 }
 
 class ToggleBoardItem extends BoardItem {
+  icon = false;
   showtime = false;
 
   Build(mode, name, params) {
@@ -40,6 +41,7 @@ class ToggleBoardItem extends BoardItem {
       mode: mode,
       name: name,
       entity: this.entity,
+      icon: this.icon,
       showtime: this.showtime,
     });
   }

@@ -18,7 +18,7 @@ block group
     if showtime && entity.lastchangetime
       .badge.badge-success
         = dayjs(entity.lastchangetime).fromNow(true)
-    i(class=entity.device.icon)
+    i(class=icon || entity.device.icon)
     = name
 
 block single
