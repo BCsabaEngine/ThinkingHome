@@ -20,7 +20,7 @@ class Thinking extends MqttDevice {
   thinking_Wifi_RSSI = 0;
   GetStatusInfos() {
     const result = [];
-    if (!this.thinking_Time && (new Date().getTime() - this.starttime) > 10 * 1000)
+    if (!this.thinking_Time && (new Date().getTime() - this.starttime) > 10 * 1000 || this.thinking_Time && (new Date().getTime() - this.thinking_Time) > 30 * 60 * 1000)
       result.push({ device: this, error: true, message: 'No info, maybe offline? ' });
     if (this.thinking_Time)
       result.push({ device: this, message: 'Info time', value: this.thinking_Time ? dayjs(this.thinking_Time).fromNow() : "" });
@@ -48,15 +48,59 @@ class Thinking extends MqttDevice {
     if (seconds % 60 != 0)
       return;
   }
+  thinking_configlasttime = 0;
+  CollectConfigToSend() { return []; }
+  SendConfig() {
+    const now = new Date();
+    const timevalue = Math.round(now.getTime() / 1000) - now.getTimezoneOffset() * 60;
+
+    const items = [];
+    items.push({ topic: `cfg/${this.GetTopic()}/time`, message: timevalue.toString() });
+    items.push({ topic: `cfg/${this.GetTopic()}/reset`, message: '' });
+    const configtosend = this.CollectConfigToSend();
+    if (configtosend && configtosend.length) {
+      for (const cts of configtosend)
+        if (cts.name)
+          items.push({ topic: `cfg/${this.GetTopic()}/set`, message: JSON.stringify({ name: cts.name, value: cts.value }) });
+      items.push({ topic: `cfg/${this.GetTopic()}/commit`, message: '' });
+    }
+
+    const MQTTDELAY_INIT = Math.floor(Math.random() * 1000);
+    const MQTTDELAY_STEP = Math.floor(Math.random() * 1000);
+    let index = 1;
+    for (const item of items) {
+      const cfg_name = item.topic;
+      const cfg_value = item.message;
+      setTimeout(function () {
+        this.platform.SendMessage(item.topic, item.message);
+        logger.debug(`[Thinking] Config message sent to ${item.topic}: ${item.message}`);
+      }.bind(this), MQTTDELAY_INIT + index * MQTTDELAY_STEP);
+      index++;
+    };
+    
+    this.thinking_configlasttime = now.getTime();
+    
+    wss.BroadcastToChannel(`device_${this.name}`);
+  }
   GetTopic() { return (this.name).toLowerCase(); }
+  SendMqtt(prefix, postfix, message) {
+    if (prefix)
+      if (postfix)
+        this.platform.SendMessage(`${prefix}/${this.GetTopic()}/${postfix}`, message);
+      else
+        this.platform.SendMessage(`${prefix}/${this.GetTopic()}`, message);
+  }
   SendCmd(command, message) {
-    const topic = `cmd/${this.GetTopic()}/${command}`;
-    this.platform.SendMessage(topic, message);
+    this.SendMqtt('cmd', command, message);
   }
   ProcessMessage(topic, message) {
     if (topic.match(`^online\/${this.GetTopic()}$`)) {
+      this.SendConfig();
       return true;
     }
+    if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`))
+      return true;
+
     return false;
   }
   ProcessMessageObj(topic, messageobj) {
@@ -70,10 +114,10 @@ class Thinking extends MqttDevice {
       this.thinking_Wifi_RSSI = messageobj.wifi.rssi;
 
       this.thinking_Time = new Date().getTime();
+      this.SendConfig();
       return true;
     }
-
-    if (topic.match(`^sys\/${this.GetTopic()}$`))
+    if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`))
       return true;
 
     return false;
