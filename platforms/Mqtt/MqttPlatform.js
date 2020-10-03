@@ -61,8 +61,9 @@ class MqttPlatform extends Platform {
     }
 
     let messageobj = null;
-    try { messageobj = JSON.parse(message) }
-    catch { messageobj = null }
+    if (message && message.startsWith('{'))
+      try { messageobj = JSON.parse(message) }
+      catch { messageobj = null }
 
     let deviceid = null;
     for (const device of this.devices)
