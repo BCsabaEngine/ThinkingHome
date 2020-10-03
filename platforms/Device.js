@@ -35,6 +35,7 @@ class Device {
     this.approuter.post('/entity/action/', this.WebEntityAction.bind(this));
     this.approuter.post('/setting/update', this.WebSettingUpdate.bind(this));
     this.approuter.post('/setting/delete', this.WebSettingDelete.bind(this));
+    this.approuter.post('/setting/execute', this.WebSettingExecute.bind(this));
     this.approuter.get('/graph/telemetry/:entity', this.WebGetTelemetryGraph.bind(this));
     this.approuter.get('/graph/state/:entity', this.WebGetStateGraph.bind(this));
 
@@ -97,6 +98,10 @@ class Device {
     await this.AdaptSetting(req.body.name, null);
     res.send("OK");
   }
+  async WebSettingExecute(req, res, next) {
+    await this.ExecuteSetting(req.body.name);
+    res.send("OK");
+  }
   WebGetTelemetryGraph(req, res, next) {
     const entitycode = req.params.entity;
     const days = Math.max(1, Math.min(req.query.days, 30));
@@ -157,6 +162,17 @@ class Device {
       if (keys.includes(name)) {
         this.setting[name] = value ? value : null;
         await this.WriteSetting(name, value);
+      }
+  }
+  async ExecuteSetting(name) {
+    const displayitems = this.setting.toDisplayList();
+    const keys = Object.keys(displayitems);
+    if (!(name.startsWith('_')))
+      if (keys.includes(name)) {
+        const displayitem = displayitems[name];
+        if (displayitem)
+          if (typeof displayitem.onexecute === 'function')
+            displayitem.onexecute();
       }
   }
 

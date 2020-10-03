@@ -49,10 +49,15 @@ block content
           ul.nav.flex-column
             each settingitem, index in device.setting.toDisplayList() || {}
               li.nav-item.noborder.pt-2.pl-2
-                if settingitem.type == "text"
-                  - var onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
-                else if settingitem.type == "select"
-                  - var onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
+                case settingitem.type
+                  when "label"
+                    - var onclick = "";
+                  when "button"
+                    - var onclick = "executesetting_button('" + index + "')";
+                  when "text"
+                    - var onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
+                  when "select"
+                    - var onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
 
                 = settingitem.title
                 if settingitem.canclear && settingitem.value
@@ -60,7 +65,17 @@ block content
                   a(href="#")
                     i.fa.fa-backspace.text-gray(onclick="clearsetting('" + index + "')")
                 a(href="#")
-                  span.float-right.badge(class = settingitem.error ? "bg-red" : (settingitem.displayvalue || settingitem.value) ? "bg-primary" : "bg-gray", onclick=onclick)
+                  span.float-right.badge(class = 
+                    settingitem.type == 'label' ? "bg-default"
+                    :
+                    settingitem.type == 'button' ? "bg-success"
+                    :
+                    settingitem.error ? "bg-red"
+                    : 
+                    (settingitem.displayvalue || settingitem.value) ? "bg-primary" 
+                    : 
+                    "bg-gray", 
+                      onclick=onclick)
                     = settingitem.displayvalue || settingitem.value || 'Not set'
 
 
@@ -428,4 +443,18 @@ block content
             });
         }
       })
+    }
+    function executesetting_button(name)
+    {
+      $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/execute`, {name: name})
+        .done(function(data) {
+          //divreload('settingpanel');
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
     }
