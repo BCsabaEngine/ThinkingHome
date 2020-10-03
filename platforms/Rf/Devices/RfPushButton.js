@@ -27,11 +27,12 @@ class RfPushButton extends RfDevice {
   };
   GetStatusInfos() {
     const result = [];
-    if (!this.setting.rfcode) result.push({ device:this, error: true, message: 'RF code not set' });
+    if (!this.setting.rfcode) result.push({ device: this, error: true, message: 'RF code not set' });
     return result;
   };
   ReceiveRfCode(rfcode) {
     if (rfcode == this.setting.rfcode) {
+      this.entities.button.DoPress();
       return true;
     }
     return false;

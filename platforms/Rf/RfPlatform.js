@@ -3,6 +3,7 @@ const Platform = require('../Platform');
 const DeviceModel = require('../../models/Device');
 const RfDevice = require('./RfDevice');
 const logger = require('../../lib/logger');
+const RunningContext = require('../../lib/runningContext');
 
 class RfPlatform extends Platform {
   msgcounter = {
@@ -20,18 +21,38 @@ class RfPlatform extends Platform {
     },
   };
 
-  last5rfcode = [];
+  last10rfcodestatus = [];
   GetStatusInfos() {
     let result = [];
+
+    const recdevs = runningContext.rfInterCom.GetReceiverDevices()
+    if (recdevs.length) {
+      let rc = 1;
+      for (const recdev of recdevs)
+        result.push({ message: `Receiver #${rc++}`, value: recdev.name, });
+    }
+    else
+      result.push({ error: true, message: `Receiver device not found`, value: '', });
+
+    const snddevs = runningContext.rfInterCom.GetSenderDevices()
+    if (snddevs.length) {
+      let rs = 1;
+      for (const snddev of snddevs)
+        result.push({ message: `Sender #${rs++}`, value: snddev.name, });
+    }
+    else
+      result.push({ error: true, message: `Sender device not found`, value: '', });
+
+    result.push({ message: '', value: '' });
     result.push({ message: 'Received', value: this.msgcounter.incoming || '0' });
     result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' });
     result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() });
 
-    if (this.last5rfcode.length) {
+    if (this.last10rfcodestatus.length) {
       result.push({ message: "" });
-      result.push({ message: "Last RF codes" });
-      for (const rfcode of this.last5rfcode)
-        result.push({ message: '', value: rfcode, });
+      result.push({ message: "Last RF codes handled by platform" });
+      for (const rfcodestatus of this.last10rfcodestatus)
+        result.push(rfcodestatus);
     }
 
     const statusinfos = super.GetStatusInfos();
@@ -44,22 +65,29 @@ class RfPlatform extends Platform {
 
   SendRfCode(rfcode) {
     this.msgcounter.outgoing++;
-    // this.mqtt.publish(topic, message, { retain: false });
+    runningContext.rfInterCom.SendRf(rfcode);
   }
 
   OnReceiveRfCode(rfcode) {
     this.msgcounter.incoming++;
 
-    this.last5rfcode.push(message);
-    while (this.last5rfcode.length > 5)
-      this.last5rfcode = this.last5rfcode.slice(1);
+    let found = false;
+    for (const device of this.devices)
+      if (device.ReceiveRfCode(rfcode)) {
+        found = true;
+        break;
+      }
+
+    if (!found)
+      this.last10rfcodestatus.push({ error: true, message: 'Not handled', value: rfcode });
+    else
+      this.last10rfcodestatus.push({ error: false, message: '', value: rfcode });
+
+    while (this.last10rfcodestatus.length > 10)
+      this.last10rfcodestatus = this.last10rfcodestatus.slice(1);
     wss.BroadcastToChannel(`platform_${this.GetCode()}`);
 
-    for (const device of this.devices)
-      if (device.ReceiveRfCode(rfcode))
-        return true;
-
-    return false;
+    return found;
   }
 
   async Start() {

@@ -1,8 +1,5 @@
 const dayjs = require('dayjs');
 const Thinking = require('./Thinking');
-const { BoolStateEntity, ButtonEntity } = require('../../Entity');
-const { ButtonAction, SelectAction, RangeAction, } = require('../../Action');
-const { ToggleBoardItem, PushBoardItem, } = require('../../BoardItem');
 
 class ThSonoffRF extends Thinking {
   get icon() { return "fa fa-broadcast-tower"; }
@@ -52,7 +49,7 @@ class ThSonoffRF extends Thinking {
     const result = super.GetStatusInfos();
     if (this.last5rfcode.length) {
       result.push({ device: this, message: "" });
-      result.push({ device: this, message: "Last RF codes" });
+      result.push({ device: this, message: "Last RF codes by this device" });
       for (const rfcode of this.last5rfcode)
         result.push({ device: this, message: '', value: rfcode, });
     }
@@ -75,10 +72,13 @@ class ThSonoffRF extends Thinking {
       return true;
 
     if (topic.match(`^event\/${this.GetTopic()}\/rf(code)?$`)) {
-      this.last5rfcode.push(message);
+      const rfcode = message;
+
+      runningContext.rfInterCom.RfReceived(rfcode);
+
+      this.last5rfcode.push(rfcode);
       while (this.last5rfcode.length > 5)
         this.last5rfcode = this.last5rfcode.slice(1);
-
       wss.BroadcastToChannel(`device_${this.name}`);
 
       return true;
