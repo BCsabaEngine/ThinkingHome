@@ -145,7 +145,7 @@ class Tasmota extends MqttDevice {
       return true;
     }
 
-    return true;
+    return false;
   }
   ProcessMessageObj(topic, messageobj) {
     for (let i = 1; i <= this.setting.buttoncount; i++)
