@@ -136,10 +136,8 @@ class Tasmota extends MqttDevice {
         return true;
       }
 
-    if (topic.match(`^stat\/${this.GetTopic()}\/RESULT$`)) {
-      logger.debug(`[Tasmota] Result message on ${topic}: ${message}`);
-      return true;
-    }
+    if (topic.match(`^stat\/${this.GetTopic()}\/RESULT$`)) return true;
+    if (topic.match(`^cmnd\/${this.GetTopic()}\/(STATUS|POWER[1-9])`)) return true;
 
     return false;
   }
@@ -235,9 +233,6 @@ class Tasmota extends MqttDevice {
       this.tasmota_RestartReason = messageobj.RestartReason;
       return true;
     }
-
-    //    if (topic.match(`^stat\/${this.GetTopic()}\/([a-zA-Z0-9]*)$`))
-    //      return true;
 
     return false;
   }

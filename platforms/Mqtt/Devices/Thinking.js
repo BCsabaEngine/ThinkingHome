@@ -73,9 +73,9 @@ class Thinking extends MqttDevice {
       }.bind(this), MQTTDELAY_INIT + index * MQTTDELAY_STEP);
       index++;
     };
-    
+
     this.thinking_configlasttime = now.getTime();
-    
+
     wss.BroadcastToChannel(`device_${this.name}`);
   }
   GetTopic() { return (this.name).toLowerCase(); }
@@ -94,8 +94,8 @@ class Thinking extends MqttDevice {
       this.SendConfig();
       return true;
     }
-    if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`))
-      return true;
+    if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`)) return true;
+    if (topic.match(`^ping\/${this.GetTopic()}$`)) return true;
 
     return false;
   }
@@ -113,8 +113,7 @@ class Thinking extends MqttDevice {
       this.SendConfig();
       return true;
     }
-    if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`))
-      return true;
+    if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`)) return true;
 
     return false;
   }
