@@ -137,7 +137,7 @@ class Tasmota extends MqttDevice {
       }
 
     if (topic.match(`^stat\/${this.GetTopic()}\/RESULT$`)) return true;
-    if (topic.match(`^cmnd\/${this.GetTopic()}\/(STATUS|POWER[1-9])`)) return true;
+    if (topic.match(`^cmnd\/${this.GetTopic()}\/(STATUS|POWER|power)`)) return true;
 
     return false;
   }
