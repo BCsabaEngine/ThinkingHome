@@ -70,10 +70,6 @@ class ThSonoffRF extends Thinking {
   async Start() {
     await super.Start();
   }
-  Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
-  }
   ProcessMessage(topic, message) {
     if (super.ProcessMessage(topic, message))
       return true;

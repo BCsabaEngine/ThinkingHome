@@ -44,10 +44,6 @@ class Thinking extends MqttDevice {
     await super.Start();
     this.platform.SendMessage(`ping/${this.GetTopic()}`, '');
   }
-  Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
-  }
   thinking_configlasttime = 0;
   CollectConfigToSend() { return []; }
   SendConfig() {

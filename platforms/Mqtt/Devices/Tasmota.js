@@ -121,10 +121,6 @@ class Tasmota extends MqttDevice {
     for (let i = 1; i <= this.setting.powercount; i++)
       this.SendCmnd(`POWER${i}`);
   }
-  Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
-  }
   GetTopic() {
     return (this.setting.topic || this.name).toLowerCase();
   }

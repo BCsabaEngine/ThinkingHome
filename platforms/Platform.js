@@ -59,7 +59,7 @@ class Platform {
     }
     return result;
   }
-  Tick(seconds) { for (const device of this.devices) device.Tick(seconds); }
+  Tick(seconds) { /*for (const device of this.devices) device.Tick(seconds);*/ }
 
   static GetAvailablePlatforms() {
     const result = [];
