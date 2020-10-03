@@ -66,14 +66,15 @@ class MqttPlatform extends Platform {
 
     let deviceid = null;
     for (const device of this.devices)
-      if (messageobj) {
-        if (device.ProcessMessageObj(topic, messageobj))
-          deviceid = device.id;
-      }
-      else {
-        if (device.ProcessMessage(topic, message))
-          deviceid = device.id;
-      }
+      if (!deviceid)
+        if (messageobj) {
+          if (device.ProcessMessageObj(topic, messageobj))
+            deviceid = device.id;
+        }
+        else {
+          if (device.ProcessMessage(topic, message))
+            deviceid = device.id;
+        }
 
     if (deviceid)
       MqttModel.Insert(deviceid, topic, message || null);
