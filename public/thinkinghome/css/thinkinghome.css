@@ -36,26 +36,32 @@ a.no-underline {
 
 a.black:link, a.black:visited, a.black:active {
   color: black;
+  text-decoration: none;
 }
 
 a.black:hover {
   color: #444;
+  text-decoration: none;
 }
 
 a.gray:link, a.gray:visited, a.gray:active {
   color: #777;
+  text-decoration: none;
 }
 
 a.gray:hover {
   color: #aaa;
+  text-decoration: none;
 }
 
 a.white:link, a.white:visited, a.white:active {
   color: white;
+  text-decoration: none;
 }
 
 a.white:hover {
   color: #fff;
+  text-decoration: none;
 }
 
 .dashboard-dragdrop-placeholder {
