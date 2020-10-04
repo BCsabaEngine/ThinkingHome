@@ -9,6 +9,7 @@
   "author": "Balázs Csaba",
   "license": "ISC",
   "dependencies": {
+    "adm-zip": "^0.4.16",
     "admin-lte": "^3.0.5",
     "body-parser": "^1.19.0",
     "chalk": "^4.1.0",
