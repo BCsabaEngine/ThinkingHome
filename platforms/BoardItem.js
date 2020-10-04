@@ -48,6 +48,24 @@ class ToggleBoardItem extends BoardItem {
 
 }
 
+class BoolStateBoardItem extends BoardItem {
+  showtime = false;
+
+  Build(mode, name, params) {
+    if (params)
+      this.AssingConfig(params);
+
+    return pug.renderFile('./views/board/boolstateentity.pug', {
+      mode: mode,
+      name: name,
+      entity: this.entity,
+      showtime: this.showtime,
+    });
+  }
+
+}
+
+
 class PushBoardItem extends BoardItem {
 
 }
@@ -75,6 +93,7 @@ module.exports = {
 
   NumericValueGaugeBoardItem,
 
+  BoolStateBoardItem,
   ToggleBoardItem,
   PushBoardItem,
 

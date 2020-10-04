@@ -1,0 +1,84 @@
+extends _entity
+
+block list
+  .row
+    .col-md-12
+      span
+        = name
+        if showtime && entity.lastchangetime
+          small.ml-3
+            small
+              = dayjs(entity.lastchangetime).fromNow()
+      span.float-right.mr-3(id=unique + "_li" class="ui_" + entity.device.name + "_" + entity.code)
+        small.mr-3(id=unique + "_li_t")
+          = entity.state ? entity.statenameon : entity.statenameoff
+        i(id=unique + "_li_i" class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
+
+block group
+  .btn.btn-app-placeholder.arrow.m-2
+    i(id=unique + "_gr" class="ui_" + entity.device.name + "_" + entity.code class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
+    = name
+
+block single
+  i.fa-2x(id=unique + "_s" class="ui_" + entity.device.name + "_" + entity.code class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
+  h4
+    = name
+
+block all
+  script(type='text/javascript').
+    var stateiconon = '#{entity.stateiconon}';
+    var stateiconoff = '#{entity.stateiconoff}';
+    var statenameon = '#{entity.statenameon}';
+    var statenameoff = '#{entity.statenameoff}';
+  script(type='text/javascript').
+    $('##{unique}_li').on('valuechanged', function (e, data) 
+    {
+      if (data.value)
+      {
+        $('##{unique}_li_t').html(statenameon);
+
+        $('##{unique}_li_i').removeClass(stateiconoff);
+        $('##{unique}_li_i').removeClass("text-default");
+        $('##{unique}_li_i').addClass(stateiconon);
+        $('##{unique}_li_i').addClass("text-info");
+      }
+      else
+      {
+        $('##{unique}_li_t').html(statenameoff);
+
+        $('##{unique}_li_i').removeClass(stateiconon);
+        $('##{unique}_li_i').removeClass("text-info");
+        $('##{unique}_li_i').addClass(stateiconoff);
+        $('##{unique}_li_i').addClass("text-default");
+      }
+    });
+    $('##{unique}_gr').on('valuechanged', function (e, data) 
+    {
+      if (data.value)
+      {
+        $('##{unique}_gr').removeClass(stateiconoff);
+        $('##{unique}_gr').removeClass("text-default");
+        $('##{unique}_gr').addClass(stateiconon);
+        $('##{unique}_gr').addClass("text-info");
+      }
+      else
+      {
+        $('##{unique}_gr').removeClass(stateiconon);
+        $('##{unique}_gr').removeClass("text-info");
+        $('##{unique}_gr').addClass(stateiconoff);
+        $('##{unique}_gr').addClass("text-default");
+      }
+    });
+    $('##{unique}_s').on('valuechanged', function (e, data) 
+    {
+      if (data.value)
+      {
+        $('##{unique}_s').removeClass('text-default').addClass('text-primary');
+        $('##{unique}_s').removeClass(stateiconoff).addClass(stateiconon);
+      }
+      else
+      {
+        $('##{unique}_s').removeClass('text-primary').addClass('text-default');
+        $('##{unique}_s').removeClass(stateiconon).addClass(stateiconoff);
+      }
+    });
