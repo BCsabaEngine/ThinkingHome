@@ -60,6 +60,8 @@ class Device {
         this.entities[key].removeAllListeners();
   }
 
+  DumpBackup() { }
+
   WebMainPage(req, res, next) {
     res.render('platforms/device', {
       title: this.name,

@@ -1,4 +1,5 @@
 const dayjs = require('dayjs');
+const got = require('got');
 const MqttDevice = require('../MqttDevice');
 const { BoolStateEntity, ButtonEntity } = require('../../Entity');
 const { ButtonAction, SelectAction, RangeAction, } = require('../../Action');
@@ -120,6 +121,17 @@ class Tasmota extends MqttDevice {
     this.SendCmnd('STATUS', "0");
     for (let i = 1; i <= this.setting.powercount; i++)
       this.SendCmnd(`POWER${i}`);
+  }
+  async DumpBackup() {
+    const ip = this.tasmota_IPAddress;
+    if (!ip)
+      throw new Error('Not known IP address');
+
+    const dump = await got(`http://${ip}/dl`, { timeout: 5000 });
+    if (dump)
+      return dump.rawBody;
+
+    throw new Error('Empty dump');
   }
   GetTopic() {
     return (this.setting.topic || this.name).toLowerCase();

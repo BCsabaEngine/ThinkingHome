@@ -242,7 +242,7 @@ module.exports = (app) => {
   app.get('/settings/backup/download', async function (req, res, next) {
     try {
       const bck = new BackupBuilder();
-      bck.CreateBackup(7);
+      await bck.CreateBackup(7);
 
       res.setHeader('Content-Disposition', 'attachment; filename=' + bck.filename);
       res.setHeader('Content-Transfer-Encoding', 'binary');
