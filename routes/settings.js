@@ -2,6 +2,7 @@ const YAML = require('yaml');
 const passwordStrength = require('pwd-strength');
 const OpenWeatherMap = require('../lib/openWeatherMap');
 const BoardBuilder = require('../lib/boardBuilder');
+const BackupBuilder = require('../lib/backupBuilder');
 const UserModel = require('../models/User');
 const BoardModel = require('../models/Board');
 
@@ -227,13 +228,33 @@ module.exports = (app) => {
     catch (err) { next(err); }
   })
 
-  app.post('/settings/restart', async function (req, res, next) {
+  app.post('/settings/restart/thinkinghome', async function (req, res, next) {
     try {
       res.send("OK");
 
       setTimeout(() => {
         process.exit();
       }, 500);
+    }
+    catch (err) { next(err); }
+  })
+
+  app.get('/settings/backup/download', async function (req, res, next) {
+    try {
+      const bck = new BackupBuilder();
+      bck.CreateBackup(7);
+
+      res.setHeader('Content-Disposition', 'attachment; filename=' + bck.filename);
+      res.setHeader('Content-Transfer-Encoding', 'binary');
+      res.setHeader('Content-Type', 'application/octet-stream');
+      res.sendFile(bck.fullpath, { root: './', }, function (err) { if (err) return next(err); })
+    }
+    catch (err) { next(err); }
+  })
+
+  app.post('/settings/backup/upload', async function (req, res, next) {
+    try {
+      res.send("OK");
     }
     catch (err) { next(err); }
   })

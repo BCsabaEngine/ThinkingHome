@@ -21,9 +21,9 @@ block content
       .col-md-2.offset-md-1
         #vert-tabs-tab.nav.flex-column.nav-tabs.h-100(role='tablist' aria-orientation='vertical')
 
-          a#vt1t.nav-link.black(data-toggle='pill' href='#vt1' role='tab' aria-controls='vt1' aria-selected='true')
+          a#vt1t.nav-link.black.active(data-toggle='pill' href='#vt1' role='tab' aria-controls='vt1' aria-selected='true')
             | Your living environment
-          a#vt2t.nav-link.black.active(data-toggle='pill' href='#vt2' role='tab' aria-controls='vt2' aria-selected='false')
+          a#vt2t.nav-link.black(data-toggle='pill' href='#vt2' role='tab' aria-controls='vt2' aria-selected='false')
             | Dashboards
           a#vt3t.nav-link.black(data-toggle='pill' href='#vt3' role='tab' aria-controls='vt3' aria-selected='false')
             | Users
@@ -79,7 +79,7 @@ block content
                       i.fa.fa-check
                       |  Check API key
 
-          #vt2.tab-pane.text-left.fade.active.show(role='tabpanel' aria-labelledby='vt2t')
+          #vt2.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt2t')
             if boards.length == 0
               p.text-warning
                 | At least one board must be created to see how the devices work.
@@ -191,7 +191,7 @@ block content
                             button.btn.btn-hover.btn-danger.btn-sm(onclick="deleteuser('" + user.Email + "');return false;")
                               i.fa.fa-ban
 
-          #vt4.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt4t')
+          #vt4.tab-pane.text-left.fade.active.show(role='tabpanel' aria-labelledby='vt4t')
             .callout.callout-success
               h5
                 i.fa.fa-cloud-upload-alt.text-success
@@ -205,7 +205,11 @@ block content
                 |  Backup
               p
                 small
-                  | By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily enter the values by pressing the My location button.
+                  | By pressing the button, you can make a full backup of the system and download it to your own computer. Make sure you put it in a safe place! Your ThinkingHome server will only store the last 7 backups you have made. 
+                  b
+                    | You decide how often you make backups. It is recommended to make a backup for all major changes.
+              a.btn.btn-default.black.ml-3(href="/settings/backup/download")
+                | Download backup
             .callout.callout-danger#restartbox
               h5
                 i.fa.fa-power-off.text-danger
@@ -213,10 +217,8 @@ block content
               p
                 small
                   | You can restart the ThinkingHome system by pressing the button. We will redirect you to the main page shortly, because wou will need to log in again after the reboot.
-              .row
-                .col-sm-2.offset-md-1
-                  button.btn.btn-danger.form-control(onclick="restart(); return false;")#restartbutton
-                    | Restart now
+              button.btn.btn-danger.ml-3(onclick="restartthinkinghome(); return false;")#restartbutton
+                | Restart now
 
 
   script(type='text/javascript').
@@ -530,7 +532,7 @@ block content
       })
     }
 
-    function restart()
+    function restartthinkinghome()
     {
       Swal.fire({
         title: 'Are you sure?',
@@ -541,7 +543,7 @@ block content
         confirmButtonText: 'Restart'
       }).then((result) => {
         if (result.isConfirmed) {
-          $.post("/settings/restart")
+          $.post("/settings/restart/thinkinghome")
             .done(function(data) {
               $('#restartbutton').html("<i class='fas fa-sync-alt fa-spin'></i> Please wait...");
               setTimeout(() => window.location.href = "/", 5000);
