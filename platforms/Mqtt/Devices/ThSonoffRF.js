@@ -67,6 +67,9 @@ class ThSonoffRF extends Thinking {
   async Start() {
     await super.Start();
   }
+  SendRf(rfcode) {
+    this.SendCmd('rfcode', rfcode);
+  }
   ProcessMessage(topic, message) {
     if (super.ProcessMessage(topic, message))
       return true;
