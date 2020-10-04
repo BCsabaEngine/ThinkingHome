@@ -32,7 +32,7 @@ class RfPlatform extends Platform {
         result.push({ message: `Receiver #${rc++}`, value: recdev.name, });
     }
     else
-      result.push({ error: true, message: `Receiver device not found`, value: '', });
+      result.push({ message: `Receiver device not found`, value: '', });
 
     const snddevs = runningContext.rfInterCom.GetSenderDevices()
     if (snddevs.length) {
@@ -41,7 +41,7 @@ class RfPlatform extends Platform {
         result.push({ message: `Sender #${rs++}`, value: snddev.name, });
     }
     else
-      result.push({ error: true, message: `Sender device not found`, value: '', });
+      result.push({ message: `Sender device not found`, value: '', });
 
     result.push({ message: '', value: '' });
     result.push({ message: 'Received', value: this.msgcounter.incoming || '0' });
@@ -79,9 +79,9 @@ class RfPlatform extends Platform {
       }
 
     if (!found)
-      this.last10rfcodestatus.push({ error: true, message: 'Not handled', value: rfcode });
+      this.last10rfcodestatus.push({ message: 'Not handled', value: rfcode });
     else
-      this.last10rfcodestatus.push({ error: false, message: '', value: rfcode });
+      this.last10rfcodestatus.push({ message: '', value: rfcode });
 
     while (this.last10rfcodestatus.length > 10)
       this.last10rfcodestatus = this.last10rfcodestatus.slice(1);
