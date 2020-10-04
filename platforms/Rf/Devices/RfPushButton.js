@@ -23,7 +23,7 @@ class RfPushButton extends RfDevice {
   get icon() { return this.setting.icon || "fa fa-code-branch"; }
   entities = {
     button: new PushButtonEntity(this, 'button', 'Button', "fa fa-dot-circle")
-      .AddAction(new ButtonAction(this, "push", "Push", "fa fa-dot-circle", function () { this.device.SendRfCode(this.device.setting.rfcode); })),
+      .AddAction(new ButtonAction(this, "push", "Push", "fa fa-dot-circle", function () { this.device.entities.button.DoPress(); })),
   };
   GetStatusInfos() {
     const result = [];
