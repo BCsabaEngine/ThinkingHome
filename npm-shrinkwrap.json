@@ -2500,9 +2500,9 @@
       }
     },
     "oui": {
-      "version": "11.0.37",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.37.tgz",
-      "integrity": "sha512-A70ov1lYmCH9nIouEKNmhROJfi0Ggh+A0efvhTqEwMQ/3DXeK6tFlgpH3cdnB4rDkoxWlJyoRcRJK0ylbmeewA==",
+      "version": "11.0.38",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.38.tgz",
+      "integrity": "sha512-ScN2CXJv/uAj/4eU2QuiQs+2f6vqsnpRZ0Rr+uVhhYnlBYXeqwB7oWJ585bf903Mj7cHi7mBg8gJllS5JKOEPg==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -2782,9 +2782,9 @@
       }
     },
     "pwd-strength": {
-      "version": "1.0.3",
-      "resolved": "https://registry.npmjs.org/pwd-strength/-/pwd-strength-1.0.3.tgz",
-      "integrity": "sha512-2vEqFE00CmgxG+jSI7rZDDUaWEllc7wVbK8VlfsASvTpUoNASUAh84Tu6Lp7tnRcnH3QFLCBvJVLC8XTYpkaqA=="
+      "version": "1.0.4",
+      "resolved": "https://registry.npmjs.org/pwd-strength/-/pwd-strength-1.0.4.tgz",
+      "integrity": "sha512-JmyL+CEONm8xQVBBAeiiNMJjqJZ+NtDdYR2U4dMdr0C+UTo+VUGGHzRD7QqYJ0JRrDDGhTve1krQHM5Xrl98ig=="
     },
     "qs": {
       "version": "6.7.0",
