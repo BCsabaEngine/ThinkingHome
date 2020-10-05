@@ -1,11 +1,12 @@
 # Initialize RPi components
  ```sh
  passwd
- apt-get update
- apt-get dist-upgrade
+ sudo
  raspi-config -> extend filesystem
  raspi-config -> set timezone
  systemctl disable dphys-swapfile.service
+ apt-get update
+ apt-get dist-upgrade
  apt-get install -y mc zip unzip telnet git
  /boot/config.txt -> dtoverlay=disable-wifi
  /boot/config.txt -> dtoverlay=disable-bt
