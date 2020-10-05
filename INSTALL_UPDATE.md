@@ -37,7 +37,7 @@
 # Install system
  ```sh
  mkdir & cd to your favorite folder
- git clone https://github.com/SymbolCsaba/ThinkingHome.git .
+ git clone https://github.com/BCsabaEngine/ThinkingHome.git .
  npm install --production --unsafe-perm
  cp ./config.js.sample ./config.js
  NODE_ENV=production pm2 start ./index.js --name ThinkingHome
