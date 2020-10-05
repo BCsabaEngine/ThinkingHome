@@ -17,7 +17,7 @@
 
 # Pre-Install components
  ```sh
- apt-get install - y nmap
+ apt-get install -y nmap
  curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
  apt-get install -y nodejs
  node -v && npm -v
