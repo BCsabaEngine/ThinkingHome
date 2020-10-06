@@ -37,7 +37,7 @@ const User = {
   },
 
   FindByEmailPassword(email, password) {
-    const pwhash = crypto.createHash("sha256").update(password.trim()).digest("hex");
+    const pwhash = crypto.createHash("sha256").update(password).digest("hex");
     return UserTable.select(['Id', 'IsAdmin', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), pwhash])
       .then(rows => {
         if (rows.length)
@@ -63,7 +63,7 @@ const User = {
     const isadmin = !any;
 
     const name = this.TryRealname(email.trim());
-    const pwhash = crypto.createHash("sha256").update(password.trim()).digest("hex");
+    const pwhash = crypto.createHash("sha256").update(password).digest("hex");
 
     const insertres = await UserTable.insert({ IsAdmin: isadmin, Email: email.trim(), Name: name, Password: pwhash });
 
