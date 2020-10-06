@@ -12,7 +12,7 @@ const UserTable = db.defineTable('User', {
 
 const User = {
 
-  hashPassword(password, salt) { return crypto.createHmac('sha512', salt).update(password).digest('hex'); },
+  hashPassword(passwd, salt) { return crypto.createHmac('sha512', salt).update(passwd).digest('hex'); },
 
   async AnySync() {
     return await UserTable.exists();
