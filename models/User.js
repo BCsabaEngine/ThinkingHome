@@ -1,4 +1,4 @@
-const crypto = require('crypto');
+const crypto = require("crypto");
 
 const UserTable = db.defineTable('User', {
   columns: {
@@ -11,6 +11,8 @@ const UserTable = db.defineTable('User', {
 });
 
 const User = {
+
+  hashPassword(password, salt) { return crypto.createHmac('sha512', salt).update(password).digest('hex'); },
 
   async AnySync() {
     return await UserTable.exists();
@@ -37,8 +39,7 @@ const User = {
   },
 
   FindByEmailPassword(email, password) {
-    const pwhash = crypto.createHash("sha256").update(password).digest("hex");
-    return UserTable.select(['Id', 'IsAdmin', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), pwhash])
+    return UserTable.select(['Id', 'IsAdmin', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), this.hashPassword(password, email.trim())])
       .then(rows => {
         if (rows.length)
           return Promise.resolve(rows[0]);
@@ -63,9 +64,8 @@ const User = {
     const isadmin = !any;
 
     const name = this.TryRealname(email.trim());
-    const pwhash = crypto.createHash("sha256").update(password).digest("hex");
 
-    const insertres = await UserTable.insert({ IsAdmin: isadmin, Email: email.trim(), Name: name, Password: pwhash });
+    const insertres = await UserTable.insert({ IsAdmin: isadmin, Email: email.trim(), Name: name, Password: this.hashPassword(password, email.trim()) });
 
     return { isadmin: isadmin, insertid: insertres.insertId, name: name };
   },
