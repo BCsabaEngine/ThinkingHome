@@ -26,7 +26,6 @@
     "helmet": "^4.1.1",
     "js-beautify": "^1.13.0",
     "material-icons": "^0.3.1",
-    "md5": "^2.3.0",
     "mousetrap": "^1.6.5",
     "mqtt": "^4.2.1",
     "mysql-plus": "^0.16.2",
@@ -36,9 +35,9 @@
     "pwd-strength": "^1.0.4",
     "serve-favicon": "^2.5.0",
     "suncalc": "^1.8.0",
-    "systeminformation": "^4.27.6",
+    "systeminformation": "^4.27.7",
     "ws": "^7.3.1",
-    "yaml": "^2.0.0-0"
+    "yaml": "^2.0.0-1"
   },
   "devDependencies": {
     "blocked-at": "^1.2.0"
