@@ -1,4 +1,4 @@
-const md5 = require('md5');
+const crypto = require('crypto');
 
 const UserTable = db.defineTable('User', {
   columns: {
@@ -37,7 +37,8 @@ const User = {
   },
 
   FindByEmailPassword(email, password) {
-    return UserTable.select(['Id', 'IsAdmin', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), md5(password.trim())])
+    const pwhash = crypto.createHash("sha256").update(password.trim()).digest("hex");
+    return UserTable.select(['Id', 'IsAdmin', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), pwhash])
       .then(rows => {
         if (rows.length)
           return Promise.resolve(rows[0]);
@@ -62,8 +63,9 @@ const User = {
     const isadmin = !any;
 
     const name = this.TryRealname(email.trim());
+    const pwhash = crypto.createHash("sha256").update(password.trim()).digest("hex");
 
-    const insertres = await UserTable.insert({ IsAdmin: isadmin, Email: email.trim(), Name: name, Password: md5(password.trim()) });
+    const insertres = await UserTable.insert({ IsAdmin: isadmin, Email: email.trim(), Name: name, Password: pwhash });
 
     return { isadmin: isadmin, insertid: insertres.insertId, name: name };
   },
