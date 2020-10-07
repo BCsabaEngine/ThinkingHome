@@ -12,13 +12,14 @@ class MqttPlatform extends Platform {
     log_message_known: false,
     log_message_unknown: true,
     log_message_error: true,
+
     toDisplayList: function () {
       const result = {};
 
       result["log_message_known"] = {
         type: 'bool',
-        title: 'Log all MQTT',
-        value: this.setting.log_message_known,
+        title: 'Log processed MQTTs',
+        value: this.setting.log_message_known ? "Log" : "Disabled",
         error: false,
         canclear: false,
       };
@@ -26,7 +27,7 @@ class MqttPlatform extends Platform {
       result["log_message_unknown"] = {
         type: 'bool',
         title: 'Log MQTTs for unknown device',
-        value: this.setting.log_message_unknown,
+        value: this.setting.log_message_unknown ? "Log" : "Disabled",
         error: false,
         canclear: false,
       };
@@ -34,7 +35,7 @@ class MqttPlatform extends Platform {
       result["log_message_error"] = {
         type: 'bool',
         title: 'Log malformed MQTTs',
-        value: this.setting.log_message_error,
+        value: this.setting.log_message_error ? "Log" : "Disabled",
         error: false,
         canclear: false,
       };
@@ -91,7 +92,8 @@ class MqttPlatform extends Platform {
     const devicenamematch = topic.match(/^[a-zA-Z]*\/([0-9a-zA-Z_]*)\/?[0-9a-zA-Z_]*$/);
     if (!devicenamematch) {
       logger.warn(`[Platform] Invalid mqtt message on ${topic}: ${message}`);
-      MqttModel.InsertUnknownFormat(topic, message || null);
+      if (this.setting.log_message_error)
+        MqttModel.InsertUnknownFormat(topic, message || null);
       return;
     }
 
@@ -112,11 +114,14 @@ class MqttPlatform extends Platform {
             deviceid = device.id;
         }
 
-    if (deviceid)
-      MqttModel.Insert(deviceid, topic, message || null);
+    if (deviceid) {
+      if (this.setting.log_message_known)
+        MqttModel.Insert(deviceid, topic, message || null);
+    }
     else {
       logger.warn(`[Platform] No device found for mqtt message on ${topic}: ${message}`);
-      MqttModel.InsertUnknownDevice(devicenamematch[1], topic, message || null);
+      if (this.setting.log_message_unknown)
+        MqttModel.InsertUnknownDevice(devicenamematch[1], topic, message || null);
     }
   }
 
