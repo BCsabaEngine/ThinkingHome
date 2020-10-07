@@ -32,7 +32,7 @@ class MqttPlatform extends Platform {
       if (this.setting.zigbee2mqtt)
         result["zigbee_basetopic"] = {
           type: 'text',
-          title: '- Zigbee MQTT base topic',
+          title: 'Zigbee base topic',
           value: this.setting.zigbee_basetopic,
           displayvalue: function () { return this.setting.zigbee_basetopic || `${this.ZIGBEE_BASETOPIC} (default)`; }.bind(this)(),
           error: false,
