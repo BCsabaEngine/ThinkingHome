@@ -13,6 +13,7 @@ class Platform {
     await this.ReadSettings();
 
     this.approuter.post('/setting/update', this.WebSettingUpdate.bind(this));
+    this.approuter.post('/setting/toggle', this.WebSettingToggle.bind(this));
     this.approuter.post('/setting/delete', this.WebSettingDelete.bind(this));
   }
   async Stop() {
@@ -23,6 +24,10 @@ class Platform {
   }
   async WebSettingUpdate(req, res, next) {
     await this.AdaptSetting(req.body.name, req.body.value);
+    res.send("OK");
+  }
+  async WebSettingToggle(req, res, next) {
+    await this.ToggleSetting(req.body.name);
     res.send("OK");
   }
   async WebSettingDelete(req, res, next) {
@@ -40,6 +45,13 @@ class Platform {
     if (keys.includes(name)) {
       this.setting[name] = value ? value : null;
       await this.WriteSetting(name, value);
+    }
+  }
+  async ToggleSetting(name) {
+    const keys = Object.keys(this.setting);
+    if (keys.includes(name)) {
+      this.setting[name] = this.setting[name] ? false : true;
+      await this.WriteSetting(name, this.setting[name]);
     }
   }
   async WriteSetting(name, value) {

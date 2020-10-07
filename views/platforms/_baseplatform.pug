@@ -64,10 +64,14 @@ block content
             ul.nav.flex-column
               each settingitem, index in platform.setting.toDisplayList() || {}
                 li.nav-item.noborder.pt-2.pl-2
-                  if settingitem.type == "text"
-                    - var onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
-                  else if settingitem.type == "select"
-                    - var onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
+                  - var onclick = "";
+                  case settingitem.type
+                    when "text"
+                      - onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
+                    when "select"
+                      - onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
+                    when "bool"
+                      - onclick = "togglesetting_bool('" + index + "')";
 
                   = settingitem.title
                   if settingitem.canclear && settingitem.value
@@ -194,6 +198,20 @@ block content
     function clearsetting(name)
     {
       $.post(`/platform/#{platform.GetCode()}/setting/delete`, {name: name})
+        .done(function(data) {
+          divreload('settingpanel');
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
+    }
+    function togglesetting_bool(name)
+    {
+      $.post(`/platform/#{platform.GetCode()}/setting/toggle`, {name: name})
         .done(function(data) {
           divreload('settingpanel');
         })
