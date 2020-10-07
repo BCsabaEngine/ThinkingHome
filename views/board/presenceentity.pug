@@ -9,16 +9,16 @@ block list
           small.ml-3
             small
               = dayjs(entity.lastchangetime).fromNow()
-      span.float-right.mr-3
-        i(class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
+      span.float-right.mr-3(id=unique + "_li" class="ui_" + entity.device.name + "_" + entity.code)
+        i(id=unique + "_li_i" class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
 
 block group
   .btn.btn-app-placeholder.arrow.m-2
-    i(class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
+    i(id=unique + "_gr" class="ui_" + entity.device.name + "_" + entity.code class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
     = name
 
 block single
-  i.fa-2x(id=unique + "_s_i" class="ui_" + entity.device.name + "_" + entity.code class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
+  i.fa-2x(id=unique + "_s" class="ui_" + entity.device.name + "_" + entity.code class=entity.state ? entity.stateiconon : entity.stateiconoff class=entity.state ? "text-info" : "text-default")
   h4
     = name
 
@@ -29,25 +29,48 @@ block all
   script(type='text/javascript').
     $('##{unique}_li').on('valuechanged', function (e, data) 
     {
-      $('##{unique}_li').prop('checked', data.value ? true : false);
+      if (data.value)
+      {
+        $('##{unique}_li_i').removeClass(stateiconoff);
+        $('##{unique}_li_i').removeClass("text-default");
+        $('##{unique}_li_i').addClass(stateiconon);
+        $('##{unique}_li_i').addClass("text-info");
+      }
+      else
+      {
+        $('##{unique}_li_i').removeClass(stateiconon);
+        $('##{unique}_li_i').removeClass("text-info");
+        $('##{unique}_li_i').addClass(stateiconoff);
+        $('##{unique}_li_i').addClass("text-default");
+      }
     });
     $('##{unique}_gr').on('valuechanged', function (e, data) 
     {
       if (data.value)
-        $('##{unique}_gr').addClass("btn-border-info");
+      {
+        $('##{unique}_gr').removeClass(stateiconoff);
+        $('##{unique}_gr').removeClass("text-default");
+        $('##{unique}_gr').addClass(stateiconon);
+        $('##{unique}_gr').addClass("text-info");
+      }
       else
-        $('##{unique}_gr').removeClass("btn-border-info");
+      {
+        $('##{unique}_gr').removeClass(stateiconon);
+        $('##{unique}_gr').removeClass("text-info");
+        $('##{unique}_gr').addClass(stateiconoff);
+        $('##{unique}_gr').addClass("text-default");
+      }
     });
     $('##{unique}_s').on('valuechanged', function (e, data) 
     {
       if (data.value)
       {
-        $('##{unique}_s_i').removeClass('text-default').addClass('text-primary');
-        $('##{unique}_s_i').removeClass(stateiconoff).addClass(stateiconon);
+        $('##{unique}_s').removeClass('text-default').addClass('text-primary');
+        $('##{unique}_s').removeClass(stateiconoff).addClass(stateiconon);
       }
       else
       {
-        $('##{unique}_s_i').removeClass('text-primary').addClass('text-default');
-        $('##{unique}_s_i').removeClass(stateiconon).addClass(stateiconoff);
+        $('##{unique}_s').removeClass('text-primary').addClass('text-default');
+        $('##{unique}_s').removeClass(stateiconon).addClass(stateiconoff);
       }
     });
