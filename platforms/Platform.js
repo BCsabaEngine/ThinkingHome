@@ -82,9 +82,11 @@ class Platform {
   }
   GetCode() { return Platform.GetCode(); }
   GetName() { return Platform.GetName(); }
+  GetDescription() { return Platform.GetDescription(); }
   static GetPriority() { return 0 }
   static GetCode() { return '' }
   static GetName() { return '' }
+  static GetDescription() { return '' }
   static GetHandlerCount() { return 0 }
 }
 module.exports = Platform;

@@ -194,8 +194,10 @@ class RfPlatform extends Platform {
   static GetHandlerCount() { return Object.keys(RfDevice.GetTypes()).length; }
   GetCode() { return RfPlatform.GetCode(); }
   GetName() { return RfPlatform.GetName(); }
+  GetDescription() { return RfPlatform.GetDescription(); }
   static GetPriority() { return 1 }
   static GetCode() { return 'rf' }
   static GetName() { return 'Rf' }
+  static GetDescription() { return 'Radio-frequency' }
 }
 module.exports = RfPlatform;

@@ -128,8 +128,10 @@ class RaspberryPiPlatform extends Platform {
   static GetHandlerCount() { return Object.keys(RaspberryPiDevice.GetTypes()).length; }
   GetCode() { return RaspberryPiPlatform.GetCode(); }
   GetName() { return RaspberryPiPlatform.GetName(); }
+  GetDescription() { return RaspberryPiPlatform.GetDescription(); }
   static GetPriority() { return 999 }
   static GetCode() { return 'raspberrypi' }
   static GetName() { return 'Raspberry PI' }
+  static GetDescription() { return 'Where the miracle happens' }
 }
 module.exports = RaspberryPiPlatform;

@@ -228,8 +228,10 @@ class PresencePlatform extends Platform {
   static GetHandlerCount() { return Object.keys(PresenceDevice.GetTypes()).length; }
   GetCode() { return PresencePlatform.GetCode(); }
   GetName() { return PresencePlatform.GetName(); }
+  GetDescription() { return PresencePlatform.GetDescription(); }
   static GetPriority() { return 100 }
   static GetCode() { return 'presence' }
   static GetName() { return 'Presence' }
+  static GetDescription() { return 'Who is at home?' }
 }
 module.exports = PresencePlatform;

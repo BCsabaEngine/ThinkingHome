@@ -8,6 +8,41 @@ const MqttDevice = require('./MqttDevice');
 const logger = require('../../lib/logger');
 
 class MqttPlatform extends Platform {
+  setting = {
+    log_message_known: false,
+    log_message_unknown: true,
+    log_message_error: true,
+    toDisplayList: function () {
+      const result = {};
+
+      result["log_message_known"] = {
+        type: 'bool',
+        title: 'Log all MQTT',
+        value: this.setting.log_message_known,
+        error: false,
+        canclear: false,
+      };
+
+      result["log_message_unknown"] = {
+        type: 'bool',
+        title: 'Log MQTTs for unknown device',
+        value: this.setting.log_message_unknown,
+        error: false,
+        canclear: false,
+      };
+
+      result["log_message_error"] = {
+        type: 'bool',
+        title: 'Log malformed MQTTs',
+        value: this.setting.log_message_error,
+        error: false,
+        canclear: false,
+      };
+
+      return result;
+    }.bind(this),
+  };
+
   mqtt = null;
   msgcounter = {
     incoming: 0,
@@ -208,8 +243,10 @@ class MqttPlatform extends Platform {
   static GetHandlerCount() { return Object.keys(MqttDevice.GetTypes()).length; }
   GetCode() { return MqttPlatform.GetCode(); }
   GetName() { return MqttPlatform.GetName(); }
+  GetDescription() { return MqttPlatform.GetDescription(); }
   static GetPriority() { return 1 }
   static GetCode() { return 'mqtt' }
   static GetName() { return 'Mqtt' }
+  static GetDescription() { return 'IoT messages' }
 }
 module.exports = MqttPlatform;
