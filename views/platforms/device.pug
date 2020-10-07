@@ -45,7 +45,7 @@ block content
 
           if Object.keys(device.setting.toDisplayList() || {}).length
             b
-              | Config
+              | Settings
           ul.nav.flex-column
             each settingitem, index in device.setting.toDisplayList() || {}
               li.nav-item.noborder.pt-2.pl-2
