@@ -8,13 +8,36 @@ const MqttDevice = require('./MqttDevice');
 const logger = require('../../lib/logger');
 
 class MqttPlatform extends Platform {
+  ZIGBEE_BASETOPIC = 'zigbee2mqtt';
+
   setting = {
+    zigbee2mqtt: false,
+    zigbee_basetopic: '',
+
     log_message_known: false,
     log_message_unknown: true,
     log_message_error: true,
 
     toDisplayList: function () {
       const result = {};
+
+      result["zigbee2mqtt"] = {
+        type: 'bool',
+        title: 'Zigbee transmit over MQTT',
+        value: this.setting.zigbee2mqtt ? "Enabled" : "Disabled",
+        error: false,
+        canclear: false,
+      };
+
+      if (this.setting.zigbee2mqtt)
+        result["zigbee_basetopic"] = {
+          type: 'text',
+          title: '- Zigbee MQTT base topic',
+          value: this.setting.zigbee_basetopic,
+          displayvalue: function () { return this.setting.zigbee_basetopic || `${this.ZIGBEE_BASETOPIC} (default)`; }.bind(this)(),
+          error: false,
+          canclear: true,
+        };
 
       result["log_message_known"] = {
         type: 'bool',
