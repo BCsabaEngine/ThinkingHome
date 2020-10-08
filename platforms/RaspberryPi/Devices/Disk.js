@@ -46,9 +46,6 @@ class RaspberryPiDisk extends RaspberryPiDevice {
   }
 
   Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
-
     for (const data of this.platform.fssize)
       if (data.fs == this.setting.diskname)
         if (!Number.isNaN(data.size) && !Number.isNaN(data.used)) {

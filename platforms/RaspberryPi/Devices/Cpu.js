@@ -16,9 +16,6 @@ class RaspberryPiCpu extends RaspberryPiDevice {
   };
   //GetStatusInfos() { }
   Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
-
     si
       .cpuTemperature()
       .then(function (data) {
