@@ -19,17 +19,16 @@ if columns.length == 2
         var device = p.device;
         var entity = p.entity;
         if (device != '' && entity != '')
+        {
           $('.ui_' + device + '_' + entity).trigger('valuechanged', { value: p.value });
+          if (!#{isproduction})
+            console.log(['.ui_' + device + '_' + entity, p.value]);
+        }
       }
     };
 
     $(function () {
       $('.knob').knob({
-        draw : function () {
-          if(this.unit != undefined)
-          {
-            this.i.val(Math.round(this.i.val()) + this.unit);
-          }
-        }
+        draw : function () { if(this.unit != undefined) this.i.val(Math.round(this.i.val()) + this.unit); }
       });
     });
