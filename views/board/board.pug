@@ -22,7 +22,7 @@ if columns.length == 2
         {
           $('.ui_' + device + '_' + entity).trigger('valuechanged', { value: p.value });
           if (!#{isproduction})
-            console.log(['.ui_' + device + '_' + entity, p.value]);
+            logdebug('.ui_' + device + '_' + entity, p);
         }
       }
     };
