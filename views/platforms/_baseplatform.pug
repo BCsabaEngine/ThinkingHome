@@ -46,11 +46,12 @@ block content
               b
                 = statusinfo.message
               if statusinfo.device
-                | 
-                small
-                  | (
-                  = statusinfo.device.name
-                  | )
+                a.black(href="/platform/" + platform.GetCode() + "/device/" + statusinfo.device.name)
+                  | 
+                  small
+                    | (
+                    = statusinfo.device.name
+                    | )
               if statusinfo.value
                 span.float-right.badge.bg-primary
                   = statusinfo.value
