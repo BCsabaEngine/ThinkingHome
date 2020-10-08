@@ -177,6 +177,12 @@ class NumericValueGaugeEntity extends NumericValueEntity {
   }
 
   toGaugeValueString() { return `${this.value} ${this.unit} (${this.minvalue}..${this.maxvalue})`.trim(); }
+
+  get percent() {
+    if (this.minvalue == Number.NEGATIVE_INFINITY || this.maxvalue == Number.NEGATIVE_INFINITY)
+      return 0;
+    return Math.round(100 * (this.value - this.minvalue) / (this.maxvalue - this.minvalue));
+  }
 }
 
 class PercentValueEntity extends NumericValueGaugeEntity {
@@ -186,6 +192,7 @@ class PercentValueEntity extends NumericValueGaugeEntity {
     this.maxvalue = 100;
     this.unit = "%";
   }
+  get percent() { return this.value; }
 }
 
 
