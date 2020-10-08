@@ -31,9 +31,9 @@ block single
     = name
   .col-md-4(id=unique + "_s" class="ui_" + entity.device.name + "_" + entity.code)
     .btn-group
-      button.btn(id=unique + "_s_on" class=entity.state ? "btn-info" : "btn-default" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'on'})")
+      button.btn(id=unique + "_s_on" class=entity.state ? "btn-info" : "btn-default" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'switchon'})")
         | ON
-      button.btn(id=unique + "_s_off" class=entity.state ? "btn-default" : "btn-info" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'off'})")
+      button.btn(id=unique + "_s_off" class=entity.state ? "btn-default" : "btn-info" onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'switchoff'})")
         | OFF
 
 block all
