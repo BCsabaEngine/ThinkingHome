@@ -1,0 +1,22 @@
+extends _entity
+
+block list
+  .row
+    .col-md-12
+      span
+        = name
+      .btn-group.float-right
+        button.btn.btn-xs.pl-2.pr-2.btn-default.mr-2(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'switchon'})")
+          | ON
+        button.btn.btn-xs.pl-2.pr-2.btn-default.ml-2(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'switchoff'})")
+          | OFF
+
+block single
+  h4
+    = name
+  .col-md-4
+    .btn-group
+      button.btn.btn-default(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'switchon'})")
+        | ON
+      button.btn.btn-default(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: 'switchoff'})")
+        | OFF

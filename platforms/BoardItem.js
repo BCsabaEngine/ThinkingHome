@@ -48,6 +48,40 @@ class ToggleBoardItem extends BoardItem {
 
 }
 
+class OnOffBoardItem extends BoardItem {
+  icon = false;
+
+  Build(mode, name, params) {
+    if (params)
+      this.AssingConfig(params);
+
+    return pug.renderFile('./views/board/onoffentity.pug', {
+      mode: mode,
+      name: name,
+      entity: this.entity,
+      icon: this.icon,
+    });
+  }
+
+}
+
+class OnOffToggleBoardItem extends BoardItem {
+  icon = false;
+
+  Build(mode, name, params) {
+    if (params)
+      this.AssingConfig(params);
+
+    return pug.renderFile('./views/board/onofftoggleentity.pug', {
+      mode: mode,
+      name: name,
+      entity: this.entity,
+      icon: this.icon,
+    });
+  }
+
+}
+
 class BoolStateBoardItem extends BoardItem {
   showtime = false;
 
@@ -94,6 +128,8 @@ module.exports = {
   NumericValueGaugeBoardItem,
 
   BoolStateBoardItem,
+  OnOffBoardItem,
+  OnOffToggleBoardItem,
   ToggleBoardItem,
   PushBoardItem,
 
