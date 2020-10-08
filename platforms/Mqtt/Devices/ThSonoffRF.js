@@ -69,6 +69,7 @@ class ThSonoffRF extends Thinking {
   }
   SendRf(rfcode) {
     this.SendCmd('rfcode', rfcode);
+    return true;
   }
   ProcessMessage(topic, message) {
     if (super.ProcessMessage(topic, message))
