@@ -8,8 +8,28 @@ const si = require('systeminformation');
 class RaspberryPiPlatform extends Platform {
   fssize = [];
 
+  setting = {
+    freshinterval: 60,
+
+    toDisplayList: function () {
+      const result = {};
+
+      const intervallist = { 5: '5 seconds', 15: '15 seconds', 30: '30 seconds', 60: '1 minute', 120: '2 minutes', 300: '5 minutes', 600: '10 minutes', };
+      result["freshinterval"] = {
+        type: 'select',
+        title: 'Refresh interval',
+        value: this.setting.freshinterval >= 60 ? `${this.setting.freshinterval / 60} minutes` : `${this.setting.freshinterval} seconds`,
+        lookup: JSON.stringify(intervallist).replace(/["]/g, "\'"),
+        error: false,
+        canclear: false,
+      };
+
+      return result;
+    }.bind(this),
+  };
+
   Tick(seconds) {
-    if (seconds % 60 != 0)
+    if (seconds % this.setting.freshinterval != 0)
       return;
 
     si
