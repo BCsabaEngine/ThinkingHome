@@ -4,17 +4,17 @@ case mode
   when 'list'
     block list
       center
-        | Sorry, no #{mode} view
+        | Sorry, no #{mode} view for #{name}
   when 'group'
     block group
       center
-        | Sorry, no #{mode} view
+        | Sorry, no #{mode} view for #{name}
   when 'single'
     block single
       center
-        | Sorry, no #{mode} view
+        | Sorry, no #{mode} view for #{name}
   default
     center
-      | Invalid view #{mode}
+      | Invalid view #{mode} for #{name}
 
 block all
