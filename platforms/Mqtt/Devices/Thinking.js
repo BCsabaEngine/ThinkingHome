@@ -96,6 +96,7 @@ class Thinking extends MqttDevice {
     }
     if (topic.match(`^cfg\/${this.GetTopic()}\/(time|set|reset|commit)`)) return true;
     if (topic.match(`^ping\/${this.GetTopic()}$`)) return true;
+    if (topic.match(`^cmd\/${this.GetTopic()}`)) return true;
 
     return false;
   }
