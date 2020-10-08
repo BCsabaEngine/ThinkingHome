@@ -2,14 +2,18 @@ extends _entity
 
 block list
   .row
-    .col-md-12
+    .col-md-8
       span
         = name
-      span.float-right.mr-3(id=unique + "_li" class="ui_" + entity.device.name + "_" + entity.code)
-        = entity.value
-        | 
-        small
-          = entity.unit
+    .col-md-4
+      span.float-rightX.mr-3(id=unique + "_li" class="ui_" + entity.device.name + "_" + entity.code)
+        .progress
+          .progress-bar.bg-info(id=unique + "_li_g" role='progressbar', aria-valuenow=entity.value, aria-valuemin=entity.minvalue, aria-valuemax=entity.maxvalue, style='width: ' + entity.percent + '%; background-color: ' + entity.toValueColor() + '!important')
+        span.float-right(id=unique + "_li_t")
+          = entity.value
+          | 
+          small
+            = entity.unit
 
 block group
   .btn.btn-app-placeholder.arrow.m-2
@@ -36,7 +40,8 @@ block all
   script(type='text/javascript').
     $('##{unique}_li').on('valuechanged', function (e, data) 
     {
-      $('##{unique}_li').html(data.value + " <small>" + #{entity.device.name + "_" + entity.code}_unit + "</small>");
+      $('##{unique}_li_g').css('width', data.value);
+      $('##{unique}_li_t').html(data.value + " <small>" + #{entity.device.name + "_" + entity.code}_unit + "</small>");
     });
     $('##{unique}_gr').on('valuechanged', function (e, data) 
     {
