@@ -27,7 +27,7 @@ class RfPushButton extends RfDevice {
           title: `RF code ${button}`.trim(),
           value: this.setting[`rfcode${button}`],
           error: false,
-          canclear: true,
+          canclear: this.buttons.length > 1,
         };
       return result;
     }.bind(this),
