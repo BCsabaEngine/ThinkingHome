@@ -6,8 +6,8 @@ const Device = require('../Device');
 const Platform = require('../Platform');
 const DeviceModel = require('../../models/Device');
 const PresenceDevice = require('./PresenceDevice');
-const PresenceMachine = require('./Devices/Machine');
 const PresenceHuman = require('./Devices/Human');
+const arrayUtils = require('../../lib/arrayUtils');
 
 class PresencePlatform extends Platform {
   setting = {
@@ -127,6 +127,8 @@ class PresencePlatform extends Platform {
       const deviceobj = PresenceDevice.CreateByType(type, id, this, name);
       await deviceobj.Start();
       this.devices.push(deviceobj);
+      arrayUtils.sortByProperty(this.devices, 'name');
+
       this.approuter.use(`/device/${name}`, deviceobj.approuter);
       logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`);
       return deviceobj;
@@ -182,11 +184,15 @@ class PresencePlatform extends Platform {
   }
 
   WebMainPage(req, res, next) {
+    arrayUtils.sortByProperty(this.devices, 'name');
+    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, 'name') : null;
+
     res.render('platforms/presence/main', {
       title: "Presence platform",
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
+      devicegroups: devicegroups,
       handlers: PresenceDevice.GetTypes(),
       autodevices: this.GetAutoDiscoveredDevices(),
     });

@@ -5,7 +5,7 @@ const Platform = require('../Platform');
 const MqttModel = require('../../models/Mqtt');
 const DeviceModel = require('../../models/Device');
 const MqttDevice = require('./MqttDevice');
-const logger = require('../../lib/logger');
+const arrayUtils = require('../../lib/arrayUtils');
 
 class MqttPlatform extends Platform {
   ZIGBEE_BASETOPIC = 'zigbee2mqtt';
@@ -172,6 +172,8 @@ class MqttPlatform extends Platform {
       const deviceobj = MqttDevice.CreateByType(type, id, this, name);
       await deviceobj.Start();
       this.devices.push(deviceobj);
+      arrayUtils.sortByProperty(this.devices, 'name');
+
       this.approuter.use(`/device/${name}`, deviceobj.approuter);
       logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`);
       return deviceobj;
@@ -225,11 +227,15 @@ class MqttPlatform extends Platform {
   }
 
   async WebMainPage(req, res, next) {
+    arrayUtils.sortByProperty(this.devices, 'name');
+    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, 'name') : null;
+
     res.render('platforms/mqtt/main', {
       title: "MQTT platform",
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
+      devicegroups: devicegroups,
       handlers: MqttDevice.GetTypes(),
       autodevices: await this.GetAutoDiscoveredDevices(),
     });

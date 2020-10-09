@@ -2,8 +2,7 @@ const Device = require('../Device');
 const Platform = require('../Platform');
 const DeviceModel = require('../../models/Device');
 const RfDevice = require('./RfDevice');
-const logger = require('../../lib/logger');
-const RunningContext = require('../../lib/runningContext');
+const arrayUtils = require('../../lib/arrayUtils');
 
 class RfPlatform extends Platform {
   msgcounter = {
@@ -101,17 +100,14 @@ class RfPlatform extends Platform {
     await super.Start();
     logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`);
   }
-  async Stop() {
-    // this.mqtt.off('message', this.OnMessage);
-    // this.mqtt.end();
-    await super.Stop();
-  }
 
   async CreateAndStartDevice(type, id, name) {
     try {
       const deviceobj = RfDevice.CreateByType(type, id, this, name);
       await deviceobj.Start();
       this.devices.push(deviceobj);
+      arrayUtils.sortByProperty(this.devices, 'name');
+
       this.approuter.use(`/device/${name}`, deviceobj.approuter);
       logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`);
       return deviceobj;
@@ -140,11 +136,15 @@ class RfPlatform extends Platform {
   }
 
   async WebMainPage(req, res, next) {
+    arrayUtils.sortByProperty(this.devices, 'name');
+    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, 'name') : null;
+
     res.render('platforms/rf/main', {
       title: "RF platform",
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
+      devicegroups: devicegroups,
       handlers: RfDevice.GetTypes(),
       autodevices: null,
     });
