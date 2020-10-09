@@ -1,0 +1,19 @@
+.col-lg-4.col-md-6.col-sm-6.col-xs-6
+  .small-box.bg-info
+    .inner
+      a.white(href='/platform/' + platform.GetCode() + '/device/' + device.name)
+        h3
+          = device.name
+          if (device.GetStatusInfos() || []).filter(si => si.warning).length
+            small
+              i.fa.fa-exclamation-triangle.text-warning.float-right
+          if (device.GetStatusInfos() || []).filter(si => si.error).length
+            small
+              i.fa.fa-times-circle.text-danger.float-right
+        p.float-right
+          != device.setting.toSubTitle()
+        p.text-bold
+          != device.setting.toTitle() || '&nbsp;'
+    a.white(href='/platform/' + platform.GetCode() + '/device/' + device.name)
+      .icon
+        i(class=device.icon)
