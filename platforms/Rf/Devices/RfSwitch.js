@@ -39,7 +39,7 @@ class RfSwitch extends RfDevice {
   };
   get icon() { return this.setting.icon || "fa fa-code-branch"; }
   entities = {
-    state: new Entity(this, 'state', 'State', "ffa fa-door-open")
+    state: new Entity(this, 'state', 'State', "fa fa-door-open")
       .AddAction(new ButtonAction(this, "switchon", "Switch on", "fa fa-toggle-on", function () { this.device.SendRfCode(this.device.setting.rfcodeon); }))
       .AddAction(new ButtonAction(this, "toggle", "Toggle", "fa fa-toggle-on", function () { this.device.SendRfCode(this.device.setting.rfcodetoggle); }))
       .AddAction(new ButtonAction(this, "switchoff", "Switch off", "fa fa-toggle-off", function () { this.device.SendRfCode(this.device.setting.rfcodeoff); }))
