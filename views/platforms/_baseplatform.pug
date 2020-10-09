@@ -108,7 +108,9 @@ block content
     .col-md-9
       if devicegroups
         each devicegroup,key in devicegroups
-          h5.ml-3
+          h5.ml-2.text-secondary
+            i.fa.fa-layer-group
+            | 
             = key
           .row
             each device in devicegroup
