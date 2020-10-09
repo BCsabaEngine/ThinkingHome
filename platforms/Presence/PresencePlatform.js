@@ -185,7 +185,7 @@ class PresencePlatform extends Platform {
 
   WebMainPage(req, res, next) {
     arrayUtils.sortByProperty(this.devices, 'name');
-    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, 'name') : null;
+    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name.replace('Presence', ''), 'name') : null;
 
     res.render('platforms/presence/main', {
       title: "Presence platform",

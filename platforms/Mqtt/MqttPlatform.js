@@ -228,7 +228,7 @@ class MqttPlatform extends Platform {
 
   async WebMainPage(req, res, next) {
     arrayUtils.sortByProperty(this.devices, 'name');
-    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, 'name') : null;
+    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.setting.toTitle(), 'name') : null;
 
     res.render('platforms/mqtt/main', {
       title: "MQTT platform",
