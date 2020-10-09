@@ -6,6 +6,7 @@ class RfDevice extends Device {
       'RfPushButton': { displayname: 'Push button', devicename: 'RfPushButton_'.toLowerCase(), icon: 'fa fa-dot-circle' },
       'RfPushButton4ch': { displayname: '4ch button', devicename: 'RfPushButton4ch_'.toLowerCase(), icon: 'fa fa-dot-circle' },
       'RfDoorSensor': { displayname: 'Door sensor', devicename: 'RfDoor_'.toLowerCase(), icon: 'fa fa-door-open' },
+      'RfMoveSensor': { displayname: 'Move sensor', devicename: 'RfMove_'.toLowerCase(), icon: 'fa fa-running' },
       'RfSwitch': { displayname: 'Switch', devicename: 'RfSwitch_'.toLowerCase(), icon: 'fa fa-toggle-on' },
     }
   }
