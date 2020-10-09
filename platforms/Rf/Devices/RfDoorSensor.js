@@ -33,7 +33,7 @@ class RfDoorSensor extends RfDevice {
       .InitStateNames("Closed", "Open")
       .InitStateIcons("fa fa-door-closed", "fa fa-door-open")
       .AddBoardItem(new BoolStateBoardItem())
-    };
+  };
   GetStatusInfos() {
     const result = [];
     if (!this.setting.rfcodeopen) result.push({ device: this, error: true, message: 'Open RF code not set' });
