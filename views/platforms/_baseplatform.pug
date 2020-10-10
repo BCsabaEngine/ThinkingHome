@@ -53,7 +53,7 @@ block content
                     = statusinfo.device.name
                     | )
               if statusinfo.value
-                span.float-right.badge.bg-primary
+                span.float-right.badge.bg-primary.clipboard(data-clipboard-text=statusinfo.value)
                   = statusinfo.value
               br
             if (platform.GetStatusInfos() || []).length
@@ -67,21 +67,37 @@ block content
                 li.nav-item.noborder.pt-2.pl-2
                   - var onclick = "";
                   case settingitem.type
+                    when "button"
+                      - var onclick = "executesetting_button('" + index + "')";
                     when "text"
                       - onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
                     when "select"
                       - onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
                     when "bool"
-                      - onclick = "togglesetting_bool('" + index + "')";
+                      - onclick = "togglesetting_bool('" + index + "', event)";
 
                   = settingitem.title
                   if settingitem.canclear && settingitem.value
                     | 
                     a(href="#")
                       i.fa.fa-backspace.text-gray(onclick="clearsetting('" + index + "')")
-                  a(href="#")
-                    span.float-right.badge(class = settingitem.error ? "bg-red" : (settingitem.displayvalue || settingitem.value) ? "bg-primary" : "bg-gray", onclick=onclick)
-                      = settingitem.displayvalue || settingitem.value || 'Not set'
+
+                  if (settingitem.type == 'label')
+                    span.float-right
+                      small
+                        = settingitem.displayvalue || settingitem.value || 'Not set'
+                  else
+                    a(href="#")
+                      span.float-right.badge(class = 
+                        settingitem.type == 'button' ? "bg-success"
+                        :
+                        settingitem.error ? "bg-red"
+                        :
+                        (settingitem.displayvalue || settingitem.value) ? "bg-primary"
+                        :
+                        "bg-gray",
+                          onclick=onclick)
+                        = settingitem.displayvalue || settingitem.value || 'Not set'
             block command
 
         .card-footer.p-3
@@ -122,6 +138,22 @@ block content
             include _baseplatform_device.pug
 
   script(type='text/javascript').
+
+    $(function() {
+      new ClipboardJS('.clipboard')
+        .on('success', function(e) {
+          swal.fire({
+            icon: 'success',
+            toast: true,
+            position: 'center-start',
+            title: 'Copied to clipboard',
+            text: e.text,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+          });
+        });      
+    });
 
     var subscribes = { platform_#{platform.GetCode()} : "content" };
 
@@ -203,8 +235,10 @@ block content
           )            
         });
     }
-    function togglesetting_bool(name)
+    function togglesetting_bool(name, event)
     {
+      $(event.target).prepend("<i class='fas fa-cog fa-spin'></i> ");
+
       $.post(`/platform/#{platform.GetCode()}/setting/toggle`, {name: name})
         .done(function(data) {
           divreload('settingpanel');

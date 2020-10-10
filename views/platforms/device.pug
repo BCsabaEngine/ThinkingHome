@@ -36,7 +36,7 @@ block content
             b
               = statusinfo.message
             if statusinfo.value
-              span.float-right.badge.bg-primary
+              span.float-right.badge.bg-primary.clipboard(data-clipboard-text=statusinfo.value)
                 = statusinfo.value
             br
 
@@ -49,34 +49,39 @@ block content
           ul.nav.flex-column
             each settingitem, index in device.setting.toDisplayList() || {}
               li.nav-item.noborder.pt-2.pl-2
+                - var onclick = "";
                 case settingitem.type
-                  when "label"
-                    - var onclick = "";
                   when "button"
                     - var onclick = "executesetting_button('" + index + "')";
                   when "text"
                     - var onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
                   when "select"
                     - var onclick = "showsetting_select('" + index + "', '" + settingitem.title + "', " + settingitem.lookup + ", '" + settingitem.value + "')";
+                  when "bool"
+                    - onclick = "togglesetting_bool('" + index + "', event)";
 
                 = settingitem.title
                 if settingitem.canclear && settingitem.value
                   | 
                   a(href="#")
                     i.fa.fa-backspace.text-gray(onclick="clearsetting('" + index + "')")
-                a(href="#")
-                  span.float-right.badge(class = 
-                    settingitem.type == 'label' ? "bg-default"
-                    :
-                    settingitem.type == 'button' ? "bg-success"
-                    :
-                    settingitem.error ? "bg-red"
-                    : 
-                    (settingitem.displayvalue || settingitem.value) ? "bg-primary" 
-                    : 
-                    "bg-gray", 
-                      onclick=onclick)
-                    = settingitem.displayvalue || settingitem.value || 'Not set'
+
+                if (settingitem.type == 'label')
+                  span.float-right
+                    small
+                      = settingitem.displayvalue || settingitem.value || 'Not set'
+                else
+                  a(href="#")
+                    span.float-right.badge(class = 
+                      settingitem.type == 'button' ? "bg-success"
+                      :
+                      settingitem.error ? "bg-red"
+                      : 
+                      (settingitem.displayvalue || settingitem.value) ? "bg-primary" 
+                      : 
+                      "bg-gray", 
+                        onclick=onclick)
+                      = settingitem.displayvalue || settingitem.value || 'Not set'
 
 
     .col-md-9
@@ -178,6 +183,22 @@ block content
   script(src='/plugins/jquery/jquery.min.js')
   script(src='/plugins/flot/jquery.flot.js')
   script(type='text/javascript').
+
+    $(function() {
+      new ClipboardJS('.clipboard')
+        .on('success', function(e) {
+          swal.fire({
+            icon: 'success',
+            toast: true,
+            position: 'center-start',
+            title: 'Copied to clipboard',
+            text: e.text,
+            showConfirmButton: false,
+            timer: 1000,
+            timerProgressBar: true,
+          });
+        });      
+    });
 
     subscribes = { device_#{device.name} : "content" };
 
@@ -382,6 +403,22 @@ block content
     function clearsetting(name)
     {
       $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/delete`, {name: name})
+        .done(function(data) {
+          divreload('settingpanel');
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
+    }
+    function togglesetting_bool(name, event)
+    {
+      $(event.target).prepend("<i class='fas fa-cog fa-spin'></i> ");
+
+      $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/toggle`, {name: name})
         .done(function(data) {
           divreload('settingpanel');
         })
