@@ -38,8 +38,9 @@ class PresenceMachine extends PresenceDevice {
       const intervallist = { 1: '1 minute', 2: '2 minutes', 3: '3 minutes', 4: '4 minutes', 5: '5 minutes', 10: '10 minutes', 15: '15 minutes', };
       result["leavetoleranceminutes"] = {
         type: 'select',
-        title: 'Refresh interval',
-        value: `${this.setting.leavetoleranceminutes} minutes`,
+        title: 'Leave tolerance',
+        value: this.setting.leavetoleranceminutes,
+        displayvalue: `${this.setting.leavetoleranceminutes} minutes`,
         lookup: JSON.stringify(intervallist).replace(/["]/g, "\'"),
         error: false,
         canclear: false,
