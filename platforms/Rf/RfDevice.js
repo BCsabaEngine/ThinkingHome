@@ -5,9 +5,10 @@ class RfDevice extends Device {
     return {
       'RfPushButton': { displayname: 'Push button', devicename: 'RfPushButton_'.toLowerCase(), icon: 'fa fa-dot-circle' },
       'RfPushButton4ch': { displayname: '4ch button', devicename: 'RfPushButton4ch_'.toLowerCase(), icon: 'fa fa-dot-circle' },
+      'RfSwitch': { displayname: 'Switch', devicename: 'RfSwitch_'.toLowerCase(), icon: 'fa fa-toggle-on' },
       'RfDoorSensor': { displayname: 'Door sensor', devicename: 'RfDoor_'.toLowerCase(), icon: 'fa fa-door-open' },
       'RfMoveSensor': { displayname: 'Move sensor', devicename: 'RfMove_'.toLowerCase(), icon: 'fa fa-running' },
-      'RfSwitch': { displayname: 'Switch', devicename: 'RfSwitch_'.toLowerCase(), icon: 'fa fa-toggle-on' },
+      'RfDigooSiren': { displayname: 'Digoo siren', devicename: 'RfDigooSiren_'.toLowerCase(), icon: 'fa fa-volume-up' },
     }
   }
   static CreateByType(type, id, platform, name) {
