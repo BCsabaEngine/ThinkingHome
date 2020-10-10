@@ -37,7 +37,7 @@ class RfSwitch extends RfDevice {
     toTitle: function () { return "RF switch" }.bind(this),
     toSubTitle: function () { return ''; }.bind(this),
   };
-  get icon() { return this.setting.icon || "fa fa-code-branch"; }
+  get icon() { return this.setting.icon || "fa fa-toggle-on"; }
   entities = {
     state: new Entity(this, 'state', 'State', "fa fa-door-open")
       .AddAction(new ButtonAction(this, "switchon", "Switch on", "fa fa-toggle-on", function () { this.device.SendRfCode(this.device.setting.rfcodeon); }))

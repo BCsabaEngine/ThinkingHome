@@ -27,7 +27,7 @@ class RfDoorSensor extends RfDevice {
     toTitle: function () { return "Door sensor" }.bind(this),
     toSubTitle: function () { return ''; }.bind(this),
   };
-  get icon() { return this.setting.icon || "fa fa-code-branch"; }
+  get icon() { return this.setting.icon || "fa fa-door-open"; }
   entities = {
     state: new BoolStateEntity(this, 'state', 'State', "fa fa-door-open")
       .InitStateNames("Closed", "Open")

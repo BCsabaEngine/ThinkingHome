@@ -42,7 +42,7 @@ class RfPushButton extends RfDevice {
       return `${count} / ${this.buttons.length} codes`;
     }.bind(this),
   };
-  get icon() { return this.setting.icon || "fa fa-code-branch"; }
+  get icon() { return this.setting.icon || "fa fa-dot-circle"; }
   GetStatusInfos() {
     const result = [];
     let anyfilled = false;

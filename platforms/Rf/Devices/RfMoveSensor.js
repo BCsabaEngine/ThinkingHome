@@ -18,7 +18,7 @@ class RfMoveSensor extends RfDevice {
     toTitle: function () { return "Move sensor" }.bind(this),
     toSubTitle: function () { return ''; }.bind(this),
   };
-  get icon() { return this.setting.icon || "fa fa-code-branch"; }
+  get icon() { return this.setting.icon || "fa fa-running"; }
   entities = {
     move: new MoveEntity(this, 'move', 'Move', "fa fa-running")
   };
