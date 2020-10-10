@@ -19,7 +19,8 @@ class RaspberryPiPlatform extends Platform {
       result["freshinterval"] = {
         type: 'select',
         title: 'Refresh interval',
-        value: this.setting.freshinterval >= 60 ? `${this.setting.freshinterval / 60} minutes` : `${this.setting.freshinterval} seconds`,
+        value: this.setting.freshinterval,
+        displayvalue: this.setting.freshinterval >= 60 ? `${this.setting.freshinterval / 60} minutes` : `${this.setting.freshinterval} seconds`,
         lookup: JSON.stringify(intervallist).replace(/["]/g, "\'"),
         error: false,
         canclear: false,
