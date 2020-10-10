@@ -1,0 +1,35 @@
+extends ../_baseplatform
+
+block command
+  center
+    button.btn.btn-default(onclick="sendircode()")
+      i.fa.fa-podcast
+      | 
+      | Send custom IR code
+
+block script
+  script(type='text/javascript').
+    function sendircode()
+    {
+      Swal.fire({
+        title: 'Send custom IR code',
+        input: 'text',
+        inputPlaceholder: 'Type IR code [NEC?]0x??????#32',
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          $.post(`/platform/#{platform.GetCode()}/sendircode`, {ircode: result.value})
+            .done(function(data) {
+              divreload('settingpanel');
+            })
+            .fail(function(error) {
+              Swal.fire(
+                'Error occured',
+                error.responseText,
+                'error'
+              )            
+            });
+        }
+      })
+    }
