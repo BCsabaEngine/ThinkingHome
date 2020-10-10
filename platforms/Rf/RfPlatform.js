@@ -195,7 +195,7 @@ class RfPlatform extends Platform {
   GetCode() { return RfPlatform.GetCode(); }
   GetName() { return RfPlatform.GetName(); }
   GetDescription() { return RfPlatform.GetDescription(); }
-  static GetPriority() { return 1 }
+  static GetPriority() { return 10 }
   static GetCode() { return 'rf' }
   static GetName() { return 'Rf' }
   static GetDescription() { return 'Radio-frequency' }
