@@ -1,6 +1,5 @@
 const useragent = require('express-useragent');
-const WebAccess = require.main.require('./models/WebAccess');
-const dayjs = require('dayjs');
+const WebAccess = require('../models/WebAccess');
 
 module.exports = (app) => {
 
