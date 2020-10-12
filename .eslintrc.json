@@ -4,17 +4,33 @@
         "commonjs": true,
         "es2021": true
     },
+    "parser": "babel-eslint",
     "extends": [
-        "eslint:recommended",
-        "standard"
+        "standard",
+        "eslint:recommended"
+    ],
+    "plugins": [
+      "babel"
     ],
     "parserOptions": {
         "ecmaVersion": 12
     },
+    "globals": {
+        "config": "readonly",
+        "db": "readonly",
+        "logger": "readonly"
+    },
     "rules": {
+      //babel as parser makes "standard" incompatible with these two rule, skip its
+      "template-curly-spacing": 0,
+      "indent": 0,
+
+      "space-before-function-paren": 0,
+      "no-magic-numbers": [2, { "ignore": [0, 1, 1000, 1024] }],
+
       "no-console": 2,
       "no-unreachable-loop": 2,
-
+      
       "class-methods-use-this": 2,
       "default-case": 2,
       "default-case-last": 2,
@@ -23,7 +39,6 @@
       "no-eq-null": 2,
       "no-extra-bind": 2,
       "no-labels": 2,
-      "no-magic-numbers": 2,
       "no-multi-spaces": 2,
       "no-new-func": 2,
       "no-new-wrappers": 2,
