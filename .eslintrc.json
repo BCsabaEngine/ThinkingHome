@@ -16,6 +16,7 @@
         "ecmaVersion": 12
     },
     "globals": {
+        "systemsettings": "readonly",
         "config": "readonly",
         "db": "readonly",
         "logger": "readonly"
@@ -26,7 +27,7 @@
       "indent": 0,
 
       "space-before-function-paren": 0,
-      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [0, 1, 100, 1000, 1024] }],
+      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [-1, 0, 1, 10, 60, 100, 1000, 1024, 3600] }],
 
       "no-console": 2,
       "no-unreachable-loop": 2,
