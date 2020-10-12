@@ -27,7 +27,7 @@
       "indent": 0,
 
       "space-before-function-paren": 0,
-      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [-1, 0, 1, 10, 60, 100, 1000, 1024, 3600] }],
+      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [-1, 0, 1, 2, 10, 24, 60, 100, 1000, 1024, 3600] }],
 
       "no-console": 2,
       "no-unreachable-loop": 2,
