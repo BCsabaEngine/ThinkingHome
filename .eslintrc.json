@@ -16,7 +16,6 @@
       "no-unreachable-loop": 2,
 
       "class-methods-use-this": 2,
-      "consistent-return": 2,
       "default-case": 2,
       "default-case-last": 2,
       "no-constructor-return": 2,
