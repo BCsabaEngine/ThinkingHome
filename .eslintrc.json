@@ -27,16 +27,14 @@
       "indent": 0,
 
       "space-before-function-paren": 0,
-      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [-1, 0, 1, 2, 10, 24, 60, 100, 1000, 1024, 3600] }],
+      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [-1, 0, 1, 2, 3, 10, 24, 60, 100, 1000, 1024, 3600] }],
 
       "no-console": 2,
       "no-unreachable-loop": 2,
       
-      "class-methods-use-this": 2,
       "default-case": 2,
       "default-case-last": 2,
       "no-constructor-return": 2,
-      "no-empty-function": 2,
       "no-eq-null": 2,
       "no-extra-bind": 2,
       "no-labels": 2,
