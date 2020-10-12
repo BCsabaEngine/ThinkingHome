@@ -43,6 +43,7 @@
  cp ./config.js.sample ./config.js
  NODE_ENV=production pm2 start ./index.js --name ThinkingHome
  pm2 save
+ pm2 startup
  ```
 
 # Update system
