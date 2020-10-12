@@ -1,8 +1,11 @@
-const Device = require('../Device');
-const Platform = require('../Platform');
-const DeviceModel = require('../../models/Device');
-const RfDevice = require('./RfDevice');
-const arrayUtils = require('../../lib/arrayUtils');
+const Device = require('../Device')
+const Platform = require('../Platform')
+const DeviceModel = require('../../models/Device')
+const RfDevice = require('./RfDevice')
+const arrayUtils = require('../../lib/arrayUtils')
+
+const http500 = 500
+const lastrfcodecount = 10
 
 class RfPlatform extends Platform {
   msgcounter = {
@@ -10,194 +13,183 @@ class RfPlatform extends Platform {
     outgoing: 0,
     startdate: new Date().getTime(),
     GetMinuteRatio() {
-      const now = new Date().getTime();
-      const minutes = (now - this.startdate) / 1000 / 60;
+      const now = new Date().getTime()
+      const minutes = (now - this.startdate) / 1000 / 60
       if (minutes > 0) {
-        const value = ((this.incoming + this.outgoing) / minutes).toFixed(0);
-        return `${value} /min`;
+        const value = ((this.incoming + this.outgoing) / minutes).toFixed(0)
+        return `${value} /min`
       }
-      return '0 /min';
-    },
+      return '0 /min'
+    }
   };
 
-  last10rfcodestatus = [];
+  lastrfcodestatus = [];
   GetStatusInfos() {
-    let result = [];
+    const result = []
 
-    const recdevs = runningContext.rfInterCom.GetReceiverDevices()
+    const recdevs = global.runningContext.rfInterCom.GetReceiverDevices()
     if (recdevs.length) {
-      let rc = 1;
-      for (const recdev of recdevs)
-        result.push({ message: `Receiver #${rc++}`, value: recdev.name, });
-    }
-    else
-      result.push({ message: `Receiver device not found`, value: '', });
+      let rc = 1
+      for (const recdev of recdevs) { result.push({ message: `Receiver #${rc++}`, value: recdev.name }) }
+    } else { result.push({ message: 'Receiver device not found', value: '' }) }
 
-    const snddevs = runningContext.rfInterCom.GetSenderDevices()
+    const snddevs = global.runningContext.rfInterCom.GetSenderDevices()
     if (snddevs.length) {
-      let rs = 1;
-      for (const snddev of snddevs)
-        result.push({ message: `Sender #${rs++}`, value: snddev.name, });
-    }
-    else
-      result.push({ message: `Sender device not found`, value: '', });
+      let rs = 1
+      for (const snddev of snddevs) { result.push({ message: `Sender #${rs++}`, value: snddev.name }) }
+    } else { result.push({ message: 'Sender device not found', value: '' }) }
 
-    result.push({ message: '', value: '' });
-    result.push({ message: 'Received', value: this.msgcounter.incoming || '0' });
-    result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' });
-    result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() });
+    result.push({ message: '', value: '' })
+    result.push({ message: 'Received', value: this.msgcounter.incoming || '0' })
+    result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' })
+    result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() })
 
-    if (this.last10rfcodestatus.length) {
-      result.push({ message: "" });
-      result.push({ message: "Last RF codes handled by platform" });
-      for (const rfcodestatus of this.last10rfcodestatus)
-        result.push(rfcodestatus);
+    if (this.lastrfcodestatus.length) {
+      result.push({ message: '' })
+      result.push({ message: 'Last RF codes handled by platform' })
+      for (const rfcodestatus of this.lastrfcodestatus) { result.push(rfcodestatus) }
     }
 
-    const statusinfos = super.GetStatusInfos();
-    if (Array.isArray(statusinfos))
-      for (const statusinfo of statusinfos)
-        if (statusinfo.error || statusinfo.warning)
-          result.push(statusinfo);
-    return result;
+    const statusinfos = super.GetStatusInfos()
+    if (Array.isArray(statusinfos)) {
+      for (const statusinfo of statusinfos) {
+        if (statusinfo.error || statusinfo.warning) { result.push(statusinfo) }
+      }
+    }
+    return result
   }
 
   SendRfCode(rfcode) {
-    this.msgcounter.outgoing++;
-    runningContext.rfInterCom.SendRf(rfcode);
+    this.msgcounter.outgoing++
+    global.runningContext.rfInterCom.SendRf(rfcode)
   }
 
   OnReceiveRfCode(rfcode) {
-    this.msgcounter.incoming++;
+    this.msgcounter.incoming++
 
-    let found = false;
-    for (const device of this.devices)
+    let found = false
+    for (const device of this.devices) {
       if (device.ReceiveRfCode(rfcode)) {
-        found = true;
-        break;
+        found = true
+        break
       }
+    }
 
-    if (!found)
-      this.last10rfcodestatus.push({ message: 'Not handled', value: rfcode });
-    else
-      this.last10rfcodestatus.push({ message: '', value: rfcode });
+    if (!found) {
+      this.lastrfcodestatus.push({ message: 'Not handled', value: rfcode })
+    } else {
+      this.lastrfcodestatus.push({ message: '', value: rfcode })
+    }
 
-    while (this.last10rfcodestatus.length > 10)
-      this.last10rfcodestatus = this.last10rfcodestatus.slice(1);
-    wss.BroadcastToChannel(`platform_${this.GetCode()}`);
+    while (this.lastrfcodestatus.length > lastrfcodecount) { this.lastrfcodestatus = this.lastrfcodestatus.slice(1) }
+    global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
 
-    return found;
+    return found
   }
 
   async Start() {
-    this.approuter.get('/', this.WebMainPage.bind(this));
-    this.approuter.post('/adddevice', this.WebAddDevice.bind(this));
-    this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this));
-    this.approuter.post('/sendrfcode', this.WebSendRfCode.bind(this));
+    this.approuter.get('/', this.WebMainPage.bind(this))
+    this.approuter.post('/adddevice', this.WebAddDevice.bind(this))
+    this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this))
+    this.approuter.post('/sendrfcode', this.WebSendRfCode.bind(this))
 
-    for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode()))
-      await this.CreateAndStartDevice(device.Type, device.Id, device.Name);
-    await super.Start();
-    logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`);
+    for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode())) { await this.CreateAndStartDevice(device.Type, device.Id, device.Name) }
+    await super.Start()
+    logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`)
   }
 
   async CreateAndStartDevice(type, id, name) {
     try {
-      const deviceobj = RfDevice.CreateByType(type, id, this, name);
-      await deviceobj.Start();
-      this.devices.push(deviceobj);
-      arrayUtils.sortByProperty(this.devices, 'name');
+      const deviceobj = RfDevice.CreateByType(type, id, this, name)
+      await deviceobj.Start()
+      this.devices.push(deviceobj)
+      arrayUtils.sortByProperty(this.devices, 'name')
 
-      this.approuter.use(`/device/${name}`, deviceobj.approuter);
-      logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`);
-      return deviceobj;
-    }
-    catch (err) {
-      console.log(err);
-      logger.error(`[Platform] Cannot create device (${name}) because '${err.message}'`);
+      this.approuter.use(`/device/${name}`, deviceobj.approuter)
+      logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`)
+      return deviceobj
+    } catch (err) {
+      logger.error(`[Platform] Cannot create device (${name}) because '${err.message}'`)
     }
   }
+
   async StopAndRemoveDevice(id) {
     try {
       for (let i = 0; i < this.devices.length; i++) {
-        const device = this.devices[i];
-        if (device.id == id) {
-          await device.Stop();
-          app.remove(device.approuter, this.approuter);
-          this.devices.splice(i, 1);
-          logger.debug(`[Platform] Device deleted ${this.GetCode()}.${type}=${name}`);
-          break;
+        const device = this.devices[i]
+        if (device.id === id) {
+          await device.Stop()
+          global.app.remove(device.approuter, this.approuter)
+          this.devices.splice(i, 1)
+          logger.debug(`[Platform] Device deleted ${this.GetCode()}`)
+          break
         }
       }
-    }
-    catch (err) {
-      logger.error(`[Platform] Cannot delete device (${id}) because '${err.message}'`);
+    } catch (err) {
+      logger.error(`[Platform] Cannot delete device (${id}) because '${err.message}'`)
     }
   }
 
   async WebMainPage(req, res, next) {
-    arrayUtils.sortByProperty(this.devices, 'name');
-    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.setting.toTitle(), 'name') : null;
+    const maxitemswithoutgrouping = 6
+
+    arrayUtils.sortByProperty(this.devices, 'name')
+    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.setting.toTitle(), 'name') : null
 
     res.render('platforms/rf/main', {
-      title: "RF platform",
+      title: 'RF platform',
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
       devicegroups: devicegroups,
       handlers: RfDevice.GetTypes(),
-      autodevices: null,
-    });
+      autodevices: null
+    })
   }
 
   async WebAddDevice(req, res, next) {
-    const type = req.body.type;
-    const name = req.body.name.toLowerCase();
-    const settings = req.body.settings;
+    const type = req.body.type
+    const name = req.body.name.toLowerCase()
+    const settings = req.body.settings
 
-    console.log(name);
-    console.log(type);
-    console.log(settings);
+    if (!Device.IsValidDeviceName(name)) { return res.status(http500).send(`Invalid device name: '${name}`) }
 
-    if (!Device.IsValidDeviceName(name))
-      return res.status(500).send(`Invalid device name: '${name}`);
+    const id = await DeviceModel.InsertSync(name, this.GetCode(), type)
 
-    const id = await DeviceModel.InsertSync(name, this.GetCode(), type);
+    const deviceobj = await this.CreateAndStartDevice(type, id, name)
 
-    const deviceobj = await this.CreateAndStartDevice(type, id, name);
+    if (settings) {
+      for (const key of Object.keys(settings)) { deviceobj.AdaptSetting(key, settings[key]) }
+    }
 
-    if (settings)
-      for (const key of Object.keys(settings))
-        deviceobj.AdaptSetting(key, settings[key]);
-
-    res.send(name);
+    res.send(name)
   }
 
   async WebDeleteDevice(req, res, next) {
-    const id = req.body.id;
+    const id = req.body.id
 
-    await DeviceModel.DeleteSync(id, this.GetCode());
+    await DeviceModel.DeleteSync(id, this.GetCode())
 
-    await this.StopAndRemoveDevice(id);
+    await this.StopAndRemoveDevice(id)
 
-    res.send("OK");
+    res.send('OK')
   }
 
   async WebSendRfCode(req, res, next) {
-    const rfcode = req.body.rfcode;
+    const rfcode = req.body.rfcode
 
-    this.SendRfCode(rfcode);
+    this.SendRfCode(rfcode)
 
-    res.send("OK");
+    res.send('OK')
   }
 
-  static GetHandlerCount() { return Object.keys(RfDevice.GetTypes()).length; }
-  GetCode() { return RfPlatform.GetCode(); }
-  GetName() { return RfPlatform.GetName(); }
-  GetDescription() { return RfPlatform.GetDescription(); }
-  static GetPriority() { return 10 }
+  static GetHandlerCount() { return Object.keys(RfDevice.GetTypes()).length }
+  GetCode() { return RfPlatform.GetCode() }
+  GetName() { return RfPlatform.GetName() }
+  GetDescription() { return RfPlatform.GetDescription() }
+  static GetPriority() { return '010' }
   static GetCode() { return 'rf' }
   static GetName() { return 'Rf' }
   static GetDescription() { return 'Radio-frequency' }
 }
-module.exports = RfPlatform;
+module.exports = RfPlatform

@@ -1,6 +1,6 @@
 const DeviceSettingTable = db.defineTable('DeviceSetting', {
   columns: {
-    Id: db.ColTypes.int(0).notNull().primaryKey().autoIncrement(),
+    Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     Device: db.ColTypes.int(10).notNull().index(),
     Name: db.ColTypes.varchar(100).notNull(),
     Value: db.ColTypes.varchar(100)

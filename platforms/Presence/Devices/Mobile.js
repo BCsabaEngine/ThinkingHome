@@ -1,6 +1,6 @@
-const PresenceMachine = require('./Machine');
+const PresenceMachine = require('./Machine')
 
 class PresenceMobile extends PresenceMachine {
-  get icon() { return "fa fa-mobile-alt" };
+  get icon() { return 'fa fa-mobile-alt' }
 }
-module.exports = PresenceMobile;
+module.exports = PresenceMobile

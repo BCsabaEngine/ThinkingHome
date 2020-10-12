@@ -1,243 +1,240 @@
-const os = require('os');
-const oui = require('oui');
-const { exec } = require('child_process');
+const os = require('os')
+const oui = require('oui')
+const { exec } = require('child_process')
 
-const Device = require('../Device');
-const Platform = require('../Platform');
-const DeviceModel = require('../../models/Device');
-const PresenceDevice = require('./PresenceDevice');
-const PresenceHuman = require('./Devices/Human');
-const arrayUtils = require('../../lib/arrayUtils');
+const Device = require('../Device')
+const Platform = require('../Platform')
+const DeviceModel = require('../../models/Device')
+const PresenceDevice = require('./PresenceDevice')
+const PresenceHuman = require('./Devices/Human')
+const arrayUtils = require('../../lib/arrayUtils')
+
+const http500 = 500
 
 class PresencePlatform extends Platform {
   setting = {
     netinterface: '',
     toDisplayList: function () {
-      const result = {};
+      const result = {}
 
-      const interfacelist = {};
-      for (const ni of this.netinterfaces)
-        interfacelist[ni] = ni;
+      const interfacelist = {}
+      for (const ni of this.netinterfaces) { interfacelist[ni] = ni }
 
-      result["netinterface"] = {
+      result.netinterface = {
         type: 'select',
         title: 'Network interface',
         value: this.setting.netinterface,
-        lookup: JSON.stringify(interfacelist).replace(/["]/g, "\'"),
+        lookup: JSON.stringify(interfacelist).replace(/["]/g, "'"),
         error: !this.setting.netinterface,
-        canclear: false,
-      };
+        canclear: false
+      }
 
-      return result;
-    }.bind(this),
+      return result
+    }.bind(this)
   };
+
   netinterfaces = [];
   macaddresses = {};
 
   GetStatusInfos() {
-    let result = [];
-    if (!this.setting.netinterface) result.push({ error: true, message: 'Network interface not set' });
-    const statusinfos = super.GetStatusInfos();
-    if (Array.isArray(statusinfos))
-      result = result.concat(statusinfos);
-    return result;
+    let result = []
+    if (!this.setting.netinterface) result.push({ error: true, message: 'Network interface not set' })
+    const statusinfos = super.GetStatusInfos()
+    if (Array.isArray(statusinfos)) { result = result.concat(statusinfos) }
+    return result
   }
+
   Tick(seconds) {
-    if (seconds % 60 != 0)
-      return;
+    if (seconds % 60 !== 0) { return }
 
-    const nets = os.networkInterfaces();
-    this.netinterfaces = Object.keys(nets);
+    const nets = os.networkInterfaces()
+    this.netinterfaces = Object.keys(nets)
 
-    for (const name of this.netinterfaces)
-      if (name == this.setting.netinterface)
-        for (const net of nets[name])
-          if (net.family === 'IPv4' && !net.internal && net.cidr)
+    for (const name of this.netinterfaces) {
+      if (name === this.setting.netinterface) {
+        for (const net of nets[name]) {
+          if (net.family === 'IPv4' && !net.internal && net.cidr) {
             this
               .UpdateNetworkPresences(net.cidr)
               .then(macs => {
-                for (const device of this.devices)
-                  if (!(device instanceof PresenceHuman))
-                    device.Tick(seconds);
-                for (const device of this.devices)
-                  if (device instanceof PresenceHuman)
-                    device.Tick(seconds);
+                for (const device of this.devices) {
+                  if (!(device instanceof PresenceHuman)) { device.Tick(seconds) }
+                }
+                for (const device of this.devices) {
+                  if (device instanceof PresenceHuman) { device.Tick(seconds) }
+                }
               })
-              .catch(err => logger.error(err.message));
+              .catch(err => logger.error(err.message))
+          }
+        }
+      }
+    }
   }
 
   UpdateNetworkPresences(cidr) {
-    const cmd = os.platform() === "win32" ? 'arp -a' : `nmap -sP ${cidr}`;
+    const cmd = os.platform() === 'win32' ? 'arp -a' : `nmap -sP ${cidr}`
 
     return new Promise(function (resolve, reject) {
-
-      if (!cmd) resolve([]);
+      if (!cmd) resolve([])
 
       exec(cmd, (error, stdout, stderr) => {
         if (error) {
-          logger.error(error.message);
-          reject(error);
-        }
-        else if (stderr) {
-          logger.error(stderr);
-          reject(new Error(stderr));
-        }
-        else {
-          const lines = stdout.split(os.EOL);
+          logger.error(error.message)
+          reject(error)
+        } else if (stderr) {
+          logger.error(stderr)
+          reject(new Error(stderr))
+        } else {
+          const lines = stdout.split(os.EOL)
 
-          let _macaddresses = [];
+          let _macaddresses = []
           for (const line of lines) {
-            const match = line.toLowerCase().match(/(([0-9a-f]{2}[:-]){5}([0-9a-f]{2}))/);
-            if (match)
-              _macaddresses.push(match[1].replace(/-/g, ':'));
+            const match = line.toLowerCase().match(/(([0-9a-f]{2}[:-]){5}([0-9a-f]{2}))/)
+            if (match) { _macaddresses.push(match[1].replace(/-/g, ':')) }
           }
-          _macaddresses = _macaddresses.filter((x, i) => i === _macaddresses.indexOf(x)); //Remove duplicates
-          _macaddresses.sort();
+          _macaddresses = _macaddresses.filter((x, i) => i === _macaddresses.indexOf(x)) // Remove duplicates
+          _macaddresses.sort()
 
-          logger.debug(`[Presence] MAC addresses on (${cidr}): ${_macaddresses.length} addresses`);
+          logger.debug(`[Presence] MAC addresses on (${cidr}): ${_macaddresses.length} addresses`)
 
-          this.macaddresses = {};
+          this.macaddresses = {}
           for (const _macaddress of _macaddresses) {
-            let vendor = oui(_macaddress);
-            if (vendor == 'null') vendor = "";
-            if (vendor) vendor = vendor.split(' ')[0];
+            let vendor = oui(_macaddress)
+            if (vendor === 'null') vendor = ''
+            if (vendor) vendor = vendor.split(' ')[0]
 
-            this.macaddresses[_macaddress] = vendor;
+            this.macaddresses[_macaddress] = vendor
           }
 
-          resolve(this.macaddresses);
+          resolve(this.macaddresses)
         }
-      });
-    }.bind(this));
+      })
+    }.bind(this))
   }
 
   async Start() {
-    this.approuter.get('/', this.WebMainPage.bind(this));
-    this.approuter.post('/adddevice', this.WebAddDevice.bind(this));
-    this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this));
+    this.approuter.get('/', this.WebMainPage.bind(this))
+    this.approuter.post('/adddevice', this.WebAddDevice.bind(this))
+    this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this))
 
-    for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode()))
-      await this.CreateAndStartDevice(device.Type, device.Id, device.Name);
-    await super.Start();
-    logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`);
+    for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode())) { await this.CreateAndStartDevice(device.Type, device.Id, device.Name) }
+    await super.Start()
+    logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`)
   }
 
   async CreateAndStartDevice(type, id, name) {
     try {
-      const deviceobj = PresenceDevice.CreateByType(type, id, this, name);
-      await deviceobj.Start();
-      this.devices.push(deviceobj);
-      arrayUtils.sortByProperty(this.devices, 'name');
+      const deviceobj = PresenceDevice.CreateByType(type, id, this, name)
+      await deviceobj.Start()
+      this.devices.push(deviceobj)
+      arrayUtils.sortByProperty(this.devices, 'name')
 
-      this.approuter.use(`/device/${name}`, deviceobj.approuter);
-      logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`);
-      return deviceobj;
-    }
-    catch (err) {
-      logger.error(`[Platform] Cannot create device because '${err.message}'`);
+      this.approuter.use(`/device/${name}`, deviceobj.approuter)
+      logger.debug(`[Platform] Device created ${this.GetCode()}.${type}=${name}`)
+      return deviceobj
+    } catch (err) {
+      logger.error(`[Platform] Cannot create device because '${err.message}'`)
     }
   }
 
   async StopAndRemoveDevice(id) {
     try {
       for (let i = 0; i < this.devices.length; i++) {
-        const device = this.devices[i];
-        if (device.id == id) {
-          await device.Stop();
-          app.remove(device.approuter, this.approuter);
-          this.devices.splice(i, 1);
-          logger.debug(`[Platform] Device deleted ${this.GetCode()}.${type}=${name}`);
-          break;
+        const device = this.devices[i]
+        if (device.id === id) {
+          await device.Stop()
+          global.app.remove(device.approuter, this.approuter)
+          this.devices.splice(i, 1)
+          logger.debug(`[Platform] Device deleted ${this.GetCode()}`)
+          break
         }
       }
-    }
-    catch (err) {
-      logger.error(`[Platform] Cannot delete device because '${err.message}'`);
+    } catch (err) {
+      logger.error(`[Platform] Cannot delete device because '${err.message}'`)
     }
   }
 
   GetAutoDiscoveredDevices() {
-    const typeselect = {};
-    const types = PresenceDevice.GetTypes();
-    for (const type of Object.keys(types))
-      if (!['Human'].includes(type))
-        typeselect[type] = types[type].displayname.replace(" ", "&nbsp;");
+    const typeselect = {}
+    const types = PresenceDevice.GetTypes()
+    for (const type of Object.keys(types)) {
+      if (!['Human'].includes(type)) { typeselect[type] = types[type].displayname.replace(' ', '&nbsp;') }
+    }
 
-    const result = [];
+    const result = []
     for (const macaddress of Object.keys(this.macaddresses)) {
-      let exists = false;
-      for (const device of this.devices)
-        if (device instanceof PresenceDevice)
-          if (device.setting.macaddress == macaddress)
-            exists = true;
-      if (!exists)
+      let exists = false
+      for (const device of this.devices) {
+        if (device instanceof PresenceDevice) {
+          if (device.setting.macaddress === macaddress) { exists = true }
+        }
+      }
+      if (!exists) {
         result.push({
-          type: JSON.stringify(typeselect).replace(/["]/g, "\'"),
+          type: JSON.stringify(typeselect).replace(/["]/g, "'"),
           displayname: this.macaddresses[macaddress] || 'Unknown',
           badge: macaddress,
           devicename: 'PresenceMachine'.toLowerCase(),
           icon: 'fa fa-question',
-          setting: JSON.stringify({ macaddress: macaddress }).replace(/["]/g, "\'"),
-        });
+          setting: JSON.stringify({ macaddress: macaddress }).replace(/["]/g, "'")
+        })
+      }
     }
-    return result;
+    return result
   }
 
   WebMainPage(req, res, next) {
-    arrayUtils.sortByProperty(this.devices, 'name');
-    const devicegroups = this.devices.length > 6 ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name.replace('Presence', ''), 'name') : null;
+    const maxitemswithoutgrouping = 6
+
+    arrayUtils.sortByProperty(this.devices, 'name')
+    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name.replace('Presence', ''), 'name') : null
 
     res.render('platforms/presence/main', {
-      title: "Presence platform",
+      title: 'Presence platform',
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
       devicegroups: devicegroups,
       handlers: PresenceDevice.GetTypes(),
-      autodevices: this.GetAutoDiscoveredDevices(),
-    });
+      autodevices: this.GetAutoDiscoveredDevices()
+    })
   }
 
   async WebAddDevice(req, res, next) {
-    const type = req.body.type;
-    const name = req.body.name.toLowerCase();
-    const settings = req.body.settings;
+    const type = req.body.type
+    const name = req.body.name.toLowerCase()
+    const settings = req.body.settings
 
-    console.log(name);
-    console.log(type);
-    console.log(settings);
+    if (!Device.IsValidDeviceName(name)) { return res.status(http500).send(`Invalid device name: '${name}`) }
 
-    if (!Device.IsValidDeviceName(name))
-      return res.status(500).send(`Invalid device name: '${name}`);
+    const id = await DeviceModel.InsertSync(name, this.GetCode(), type)
 
-    const id = await DeviceModel.InsertSync(name, this.GetCode(), type);
+    const deviceobj = await this.CreateAndStartDevice(type, id, name)
 
-    const deviceobj = await this.CreateAndStartDevice(type, id, name);
+    if (settings) {
+      for (const key of Object.keys(settings)) { deviceobj.AdaptSetting(key, settings[key]) }
+    }
 
-    if (settings)
-      for (const key of Object.keys(settings))
-        deviceobj.AdaptSetting(key, settings[key]);
-
-    res.send(name);
+    res.send(name)
   }
 
   async WebDeleteDevice(req, res, next) {
-    const id = req.body.id;
+    const id = req.body.id
 
-    await DeviceModel.DeleteSync(id, this.GetCode());
+    await DeviceModel.DeleteSync(id, this.GetCode())
 
-    await this.StopAndRemoveDevice(id);
+    await this.StopAndRemoveDevice(id)
 
-    res.send("OK");
+    res.send('OK')
   }
 
-  static GetHandlerCount() { return Object.keys(PresenceDevice.GetTypes()).length; }
-  GetCode() { return PresencePlatform.GetCode(); }
-  GetName() { return PresencePlatform.GetName(); }
-  GetDescription() { return PresencePlatform.GetDescription(); }
-  static GetPriority() { return 100 }
+  static GetHandlerCount() { return Object.keys(PresenceDevice.GetTypes()).length }
+  GetCode() { return PresencePlatform.GetCode() }
+  GetName() { return PresencePlatform.GetName() }
+  GetDescription() { return PresencePlatform.GetDescription() }
+  static GetPriority() { return '100' }
   static GetCode() { return 'presence' }
   static GetName() { return 'Presence' }
   static GetDescription() { return 'Who is at home?' }
 }
-module.exports = PresencePlatform;
+module.exports = PresencePlatform
