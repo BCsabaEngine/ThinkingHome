@@ -1,262 +1,260 @@
-const YAML = require('yaml');
-const passwordStrength = require('pwd-strength');
-const OpenWeatherMap = require('../lib/openWeatherMap');
-const BoardBuilder = require('../lib/boardBuilder');
-const BackupBuilder = require('../lib/backupBuilder');
-const UserModel = require('../models/User');
-const BoardModel = require('../models/Board');
+const YAML = require('yaml')
+const passwordStrength = require('pwd-strength')
+const OpenWeatherMap = require('../lib/openWeatherMap')
+const BoardBuilder = require('../lib/boardBuilder')
+const BackupBuilder = require('../lib/backupBuilder')
+const UserModel = require('../models/User')
+const BoardModel = require('../models/Board')
 
 module.exports = (app) => {
-
   app.get('/settings', async function (req, res, next) {
     try {
       // await req.RequirePermission(UserPermissions.RuleCode);
 
-      const boards = await BoardModel.GetAllSync();
-      const users = await UserModel.GetAllSync();
+      const boards = await BoardModel.GetAllSync()
+      const users = await UserModel.GetAllSync()
 
       res.render('settings', {
-        title: "System settings",
+        title: 'System settings',
         settings: global.systemsettings,
         boards: boards,
-        users: users,
-      });
+        users: users
+      })
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/update', async function (req, res, next) {
     try {
-      global.systemsettings.AdaptFromObject(req.body);
+      global.systemsettings.AdaptFromObject(req.body)
 
-      res.send("OK");
+      res.send('OK')
     }
     catch (err) {
-      res.status(500).send(err.message);
+      res.status(500).send(err.message)
     }
   })
 
   app.post('/settings/checkopenweatherapikey', async function (req, res, next) {
     try {
-      const latitude = req.body.latitude;
-      const longitude = req.body.longitude;
-      const apikey = req.body.apikey;
+      const latitude = req.body.latitude
+      const longitude = req.body.longitude
+      const apikey = req.body.apikey
 
-      const checkres = await OpenWeatherMap.check(latitude, longitude, apikey);
-      res.send(checkres);
+      const checkres = await OpenWeatherMap.check(latitude, longitude, apikey)
+      res.send(checkres)
     }
     catch (err) {
-      res.status(403).send(err.message);
+      res.status(403).send(err.message)
     }
   })
 
   app.post('/settings/user/add', async function (req, res, next) {
     try {
-      const email = req.body.email;
-      const password = req.body.password;
-      const validemail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
-      const pwdtest = passwordStrength(password, { minPasswordLength: 8, minUpperChars: 1, minLowerChars: 1, minSpecialChars: 0 });
+      const email = req.body.email
+      const password = req.body.password
+      const validemail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+      const pwdtest = passwordStrength(password, { minPasswordLength: 8, minUpperChars: 1, minLowerChars: 1, minSpecialChars: 0 })
 
       if (email.length > 100)
-        return res.status(403).send(`Too long email: max 100 characters`);
+        return res.status(403).send('Too long email: max 100 characters')
       if (!validemail)
-        return res.status(403).send(`Not a valid email: ${email}`);
+        return res.status(403).send(`Not a valid email: ${email}`)
       if (await UserModel.ExistsSync(email))
-        return res.status(403).send(`Email already exists: ${email}`);
+        return res.status(403).send(`Email already exists: ${email}`)
       if (!pwdtest.success)
-        return res.status(403).send(`Not enought strong password: minimum 8 characters, lower and uppercase letters`);
+        return res.status(403).send('Not enought strong password: minimum 8 characters, lower and uppercase letters')
 
-      const insertres = await UserModel.Insert(email, password);
+      const insertres = await UserModel.Insert(email, password)
 
       // autologin first user
       if (insertres.isadmin)
-        req.session.user = { id: insertres.insertid, isadmin: true, email: email, name: insertres.name, };
+        req.session.user = { id: insertres.insertid, isadmin: true, email: email, name: insertres.name }
 
-      res.send("OK");
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/user/update', async function (req, res, next) {
     try {
-      const name = req.body.name;
-      const email = req.body.email;
+      const name = req.body.name
+      const email = req.body.email
 
       if (name.length > 100)
-        return res.status(403).send(`Too long name: max 100 characters`);
+        return res.status(403).send('Too long name: max 100 characters')
 
-      await UserModel.UpdateSync(name, email);
-      res.send("OK");
+      await UserModel.UpdateSync(name, email)
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/user/delete', async function (req, res, next) {
     try {
-      const email = req.body.email;
+      const email = req.body.email
 
-      await UserModel.DeleteSync(email);
+      await UserModel.DeleteSync(email)
 
-      res.send("OK");
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/add', async function (req, res, next) {
     try {
-      const name = req.body.name;
+      const name = req.body.name
 
       if (name.length > 100)
-        return res.status(403).send(`Too long name: max 100 characters`);
+        return res.status(403).send('Too long name: max 100 characters')
 
-      const insertres = await BoardModel.InsertSync(name, '');
-      res.send("OK");
+      const insertres = await BoardModel.InsertSync(name, '')
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/setprimary', async function (req, res, next) {
     try {
-      const id = req.body.id;
-      await BoardModel.SetPrimarySync(id);
-      res.send("OK");
+      const id = req.body.id
+      await BoardModel.SetPrimarySync(id)
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/updatename', async function (req, res, next) {
     try {
-      const id = req.body.id;
-      const name = req.body.name;
+      const id = req.body.id
+      const name = req.body.name
 
       if (name.length > 100)
-        return res.status(403).send(`Too long name: max 100 characters`);
+        return res.status(403).send('Too long name: max 100 characters')
 
-      await BoardModel.UpdateNameSync(id, name);
-      res.send("OK");
+      await BoardModel.UpdateNameSync(id, name)
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.get('/settings/board/edit/:id', async function (req, res, next) {
     try {
-      const id = req.params.id;
-      const board = await BoardModel.GetByIdSync(id);
+      const id = req.params.id
+      const board = await BoardModel.GetByIdSync(id)
 
       if (!board)
-        return Page404(req, res, next);
+        return Page404(req, res, next)
 
-      let yamllinecount = (board.Yaml || "").split(/\r\n|\r|\n/).length;
-      yamllinecount += 5;
+      let yamllinecount = (board.Yaml || '').split(/\r\n|\r|\n/).length
+      yamllinecount += 5
       if (yamllinecount < 30)
-        yamllinecount = 30;
+        yamllinecount = 30
 
       res.render('boardeditor', {
-        title: "Board editor",
+        title: 'Board editor',
         board: board,
         yamllinecount: yamllinecount,
-        devices: global.runningContext.GetDevices(),
-      });
+        devices: global.runningContext.GetDevices()
+      })
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/updateyaml', async function (req, res, next) {
     try {
-      const id = req.body.id;
-      const yaml = req.body.yaml;
+      const id = req.body.id
+      const yaml = req.body.yaml
 
       if (!yaml)
-        return res.status(411).send("Empty content");
+        return res.status(411).send('Empty content')
 
-      try { YAML.parse(yaml); }
-      catch (err) { return res.status(403).send(err.message); }
+      try { YAML.parse(yaml) }
+      catch (err) { return res.status(403).send(err.message) }
 
-      await BoardModel.UpdateYamlSync(id, yaml);
-      res.send("OK");
+      await BoardModel.UpdateYamlSync(id, yaml)
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/formatyaml', async function (req, res, next) {
     try {
-      const yaml = req.body.yaml;
+      const yaml = req.body.yaml
 
       if (!yaml)
-        return res.status(411).send("Empty content");
+        return res.status(411).send('Empty content')
 
       try {
-        const parsed = YAML.parse(yaml);
-        const formatted = YAML.stringify(parsed);
-        return res.send(formatted);
+        const parsed = YAML.parse(yaml)
+        const formatted = YAML.stringify(parsed)
+        return res.send(formatted)
       }
       catch (err) {
-        console.log(err);
-        return res.status(500).send(err.message);
+        console.log(err)
+        return res.status(500).send(err.message)
       }
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/checkyaml', async function (req, res, next) {
     try {
-      const yaml = req.body.yaml;
+      const yaml = req.body.yaml
 
       if (!yaml)
-        return res.status(411).send("Empty content");
+        return res.status(411).send('Empty content')
 
       try {
-        bbuilder = new BoardBuilder(yaml);
-        return res.send(bbuilder.Build());
+        bbuilder = new BoardBuilder(yaml)
+        return res.send(bbuilder.Build())
       }
       catch (err) {
-        console.log(err);
-        return res.status(500).send(err.message);
+        console.log(err)
+        return res.status(500).send(err.message)
       }
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/board/delete', async function (req, res, next) {
     try {
-      const id = req.body.id;
+      const id = req.body.id
 
-      await BoardModel.DeleteSync(id);
+      await BoardModel.DeleteSync(id)
 
-      res.send("OK");
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/restart/thinkinghome', async function (req, res, next) {
     try {
-      res.send("OK");
+      res.send('OK')
 
       setTimeout(() => {
-        process.exit();
-      }, 500);
+        process.exit()
+      }, 500)
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.get('/settings/backup/download', async function (req, res, next) {
     try {
-      const bck = new BackupBuilder();
-      await bck.CreateBackup(7);
+      const bck = new BackupBuilder()
+      await bck.CreateBackup(7)
 
-      res.setHeader('Content-Disposition', 'attachment; filename=' + bck.filename);
-      res.setHeader('Content-Transfer-Encoding', 'binary');
-      res.setHeader('Content-Type', 'application/octet-stream');
-      res.sendFile(bck.fullpath, { root: './', }, function (err) { if (err) return next(err); })
+      res.setHeader('Content-Disposition', 'attachment; filename=' + bck.filename)
+      res.setHeader('Content-Transfer-Encoding', 'binary')
+      res.setHeader('Content-Type', 'application/octet-stream')
+      res.sendFile(bck.fullpath, { root: './' }, function (err) { if (err) return next(err) })
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
 
   app.post('/settings/backup/upload', async function (req, res, next) {
     try {
-      res.send("OK");
+      res.send('OK')
     }
-    catch (err) { next(err); }
+    catch (err) { next(err) }
   })
-
 }
