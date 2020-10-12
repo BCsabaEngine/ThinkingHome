@@ -5,6 +5,8 @@ const favicon = require('serve-favicon')
 // const IpBlacklist = require('../lib/IpBlacklist')
 const express = require('express')
 
+const http404 = 404
+
 module.exports = (app) => {
   // filter private and public banned IPs
   // app.use(IpBlacklist.check({
@@ -46,9 +48,8 @@ module.exports = (app) => {
     }
   }
 
-  const http404 = 404
-  const Page404 = function (req, res, next) { res.status(http404).render('page404', { title: 'Oops 404!' }) }
-  app.re404 = () => { app.remove(Page404); app.use(Page404) }
+  app.Page404 = function (req, res, next) { res.status(http404).render('page404', { title: 'Oops 404!' }) }
+  app.re404 = () => { app.remove(app.Page404); app.use(app.Page404) }
   app.re404()
 
   app.use(function (err, req, res, next) {
