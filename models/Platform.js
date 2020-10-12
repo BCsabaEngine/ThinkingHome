@@ -15,7 +15,7 @@ const PlatformModel = {
   },
 
   async DisableSync(code) {
-    await PlatformTable.update({ Enabled: 0 }, 'WHERE Code = ?', [code], noop);
+    await PlatformTable.update({ Enabled: 0 }, 'WHERE Code = ?', [code]);
   },
 
   async GetEnabledPlatformCodesSync() {
