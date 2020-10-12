@@ -1,24 +1,23 @@
 const RuleCodeTable = db.defineTable('RuleCode', {
   columns: {
-    Id: db.ColTypes.int(11).notNull().primaryKey().autoIncrement(),
+    Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
-    JsCode: db.ColTypes.mediumtext().notNull(),
-  },
-});
+    JsCode: db.ColTypes.mediumtext().notNull()
+  }
+})
 
 const RuleCode = {
 
   Insert(jscode) {
-    return RuleCodeTable.insert({ JsCode: jscode });
+    return RuleCodeTable.insert({ JsCode: jscode })
   },
 
   async FindLastJsCode() {
-    const rows = await db.pquery("SELECT rc.JsCode FROM RuleCode rc ORDER BY rc.Id DESC LIMIT 1");
-    if (rows.length)
-      return rows[0].JsCode;
-    return '';
-  },
+    const rows = await db.pquery('SELECT rc.JsCode FROM RuleCode rc ORDER BY rc.Id DESC LIMIT 1')
+    if (rows.length) { return rows[0].JsCode }
+    return ''
+  }
 
-};
+}
 
-module.exports = RuleCode;
+module.exports = RuleCode
