@@ -258,7 +258,7 @@ class BoolStateEntity extends StateEntity {
 
   Toggle() { this.SetState(!this.GetState()) }
   SetState(state) {
-    super.SetState(state)
+    super.SetState(Boolean(state))
     DeviceState.InsertSync(this.device.id, this.code, state ? '1' : '0')
   }
 
