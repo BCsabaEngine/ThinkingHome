@@ -3,7 +3,8 @@ const Device = require('../Device')
 class IrDevice extends Device {
   static GetTypes() {
     return {
-      IrRemoteController: { displayname: 'Push button', devicename: 'IrPushButton_'.toLowerCase(), icon: 'fa fa-rss' }
+      IrButton: { displayname: 'Button', devicename: 'IrButton_'.toLowerCase(), icon: 'fa fa-rss' },
+      IrTvRemote: { displayname: 'TV remote', devicename: 'IrTvRemote_'.toLowerCase(), icon: 'fa fa-rss' }
     }
   }
 
@@ -17,9 +18,9 @@ class IrDevice extends Device {
     }
   }
 
-  get icon() { return 'fa fa-broadcast-tower' }
+  get icon() { return 'fa fa-rss' }
 
-  SendIrCode(ircode) { this.platform.SendIrCode(ircode) }
-  ReceiveIrCode(ircode) { return false }
+  SendIrCode(handlerdevice, ircode) { this.platform.SendIrCode(handlerdevice, ircode) }
+  ReceiveIrCode(handlerdevice, ircode) { return false }
 }
 module.exports = IrDevice

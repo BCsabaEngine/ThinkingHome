@@ -65,17 +65,17 @@ class IrPlatform extends Platform {
     return result
   }
 
-  SendIrCode(ircode) {
+  SendIrCode(handlerdevice, ircode) {
     this.msgcounter.outgoing++
-    global.runningContext.irInterCom.SendIr(ircode)
+    global.runningContext.irInterCom.SendIr(handlerdevice, ircode)
   }
 
-  OnReceiveIrCode(ircode) {
+  OnReceiveIrCode(handlerdevice, ircode) {
     this.msgcounter.incoming++
 
     let found = false
     for (const device of this.devices) {
-      if (device.ReceiveIrCode(ircode)) {
+      if (device.ReceiveIrCode(handlerdevice, ircode)) {
         found = true
         break
       }

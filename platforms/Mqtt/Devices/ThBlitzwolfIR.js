@@ -74,7 +74,7 @@ class ThBlitzwolfIR extends Thinking {
     if (topic.match(`^event/${this.GetTopic()}/ir(code)?$`)) {
       const ircode = message
 
-      global.runningContext.irInterCom.IrReceived(ircode)
+      global.runningContext.irInterCom.IrReceived(this.name, ircode)
 
       this.lastircodes.push(ircode)
       while (this.lastircodes.length > lastircodecount) { this.lastircodes = this.lastircodes.slice(1) }
