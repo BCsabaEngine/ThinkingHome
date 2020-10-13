@@ -111,3 +111,6 @@ dist
 
 # APP config
 config*.js
+
+# Firewall blocked IPs
+*.ips
