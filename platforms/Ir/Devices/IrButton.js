@@ -80,12 +80,28 @@ class IrButton extends IrSender {
     this.InitEntities()
   }
 
+  IsHandledBy(handlerdevice) { return Number(this.setting.handlerdevice) === handlerdevice }
+  CollectConfigToSend(handlerdevice) {
+    const result = []
+
+    if (Number(this.setting.handlerdevice) === handlerdevice) {
+      for (const button of this.buttons) {
+        const ircode = this.setting[`ircode${button}`]
+        if (ircode) { result.push(ircode) }
+      }
+    }
+
+    return result
+  }
+
   ReceiveIrCode(handlerdevice, ircode) {
-    for (const button of this.buttons) {
-      if (ircode === this.setting[`ircode${button}`]) {
-        if (this.entities[`button${button}`]) {
-          this.entities[`button${button}`].DoPress()
-          return true
+    if (Number(this.setting.handlerdevice) === handlerdevice) {
+      for (const button of this.buttons) {
+        if (ircode === this.setting[`ircode${button}`]) {
+          if (this.entities[`button${button}`]) {
+            this.entities[`button${button}`].DoPress()
+            return true
+          }
         }
       }
     }

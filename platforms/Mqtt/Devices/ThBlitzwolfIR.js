@@ -7,7 +7,6 @@ class ThBlitzwolfIR extends Thinking {
   get icon() { return 'fa fa-rss' }
   entities = {};
   setting = {
-    ircode1: '',
     toDisplayList: function () {
       const result = {}
       if (this.thinking_configlasttime) {
@@ -23,16 +22,6 @@ class ThBlitzwolfIR extends Thinking {
         value: 'Push now',
         onexecute: function () { this.SendConfig() }.bind(this)
       }
-      for (let i = 1; i <= 1; i++) {
-        result[`ircode${i}`] = {
-          type: 'text',
-          title: `IR code ${i}`,
-          value: this.setting[`ircode${i}`],
-          displayvalue: function () { return this.setting[`ircode${i}`] || '' }.bind(this)(),
-          error: false,
-          canclear: true
-        }
-      }
       return result
     }.bind(this),
     toTitle: function () { return this.constructor.name }.bind(this),
@@ -42,6 +31,14 @@ class ThBlitzwolfIR extends Thinking {
   lastircodes = [];
   GetStatusInfos() {
     const result = super.GetStatusInfos()
+
+    const handleddevices = global.runningContext.irInterCom.GetDevicesHandledBy(this.id)
+    if (handleddevices.length) {
+      result.push({ device: this, message: '' })
+      result.push({ device: this, message: 'Handled devices' })
+      for (const handleddevice of handleddevices) { result.push({ message: '', value: handleddevice.name }) }
+    }
+
     if (this.lastircodes.length) {
       result.push({ device: this, message: '' })
       result.push({ device: this, message: 'Last IR codes by this device' })
@@ -52,9 +49,10 @@ class ThBlitzwolfIR extends Thinking {
 
   CollectConfigToSend() {
     const result = []
-    for (let i = 1; i <= 10; i++) {
-      const irx = this.setting[`ircode${i}`]
-      if (irx) { result.push({ name: `IR.${irx}`, value: irx }) }
+    for (const handleddevice of global.runningContext.irInterCom.GetDevicesHandledBy(this.id)) {
+      for (const ircode of handleddevice.CollectConfigToSend(this.id)) {
+        if (ircode) { result.push({ name: `IR.${ircode}`, value: ircode }) }
+      }
     }
     return result
   }
@@ -74,7 +72,7 @@ class ThBlitzwolfIR extends Thinking {
     if (topic.match(`^event/${this.GetTopic()}/ir(code)?$`)) {
       const ircode = message
 
-      global.runningContext.irInterCom.IrReceived(this.name, ircode)
+      global.runningContext.irInterCom.IrReceived(this.id, ircode)
 
       this.lastircodes.push(ircode)
       while (this.lastircodes.length > lastircodecount) { this.lastircodes = this.lastircodes.slice(1) }
