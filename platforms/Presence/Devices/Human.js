@@ -63,7 +63,7 @@ class PresenceHuman extends PresenceDevice {
       const deviceid = this.setting[`device${i}`]
       if (deviceid) {
         for (const device of this.platform.devices) {
-          if (device.id === deviceid) {
+          if (device.id === Number(deviceid)) {
             if (device.entities.home.state) { exists = true }
           }
         }
