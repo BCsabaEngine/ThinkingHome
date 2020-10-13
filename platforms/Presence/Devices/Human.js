@@ -25,7 +25,7 @@ class PresenceHuman extends PresenceDevice {
           value: value,
           displayvalue: function () {
             if (value) {
-              const owned = this.platform.devices.find(d => d.id === value)
+              const owned = this.platform.devices.find(d => d.id === Number(value))
               if (owned) { return owned.name }
             }
             return ''
