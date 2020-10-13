@@ -1,4 +1,4 @@
-const BoardHistoryTable = db.defineTable('BoardHistory', {
+/* const BoardHistoryTable = */ db.defineTable('BoardHistory', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),

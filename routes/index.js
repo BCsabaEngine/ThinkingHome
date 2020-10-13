@@ -1,32 +1,39 @@
+const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
 const favicon = require('serve-favicon')
-// const nGfirewall = require('../lib/nGfirewall')
-// const IpBlacklist = require('../lib/IpBlacklist')
+const nGfirewall = require('../lib/nGfirewall')
+const IpBlacklist = require('../lib/IpBlacklist')
 const express = require('express')
 
 const http404 = 404
 
 module.exports = (app) => {
   // filter private and public banned IPs
-  // app.use(IpBlacklist.check({
-  //   blackLists: [
-  //     "blacklist.txt",
-  //     "https://sslbl.abuse.ch/blacklist/sslipblacklist.txt",
-  //     "https://myip.ms/files/blacklist/general/latest_blacklist.txt",
-  //   ],
-  //   whiteListLifeTimeMs: 10 * 60 * 1000,
-  //   onFailRequest: function (ipAddress) {
-  //     require('fs').appendFile('banned.ips', ipAddress + require('os').EOL, 'utf8', () => { });
-  //   }
-  // }));
+  if (global.IsProduction) {
+    app.use(IpBlacklist.check({
+      blackLists: [
+        'blacklist.txt',
+        'https://sslbl.abuse.ch/blacklist/sslipblacklist.txt',
+        'https://myip.ms/files/blacklist/general/latest_blacklist.txt'
+      ],
+      whiteListLifeTimeMs: 10 * 60 * 1000,
+      onFailRequest: function (ipAddress) {
+        logger.warn(`[BlackList] Banned IP ${ipAddress}`)
+        fs.appendFile('blacklist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
+      }
+    }))
+  }
 
   // filter malicious requests
-  // app.use(nGfirewall.check({
-  //   onFailRequest: function (ipAddress, item, rule) {
-  //     console.log("[nGfirewall] %s from %s matched %s", item, ipAddress, rule);
-  //   }
-  // }));
+  if (global.IsProduction) {
+    app.use(nGfirewall.check({
+      onFailRequest: function (ipAddress, item, rule) {
+        logger.warn(`[nGfirewall] Blocked ${ipAddress} uri ${item} matched ${rule}`)
+        fs.appendFile('firewall.ips', ipAddress + require('os').EOL, 'utf8', () => { })
+      }
+    }))
+  }
 
   app.use(express.static('public', { index: false, maxAge: '1h', redirect: false }))
   app.use('/dist', express.static('./node_modules/admin-lte/dist', { index: false, maxAge: '1h', redirect: false }))

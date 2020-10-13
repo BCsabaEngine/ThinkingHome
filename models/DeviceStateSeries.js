@@ -1,4 +1,4 @@
-const DeviceStateSeriesTable = db.defineTable('DeviceStateSeries', {
+/* const DeviceStateSeriesTable = */ db.defineTable('DeviceStateSeries', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     Device: db.ColTypes.int(10).notNull().index(),
