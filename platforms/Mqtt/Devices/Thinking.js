@@ -33,7 +33,9 @@ class Thinking extends MqttDevice {
 
   async Start() {
     await super.Start()
-    this.platform.SendMessage(`ping/${this.GetTopic()}`, '')
+    setTimeout(() => {
+      this.platform.SendMessage(`ping/${this.GetTopic()}`, '')
+    }, Math.floor(1000 + Math.random() * 3 * 1000))
   }
 
   thinkingConfiglasttime = 0;
