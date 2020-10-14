@@ -1,7 +1,9 @@
 const IrButton = require('./IrButton')
 
 class IrTvRemote extends IrButton {
-  buttons = ['Red', 'Green', 'Yellow', 'Blue'];
+  buttons = [
+    'Prev', 'Rec', 'Play', 'Pause', 'Stop', 'Next',
+    'Red', 'Green', 'Yellow', 'Blue']
 
   constructor(id, platform, name) {
     super(id, platform, name)
