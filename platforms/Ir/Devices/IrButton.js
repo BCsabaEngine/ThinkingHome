@@ -92,7 +92,7 @@ class IrButton extends IrSender {
     if (Number(this.setting.handlerdevice) === handlerdevice) {
       for (const button of this.buttons) {
         const ircode = this.setting[`ircode${button}`]
-        if (ircode) { result.push(ircode) }
+        if (ircode && ircode.length > 0) { result.push(ircode) }
       }
     }
 
@@ -100,8 +100,10 @@ class IrButton extends IrSender {
   }
 
   ReceiveIrCode(handlerdevice, ircode) {
-    if (Number(this.setting.handlerdevice) === handlerdevice) {
-      for (const button of this.buttons) {
+    if (Number(this.setting.handlerdevice) !== handlerdevice) { return false }
+
+    for (const button of this.buttons) {
+      if (this.setting[`ircode${button}`]) {
         if (ircode === this.setting[`ircode${button}`]) {
           if (this.entities[`button${button}`]) {
             this.entities[`button${button}`].DoPress()
@@ -110,6 +112,7 @@ class IrButton extends IrSender {
         }
       }
     }
+
     return false
   }
 }
