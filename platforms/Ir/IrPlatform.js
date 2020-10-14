@@ -27,23 +27,25 @@ class IrPlatform extends Platform {
   GetStatusInfos() {
     const result = []
 
-    // const recdevs = runningContext.irInterCom.GetReceiverDevices()
-    // if (recdevs.length) {
-    //   let rc = 1;
-    //   for (const recdev of recdevs)
-    //     result.push({ message: `Receiver #${rc++}`, value: recdev.name, });
-    // }
-    // else
-    //   result.push({ message: `Receiver device not found`, value: '', });
+    const recdevs = global.runningContext.irInterCom.GetReceiverDevices()
+    if (recdevs.length) {
+      let rc = 1
+      for (const recdev of recdevs) {
+        result.push({ message: `Receiver #${rc++}`, value: recdev.name })
+      }
+    } else {
+      result.push({ message: 'Receiver device not found', value: '' })
+    }
 
-    // const snddevs = runningContext.rfInterCom.GetSenderDevices()
-    // if (snddevs.length) {
-    //   let rs = 1;
-    //   for (const snddev of snddevs)
-    //     result.push({ message: `Sender #${rs++}`, value: snddev.name, });
-    // }
-    // else
-    //   result.push({ message: `Sender device not found`, value: '', });
+    const snddevs = global.runningContext.irInterCom.GetSenderDevices()
+    if (snddevs.length) {
+      let rc = 1
+      for (const snddev of snddevs) {
+        result.push({ message: `Sender #${rc++}`, value: snddev.name })
+      }
+    } else {
+      result.push({ message: 'Sender device not found', value: '' })
+    }
 
     result.push({ message: '', value: '' })
     result.push({ message: 'Received', value: this.msgcounter.incoming || '0' })
