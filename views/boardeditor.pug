@@ -77,13 +77,23 @@ block content
       .card.card-outline.card-primary
         .card-header
           h3.card-title
-            | Devices
+            | Devices and entities
         .card-body.small.monospace
           each device in devices
-            each key of Object.keys(device.entities)
-              button.btn.btn-default.btn-xs(onclick="inserttext('" + device.name + "." + key + "')")
-                = device.name + "." + key
-              br
+            .dropdown
+              button#dropdownMenuButton.btn.btn-default.btn-xs.dropdown-toggle.mb-2(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+                = device.name
+                |  (
+                small
+                  = device.platform.GetCode()
+                | )
+              .dropdown-menu(aria-labelledby='dropdownMenuButton')
+                each key of Object.keys(device.entities)
+                  a.dropdown-item(onclick="inserttext('" + device.name + "." + key + "')")
+                    small
+                      = device.name + "."
+                    strong.text-success
+                      = key
 
   script(type='text/javascript').
     function formatyaml()
