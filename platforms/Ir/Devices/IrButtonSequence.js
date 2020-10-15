@@ -8,6 +8,7 @@ class IrButtonSequence extends IrSender {
     ircode1: '',
     ircode2: '',
     ircode3: '',
+    ircode4: '',
     latency: 1500,
     toDisplayList: function () {
       const result = {}
@@ -52,6 +53,13 @@ class IrButtonSequence extends IrSender {
         error: false,
         canclear: true
       }
+      result.ircode4 = {
+        type: 'text',
+        title: 'IR code 4th',
+        value: this.setting.ircode4,
+        error: false,
+        canclear: true
+      }
       const latencyintervallist = { 1000: '1000 ms', 1500: '1500 ms', 2000: '2000 ms', 2500: '2500 ms' }
       result.latency = {
         type: 'select',
@@ -67,9 +75,10 @@ class IrButtonSequence extends IrSender {
     toTitle: function () { return 'Sequence' },
     toSubTitle: function () {
       const result = []
-      if (this.setting.ircode1) { result.push('A') }
-      if (this.setting.ircode2) { result.push('B') }
-      if (this.setting.ircode3) { result.push('C') }
+      if (this.setting.ircode1) { result.push('1') }
+      if (this.setting.ircode2) { result.push('2') }
+      if (this.setting.ircode3) { result.push('3') }
+      if (this.setting.ircode3) { result.push('4') }
       return result.join(' + ') + ` (${this.setting.latency} ms)`
     }.bind(this)
   };
@@ -97,6 +106,7 @@ class IrButtonSequence extends IrSender {
       if (this.setting.ircode1) { result.push(this.setting.ircode1) }
       if (this.setting.ircode2) { result.push(this.setting.ircode2) }
       if (this.setting.ircode3) { result.push(this.setting.ircode3) }
+      if (this.setting.ircode4) { result.push(this.setting.ircode4) }
     }
 
     return result
@@ -120,9 +130,16 @@ class IrButtonSequence extends IrSender {
         } else { this.seqstep++ }
       } else
         if (this.seqstep === 3 && ircode === this.setting.ircode3) {
-          this.entities.sequence.DoPress()
-          this.seqstep = 1
-        }
+          if (!this.setting.ircode4) {
+            this.entities.sequence.DoPress()
+            this.seqstep = 1
+          } else { this.seqstep++ }
+        } else
+          // eslint-disable-next-line no-magic-numbers
+          if (this.seqstep === 4 && ircode === this.setting.ircode4) {
+            this.entities.sequence.DoPress()
+            this.seqstep = 1
+          }
 
     this.lastarrived = now
     return ircode === this.setting.ircode1 || ircode === this.setting.ircode2 || ircode === this.setting.ircode3
