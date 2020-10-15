@@ -22,6 +22,18 @@ class ThBlitzwolfIR extends Thinking {
         value: 'Push now',
         onexecute: function () { this.SendConfig() }.bind(this)
       }
+      result.startdiscovery = {
+        type: 'button',
+        title: 'IR discovery mode',
+        value: 'Start',
+        onexecute: function () { this.SendCmd('irdiscovery', '1') }.bind(this)
+      }
+      result.finishdiscovery = {
+        type: 'button',
+        title: 'IR discovery mode',
+        value: 'Finish',
+        onexecute: function () { this.SendCmd('irdiscovery', '0') }.bind(this)
+      }
       return result
     }.bind(this),
     toTitle: function () { return this.constructor.name }.bind(this),
@@ -69,7 +81,7 @@ class ThBlitzwolfIR extends Thinking {
   ProcessMessage(topic, message) {
     if (super.ProcessMessage(topic, message)) { return true }
 
-    if (topic.match(`^event/${this.GetTopic()}/ir(code)?$`)) {
+    if (topic.match(`^event/${this.GetTopic()}/ir(code|discovery)?$`)) {
       const ircode = message
 
       global.runningContext.irInterCom.IrReceived(this.id, ircode)

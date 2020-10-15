@@ -42,6 +42,18 @@ class ThSonoffRF extends Thinking {
           canclear: true
         }
       }
+      result.startdiscovery = {
+        type: 'button',
+        title: 'RF discovery mode',
+        value: 'Start',
+        onexecute: function () { this.SendCmd('rfdiscovery', '1') }.bind(this)
+      }
+      result.finishdiscovery = {
+        type: 'button',
+        title: 'RF discovery mode',
+        value: 'Finish',
+        onexecute: function () { this.SendCmd('rfdiscovery', '0') }.bind(this)
+      }
       return result
     }.bind(this),
     toTitle: function () { return this.constructor.name }.bind(this),
