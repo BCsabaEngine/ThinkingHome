@@ -87,7 +87,7 @@ block content
                       small
                         = settingitem.displayvalue || settingitem.value || 'Not set'
                   else
-                    a(href="#")
+                    span.pointer
                       span.float-right.badge(class = 
                         settingitem.type == 'button' ? "bg-success"
                         :

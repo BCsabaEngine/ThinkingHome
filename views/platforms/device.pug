@@ -36,7 +36,7 @@ block content
             b
               = statusinfo.message
             if statusinfo.value
-              span.float-right.badge.bg-primary.clipboard(data-clipboard-text=statusinfo.value)
+              span.pointer.float-right.badge.bg-primary.clipboard(data-clipboard-text=statusinfo.value)
                 = statusinfo.value
             br
 
@@ -71,7 +71,7 @@ block content
                     small
                       = settingitem.displayvalue || settingitem.value || 'Not set'
                 else
-                  a(href="#")
+                  span.pointer
                     span.float-right.badge(class = 
                       settingitem.type == 'button' ? "bg-success"
                       :
