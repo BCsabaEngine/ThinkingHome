@@ -7,7 +7,7 @@
  systemctl disable dphys-swapfile.service
  apt-get update
  apt-get dist-upgrade
- apt-get install -y mc zip unzip telnet git
+ apt-get install -y mc zip unzip telnet git wget curl
  /boot/config.txt -> dtoverlay=disable-wifi
  /boot/config.txt -> dtoverlay=disable-bt
  /etc/dhcpcd.conf -> setup fix IP
