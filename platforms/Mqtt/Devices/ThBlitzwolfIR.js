@@ -1,4 +1,5 @@
 const dayjs = require('dayjs')
+const arrayUtils = require('../../../lib/arrayUtils')
 const Thinking = require('./Thinking')
 
 const lastircodecount = 5
@@ -45,6 +46,7 @@ class ThBlitzwolfIR extends Thinking {
     const result = super.GetStatusInfos()
 
     const handleddevices = global.runningContext.irInterCom.GetDevicesHandledBy(this.id)
+    arrayUtils.sortByProperty(handleddevices, 'name')
     if (handleddevices.length) {
       result.push({ device: this, message: '' })
       result.push({ device: this, message: 'Handled devices' })
