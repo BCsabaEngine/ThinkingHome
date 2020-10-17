@@ -1,6 +1,7 @@
 const IrReceiverDevice = require('../IrReceiverDevice')
 const { Entity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
+const { AllActionBoardItem } = require('../../BoardItem')
 
 const mintemp = 18
 const maxtemp = 30
@@ -85,18 +86,18 @@ class IrClimate extends IrReceiverDevice {
   get icon() { return this.setting.icon || 'fa fa-icicles' }
   entities = {
     engine: new Entity(this, 'engine', 'Engine', 'fa fa-icicles')
-      .AddAction(new ButtonAction(this, 'switchoff', 'Switch off', 'fa fa-power-off', function () {
+      .AddAction(new ButtonAction(this, 'switchoff', 'Off', 'fa fa-power-off', function () {
         this.device.SendClimateObject({
           command: 'off'
         })
       }))
-      .AddAction(new ButtonAction(this, 'fan', 'Start fan', 'fa fa-fan', function () {
+      .AddAction(new ButtonAction(this, 'fan', 'Fan', 'fa fa-fan', function () {
         this.device.SendClimateObject({
           command: 'on',
           mode: 'fan'
         })
       }))
-      .AddAction(new ButtonAction(this, 'cool', 'Cooling', 'fa fa-icicles', function () {
+      .AddAction(new ButtonAction(this, 'cool', 'Cool', 'fa fa-icicles', function () {
         this.device.SendClimateObject({
           command: 'on',
           mode: 'cool',
@@ -104,7 +105,7 @@ class IrClimate extends IrReceiverDevice {
           fan: 'auto'
         })
       }))
-      .AddAction(new ButtonAction(this, 'coolextra', 'Cooling extra', 'fa fa-icicles', function () {
+      .AddAction(new ButtonAction(this, 'coolextra', 'Cool+', 'fa fa-icicles', function () {
         this.device.SendClimateObject({
           command: 'on',
           mode: 'cool',
@@ -112,7 +113,7 @@ class IrClimate extends IrReceiverDevice {
           fan: 'high'
         })
       }))
-      .AddAction(new ButtonAction(this, 'heat', 'Heating', 'fa fa-hot-tub', function () {
+      .AddAction(new ButtonAction(this, 'heat', 'Heat', 'fa fa-hot-tub', function () {
         this.device.SendClimateObject({
           command: 'on',
           mode: 'heat',
@@ -120,7 +121,7 @@ class IrClimate extends IrReceiverDevice {
           fan: 'auto'
         })
       }))
-      .AddAction(new ButtonAction(this, 'heatextra', 'Heating extra', 'fa fa-hot-tub', function () {
+      .AddAction(new ButtonAction(this, 'heatextra', 'Heat+', 'fa fa-hot-tub', function () {
         this.device.SendClimateObject({
           command: 'on',
           mode: 'heat',
@@ -128,6 +129,7 @@ class IrClimate extends IrReceiverDevice {
           fan: 'high'
         })
       }))
+      .AddBoardItem(new AllActionBoardItem())
   };
 
   GetStatusInfos() {
