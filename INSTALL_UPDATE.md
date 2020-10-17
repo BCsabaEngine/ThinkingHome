@@ -8,6 +8,7 @@
  apt-get update
  apt-get dist-upgrade
  apt-get install -y mc zip unzip telnet git wget curl
+ apt-get autoclean
  /boot/config.txt -> dtoverlay=disable-wifi
  /boot/config.txt -> dtoverlay=disable-bt
  /etc/dhcpcd.conf -> setup fix IP
