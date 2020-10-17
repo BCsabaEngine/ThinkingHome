@@ -108,6 +108,19 @@ class PresenceBoardItem extends BoardItem {
   }
 }
 
+class AllActionBoardItem extends BoardItem {
+  Build(mode, name, params) {
+    if (params) { this.AssingConfig(params) }
+
+    return pug.renderFile('./views/board/allaction.pug', {
+      mode: mode,
+      name: name,
+      entity: this.entity,
+      actions: this.entity.actions
+    })
+  }
+}
+
 module.exports = {
   BoardItem,
 
@@ -119,5 +132,7 @@ module.exports = {
   ToggleBoardItem,
   PushBoardItem,
 
-  PresenceBoardItem
+  PresenceBoardItem,
+
+  AllActionBoardItem
 }

@@ -1,0 +1,33 @@
+extends _entity
+
+block list
+  .row
+    .col-md-12
+      span
+        = name
+      .btn-group.float-right
+        each action in actions
+          button.btn.btn-xs.pl-2.pr-2.btn-default.mr-2(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: '" + action.code + "'})")
+            = action.name
+
+block group
+  button#dropdown.btn.btn-app.m-2.dropdown-toggleX(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
+    i(class=icon || entity.device.icon)
+    = name
+  .dropdown-menu(aria-labelledby='dropdown')
+    each action in actions
+      a.dropdown-item(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: '" + action.code + "'})")
+        i.fa(class=action.icon) 
+        | 
+        = action.name
+
+block single
+  h4
+    = name
+  .col-md-12
+    .btn-group
+      each action in actions
+        button.btn.btn-default(onclick="$.post('/platform/" + entity.device.platform.GetCode() + "/device/" + entity.device.name + "/entity/action', {entity: '" + entity.code + "', action: '" + action.code + "'})")
+          i.fa(class=action.icon)
+          br
+          = action.name
