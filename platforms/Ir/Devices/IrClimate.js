@@ -85,12 +85,49 @@ class IrClimate extends IrReceiverDevice {
   get icon() { return this.setting.icon || 'fa fa-icicles' }
   entities = {
     engine: new Entity(this, 'engine', 'Engine', 'fa fa-icicles')
-      .AddAction(new ButtonAction(this, 'switchoff', 'Switch off', 'fa fa-power-off', function () { this.device.entities.sequence.DoPress() }))
-      .AddAction(new ButtonAction(this, 'fan', 'Start fan', 'fa fa-fan', function () { this.device.entities.sequence.DoPress() }))
-      .AddAction(new ButtonAction(this, 'cool', 'Cooling', 'fa fa-icicles', function () { this.device.entities.sequence.DoPress() }))
-      .AddAction(new ButtonAction(this, 'coolextra', 'Cooling extra', 'fa fa-icicles', function () { this.device.entities.sequence.DoPress() }))
-      .AddAction(new ButtonAction(this, 'heat', 'Heating', 'fa fa-hot-tub', function () { this.device.entities.sequence.DoPress() }))
-      .AddAction(new ButtonAction(this, 'heatextra', 'Heating extra', 'fa fa-hot-tub', function () { this.device.entities.sequence.DoPress() }))
+      .AddAction(new ButtonAction(this, 'switchoff', 'Switch off', 'fa fa-power-off', function () {
+        this.device.SendClimateObject({
+          command: 'off'
+        })
+      }))
+      .AddAction(new ButtonAction(this, 'fan', 'Start fan', 'fa fa-fan', function () {
+        this.device.SendClimateObject({
+          command: 'on',
+          mode: 'fan'
+        })
+      }))
+      .AddAction(new ButtonAction(this, 'cool', 'Cooling', 'fa fa-icicles', function () {
+        this.device.SendClimateObject({
+          command: 'on',
+          mode: 'cool',
+          temp: this.device.setting.temp_cool,
+          fan: 'auto'
+        })
+      }))
+      .AddAction(new ButtonAction(this, 'coolextra', 'Cooling extra', 'fa fa-icicles', function () {
+        this.device.SendClimateObject({
+          command: 'on',
+          mode: 'cool',
+          temp: this.device.setting.temp_cool,
+          fan: 'high'
+        })
+      }))
+      .AddAction(new ButtonAction(this, 'heat', 'Heating', 'fa fa-hot-tub', function () {
+        this.device.SendClimateObject({
+          command: 'on',
+          mode: 'heat',
+          temp: this.device.setting.temp_heat,
+          fan: 'auto'
+        })
+      }))
+      .AddAction(new ButtonAction(this, 'heatextra', 'Heating extra', 'fa fa-hot-tub', function () {
+        this.device.SendClimateObject({
+          command: 'on',
+          mode: 'heat',
+          temp: this.device.setting.temp_heat,
+          fan: 'high'
+        })
+      }))
   };
 
   GetStatusInfos() {
@@ -100,21 +137,21 @@ class IrClimate extends IrReceiverDevice {
     return result
   }
 
-  SendClimateObject(settings) {
+  SendClimateObject(config) {
     const brandmodel = this.setting.brandmodel.split('_')
     const defaultconfig = {
       brand: brandmodel[0],
       model: brandmodel[1],
       command: 'off',
-      mode: 'fan',
+      mode: 'auto',
       temp: 25,
-      fan: 'HIGH' / 'LOW',
+      fan: 'auto',
       swing: this.setting.swing ? 'on' : 'off'
     }
 
-    const configtosend = Object.assign(defaultconfig, this.setting)
+    const configtosend = Object.assign(defaultconfig, config)
 
-    this.SendIrObject(configtosend)
+    this.SendIrObject(Number(this.setting.handlerdevice), configtosend)
   }
 
   IsHandledBy(handlerdevice) { return Number(this.setting.handlerdevice) === handlerdevice }
