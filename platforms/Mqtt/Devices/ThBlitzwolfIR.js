@@ -63,7 +63,7 @@ class ThBlitzwolfIR extends Thinking {
 
   CollectConfigToSend() {
     const result = []
-    for (const handleddevice of global.runningContext.irInterCom.GetDevicesHandledBy(this.id)) {
+    for (const handleddevice of global.runningContext.irInterCom.GetDevicesHandledBy(this.id, true, false)) {
       for (const ircode of handleddevice.CollectConfigToSend(this.id)) {
         if (ircode) { result.push({ name: `IR.${ircode}`, value: ircode }) }
       }
