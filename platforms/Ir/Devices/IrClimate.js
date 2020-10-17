@@ -83,7 +83,7 @@ class IrClimate extends IrReceiverDevice {
     toSubTitle: function () { return this.setting.brandmodel }.bind(this)
   };
 
-  get icon() { return this.setting.icon || 'fa fa-icicles'  }
+  get icon() { return this.setting.icon || 'fa fa-icicles'   }
   entities = {
     engine: new Entity(this, 'engine', 'Engine', 'fa fa-icicles')
       .AddAction(new ButtonAction(this, 'switchoff', 'Off', 'fa fa-power-off', function () {
