@@ -141,7 +141,7 @@ class IrClimate extends IrReceiverDevice {
     const brandmodel = this.setting.brandmodel.split('_')
     const defaultconfig = {
       brand: brandmodel[0],
-      model: brandmodel[1],
+      model: brandmodel.length > 1 ? brandmodel[1] : '',
       command: 'off',
       mode: 'auto',
       temp: 25,
