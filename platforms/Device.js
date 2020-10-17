@@ -34,6 +34,7 @@ class Device {
     this.approuter.get('/', this.WebMainPage.bind(this))
     this.approuter.post('/entity/action/', this.WebEntityAction.bind(this))
     this.approuter.post('/setting/update', this.WebSettingUpdate.bind(this))
+    this.approuter.post('/setting/toggle', this.WebSettingToggle.bind(this))
     this.approuter.post('/setting/delete', this.WebSettingDelete.bind(this))
     this.approuter.post('/setting/execute', this.WebSettingExecute.bind(this))
     this.approuter.get('/graph/telemetry/:entity', this.WebGetTelemetryGraph.bind(this))
@@ -98,6 +99,11 @@ class Device {
 
   async WebSettingUpdate(req, res, next) {
     await this.AdaptSetting(req.body.name, req.body.value)
+    res.send('OK')
+  }
+
+  async WebSettingToggle(req, res, next) {
+    await this.ToggleSetting(req.body.name)
     res.send('OK')
   }
 
@@ -171,6 +177,16 @@ class Device {
       if (keys.includes(name)) {
         this.setting[name] = value
         await this.WriteSetting(name, value)
+      }
+    }
+  }
+
+  async ToggleSetting(name) {
+    const keys = Object.keys(this.setting)
+    if (!(name.startsWith('_'))) {
+      if (keys.includes(name)) {
+        this.setting[name] = !this.setting[name]
+        await this.WriteSetting(name, this.setting[name])
       }
     }
   }

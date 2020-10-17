@@ -52,7 +52,7 @@ block content
                 - var onclick = "";
                 case settingitem.type
                   when "button"
-                    - var onclick = "executesetting_button('" + index + "')";
+                    - var onclick = "executesetting_button('" + index + "', '" + (settingitem.displayvalue || settingitem.value || '') + "')";
                   when "text"
                     - var onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
                   when "select"
@@ -481,11 +481,21 @@ block content
         }
       })
     }
-    function executesetting_button(name)
+    function executesetting_button(name, displaytext)
     {
       $.post(`/platform/#{device.platform.GetCode()}/device/#{device.name}/setting/execute`, {name: name})
         .done(function(data) {
-          //divreload('settingpanel');
+          swal.fire({
+            icon: 'success',
+            toast: true,
+            position: 'center-start',
+            title: 'Command sent',
+            text: displaytext,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          });
+          divreload('settingpanel', null, 2500);
         })
         .fail(function(error) {
           Swal.fire(

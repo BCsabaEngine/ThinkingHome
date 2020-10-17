@@ -16,6 +16,7 @@ class Platform {
     this.approuter.post('/setting/update', this.WebSettingUpdate.bind(this))
     this.approuter.post('/setting/toggle', this.WebSettingToggle.bind(this))
     this.approuter.post('/setting/delete', this.WebSettingDelete.bind(this))
+    this.approuter.post('/setting/execute', this.WebSettingExecute.bind(this))
   }
 
   async Stop() {
@@ -39,6 +40,11 @@ class Platform {
     res.send('OK')
   }
 
+  async WebSettingExecute(req, res, next) {
+    await this.ExecuteSetting(req.body.name)
+    res.send('OK')
+  }
+
   async ReadSettings() {
     const settingread = await PlatformSettingModel.GetSettingsSync(this.GetCode())
     for (const key of Object.keys(settingread).filter(key => key in this.setting)) { this.setting[key] = settingread[key] }
@@ -57,6 +63,19 @@ class Platform {
     if (keys.includes(name)) {
       this.setting[name] = !this.setting[name]
       await this.WriteSetting(name, this.setting[name])
+    }
+  }
+
+  async ExecuteSetting(name) {
+    const displayitems = this.setting.toDisplayList()
+    const keys = Object.keys(displayitems)
+    if (!(name.startsWith('_'))) {
+      if (keys.includes(name)) {
+        const displayitem = displayitems[name]
+        if (displayitem) {
+          if (typeof displayitem.onexecute === 'function') { displayitem.onexecute() }
+        }
+      }
     }
   }
 

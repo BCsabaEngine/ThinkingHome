@@ -68,7 +68,7 @@ block content
                   - var onclick = "";
                   case settingitem.type
                     when "button"
-                      - var onclick = "executesetting_button('" + index + "')";
+                      - var onclick = "executesetting_button('" + index + "', '" + (settingitem.displayvalue || settingitem.value || '') + "')";
                     when "text"
                       - onclick = "showsetting_text('" + index + "', '" + settingitem.title + "', '" + settingitem.value + "')";
                     when "select"
@@ -301,6 +301,30 @@ block content
             });
         }
       })
+    }
+    function executesetting_button(name, displaytext)
+    {
+      $.post(`/platform/#{platform.GetCode()}/setting/execute`, {name: name})
+        .done(function(data) {
+          swal.fire({
+            icon: 'success',
+            toast: true,
+            position: 'center-start',
+            title: 'Command sent',
+            text: displaytext,
+            showConfirmButton: false,
+            timer: 1500,
+            timerProgressBar: true,
+          });
+          divreload('settingpanel', null, 2500);
+        })
+        .fail(function(error) {
+          Swal.fire(
+            'Error occured',
+            error.responseText,
+            'error'
+          )            
+        });
     }
 
   block script
