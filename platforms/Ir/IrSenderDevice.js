@@ -1,7 +1,7 @@
 const IrDevice = require('./IrDevice')
 
 class IrSenderDevice extends IrDevice {
-  IsHandledBy(handlerdevice) { return false }
   CollectConfigToSend(handlerdevice) { return [] }
+  ReceiveIrCode(handlerdevice, ircode) { return false }
 }
 module.exports = IrSenderDevice

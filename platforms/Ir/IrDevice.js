@@ -6,7 +6,8 @@ class IrDevice extends Device {
       IrButton: { displayname: 'Button', devicename: 'IrButton_'.toLowerCase(), icon: 'fa fa-hockey-puck' },
       IrTvRemote: { displayname: 'TV remote', devicename: 'IrTvRemote_'.toLowerCase(), icon: 'fa fa-keyboard' },
       IrCustomRemote: { displayname: 'Custom remote', devicename: 'IrCustomRemote_'.toLowerCase(), icon: 'fa fa-keyboard' },
-      IrButtonSequence: { displayname: 'Button sequence', devicename: 'IrSeq_'.toLowerCase(), icon: 'fa fa-angle-double-right' }
+      IrButtonSequence: { displayname: 'Button sequence', devicename: 'IrSeq_'.toLowerCase(), icon: 'fa fa-angle-double-right' },
+      IrClimate: { displayname: 'Air climate', devicename: 'IrClimate_'.toLowerCase(), icon: 'fa fa-icicles' }
     }
   }
 
@@ -22,7 +23,6 @@ class IrDevice extends Device {
 
   get icon() { return 'fa fa-rss' }
 
-  SendIrCode(handlerdevice, ircode) { this.platform.SendIrCode(handlerdevice, ircode) }
-  ReceiveIrCode(handlerdevice, ircode) { return false }
+  IsHandledBy(handlerdevice) { return false }
 }
 module.exports = IrDevice
