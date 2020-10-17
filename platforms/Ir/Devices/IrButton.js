@@ -1,8 +1,8 @@
-const IrSender = require('./IrSender')
+const IrSenderDevice = require('../IrSenderDevice')
 const { PushButtonEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 
-class IrButton extends IrSender {
+class IrButton extends IrSenderDevice {
   buttons = [''];
 
   constructor(id, platform, name) {

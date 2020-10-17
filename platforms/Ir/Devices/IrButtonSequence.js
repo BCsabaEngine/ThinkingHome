@@ -1,8 +1,8 @@
-const IrSender = require('./IrSender')
+const IrSenderDevice = require('../IrSenderDevice')
 const { PushButtonEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 
-class IrButtonSequence extends IrSender {
+class IrButtonSequence extends IrSenderDevice {
   setting = {
     handlerdevice: null,
     ircode1: '',
