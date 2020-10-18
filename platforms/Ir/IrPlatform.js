@@ -2,6 +2,8 @@ const Device = require('../Device')
 const Platform = require('../Platform')
 const DeviceModel = require('../../models/Device')
 const IrDevice = require('./IrDevice')
+const IrReceiverDevice = require('./IrReceiverDevice')
+const IrSenderDevice = require('./IrSenderDevice')
 const arrayUtils = require('../../lib/arrayUtils')
 
 const http500 = 500
@@ -77,9 +79,11 @@ class IrPlatform extends Platform {
 
     let found = false
     for (const device of this.devices) {
-      if (device.ReceiveIrCode(handlerdevice, ircode)) {
-        found = true
-        break
+      if (device instanceof IrSenderDevice) {
+        if (device.ReceiveIrCode(handlerdevice, ircode)) {
+          found = true
+          break
+        }
       }
     }
 
