@@ -6,7 +6,8 @@ const UserTable = db.defineTable('User', {
     IsAdmin: db.ColTypes.tinyint(1).notNull(),
     Email: db.ColTypes.varchar(100).notNull().unique(),
     Name: db.ColTypes.varchar(100).notNull(),
-    Password: db.ColTypes.varchar(100).notNull()
+    // eslint-disable-next-line no-magic-numbers
+    Password: db.ColTypes.varchar(128).notNull() // sha512 in hex format
   }
 })
 
