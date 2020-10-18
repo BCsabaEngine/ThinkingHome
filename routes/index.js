@@ -46,11 +46,11 @@ module.exports = (app) => {
 
   // early loading of common and login routes
   require(path.resolve('./routes/common.js'))(app)
-  //  require(path.resolve('./routes/login.js'))(app);
+  require(path.resolve('./routes/login.js'))(app)
 
   // all other definition files
   for (const file of glob.sync('./routes/*.js')) {
-    if (!file.endsWith('index.js')) {
+    if (!file.endsWith('index.js') && !file.endsWith('common.js') && !file.endsWith('login.js')) {
       require(path.resolve(file))(app)
     }
   }
