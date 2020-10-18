@@ -21,6 +21,7 @@ block content
             thead
               tr
                 th Time
+                th Topic
                 th Message
             tbody
               each rulecodelog in rulecodelogs
@@ -28,7 +29,9 @@ block content
                   td(width="10%", title=rulecodelog.DateTime)
                     = dayjs(rulecodelog.DateTime).fromNow()
                   td.monospace
-                    =rulecodelog.Message
+                    = rulecodelog.Topic
+                  td.monospace
+                    = rulecodelog.Message
 
   script(type='text/javascript')
     | subscribes = { rulecodelog : "content-wrapper" }
