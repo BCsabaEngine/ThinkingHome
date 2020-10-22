@@ -47,6 +47,16 @@
  pm2 startup
  ```
 
+# Install zigbee2mqtt
+ ```sh
+ mkdir & cd to your favorite folder 2
+ git clone https://github.com/Koenkk/zigbee2mqtt.git .
+ npm ci --unsafe-perm
+ edit /zigbee2mqtt/data/configuration.yaml
+ optionally create service file
+ npm start
+ ```
+
 # Update system
  ```sh
  pm2 stop ThinkingHome
