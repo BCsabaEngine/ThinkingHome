@@ -46,7 +46,7 @@ class E1743 extends GenericDevice {
   ProcessActionObj(actionobj) { this.entities.pushbutton.DoAction(actionobj.action) }
 
   entities = {
-    pushbutton: new E1743Entity(this, 'pushbutton', 'Push button', 'fa fa-toogle-on')
+    pushbutton: new E1743Entity(this, 'pushbutton', 'Push button', 'fa fa-toggle-on')
   };
 
   get icon() { return 'fa fa-toggle-on' }
