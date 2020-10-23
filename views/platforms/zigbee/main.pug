@@ -2,34 +2,56 @@ extends ../_baseplatform
 
 block command
   center
-    button.btn.btn-default(onclick="sendrfcode()")
-      i.fa.fa-podcast
-      | 
-      | Send custom RF code
+    .dropdown
+      button#dropdownMenuButton.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+        | Devices 
+        small
+          | (
+          = bridgedevices.length
+          | )
+      .dropdown-menu(aria-labelledby='dropdownMenuButton')
+        each bridgedevice in bridgedevices
+          a.dropdown-item(onclick="show_" + bridgedevice.ieee + "()")
+            b
+              = bridgedevice.description || bridgedevice.type
+            br
+            center
+              small
+                = bridgedevice.ieee
+
+block logs
+  hr
+  .row
+    .col-12
+      .card
+        .card-body.table-responsive.p-0
+          table.table.table-hover.text-nowrap
+            thead
+              tr
+                th Time
+                th Type
+                th Message
+            tbody
+              each bridgelog in bridgelogs
+                tr
+                  td
+                    = dayjs(bridgelog.date).fromNow()
+                  td
+                    b
+                      = bridgelog.type
+                  td
+                    = bridgelog.message
+
 
 block script
-  script(type='text/javascript').
-    function sendrfcode()
-    {
-      Swal.fire({
-        title: 'Send custom RF code',
-        input: 'text',
-        inputPlaceholder: 'Type RF code 0x??????#24',
-        showCancelButton: true,
-      })
-      .then((result) => {
-        if (result.value) {
-          $.post(`/platform/#{platform.GetCode()}/sendrfcode`, {rfcode: result.value})
-            .done(function(data) {
-              divreload('settingpanel');
-            })
-            .fail(function(error) {
-              Swal.fire(
-                'Error occured',
-                error.responseText,
-                'error'
-              )            
-            });
-        }
-      })
-    }
+  each bridgedevice in bridgedevices
+    script(type='text/javascript').
+      function show_#{bridgedevice.ieee}()
+      {
+        Swal.fire({
+          icon: 'info',
+          title: '#{bridgedevice.description || bridgedevice.type}',
+          html: '#{bridgedevice.lasttimehuman} (#{bridgedevice.lasttime}) <br/> #{bridgedevice.ieee} <br/> #{bridgedevice.manufacturer} #{bridgedevice.vendor} <br/> #{bridgedevice.model} #{bridgedevice.powersource}',
+          showCancelButton: false,
+        })
+      }
