@@ -212,6 +212,6 @@ class Device {
     await DeviceSettingModel.UpdateSettingsSync(this.id, this.setting)
   }
 
-  static IsValidDeviceName(name) { return name.match(/^[a-z0-9_]{1,20}$/) }
+  static IsValidDeviceName(name) { return name.match(/^[a-z0-9_]{1,32}$/) }
 }
 module.exports = Device
