@@ -1,10 +1,14 @@
+const dayjs = require('dayjs')
+
 const Device = require('../Device')
 const Platform = require('../Platform')
 const DeviceModel = require('../../models/Device')
 const ZigbeeDevice = require('./ZigbeeDevice')
 const arrayUtils = require('../../lib/arrayUtils')
+const objectUtils = require('../../lib/objectUtils')
 
 const http500 = 500
+const lastlogs = 50
 
 class ZigbeePlatform extends Platform {
   setting = {
@@ -22,6 +26,12 @@ class ZigbeePlatform extends Platform {
         title: 'Deny join',
         value: 'Deny',
         onexecute: function () { this.SendMessage('bridge/config/permit_join', 'false') }.bind(this)
+      }
+      result.listdevices = {
+        type: 'button',
+        title: 'Coordinator devices',
+        value: this.bridgeDevices.length ? 'Refresh list' : 'Get list',
+        onexecute: function () { this.SendMessage('bridge/config/devices/get', '') }.bind(this)
       }
 
       return result
@@ -49,6 +59,10 @@ class ZigbeePlatform extends Platform {
   bridgeLoglevel = '';
   bridgeNetworkChannel = '';
   bridgePermitjoin = undefined;
+
+  bridgeDevices = [];
+
+  bridgeLog = [];
 
   GetStatusInfos() {
     const result = []
@@ -84,20 +98,61 @@ class ZigbeePlatform extends Platform {
     const messagestr = message.toString()
 
     let messageobj = null
-    if (messagestr && messagestr.startsWith('{')) { try { messageobj = JSON.parse(messagestr) } catch { messageobj = null } }
-
-    console.log(topic)
-    console.log(messageobj || message)
+    if (messagestr && (messagestr.startsWith('{') || messagestr.startsWith('[{'))) { try { messageobj = JSON.parse(messagestr) } catch { messageobj = null } }
 
     if (topic.startsWith('bridge/')) {
       switch (topic) {
+        case 'bridge/log':
+          if (messageobj) {
+            const type = messageobj.type
+            let message = messageobj.message
+            let meta = messageobj.meta
+
+            if (!['devices', 'groups'].includes(type)) {
+              if (typeof message === typeof {}) message = objectUtils.objectToString(message)
+              if (meta) {
+                if (typeof meta === typeof {}) meta = objectUtils.objectToString(meta)
+                message += ' meta: ' + meta
+              }
+
+              this.bridgeLog.push({ date: new Date().getTime(), type: type, message: message })
+
+              while (this.bridgeLog.length > lastlogs) { this.bridgeLog = this.bridgeLog.slice(1) }
+
+              global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
+            }
+          }
+          break
         case 'bridge/config':
-          this.bridgeVersion = messageobj.version
-          this.bridgeCoordinatorType = messageobj.coordinator.type
-          this.bridgeCoordinatorRevision = messageobj.coordinator.meta.revision
-          this.bridgeLoglevel = messageobj.log_level
-          this.bridgeNetworkChannel = messageobj.network.channel
-          this.bridgePermitjoin = messageobj.permit_join
+          if (messageobj) {
+            this.bridgeVersion = messageobj.version
+            this.bridgeCoordinatorType = messageobj.coordinator.type
+            this.bridgeCoordinatorRevision = messageobj.coordinator.meta.revision
+            this.bridgeLoglevel = messageobj.log_level
+            this.bridgeNetworkChannel = messageobj.network.channel
+            this.bridgePermitjoin = messageobj.permit_join
+
+            global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
+          }
+          break
+        case 'bridge/config/devices':
+          if (messageobj) {
+            this.bridgeDevices = []
+            for (const device of messageobj) {
+              this.bridgeDevices.push({
+                type: device.type,
+                ieee: device.ieeeAddr,
+                description: device.description,
+                manufacturer: device.manufacturerName,
+                vendor: device.vendor,
+                model: device.model,
+                powersource: device.powerSource,
+                lasttime: dayjs(device.lastSeen).format('YYYY-MM-DD HH:mm:ss'),
+                lasttimehuman: dayjs(device.lastSeen).fromNow()
+              })
+            }
+            global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
+          }
           break
         default:
           break
@@ -125,7 +180,10 @@ class ZigbeePlatform extends Platform {
     await super.Start()
     logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`)
 
-    setTimeout(function () { this.SendMessage('bridge/config/permit_join', '') }.bind(this), 2 * 1000)
+    setTimeout(function () {
+      this.SendMessage('bridge/config/permit_join', '') // Retrieve config
+      this.SendMessage('bridge/config/devices/get', '') // Retrieve devices
+    }.bind(this), 2 * 1000)
   }
 
   async CreateAndStartDevice(type, id, name) {
@@ -160,33 +218,6 @@ class ZigbeePlatform extends Platform {
     }
   }
 
-  async GetAutoDiscoveredDevices() {
-    const typeselect = {}
-    const types = ZigbeeDevice.GetTypes()
-    for (const type of Object.keys(types)) { typeselect[type] = types[type].displayname.replace(' ', '&nbsp;') }
-
-    const result = []
-
-    // TODO Autodiscover zigbee devices
-
-    // for (const mqttdevice of await MqttModel.GetUnknownDevices(autodetectdevicedays)) {
-    //   let exists = false
-    //   for (const device of this.devices) {
-    //     if (device.name === mqttdevice) { exists = true }
-    //   }
-    //   if (!exists) {
-    //     result.push({
-    //       type: JSON.stringify(typeselect).replace(/["]/g, "'"),
-    //       displayname: mqttdevice,
-    //       devicename: mqttdevice.toLowerCase(),
-    //       icon: 'fa fa-question',
-    //       setting: JSON.stringify({ name: mqttdevice }).replace(/["]/g, "'")
-    //     })
-    //   }
-    // }
-    return result
-  }
-
   async WebMainPage(req, res, next) {
     const maxitemswithoutgrouping = 6
 
@@ -194,13 +225,14 @@ class ZigbeePlatform extends Platform {
     const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.setting.toTitle(), 'name') : null
 
     res.render('platforms/zigbee/main', {
-      title: 'MQTT platform',
+      title: 'Zigbee platform',
       platform: this,
       devicecount: this.GetDeviceCount(),
       devices: this.devices,
       devicegroups: devicegroups,
       handlers: ZigbeeDevice.GetTypes(),
-      autodevices: await this.GetAutoDiscoveredDevices()
+      bridgedevices: this.bridgeDevices,
+      bridgelogs: this.bridgeLog
     })
   }
 
@@ -209,7 +241,7 @@ class ZigbeePlatform extends Platform {
     const name = req.body.name.toLowerCase()
     const settings = req.body.settings
 
-    if (!Device.IsValidDeviceName(name) || !name.startsWith('ieee_')) { return res.status(http500).send(`Invalid device name: ${name}`) }
+    if (!Device.IsValidDeviceName(name)) { return res.status(http500).send(`Invalid device name: ${name}`) }
 
     const id = await DeviceModel.InsertSync(name, this.GetCode(), type)
 

@@ -1,22 +1,21 @@
 const dayjs = require('dayjs')
 const ZigbeeDevice = require('../ZigbeeDevice')
-const { BoolStateEntity, ButtonEntity } = require('../../Entity')
+const { NumericValueGaugeEntity, ButtonEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
-const { ToggleBoardItem } = require('../../BoardItem')
+const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 
 class GenericDevice extends ZigbeeDevice {
   sensors = [];
   actions = {};
 
   InitEntities() {
-    // for (let i = 1; i <= this.setting.powercount; i++) {
-    //   this.entities[`power${i}`] = new BoolStateEntity(this, `power${i}`, `Power${i}`, 'fa fa-toggle-on')
-    //     .InitStateIcons('fa fa-toggle-off', 'fa fa-toggle-on')
-    //     .AddAction(new ButtonAction(this, 'toggle', 'Toggle', 'fa fa-toggle-on', function () { this.device.SendCmnd(`power${i}`, 'toggle') }))
-    //     .AddAction(new ButtonAction(this, 'switchon', 'Switch on', 'fa fa-toggle-on', function () { this.device.SendCmnd(`power${i}`, 'on') }))
-    //     .AddAction(new ButtonAction(this, 'switchoff', 'Switch off', 'fa fa-toggle-off', function () { this.device.SendCmnd(`power${i}`, 'off') }))
-    //     .AddBoardItem(new ToggleBoardItem())
-    // }
+    for (const sensor of this.sensors) {
+      this.entities[sensor.code] = new NumericValueGaugeEntity(this, sensor.code, sensor.name, sensor.icon)
+        .InitUnit(sensor.unit)
+        .AddBoardItem(new NumericValueGaugeBoardItem())
+      if (sensor.minvalue) this.entities[sensor.code].InitMinValue(sensor.minvalue)
+      if (sensor.maxvalue) this.entities[sensor.code].InitMaxValue(sensor.maxvalue)
+    }
     // for (let i = 1; i <= this.setting.buttoncount; i++) {
     //   this.entities[`button${i}`] = new ButtonEntity(this, `button${i}`, `Button${i}`, 'fa fa-dot-circle')
     //     .AddAction(new ButtonAction(this, 'push', 'Push', 'fa fa-dot-circle', function () { this.entity.DoPress(1) }))
@@ -27,36 +26,22 @@ class GenericDevice extends ZigbeeDevice {
 
   setting = {
     topic: '',
-    icon: '',
     toDisplayList: function () {
       const result = {}
       result.topic = {
         type: 'text',
         title: 'MQTT topic',
         value: this.setting.topic,
-        displayvalue: function () { return this.setting.topic || `${this.name.replace('ieee_', '')} (default)` }.bind(this)(),
-        error: false,
-        canclear: true
-      }
-      result.icon = {
-        type: 'text',
-        title: 'Device icon',
-        value: this.setting.icon,
-        displayvalue: function () { return this.setting.icon || 'fa fa-hive (default)' }.bind(this)(),
+        displayvalue: function () { return this.setting.topic || `${this.name} (default)` }.bind(this)(),
         error: false,
         canclear: true
       }
       return result
     }.bind(this),
     toTitle: function () { return this.constructor.name }.bind(this),
-    toSubTitle: function () {
-      const result = []
-      // TODO Show first sensor data
-      return result.join('+')
-    }.bind(this)
+    toSubTitle: function () { return this.setting.topic || `${this.name} (default)` }.bind(this)
   };
 
-  get icon() { return this.setting.icon || 'fa fa-hive' }
   entities = {};
   starttime = new Date().getTime();
   zigbeeLastTime = '';
@@ -79,7 +64,7 @@ class GenericDevice extends ZigbeeDevice {
   }
 
   GetTopic() {
-    return (this.setting.topic || this.name.replace('ieee_', '')).toLowerCase()
+    return (this.setting.topic || this.name).toLowerCase()
   }
 
   SendCmnd(command, message) {
@@ -100,7 +85,14 @@ class GenericDevice extends ZigbeeDevice {
       if (messageobj.battery) this.zigbeeBatteryPercent = messageobj.battery
       if (messageobj.voltage) this.zigbeeVoltage = messageobj.voltage
 
-      console.log(messageobj)
+      for (const sensor of this.sensors) {
+        let value = messageobj[sensor.code]
+        if (value !== undefined) {
+          if (sensor.converter) value = sensor.converter(value)
+          this.entities[sensor.code].SetValue(value)
+        }
+      }
+
       return true
     }
 

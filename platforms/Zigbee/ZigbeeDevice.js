@@ -3,7 +3,8 @@ const Device = require('../Device')
 class ZigbeeDevice extends Device {
   static GetTypes() {
     return {
-      MiJiaLightSensor: { displayname: 'MiJia Light sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-low-vision' },
+      LightSensor: { displayname: 'Light sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-low-vision' },
+      TempSensor: { displayname: 'Temp sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-thermometer-half' },
       E1744: { displayname: 'Ikea E1744', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-tablets' }
     }
   }
