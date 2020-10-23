@@ -1,7 +1,7 @@
 const dayjs = require('dayjs')
 const ZigbeeDevice = require('../ZigbeeDevice')
-const { NumericValueGaugeEntity, ButtonEntity } = require('../../Entity')
-const { ButtonAction } = require('../../Action')
+const { NumericValueGaugeEntity /*, ButtonEntity */ } = require('../../Entity')
+// const { ButtonAction } = require('../../Action')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 
 class GenericDevice extends ZigbeeDevice {
