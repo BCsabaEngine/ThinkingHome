@@ -1,12 +1,13 @@
 const dayjs = require('dayjs')
 const ZigbeeDevice = require('../ZigbeeDevice')
-const { NumericValueGaugeEntity /*, ButtonEntity */ } = require('../../Entity')
-// const { ButtonAction } = require('../../Action')
+const { NumericValueGaugeEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
+
+const batterywarninglevel = 20
+const batteryerrorlevel = 10
 
 class GenericDevice extends ZigbeeDevice {
   sensors = [];
-  actions = {};
 
   InitEntities() {
     for (const sensor of this.sensors) {
@@ -16,11 +17,6 @@ class GenericDevice extends ZigbeeDevice {
       if (sensor.minvalue) this.entities[sensor.code].InitMinValue(sensor.minvalue)
       if (sensor.maxvalue) this.entities[sensor.code].InitMaxValue(sensor.maxvalue)
     }
-    // for (let i = 1; i <= this.setting.buttoncount; i++) {
-    //   this.entities[`button${i}`] = new ButtonEntity(this, `button${i}`, `Button${i}`, 'fa fa-dot-circle')
-    //     .AddAction(new ButtonAction(this, 'push', 'Push', 'fa fa-dot-circle', function () { this.entity.DoPress(1) }))
-    // }
-    // .AddBoardItem(new PushBoardItem('push'))
     this.LinkUpEntities()
   }
 
@@ -53,7 +49,15 @@ class GenericDevice extends ZigbeeDevice {
     if (!this.zigbeeLastTime && (new Date().getTime() - this.starttime) > 3 * 60 * 1000) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
     if (this.zigbeeLastTime) { result.push({ device: this, message: 'Info time', value: this.zigbeeLastTime ? dayjs(this.zigbeeLastTime).fromNow() : '' }) }
     if (this.zigbeeLinkQuality) { result.push({ device: this, message: 'Link quality', value: `${this.zigbeeLinkQuality} lqi` }) }
-    if (this.zigbeeBatteryPercent) { result.push({ device: this, message: 'Battery', value: `${this.zigbeeBatteryPercent} %` }) }
+    if (this.zigbeeBatteryPercent) {
+      result.push({
+        device: this,
+        warning: this.zigbeeBatteryPercent < batterywarninglevel && this.zigbeeBatteryPercent >= batteryerrorlevel,
+        error: this.zigbeeBatteryPercent < batteryerrorlevel,
+        message: 'Battery',
+        value: `${this.zigbeeBatteryPercent} %`
+      })
+    }
     if (this.zigbeeVoltage) { result.push({ device: this, message: 'Voltage', value: `${this.zigbeeVoltage} mV` }) }
     return result
   }
@@ -78,6 +82,8 @@ class GenericDevice extends ZigbeeDevice {
     return false
   }
 
+  ProcessActionObj(action) { }
+
   ProcessMessageObj(topic, messageobj) {
     if (topic === this.GetTopic()) {
       this.zigbeeLastTime = new Date().getTime()
@@ -92,6 +98,9 @@ class GenericDevice extends ZigbeeDevice {
           this.entities[sensor.code].SetValue(value)
         }
       }
+
+      // console.log(messageobj)
+      if (messageobj.action) this.ProcessActionObj(messageobj)
 
       return true
     }
