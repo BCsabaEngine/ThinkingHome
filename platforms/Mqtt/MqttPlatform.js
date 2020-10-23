@@ -104,6 +104,11 @@ class MqttPlatform extends Platform {
     return result
   }
 
+  SendZigbeeMessage(topic, message) {
+    const zigbeeprefix = (this.setting.zigbee_basetopic || this.ZIGBEE_BASETOPIC) + '/'
+    this.SendMessage(zigbeeprefix + topic, message)
+  }
+
   SendMessage(topic, message) {
     this.msgcounter.outgoing++
     if ((!!message) && (message.constructor === Object)) {
@@ -116,6 +121,15 @@ class MqttPlatform extends Platform {
   OnMessage(topic, message) {
     this.msgcounter.incoming++
     const messagestr = message.toString()
+
+    const zigbeeprefix = (this.setting.zigbee_basetopic || this.ZIGBEE_BASETOPIC) + '/'
+
+    if (topic.startsWith(zigbeeprefix)) {
+      if (this.setting.zigbee2mqtt) {
+        global.runningContext.zigbeeInterCom.ZigbeeMqttReceived(topic.substr(zigbeeprefix.length), message)
+      }
+      return
+    }
 
     const devicenamematch = topic.match(/^[a-zA-Z]*\/([0-9a-zA-Z_]*)\/?[0-9a-zA-Z_]*$/)
     if (!devicenamematch) {
@@ -274,6 +288,6 @@ class MqttPlatform extends Platform {
   static GetPriority() { return '001' }
   static GetCode() { return 'mqtt' }
   static GetName() { return 'Mqtt' }
-  static GetDescription() { return 'IoT messages' }
+  static GetDescription() { return 'IoT messages over network' }
 }
 module.exports = MqttPlatform
