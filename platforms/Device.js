@@ -177,6 +177,12 @@ class Device {
       if (keys.includes(name)) {
         this.setting[name] = value
         await this.WriteSetting(name, value)
+
+        const displayitems = this.setting.toDisplayList()
+        const displayitem = displayitems[name]
+        if (displayitem) {
+          if (typeof displayitem.onchange === 'function') { displayitem.onchange(value) }
+        }
       }
     }
   }
@@ -187,6 +193,12 @@ class Device {
       if (keys.includes(name)) {
         this.setting[name] = !this.setting[name]
         await this.WriteSetting(name, this.setting[name])
+
+        const displayitems = this.setting.toDisplayList()
+        const displayitem = displayitems[name]
+        if (displayitem) {
+          if (typeof displayitem.onchange === 'function') { displayitem.onchange(this.setting[name]) }
+        }
       }
     }
   }

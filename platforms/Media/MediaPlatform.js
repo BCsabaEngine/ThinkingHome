@@ -7,38 +7,6 @@ const arrayUtils = require('../../lib/arrayUtils')
 const http500 = 500
 
 class MediaPlatform extends Platform {
-  setting = {
-    netinterface: '',
-    toDisplayList: function () {
-      const result = {}
-
-      const interfacelist = {}
-      for (const ni of this.netinterfaces) { interfacelist[ni] = ni }
-
-      result.netinterface = {
-        type: 'select',
-        title: 'Network interface',
-        value: this.setting.netinterface,
-        lookup: JSON.stringify(interfacelist).replace(/["]/g, "'"),
-        error: !this.setting.netinterface,
-        canclear: false
-      }
-
-      return result
-    }.bind(this)
-  };
-
-  netinterfaces = [];
-  macaddresses = {};
-
-  GetStatusInfos() {
-    let result = []
-    if (!this.setting.netinterface) result.push({ error: true, message: 'Network interface not set' })
-    const statusinfos = super.GetStatusInfos()
-    if (Array.isArray(statusinfos)) { result = result.concat(statusinfos) }
-    return result
-  }
-
   async Start() {
     this.approuter.get('/', this.WebMainPage.bind(this))
     this.approuter.post('/adddevice', this.WebAddDevice.bind(this))

@@ -27,6 +27,7 @@
     "got": "^11.8.0",
     "helmet": "^4.1.1",
     "js-beautify": "^1.13.0",
+    "lgtv2": "^1.6.3",
     "material-icons": "^0.3.1",
     "mousetrap": "^1.6.5",
     "mqtt": "^4.2.1",
@@ -45,7 +46,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "blocked-at": "^1.2.0",
-    "eslint": "^7.11.0",
+    "eslint": "^7.12.0",
     "eslint-config-standard": "^15.0.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
