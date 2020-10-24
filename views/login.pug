@@ -46,8 +46,9 @@ html(lang='en')
         var email = $('#email').val();
         var password = $('#password').val();
         var rememberme = $('#rememberme').is(':checked');
+
         $('#loginbutton').html("<i class='fas fa-sync-alt fa-spin'></i> Please wait...").addClass('disabled');
-        $.post('/login', { email: email, password: password, rememberme: rememberme}, 'json')
+        $.post('/login', { email: email, password: password, rememberme: rememberme ? 'yes' : '' }, 'json')
         .done(function() {
           window.location = "/";
         })

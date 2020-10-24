@@ -64,7 +64,7 @@ module.exports = (app) => {
       .then(user => {
         if (user) {
           req.session.user = { id: user.Id, isadmin: user.IsAdmin, email: user.Email, name: user.Name }
-          if (rememberme) res.cookie('autologin', JSON.stringify({ id: user.Id, passwordhash: UserModel.hashPassword(password, email) }), { maxAge: 24 * 60 * 60 * 1000, signed: true }) // 24h = 1day
+          if (rememberme === 'yes') res.cookie('autologin', JSON.stringify({ id: user.Id, passwordhash: UserModel.hashPassword(password, email) }), { maxAge: 24 * 60 * 60 * 1000, signed: true }) // 24h = 1day
           res.send('OK')
         } else {
           setTimeout(() => {
