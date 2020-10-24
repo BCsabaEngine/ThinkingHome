@@ -15,16 +15,25 @@ html(lang='en')
       .card#card
         .card-body.login-card-body
           p.login-box-msg Log in to access your home now
+
           .input-group.mb-3
             input.form-control(type='email' placeholder='Email' onkeydown='if (event.keyCode == 13) login()')#email
             .input-group-append
               .input-group-text
                 span.fas.fa-user
+
           .input-group.mb-3
             input.form-control(type='password' placeholder='Password' onkeydown='if (event.keyCode == 13) login()')#password
             .input-group-append
               .input-group-text
                 span.fas.fa-lock
+
+          center
+            .form-group
+              .custom-control.custom-switch
+                input#rememberme.custom-control-input(type='checkbox')
+                label.custom-control-label(for='rememberme') Remember me
+
           center
             button.btn.btn-primary.btn-blockx(type='button' onclick='login()')#loginbutton
               | Log In
@@ -36,8 +45,9 @@ html(lang='en')
       {
         var email = $('#email').val();
         var password = $('#password').val();
+        var rememberme = $('#rememberme').is(':checked');
         $('#loginbutton').html("<i class='fas fa-sync-alt fa-spin'></i> Please wait...").addClass('disabled');
-        $.post('/login', { email: email, password: password}, 'json')
+        $.post('/login', { email: email, password: password, rememberme: rememberme}, 'json')
         .done(function() {
           window.location = "/";
         })

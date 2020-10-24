@@ -20,7 +20,25 @@ module.exports = (app) => {
   app.all('/*', async function (req, res, next) {
     if (req.session.user) return next()
 
-    if (!global.IsProduction) return next()
+    if (req.signedCookies.autologin) {
+      try {
+        const autologincredentials = JSON.parse(req.signedCookies.autologin)
+
+        await UserModel.FindByIdPasswordHash(autologincredentials.id, autologincredentials.passwordhash)
+          .then(user => {
+            if (user) {
+              req.session.user = { id: user.Id, isadmin: user.IsAdmin, email: user.Email, name: user.Name }
+
+              // Reinit cookie for 24h again
+              res.cookie('autologin', req.signedCookies.autologin, { maxAge: 24 * 60 * 60 * 1000, signed: true }) // 24h = 1day
+            }
+          })
+      } catch (error) { return }
+
+      if (req.session.user) return next()
+    }
+
+    // if (!global.IsProduction) return next()
 
     if (!(await UserModel.AnySync())) {
       if (isInSubnet(req.connection.remoteAddress, cidrs)) return next()
@@ -38,10 +56,15 @@ module.exports = (app) => {
   })
 
   app.post('/login', function (req, res) {
-    UserModel.FindByEmailPassword(req.body.email, req.body.password)
+    const email = req.body.email
+    const password = req.body.password
+    const rememberme = req.body.rememberme
+
+    UserModel.FindByEmailPassword(email, password)
       .then(user => {
         if (user) {
           req.session.user = { id: user.Id, isadmin: user.IsAdmin, email: user.Email, name: user.Name }
+          if (rememberme) res.cookie('autologin', JSON.stringify({ id: user.Id, passwordhash: UserModel.hashPassword(password, email) }), { maxAge: 24 * 60 * 60 * 1000, signed: true }) // 24h = 1day
           res.send('OK')
         } else {
           setTimeout(() => {
@@ -54,6 +77,7 @@ module.exports = (app) => {
   app.get('/logout', function (req, res) {
     delete req.session.user
 
+    res.cookie('autologin', '', { maxAge: 0 })
     res.redirect('/')
   })
 }
