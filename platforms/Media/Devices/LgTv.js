@@ -1,8 +1,10 @@
 const lgtv2 = require('lgtv2')
+const wakeonlan = require('wakeonlan')
 
 const MediaDevice = require('../MediaDevice')
-const { NumericValueGaugeEntity } = require('../../Entity')
+const { NumericValueGaugeEntity, BoolStateEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
+const { ButtonAction } = require('../../Action')
 
 class LgTv extends MediaDevice {
   lgtvcli = null;
@@ -45,11 +47,39 @@ class LgTv extends MediaDevice {
 
   get icon() { return 'fa fa-tv' }
   entities = {
+
+    state: new BoolStateEntity(this, 'state', 'State', 'fa fa-toggle-on')
+      .AddBoardItem(new NumericValueGaugeBoardItem())
+      .AddAction(new ButtonAction(this, 'switchoff', 'Switch Off', 'fa fa-toggle-off', () => {
+        if (!this.lgtvcli) return
+        this.lgtvcli.request('ssap://system/turnOff')
+      }))
+      .AddAction(new ButtonAction(this, 'switchon', 'Switch On', 'fa fa-toggle-on', () => { if (this.setting.mac) wakeonlan(this.setting.mac) })),
+
     volume: new NumericValueGaugeEntity(this, 'volume', 'Volume', 'fa fa-volume-up')
       .InitUnit('')
       // eslint-disable-next-line no-magic-numbers
       .InitMinMaxValue(0, 100).InitHighLevels(40, 70)
+      .AddAction(new ButtonAction(this, 'mute', 'Mute', 'fa fa-volume-mute', () => {
+        if (!this.lgtvcli) return
+        this.lgtvcli.request('ssap://audio/setMute', { mute: this.volume.value })
+      }))
+      .AddAction(new ButtonAction(this, 'volumeup', 'Volume Up', 'fa fa-volume-up', () => {
+        if (!this.lgtvcli) return
+        this.lgtvcli.request('ssap://audio/setMute', { mute: false }, function (err, res) {
+          if (err) return
+          this.lgtvcli.request('ssap://audio/setVolume', { volume: this.volume.value + 1 })
+        }.bind(this))
+      }))
+      .AddAction(new ButtonAction(this, 'volumedown', 'Volume Down', 'fa fa-volume-down', () => {
+        if (!this.lgtvcli) return
+        this.lgtvcli.request('ssap://audio/setMute', { mute: false }, function (err, res) {
+          if (err) return
+          this.lgtvcli.request('ssap://audio/setVolume', { volume: this.volume.value - 1 })
+        }.bind(this))
+      }))
       .AddBoardItem(new NumericValueGaugeBoardItem())
+
   };
 
   lgProductName = '';
@@ -79,6 +109,7 @@ class LgTv extends MediaDevice {
   }
 
   OnConnect() {
+    this.entities.state.SetState(true)
     this.lgtvcli.request('ssap://com.webos.service.update/getCurrentSWInformation', function (err, res) {
       if (!err && res.returnValue) {
         this.lgProductName = res.product_name
@@ -122,16 +153,22 @@ class LgTv extends MediaDevice {
   }
 
   InitCli() {
-    if (this.setting.ip) {
+    this.lgtvcli = null
+
+    if (!this.setting.ip) return
+
+    try {
       this.lgtvcli = lgtv2({
         url: `ws://${this.setting.ip}:3000`,
-        timeout: 10 * 1000,
+        timeout: 500,
         reconnect: 10 * 1000,
         saveKey: function (key) { if (this.setting.tvkey !== key) this.AdaptSetting('tvkey', key) }.bind(this),
         clientKey: this.setting.tvkey
       })
+      this.lgtvcli.on('error', (err) => { return err })
+      this.lgtvcli.on('close', () => { this.entities.state.SetState(false) })
       this.lgtvcli.on('connect', this.OnConnect.bind(this))
-    } else this.lgtvcli = null
+    } catch (error) { return false }
   }
 }
 module.exports = LgTv

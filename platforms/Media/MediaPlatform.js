@@ -7,6 +7,13 @@ const arrayUtils = require('../../lib/arrayUtils')
 const http500 = 500
 
 class MediaPlatform extends Platform {
+  GetStatusInfos() {
+    let result = []
+    const statusinfos = super.GetStatusInfos()
+    if (Array.isArray(statusinfos)) { result = result.concat(statusinfos) }
+    return result
+  }
+
   async Start() {
     this.approuter.get('/', this.WebMainPage.bind(this))
     this.approuter.post('/adddevice', this.WebAddDevice.bind(this))
