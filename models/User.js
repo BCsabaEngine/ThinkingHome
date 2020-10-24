@@ -39,8 +39,18 @@ const User = {
                     ORDER BY u.Id`)
   },
 
-  FindByEmailPassword(email, password) {
-    return UserTable.select(['Id', 'IsAdmin', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), this.hashPassword(password, email.trim())])
+  FindByEmailPassword(email, password) { return this.FindByEmailPasswordHash(email, this.hashPassword(password, email.trim())) },
+
+  FindByEmailPasswordHash(email, passwordhash) {
+    return UserTable.select(['Id', 'IsAdmin', 'Email', 'Name'], 'WHERE Email = ? AND Password = ?', [email.trim(), passwordhash])
+      .then(rows => {
+        if (rows.length) { return Promise.resolve(rows[0]) }
+        return Promise.resolve(null)
+      })
+  },
+
+  FindByIdPasswordHash(id, passwordhash) {
+    return UserTable.select(['Id', 'IsAdmin', 'Email', 'Name'], 'WHERE Id = ? AND Password = ?', [id, passwordhash])
       .then(rows => {
         if (rows.length) { return Promise.resolve(rows[0]) }
         return Promise.resolve(null)
