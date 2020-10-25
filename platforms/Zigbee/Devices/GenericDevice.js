@@ -46,7 +46,7 @@ class GenericDevice extends ZigbeeDevice {
   zigbeeVoltage = '';
   GetStatusInfos() {
     const result = []
-    if (!this.zigbeeLastTime && (new Date().getTime() - this.starttime) > 3 * 60 * 1000) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
+    // if (!this.zigbeeLastTime && (new Date().getTime() - this.starttime) > 3 * 60 * 1000) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
     if (this.zigbeeLastTime) { result.push({ device: this, message: 'Info time', value: this.zigbeeLastTime ? dayjs(this.zigbeeLastTime).fromNow() : '' }) }
     if (this.zigbeeLinkQuality) { result.push({ device: this, message: 'Link quality', value: `${this.zigbeeLinkQuality} lqi` }) }
     if (this.zigbeeBatteryPercent) {
