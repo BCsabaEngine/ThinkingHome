@@ -5,6 +5,7 @@ class ZigbeeDevice extends Device {
     return {
       LightSensor: { displayname: 'Light sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-low-vision' },
       TempSensor: { displayname: 'Temp sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-thermometer-half' },
+      MotionSensor: { displayname: 'Motion sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-running' },
       E1743: { displayname: 'TRÅDFRI on/off', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-toggle-on' },
       E1744: { displayname: 'SYMFONISK sound', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-tablets' },
       AqaraCube: { displayname: 'Aqara magic cube', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-cube' }
