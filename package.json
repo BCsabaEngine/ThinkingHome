@@ -40,7 +40,7 @@
     "serve-favicon": "^2.5.0",
     "subnet-check": "^1.10.1",
     "suncalc": "^1.8.0",
-    "systeminformation": "^4.27.10",
+    "systeminformation": "^4.27.11",
     "wakeonlan": "^0.1.0",
     "ws": "^7.3.1",
     "yaml": "^2.0.0-1"
@@ -48,7 +48,7 @@
   "devDependencies": {
     "babel-eslint": "^10.1.0",
     "blocked-at": "^1.2.0",
-    "eslint": "^7.12.0",
+    "eslint": "^7.12.1",
     "eslint-config-standard": "^15.0.0",
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.22.1",
