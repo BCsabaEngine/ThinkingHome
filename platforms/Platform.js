@@ -91,7 +91,7 @@ class Platform {
   GetStatusInfos() {
     let result = []
     for (const device of this.devices) {
-      const statusinfos = device.GetStatusInfos()
+      const statusinfos = device.GetStatusInfos().filter(si => si.error || si.warning)
       if (Array.isArray(statusinfos)) { result = result.concat(statusinfos) }
     }
     return result
