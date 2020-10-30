@@ -90,6 +90,9 @@ block content
           | .(date | H | M | HHMM | HH_MM)
           br
           br
+          | OnceADay("name").(occured() | hasoccured)
+          br
+          br
           | &lt;device&gt;.&lt;entity&gt;.&lt;property&gt;
           br
           | &lt;device&gt;.&lt;entity&gt;.&lt;command&gt;()
