@@ -2,7 +2,6 @@ const fs = require('fs')
 const glob = require('glob')
 const path = require('path')
 const favicon = require('serve-favicon')
-const nGfirewall = require('../lib/nGfirewall')
 const IpBlacklist = require('../lib/IpBlacklist')
 const express = require('express')
 
@@ -21,16 +20,6 @@ module.exports = (app) => {
       onFailRequest: function (ipAddress) {
         logger.warn(`[BlackList] Banned IP ${ipAddress}`)
         fs.appendFile('blacklist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
-      }
-    }))
-  }
-
-  // filter malicious requests
-  if (global.IsProduction) {
-    app.use(nGfirewall.check({
-      onFailRequest: function (ipAddress, item, rule) {
-        logger.warn(`[nGfirewall] Blocked ${ipAddress} uri ${item} matched ${rule}`)
-        fs.appendFile('firewall.ips', ipAddress + require('os').EOL, 'utf8', () => { })
       }
     }))
   }
