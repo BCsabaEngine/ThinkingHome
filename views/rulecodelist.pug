@@ -63,17 +63,20 @@ block content
                     | 
                     | lines of code
                 .btn-group
-                  a.btn.btn-success(href="/rulecode/edit/" + rulecode.Id)
+                  a.btn.btn-info(href="/rulecode/edit/" + rulecode.Id)
                     i.fa.fa-edit
-                    |  Edit rule
+                    |  Edit
                   if rulecode.Disabled
                     button.btn.btn-default(onclick="enableclick(" + rulecode.Id + ")")
                       i.fa.fa-check
-                      |  Enable rule
+                      |  Enable
                   else
                     button.btn.btn-default(onclick="disableclick(" + rulecode.Id + ")")
                       i.fa.fa-ban
-                      |  Disable rule
+                      |  Disable
+                  a.btn.btn-default(href="/rulecode/loglist/" + rulecode.Id, target="_blank")
+                    i.fa.fa-list
+                    |  Logs
               .col-md-6
                 | Code analysis
                 br
