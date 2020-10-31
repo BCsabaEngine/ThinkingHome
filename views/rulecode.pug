@@ -4,7 +4,11 @@ block content
   section.content-header
     .container-fluid
       h4
-        | Rules
+        a.black(href="/rulecode/list")
+          i.fa.fa-arrow-circle-left
+        | 
+        | Rule - 
+        = rulecode.displayname
 
   if (runerrormessage)
     .row
@@ -22,22 +26,24 @@ block content
       .btn-group
         button.btn.btn-primary(onclick="savecode()")
           i.fa.fa-upload
-          |  Upload rules
+          |  Upload
+          | 
+          = rulecode.displayname
+          |  rule
         button.btn.btn-default(onclick="formatcode()")
           i.fa.fa-align-left
           |  Reformat code
     .col-md-4
-      center
-        a.btn.btn-default(href="/rulecode/loglist" target="_blank")
-          i.fa.fa-list
-          |  Show logs
+      a.btn.btn-default.float-right(href="/rulecode/loglist/" + rulecode.Id target="_blank")
+        i.fa.fa-list
+        |  Show logs
   br
 
   .row
     .col-md-8
       .form-group
         textarea.form-control.monospace(rows=rulecodelinecount onkeypress="editorkeypress(event)")#codeeditor
-          = rulecode
+          = rulecode.JsCode
 
     .col-md-4
 
@@ -65,7 +71,7 @@ block content
             | 
             | // debug purpose
           br
-          | log("Message to database" [,"topic"]);
+          | log("Message");
           small
             | 
             | // long time purpose
@@ -149,10 +155,10 @@ block content
     function savecode()
     {
       var code = $('#codeeditor').val();
-      $.post('/rulecode/update', { rulecode: code })
+      $.post('/rulecode/update/#{rulecode.Id}', { rulecode: code })
         .done(function()
         {
-          setTimeout(() => pagereload(), 250);
+          pagereload(350);
         })
         .fail(function(response)
         {

@@ -2,6 +2,7 @@ const express = require('express')
 const DeviceSettingModel = require('../models/DeviceSetting')
 const DeviceTelemetryModel = require('../models/DeviceTelemetry')
 const DeviceStateSeriesModel = require('../models/DeviceStateSeries')
+const RuleCodeModel = require('../models/RuleCode')
 const timelineConverter = require('../lib/timelineConverter')
 const { NumericValueEntity, StateEntity } = require('./Entity')
 const { ButtonAction, SelectAction, RangeAction } = require('./Action')
@@ -64,10 +65,12 @@ class Device {
 
   DumpBackup() { }
 
-  WebMainPage(req, res, next) {
+  async WebMainPage(req, res, next) {
     res.render('platforms/device', {
       title: this.name,
       device: this,
+
+      rulecode: await RuleCodeModel.GetForDeviceSync(this.id),
 
       NumericValueEntity: NumericValueEntity,
       StateEntity: StateEntity,

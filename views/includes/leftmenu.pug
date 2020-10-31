@@ -21,12 +21,12 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
                     = platformwarningcount
 
 
-          - var rulecodeerror = runningContext.GetRuleCodeExecutorMessage()
+          - var anyrulecodeerror = runningContext.GetAnyRuleCodeExecutorMessage()
           li.nav-item
-            a.nav-link(href='/rulecode')
-              i.nav-icon.fa.fa-code(class=rulecodeerror ? "text-danger" : "")
+            a.nav-link(href='/rulecode/list')
+              i.nav-icon.fa.fa-code(class=anyrulecodeerror ? "text-danger" : "")
               p Rules
-                if (rulecodeerror)
+                if (anyrulecodeerror)
                   span.badge.badge-danger.right !
 
           li.nav-item

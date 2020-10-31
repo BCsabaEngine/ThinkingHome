@@ -1,0 +1,169 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h4
+        | Rules
+
+  if (runerrormessage)
+    .row
+      .col-md-8
+        .callout.callout-danger
+          span.text-danger
+            i.icon.fa.fa-exclamation-triangle
+            |  Error in rules: 
+            b
+              = runerrormessage
+          p.monospace.small.pl-3.pt-3 !{runerrorstack.replace(/\n/g, '<br/>')}
+
+  .row
+    .col-md-8
+      .btn-group
+        button.btn.btn-default(onclick="createnewclick()")
+          i.fa.fa-code
+          if rulecodes.length
+            |  Create new rule
+          else
+            |  Create first rule
+    .col-md-4
+      a.btn.btn-default.float-right(href="/rulecode/loglist" target="_blank")
+        i.fa.fa-list
+        |  Show all logs
+  br
+
+  .row
+    each rulecode in rulecodes
+      .col-md-6
+        .card(class=rulecode.Disabled ? "card-warning" : "card-info")
+          .card-header
+            h3.card-title
+              if rulecode.Disabled
+                | [Disabled]
+                | 
+              = rulecode.displayname
+            .card-tools
+              button.btn.btn-tool(type='button' onclick="deleteclick('" + rulecode.displayname + "', " + rulecode.Id + ")")
+                i.fas.fa-trash
+          .card-body
+            if rulecode.runerrormessage
+              .row
+                .col-md-8
+                  .callout.callout-danger
+                    span.text-danger
+                      i.icon.fa.fa-exclamation-triangle
+                      |  Error: 
+                      b
+                        = rulecode.runerrormessage
+            .row
+              .col-md-6
+                h4
+                  = rulecode.linecount 
+                  small
+                    | 
+                    | lines of code
+                .btn-group
+                  a.btn.btn-success(href="/rulecode/edit/" + rulecode.Id)
+                    i.fa.fa-edit
+                    |  Edit rule
+                  if rulecode.Disabled
+                    button.btn.btn-default(onclick="enableclick(" + rulecode.Id + ")")
+                      i.fa.fa-check
+                      |  Enable rule
+                  else
+                    button.btn.btn-default(onclick="disableclick(" + rulecode.Id + ")")
+                      i.fa.fa-ban
+                      |  Disable rule
+              .col-md-6
+                | Code analysis
+                br
+                if (rulecode.parsed.devices)
+                  each device in rulecode.parsed.devices
+                    .span.badge.badge-success
+                      = device
+                  br
+                if (rulecode.parsed.keywords)
+                  each kw in rulecode.parsed.keywords
+                    .span.badge.badge-info
+                      = kw
+                  br
+
+  script(type='text/javascript').
+    function enableclick(id)
+    {
+      $.post('/rulecode/enable/' + id)
+        .done(function(response)
+        {
+          pagereload(350);
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Enable failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function disableclick(id)
+    {
+      $.post('/rulecode/disable/' + id)
+        .done(function(response)
+        {
+          pagereload(350);
+        })
+        .fail(function(response)
+        {
+          swal.fire({
+            icon: 'error',
+            title: 'Disable failed',
+            text: response.responseText,
+          });
+        });
+    }
+
+    function deleteclick(name, id)
+    {
+      showconfirmdeletedialog("Rule '" + name + "' will be deleted", function() 
+      {
+        $.post('/rulecode/delete/' + id)
+          .done(function(response)
+          {
+            pagereload(350);
+          })
+          .fail(function(response)
+          {
+            swal.fire({
+              icon: 'error',
+              title: 'Delete failed',
+              text: response.responseText,
+            });
+          });
+      });
+    }
+
+    function createnewclick()
+    {
+      Swal.fire({
+        title: 'Name of new rule',
+        input: 'text',
+        inputPlaceholder: 'Living room light rules',
+        showCancelButton: true,
+      })
+      .then((result) => {
+        if (result.value) {
+          $.post('/rulecode/createbyname', {name: result.value})
+            .done(function(data) {
+              window.location.href = '/rulecode/edit/' + data.id
+            })
+            .fail(function(error) {
+              swal.fire({
+                icon: 'error',
+                title: 'Create new rule failed',
+                text: response.responseText,
+              });
+            });
+        }
+      })
+    }

@@ -5,6 +5,9 @@ block content
     .container-fluid
       h4
         | Rules log
+        if rulecode
+          |  for 
+          = rulecode.displayname
         small
           | 
           | (last
@@ -21,15 +24,17 @@ block content
             thead
               tr
                 th Time
-                th Topic
+                if !rulecode
+                  th Rule
                 th Message
             tbody
               each rulecodelog in rulecodelogs
                 tr
-                  td(width="10%", title=rulecodelog.DateTime)
-                    = dayjs(rulecodelog.DateTime).fromNow()
-                  td.monospace
-                    = rulecodelog.Topic
+                  td(width="10%")
+                    = dayjs(rulecodelog.DateTime).format("YYYY-MM-DD HH:mm:ss").replace(dayjs().format("YYYY-MM-DD"), '')
+                  if !rulecode
+                    td.monospace
+                      = rulecodelog.RuleCodeName
                   td.monospace
                     = rulecodelog.Message
 

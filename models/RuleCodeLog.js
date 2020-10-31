@@ -1,25 +1,27 @@
 const RuleCodeLogTable = db.defineTable('RuleCodeLog', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
-    DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
-    Topic: db.ColTypes.varchar(100).notNull(),
+    DateTime: db.ColTypes.datetime().notNull().index().defaultCurrentTimestamp(),
+    RuleCode: db.ColTypes.int(10).notNull().index(),
     Message: db.ColTypes.varchar(1024).notNull()
   },
   keys: [
-    db.KeyTypes.index('DateTime')
+    db.KeyTypes.foreignKey('RuleCode').references('RuleCode', 'Id').cascade()
   ]
 })
 
 const RuleCodeLog = {
 
-  Insert(topic, message) {
-    return RuleCodeLogTable.insert({ Topic: topic || '', Message: message || '' })
+  Insert(rulecode, message) {
+    return RuleCodeLogTable.insert({ RuleCode: rulecode, Message: message || '' })
   },
 
-  GetLastLogs(limit = 100) {
-    return RuleCodeLogTable.select('*', 'ORDER BY Id DESC LIMIT ?', [limit])
+  async GetLastLogs(rulecode = null, limit = 100) {
+    if (rulecode) {
+      return RuleCodeLogTable.select('*', 'WHERE RuleCode = ? ORDER BY Id DESC LIMIT ?', [rulecode, limit])
+    }
+    return await db.pquery('SELECT rcl.DateTime, COALESCE(rc.Name, d.Name) AS RuleCodeName, rcl.Message FROM RuleCodeLog rcl LEFT JOIN RuleCode rc ON rc.Id = rcl.RuleCode LEFT JOIN Device d ON d.Id = rc.Device ORDER BY rcl.Id DESC LIMIT ?', [limit])
   }
-
 }
 
 module.exports = RuleCodeLog

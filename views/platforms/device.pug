@@ -20,6 +20,14 @@ block content
           .btn.btn-sm.btn-danger.float-left(onclick="deletedevice(" + device.id + ")")
             .fa.fa-stop
             |  Delete
+          if !rulecode
+            button.btn.btn-sm.btn-warning.float-right(onclick="createrulecode(" + device.id + ")")
+              .fa.fa-code
+              |  Create rule
+          else
+            a.btn.btn-sm.btn-warning.float-right(href="/rulecode/edit/" + rulecode.Id)
+              .fa.fa-code
+              |  Edit rule
         .widget-user-image
           .img-box.elevation-3
             center
@@ -382,6 +390,21 @@ block content
         });
       })
     };
+
+    function createrulecode(id)
+    {
+      $.post("/rulecode/createfordevice", {deviceid: id})
+        .done(function(data) {
+          window.location.href = '/rulecode/edit/' + data.id
+        })
+        .fail(function(error) {
+          swal.fire({
+            icon: 'error',
+            title: 'Create new rule failed',
+            text: response.responseText,
+          });
+        });
+    }
 
     function deletedevice(id)
     {
