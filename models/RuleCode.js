@@ -3,7 +3,6 @@ const RuleCodeTable = db.defineTable('RuleCode', {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     Name: db.ColTypes.varchar(100).unique(),
     Device: db.ColTypes.int(10).unique(),
-    DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
     Disabled: db.ColTypes.tinyint(1).notNull(),
     JsCode: db.ColTypes.mediumtext().notNull()
   },
