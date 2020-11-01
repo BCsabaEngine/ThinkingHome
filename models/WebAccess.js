@@ -5,8 +5,7 @@ const WebAccessTable = db.defineTable('WebAccess', {
     User: db.ColTypes.int(10).index(),
     Uri: db.ColTypes.varchar(100).index(),
     Session: db.ColTypes.varchar(100),
-    RemoteIp: db.ColTypes.varchar(100).index(),
-    Browser: db.ColTypes.longtext()
+    RemoteIp: db.ColTypes.varchar(100).index()
   },
   keys: [
     db.KeyTypes.foreignKey('User').references('User', 'Id').cascade(),
@@ -16,8 +15,8 @@ const WebAccessTable = db.defineTable('WebAccess', {
 
 const WebAccess = {
 
-  Insert(user, uri, session, remoteip, browser) {
-    return WebAccessTable.insert({ User: user, Uri: uri.substring(0, 100), Session: session, RemoteIp: remoteip, Browser: browser })
+  Insert(user, uri, session, remoteip) {
+    return WebAccessTable.insert({ User: user, Uri: uri.substring(0, 100), Session: session, RemoteIp: remoteip })
   }
 
 }

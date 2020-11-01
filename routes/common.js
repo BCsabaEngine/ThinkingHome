@@ -1,4 +1,3 @@
-const useragent = require('express-useragent')
 const WebAccess = require('../models/WebAccess')
 
 module.exports = (app) => {
@@ -8,20 +7,8 @@ module.exports = (app) => {
     const uri = req.originalUrl
     const session = req.sessionID
     const remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-    const uadetect = useragent.parse(req.headers['user-agent'] || '')
 
-    const uaresult = {}
-    uaresult.platform = uadetect.platform
-    uaresult.os = uadetect.os
-    uaresult.browser = uadetect.browser
-    uaresult.version = uadetect.version
-    uaresult.isDesktop = uadetect.isDesktop
-    uaresult.isTablet = uadetect.isTablet
-    uaresult.isMobile = uadetect.isMobile
-
-    const browser = JSON.stringify(uaresult)
-
-    WebAccess.Insert(user, uri, session, remoteip, browser)
+    WebAccess.Insert(user, uri, session, remoteip)
 
     return next()
   })
