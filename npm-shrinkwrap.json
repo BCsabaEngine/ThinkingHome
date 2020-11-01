@@ -2538,9 +2538,9 @@
       "integrity": "sha512-PLcsoqu++dmEIZB+6totNFKq/7Do+Z0u4oT0zKOJNl3lYK6vGwwu2hjHs+68OEZbTjiUE9bgOABXbP/GvrS0Kg=="
     },
     "helmet": {
-      "version": "4.1.1",
-      "resolved": "https://registry.npmjs.org/helmet/-/helmet-4.1.1.tgz",
-      "integrity": "sha512-Avg4XxSBrehD94mkRwEljnO+6RZx7AGfk8Wa6K1nxaU+hbXlFOhlOIMgPfFqOYQB/dBCsTpootTGuiOG+CHiQA=="
+      "version": "4.2.0",
+      "resolved": "https://registry.npmjs.org/helmet/-/helmet-4.2.0.tgz",
+      "integrity": "sha512-aoiSxXMd0ks1ojYpSCFoCRzgv4rY/uB9jKStaw8PkXwsdLYa/Gq+Nc5l0soH0cwBIsLAlujPnx4HLQs+LaXCrQ=="
     },
     "help-me": {
       "version": "1.1.0",
@@ -3480,9 +3480,9 @@
       }
     },
     "oui": {
-      "version": "11.0.40",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.40.tgz",
-      "integrity": "sha512-5inIswd8OXaRZrw5OnQlkcWWQepv+ZF9TxLE+bb8I+hGA+z0l6zVlZABQnUPSmyHRbdURDDPbxRQFiXVxjVUHg==",
+      "version": "11.0.41",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.41.tgz",
+      "integrity": "sha512-1PgQ98dr84YzmBLfekZPnDVqLRC70G3Q/nhvAjPnIBoLg5/CPOUgdK/0gGMYTes522Rn+2lC3P0z2hAlcGdtBA==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
