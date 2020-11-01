@@ -122,6 +122,8 @@ class MqttPlatform extends Platform {
     this.msgcounter.incoming++
     const messagestr = message.toString()
 
+    if (topic.startsWith('tasmota/discovery/')) return
+
     const zigbeeprefix = (this.setting.zigbee_basetopic || this.ZIGBEE_BASETOPIC) + '/'
 
     if (topic.startsWith(zigbeeprefix)) {
@@ -162,13 +164,15 @@ class MqttPlatform extends Platform {
 
   async Start() {
     this.mqtt = mqttCli()
-    this.mqtt.on('message', this.OnMessage.bind(this))
 
     this.approuter.get('/', this.WebMainPage.bind(this))
     this.approuter.post('/adddevice', this.WebAddDevice.bind(this))
     this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this))
 
     for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode())) { await this.CreateAndStartDevice(device.Type, device.Id, device.Name) }
+
+    this.mqtt.on('message', this.OnMessage.bind(this))
+
     await super.Start()
     logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`)
   }
