@@ -77,13 +77,17 @@ block content
             | // long time purpose
           br
           br
-          | createInterval("Alias", 10 * 1000, () => { });
+          | atEveryMinute(() => { });
           br
-          | clearInterval("Alias");
+          | atEveryHour(() => { });
           br
           | createTimeout("Alias", 60 * 1000, () => { });
           br
           | clearTimeout("Alias");
+          br
+          | createInterval("Alias", 10 * 1000, () => { });
+          br
+          | clearInterval("Alias");
           br
           br
           | now.(y | m | d | H | M | S | dow | time | HHMM | HH_MM)
