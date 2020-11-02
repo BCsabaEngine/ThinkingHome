@@ -24,6 +24,7 @@ module.exports = (app) => {
         fs.appendFile('blacklist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
       }
     }))
+
     app.use(IpBan.check({
       onBan: function (ipAddress) {
         logger.warn(`[IPBanList] Banned IP ${ipAddress}`)
@@ -33,6 +34,14 @@ module.exports = (app) => {
         logger.warn(`[IPBanList] Permit IP ${ipAddress}`)
       }
     }))
+  }
+
+  if (global.httpsserver) {
+    // Force SSL
+    app.use((req, res, next) => {
+      if (!req.secure) return res.redirect(['https://', req.get('Host'), req.url].join(''))
+      return next()
+    })
   }
 
   app.use(express.static('public', { index: false, maxAge: '1h', redirect: false }))
