@@ -6,7 +6,8 @@ module.exports = (app) => {
     const user = req.session && req.session.user ? req.session.user.id : null
     const uri = req.originalUrl
     const session = req.sessionID
-    const remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+    let remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
+    if (remoteip.startsWith('::ffff:')) remoteip = remoteip.substr('::ffff:'.length)
 
     WebAccessModel.Insert(user, uri, session, remoteip)
 
