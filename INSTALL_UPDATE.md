@@ -34,6 +34,7 @@
  mosquitto_passwd -U /etc/mosquitto/mosquitto.passwd
  service mosquitto restart
  npm install pm2 -g
+ apt-get install -y certbot
  ```
 
 # Install system
@@ -45,6 +46,10 @@
  NODE_ENV=production pm2 start ./index.js --name ThinkingHome
  pm2 save
  pm2 startup
+
+ pm2 stop ThinkingHome
+ certbot certonly --standalone -d yourdomain.tld
+ pm2 start ThinkingHome
  ```
 
 # Install zigbee2mqtt
