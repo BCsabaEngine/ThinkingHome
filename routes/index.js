@@ -10,7 +10,7 @@ const http404 = 404
 const http500 = 500
 
 module.exports = (app) => {
-  if (!global.IsProduction) {
+  if (global.IsProduction) {
     app.use(IpBlacklist.check({
       blackLists: [
         'blacklist.ips',
