@@ -4,7 +4,8 @@ function socket_open() {
   socket = null;
 
   try {
-    socket = new WebSocket("ws://" + location.host);
+    var wsproto = (location.protocol == 'https:') ? 'wss:' : 'ws:';
+    socket = new WebSocket(wsproto + '//' + location.host);
 
     socket.onopen = function (event) {
       if (typeof subscribes !== 'undefined')
