@@ -14,7 +14,7 @@
   ]
 })
 
-const DeviceStateSeries = {
+const DeviceStateSeriesModel = {
 
   GetByDeviceId(deviceid, entity, days = 1) {
     return db.pquery(`
@@ -94,4 +94,4 @@ const DeviceStateSeries = {
 
 }
 
-module.exports = DeviceStateSeries
+module.exports = DeviceStateSeriesModel

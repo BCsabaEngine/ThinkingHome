@@ -1,4 +1,4 @@
-const WebAccess = require('../models/WebAccess')
+const WebAccessModel = require('../models/WebAccess')
 
 module.exports = (app) => {
   // log all request
@@ -8,7 +8,7 @@ module.exports = (app) => {
     const session = req.sessionID
     const remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
 
-    WebAccess.Insert(user, uri, session, remoteip)
+    WebAccessModel.Insert(user, uri, session, remoteip)
 
     return next()
   })

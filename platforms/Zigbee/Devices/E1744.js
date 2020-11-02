@@ -1,6 +1,6 @@
 const GenericDevice = require('./GenericDevice')
 const { Entity } = require('../../Entity')
-const DeviceEvent = require('../../../models/DeviceEvent')
+const DeviceEventModel = require('../../../models/DeviceEvent')
 
 class E1744Entity extends Entity {
   publics = ['lastpresstime'];
@@ -17,23 +17,23 @@ class E1744Entity extends Entity {
     this.lastpresstime = new Date().getTime()
     switch (mode) {
       case 'rotate_left':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'left')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'left')
         this.emit('left', this)
         break
       case 'rotate_right':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'right')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'right')
         this.emit('right', this)
         break
       case 'play_pause':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'click')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'click')
         this.emit('click', this)
         break
       case 'skip_forward':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'doubleclick')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'doubleclick')
         this.emit('doubleclick', this)
         break
       case 'skip_backward':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'tripleclick')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'tripleclick')
         this.emit('tripleclick', this)
         break
       default:

@@ -1,7 +1,7 @@
 const EventEmitter = require('events')
-const DeviceTelemetry = require('../models/DeviceTelemetry')
-const DeviceState = require('../models/DeviceState')
-const DeviceEvent = require('../models/DeviceEvent')
+const DeviceTelemetryModel = require('../models/DeviceTelemetry')
+const DeviceStateModel = require('../models/DeviceState')
+const DeviceEventModel = require('../models/DeviceEvent')
 const { Action } = require('./Action')
 const { BoardItem } = require('./BoardItem')
 
@@ -127,7 +127,7 @@ class NumericValueEntity extends ValueEntity {
 
     this.value = value
     this.lastvaluetime = new Date().getTime()
-    DeviceTelemetry.Insert(this.device.id, this.code, value)
+    DeviceTelemetryModel.Insert(this.device.id, this.code, value)
     this.emit('update', this, value)
 
     if (Math.abs(originalvalue - value) >= this.changetolerance) {
@@ -259,7 +259,7 @@ class BoolStateEntity extends StateEntity {
   Toggle() { this.SetState(!this.GetState()) }
   SetState(state) {
     super.SetState(Boolean(state))
-    DeviceState.InsertSync(this.device.id, this.code, state ? '1' : '0')
+    DeviceStateModel.InsertSync(this.device.id, this.code, state ? '1' : '0')
   }
 
   toStateString() { return this.state ? this.statenameon : this.statenameoff }
@@ -340,19 +340,19 @@ class ButtonEntity extends Entity {
     this.emit('press', this, clicks)
     switch (clicks) {
       case 1:
-        DeviceEvent.InsertSync(this.device.id, this.code, 'single')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'single')
         this.emit('single', this)
         break
       case 2:
-        DeviceEvent.InsertSync(this.device.id, this.code, 'double')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'double')
         this.emit('double', this)
         break
       case 3:
-        DeviceEvent.InsertSync(this.device.id, this.code, 'triple')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'triple')
         this.emit('triple', this)
         break
       case -1:
-        DeviceEvent.InsertSync(this.device.id, this.code, 'hold')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold')
         this.emit('hold', this)
         break
       default:

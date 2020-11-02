@@ -1,6 +1,6 @@
 const GenericDevice = require('./GenericDevice')
 const { Entity } = require('../../Entity')
-const DeviceEvent = require('../../../models/DeviceEvent')
+const DeviceEventModel = require('../../../models/DeviceEvent')
 
 class E1743Entity extends Entity {
   publics = ['lastpresstime'];
@@ -17,23 +17,23 @@ class E1743Entity extends Entity {
     this.lastpresstime = new Date().getTime()
     switch (mode) {
       case 'on':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'on')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'on')
         this.emit('on', this)
         break
       case 'off':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'off')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'off')
         this.emit('off', this)
         break
       case 'brightness_move_up':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'hold_up')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold_up')
         this.emit('hold_up', this)
         break
       case 'brightness_move_down':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'hold_down')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold_down')
         this.emit('hold_down', this)
         break
       case 'brightness_stop':
-        DeviceEvent.InsertSync(this.device.id, this.code, 'hold_release')
+        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold_release')
         this.emit('hold_release', this)
         break
       default:

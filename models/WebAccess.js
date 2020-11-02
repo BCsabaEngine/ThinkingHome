@@ -13,7 +13,7 @@ const WebAccessTable = db.defineTable('WebAccess', {
   ]
 })
 
-const WebAccess = {
+const WebAccessModel = {
 
   Insert(user, uri, session, remoteip) {
     return WebAccessTable.insert({ User: user, Uri: uri.substring(0, 100), Session: session, RemoteIp: remoteip })
@@ -21,4 +21,4 @@ const WebAccess = {
 
 }
 
-module.exports = WebAccess
+module.exports = WebAccessModel

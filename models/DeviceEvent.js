@@ -13,7 +13,7 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
   ]
 })
 
-const DeviceEvent = {
+const DeviceEventModel = {
 
   GetByDeviceId(deviceid, entitycode, days = 1) {
     return db.pquery(`
@@ -31,4 +31,4 @@ const DeviceEvent = {
 
 }
 
-module.exports = DeviceEvent
+module.exports = DeviceEventModel

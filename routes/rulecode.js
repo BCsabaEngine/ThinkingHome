@@ -1,7 +1,7 @@
 const jsbeautify = require('js-beautify').js
-const RuleCode = require('../models/RuleCode')
-const RuleCodeHistory = require('../models/RuleCodeHistory')
-const RuleCodeLog = require('../models/RuleCodeLog')
+const RuleCodeModel = require('../models/RuleCode')
+const RuleCodeHistoryModel = require('../models/RuleCodeHistory')
+const RuleCodeLogModel = require('../models/RuleCodeLog')
 const RuleCodeExecutor = require('../lib/ruleCodeExecutor')
 
 const http411 = 411
@@ -11,7 +11,7 @@ const rulecodepluslines = 30
 module.exports = (app) => {
   app.get('/rulecode/list', async function (req, res, next) {
     try {
-      const rulecodes = await RuleCode.GetAllSync()
+      const rulecodes = await RuleCodeModel.GetAllSync()
       for (const rulecode of rulecodes) {
         rulecode.linecount = rulecode.JsCode.split(/\r\n|\r|\n/).length
         rulecode.parsed = RuleCodeExecutor.ParseJsCode(rulecode.JsCode)
@@ -29,7 +29,7 @@ module.exports = (app) => {
   app.get('/rulecode/edit/:id', async function (req, res, next) {
     try {
       const id = req.params.id
-      const rulecode = await RuleCode.GetByIdSync(id)
+      const rulecode = await RuleCodeModel.GetByIdSync(id)
       if (!rulecode) throw new Error('Rulecode not found')
 
       let rulecodelinecount = rulecode.JsCode.split(/\r\n|\r|\n/).length
@@ -51,7 +51,7 @@ module.exports = (app) => {
   app.post('/rulecode/createbyname', async function (req, res, next) {
     try {
       const name = req.body.name
-      const id = await RuleCode.CreateByNameSync(name.trim())
+      const id = await RuleCodeModel.CreateByNameSync(name.trim())
       res.send({ id: id })
     } catch (err) { next(err) }
   })
@@ -59,7 +59,7 @@ module.exports = (app) => {
   app.post('/rulecode/createfordevice', async function (req, res, next) {
     try {
       const deviceid = req.body.deviceid
-      const id = await RuleCode.CreateForDeviceSync(deviceid)
+      const id = await RuleCodeModel.CreateForDeviceSync(deviceid)
       res.send({ id: id })
     } catch (err) { next(err) }
   })
@@ -68,7 +68,7 @@ module.exports = (app) => {
     try {
       const id = req.params.id
       const rulecode = req.body.rulecode || ''
-      RuleCode.UpdateJsCodeSync(id, rulecode.trim())
+      RuleCodeModel.UpdateJsCodeSync(id, rulecode.trim())
         .then(async function () {
           await global.runningContext.StartRuleCodeExecutors()
           res.send('OK')
@@ -79,7 +79,7 @@ module.exports = (app) => {
   app.post('/rulecode/enable/:id', async function (req, res, next) {
     try {
       const id = req.params.id
-      RuleCode.EnableSync(id)
+      RuleCodeModel.EnableSync(id)
         .then(async function () {
           await global.runningContext.StartRuleCodeExecutors()
           res.send('OK')
@@ -90,7 +90,7 @@ module.exports = (app) => {
   app.post('/rulecode/disable/:id', async function (req, res, next) {
     try {
       const id = req.params.id
-      RuleCode.DisableSync(id)
+      RuleCodeModel.DisableSync(id)
         .then(async function () {
           await global.runningContext.StartRuleCodeExecutors()
           res.send('OK')
@@ -101,7 +101,7 @@ module.exports = (app) => {
   app.post('/rulecode/delete/:id', async function (req, res, next) {
     try {
       const id = req.params.id
-      RuleCode.DeleteSync(id)
+      RuleCodeModel.DeleteSync(id)
         .then(async function () {
           await global.runningContext.StartRuleCodeExecutors()
           res.send('OK')
@@ -124,7 +124,7 @@ module.exports = (app) => {
   app.get('/rulecode/loglist', async function (req, res, next) {
     try {
       const limit = 100
-      RuleCodeLog.GetLastLogs(null, limit)
+      RuleCodeLogModel.GetLastLogs(null, limit)
         .then(rulecodelogs => {
           res.render('rulecodelog', {
             title: 'Rules log',
@@ -139,10 +139,10 @@ module.exports = (app) => {
   app.get('/rulecode/loglist/:id', async function (req, res, next) {
     try {
       const id = req.params.id
-      const rulecode = await RuleCode.GetByIdSync(id)
+      const rulecode = await RuleCodeModel.GetByIdSync(id)
 
       const limit = 100
-      RuleCodeLog.GetLastLogs(id, limit)
+      RuleCodeLogModel.GetLastLogs(id, limit)
         .then(rulecodelogs => {
           res.render('rulecodelog', {
             title: 'Rules log',

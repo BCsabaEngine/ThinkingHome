@@ -39,7 +39,7 @@ const DeviceStateTable = db.defineTable('DeviceState', {
   }
 })
 
-const DeviceState = {
+const DeviceStateModel = {
 
   GetByDeviceId(deviceid, entitycode, days = 1) {
     return db.pquery(`
@@ -57,4 +57,4 @@ const DeviceState = {
 
 }
 
-module.exports = DeviceState
+module.exports = DeviceStateModel

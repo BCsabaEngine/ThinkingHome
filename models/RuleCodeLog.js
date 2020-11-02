@@ -10,7 +10,7 @@ const RuleCodeLogTable = db.defineTable('RuleCodeLog', {
   ]
 })
 
-const RuleCodeLog = {
+const RuleCodeLogModel = {
 
   Insert(rulecode, message) {
     return RuleCodeLogTable.insert({ RuleCode: rulecode, Message: message || '' })
@@ -24,4 +24,4 @@ const RuleCodeLog = {
   }
 }
 
-module.exports = RuleCodeLog
+module.exports = RuleCodeLogModel

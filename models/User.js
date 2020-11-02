@@ -11,7 +11,7 @@ const UserTable = db.defineTable('User', {
   }
 })
 
-const User = {
+const UserModel = {
 
   hashPassword(pwd, salt) { return crypto.createHmac('sha512', salt).update(pwd).digest('hex') },
 
@@ -89,4 +89,4 @@ const User = {
 
 }
 
-module.exports = User
+module.exports = UserModel

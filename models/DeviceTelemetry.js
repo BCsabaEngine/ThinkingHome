@@ -13,7 +13,7 @@ const DeviceTelemetryTable = db.defineTable('DeviceTelemetry', {
   ]
 })
 
-const DeviceTelemetry = {
+const DeviceTelemetryModel = {
 
   GetByDeviceId(deviceid, entitycode, days = 1) {
     return db.pquery(`
@@ -31,4 +31,4 @@ const DeviceTelemetry = {
 
 }
 
-module.exports = DeviceTelemetry
+module.exports = DeviceTelemetryModel
