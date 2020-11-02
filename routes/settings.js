@@ -5,6 +5,7 @@ const BoardBuilder = require('../lib/boardBuilder')
 const BackupBuilder = require('../lib/backupBuilder')
 const UserModel = require('../models/User')
 const BoardModel = require('../models/Board')
+const SystemLogModel = require('../models/SystemLog')
 
 const http403 = 403
 const http411 = 411
@@ -15,6 +16,10 @@ const yamlminlines = 30
 const yamlpluslines = 5
 const restartdelay = 500
 const backupremainingcount = 7
+const topicbootup = 'Bootup'
+const topicrestart = 'Restart'
+const topicmanualbackup = 'Manual backup'
+const topicautobackup = 'Automatic backup'
 
 module.exports = (app) => {
   app.get('/settings', async function (req, res, next) {
@@ -23,12 +28,20 @@ module.exports = (app) => {
 
       const boards = await BoardModel.GetAllSync()
       const users = await UserModel.GetAllSync()
+      const lastboot = await SystemLogModel.GetLastTopicLog(topicbootup)
+      const lastrestart = await SystemLogModel.GetLastTopicLog(topicrestart)
+      const lastmanualbackup = await SystemLogModel.GetLastTopicLog(topicmanualbackup)
+      const lastautobackup = await SystemLogModel.GetLastTopicLog(topicautobackup)
 
       res.render('settings', {
         title: 'System settings',
         settings: global.systemsettings,
-        boards: boards,
-        users: users
+        boards,
+        users,
+        lastautobackup,
+        lastmanualbackup,
+        lastboot,
+        lastrestart
       })
     } catch (err) { next(err) }
   })
@@ -172,7 +185,7 @@ module.exports = (app) => {
         const formatted = YAML.stringify(parsed)
         return res.send(formatted)
       } catch (err) {
-        global.logger.log(err)
+        logger.info(err)
         return res.status(http500).send(err.message)
       }
     } catch (err) { next(err) }
@@ -188,7 +201,7 @@ module.exports = (app) => {
         const bbuilder = new BoardBuilder(yaml)
         return res.send(bbuilder.Build())
       } catch (err) {
-        global.logger.error(err)
+        logger.error(err)
         return res.status(http500).send(err.message)
       }
     } catch (err) { next(err) }
@@ -206,11 +219,13 @@ module.exports = (app) => {
 
   app.post('/settings/restart/thinkinghome', async function (req, res, next) {
     try {
-      res.send('OK')
+      SystemLogModel.Insert(topicrestart, 'Restart from browser')
 
       setTimeout(() => {
         process.exit()
       }, restartdelay)
+
+      res.send('OK')
     } catch (err) { next(err) }
   })
 
@@ -226,6 +241,7 @@ module.exports = (app) => {
         if (err) { return next(err) }
         return null
       })
+      SystemLogModel.Insert(topicmanualbackup, 'Manual backup created successfully')
     } catch (err) { next(err) }
   })
 

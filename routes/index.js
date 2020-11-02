@@ -6,6 +6,7 @@ const IpBlacklist = require('../lib/IpBlacklist')
 const express = require('express')
 
 const http404 = 404
+const http500 = 500
 
 module.exports = (app) => {
   // filter private and public banned IPs
@@ -49,8 +50,8 @@ module.exports = (app) => {
   app.re404()
 
   app.use(function (err, req, res, next) {
-    global.logger.error(err.message)
-    // res.status(500).send(err.message);
-    // res.status(500).render('page500', { title: "Oops Error!", error: err.message });
+    logger.error(err.message)
+    res.status(http500).send(err.message)
+    // res.status(500).render('page500', { title: 'Oops Error!', error: err.message });
   })
 }

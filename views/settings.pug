@@ -33,7 +33,7 @@ block content
       .col-md-8
         #vert-tabs-tabContent.tab-content
 
-          #vt1.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt1t')
+          #vt1.tab-pane.text-left.fade.active.show(role='tabpanel' aria-labelledby='vt1t')
             .callout.callout-success
               h5
                 i.fa.fa-globe-europe.text-success
@@ -191,23 +191,44 @@ block content
                             button.btn.btn-hover.btn-danger.btn-sm(onclick="deleteuser('" + user.Email + "');return false;")
                               i.fa.fa-ban
 
-          #vt4.tab-pane.text-left.fade.active.show(role='tabpanel' aria-labelledby='vt4t')
+          #vt4.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt4t')
             .callout.callout-success
               h5
                 i.fa.fa-cloud-upload-alt.text-success
                 |  Online backup
               p
                 small
-                  | By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily enter the values by pressing the My location button.
+                  | At regular intervals (typically once a day) you back up your ThinkingHome yourself. It is uploaded encrypted and stored on the central server for several months. 
+                  if lastautobackup
+                    if lastautobackup.Level
+                      | The system tried to make an automatic backup at 
+                      b
+                        = dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm')
+                      |  with message 
+                      b
+                        = lastautobackup.Message
+                      | . 
+                    else
+                      | The system made and uploaded the last automatic backup at 
+                      b
+                        = dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm')
+                      | . 
+                  else
+                    | The system never tried to make an automatic backup.
             .callout.callout-success
               h5
                 i.fa.fa-sd-card.text-success
                 |  Backup
               p
                 small
-                  | By pressing the button, you can make a full backup of the system and download it to your own computer. Make sure you put it in a safe place! Your ThinkingHome server will only store the last 7 backups you have made. 
-                  b
-                    | You decide how often you make backups. It is recommended to make a backup for all major changes.
+                  | By pressing the button, you can make a full backup of the system and download it to your own computer. 
+                  if lastmanualbackup
+                    | (You last made and downloaded a backup at 
+                    b
+                      = dayjs(lastmanualbackup.DateTime).format('YYYY-MM-DD HH:mm') 
+                    | ). 
+                  | Make sure you put it in a safe place! Your ThinkingHome station will only store the last 7 backups you have made. 
+                  | You decide how often you make backups. It is recommended to make a backup for all major changes.
               a.btn.btn-default.black.ml-3(href="/settings/backup/download")
                 | Download backup
             .callout.callout-danger#restartbox
@@ -216,7 +237,21 @@ block content
                 |  Restart
               p
                 small
-                  | You can restart the ThinkingHome system by pressing the button. We will redirect you to the main page shortly, because wou will need to log in again after the reboot.
+                  if lastboot
+                    | The system was launched 
+                    b
+                      = dayjs(lastboot.DateTime).fromNow()
+                    | 
+                    | (at 
+                    = dayjs(lastboot.DateTime).format('YYYY-MM-DD HH:mm')
+                    | ). 
+                  | You can restart the ThinkingHome system by pressing the button. 
+                  if lastrestart
+                    | (We know someone had already restarted the system at 
+                    b
+                      = dayjs(lastrestart.DateTime).format('YYYY-MM-DD HH:mm')
+                    | ). 
+                  | After restart we will redirect you to the main page shortly, because you will need to log in again.
               button.btn.btn-danger.ml-3(onclick="restartthinkinghome(); return false;")#restartbutton
                 | Restart now
 

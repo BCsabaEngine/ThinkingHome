@@ -25,6 +25,8 @@ global.db = database(() => {
       global.runningContext.Start()
 
       jobs()
+
+      require('./models/SystemLog').Insert('Bootup', 'Application ready')
     })
 })
 
