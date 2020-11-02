@@ -35,7 +35,7 @@ module.exports = (app) => {
 
       res.render('settings', {
         title: 'System settings',
-        settings: global.systemsettings,
+        systemsettings,
         boards,
         users,
         lastautobackup,
@@ -46,9 +46,22 @@ module.exports = (app) => {
     } catch (err) { next(err) }
   })
 
-  app.post('/settings/update', function (req, res, next) {
+  app.post('/settings/update/inline', async function (req, res, next) {
     try {
-      global.systemsettings.AdaptFromObject(req.body)
+      const name = req.body.name
+      const value = req.body.value
+
+      switch (name) {
+        case 'openweathermapapikey':
+          try {
+            await OpenWeatherMap.check(systemsettings.Latitude, systemsettings.Longitude, value)
+          } catch (err) { throw new Error('Invalid OpenWeatherMap API key') }
+          break
+        default:
+          break
+      }
+
+      systemsettings.SetByName(name, value)
 
       res.send('OK')
     } catch (err) { res.status(http500).send(err.message) }
