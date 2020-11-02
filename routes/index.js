@@ -36,7 +36,7 @@ module.exports = (app) => {
     }))
   }
 
-  if (global.httpsserver) {
+  if (config.web.ssl && config.web.ssl.port) {
     // Force SSL
     app.use((req, res, next) => {
       if (!req.secure) return res.redirect(['https://', req.get('Host'), req.url].join(''))
