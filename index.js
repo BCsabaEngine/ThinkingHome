@@ -18,7 +18,7 @@ global.db = database(() => {
     .Init()
     .then(() => {
       global.app = http()
-      global.wss = webSocket(global.httpserver)
+      global.wss = webSocket(global.httpsserver || global.httpserver)
 
       const RunningContext = require('./lib/runningContext')
       global.runningContext = new RunningContext()
@@ -35,6 +35,7 @@ process.on('SIGINT', async function () {
 
   logger.info('Quit signal...')
   if (global.runningContext) await global.runningContext.Stop()
+  if (global.httpsserver) global.httpsserver.close()
   if (global.httpserver) global.httpserver.close()
 
   process.exit(exitcode)

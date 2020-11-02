@@ -3,6 +3,7 @@ const config = {}
 config.database = {}
 config.mqtt = {}
 config.web = {}
+config.web.ssl = {}
 
 config.database.server = process.env.DATABASE_SERVER || 'localhost'
 config.database.port = process.env.DATABASE_PORT || '3306'
@@ -17,5 +18,9 @@ config.mqtt.password = process.env.MQTT_PASSWORD || 'th1234'
 config.mqtt.clientid = process.env.MQTT_CLIENTID || 'ThinkingHome'
 
 config.web.port = process.env.WEB_PORT || '80'
+config.web.ssl.port = process.env.WEB_SSL_PORT || '443'
+config.web.ssl.key = process.env.WEB_SSL_KEY || 'privkey.pem'
+config.web.ssl.cert = process.env.WEB_SSL_CERT || 'cert.pem'
+config.web.ssl.ca = process.env.WEB_SSL_CA || 'chain.pem'
 
 module.exports = config
