@@ -1,3 +1,4 @@
+const ipUtils = require('../lib/ipUtils')
 const WebAccessModel = require('../models/WebAccess')
 
 module.exports = (app) => {
@@ -6,10 +7,9 @@ module.exports = (app) => {
     const user = req.session && req.session.user ? req.session.user.id : null
     const uri = req.originalUrl
     const session = req.sessionID
-    let remoteip = req.headers['x-forwarded-for'] || req.connection.remoteAddress
-    if (remoteip.startsWith('::ffff:')) remoteip = remoteip.substr('::ffff:'.length)
+    const requestip = ipUtils.remoteip(req)
 
-    WebAccessModel.Insert(user, uri, session, remoteip)
+    WebAccessModel.Insert(user, uri, session, requestip)
 
     return next()
   })
