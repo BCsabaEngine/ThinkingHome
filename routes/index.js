@@ -3,24 +3,34 @@ const glob = require('glob')
 const path = require('path')
 const favicon = require('serve-favicon')
 const IpBlacklist = require('../lib/IpBlacklist')
+const IpBan = require('../lib/IpBan')
 const express = require('express')
 
 const http404 = 404
 const http500 = 500
 
 module.exports = (app) => {
-  // filter private and public banned IPs
-  if (global.IsProduction) {
+  if (!global.IsProduction) {
     app.use(IpBlacklist.check({
       blackLists: [
-        'blacklist.txt',
+        'blacklist.ips',
         'https://sslbl.abuse.ch/blacklist/sslipblacklist.txt',
+        'https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt',
         'https://myip.ms/files/blacklist/general/latest_blacklist.txt'
       ],
-      whiteListLifeTimeMs: 10 * 60 * 1000,
+      whiteListLifeTimeMs: 1 * 60 * 1000,
       onFailRequest: function (ipAddress) {
-        logger.warn(`[BlackList] Banned IP ${ipAddress}`)
+        logger.warn(`[IPBlackList] Banned IP ${ipAddress}`)
         fs.appendFile('blacklist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
+      }
+    }))
+    app.use(IpBan.check({
+      onBan: function (ipAddress) {
+        logger.warn(`[IPBanList] Banned IP ${ipAddress}`)
+        fs.appendFile('banlist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
+      },
+      onPermit: function (ipAddress) {
+        logger.warn(`[IPBanList] Permit IP ${ipAddress}`)
       }
     }))
   }
@@ -45,7 +55,10 @@ module.exports = (app) => {
     }
   }
 
-  app.Page404 = function (req, res, next) { res.status(http404).render('page404', { title: 'Oops 404!' }) }
+  app.Page404 = function (req, res, next) {
+    IpBan.add404(req)
+    res.status(http404).render('page404', { title: 'Oops 404!' })
+  }
   app.re404 = () => { app.remove(app.Page404); app.use(app.Page404) }
   app.re404()
 
