@@ -6,6 +6,7 @@ const SystemSettings = require('./lib/systemSettings')
 const database = require('./lib/database')
 const http = require('./lib/http')
 const webSocket = require('./lib/webSocket')
+const jobs = require('./jobs')
 
 logger.info('Application starting')
 logger.version()
@@ -22,6 +23,8 @@ global.db = database(() => {
       const RunningContext = require('./lib/runningContext')
       global.runningContext = new RunningContext()
       global.runningContext.Start()
+
+      jobs()
     })
 })
 
