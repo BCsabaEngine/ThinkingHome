@@ -10,8 +10,8 @@ const SystemSettingModel = {
 
   StoreAll(rows) {
     return SystemSettingTable.delete()
-      .then(() => {
-        rows.forEach(row => SystemSettingTable.insert(row))
+      .then(async () => {
+        for (const row of rows) await SystemSettingTable.insert(row)
       })
   },
 
