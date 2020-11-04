@@ -15,7 +15,6 @@ const emailmaxlength = 100
 const yamlminlines = 30
 const yamlpluslines = 5
 const restartdelay = 500
-const backupremainingcount = 7
 const topicbootup = 'Bootup'
 const topicrestart = 'Restart'
 const topicmanualbackup = 'Manual backup'
@@ -245,7 +244,7 @@ module.exports = (app) => {
   app.get('/settings/backup/download', async function (req, res, next) {
     try {
       const bck = new BackupBuilder()
-      await bck.CreateBackup(backupremainingcount)
+      await bck.CreateBackup(true)
 
       res.setHeader('Content-Disposition', 'attachment; filename=' + bck.filename)
       res.setHeader('Content-Transfer-Encoding', 'binary')
