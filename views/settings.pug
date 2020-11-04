@@ -204,19 +204,23 @@ block content
               small
                 | At regular intervals (typically once a day) you back up your ThinkingHome yourself. It is uploaded encrypted and stored on the central server for several months. 
                 if lastautobackup
-                  if lastautobackup.Level
-                    | The system tried to make an automatic backup at 
-                    b
-                      = dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm')
-                    |  with message 
-                    b
-                      = lastautobackup.Message
-                    | . 
-                  else
-                    | The system made and uploaded the last automatic backup at 
-                    b
-                      = dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm')
-                    | . 
+                  | The system tried to make an automatic backup at 
+                  b
+                    = dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm')
+                  |  with message 
+                  case lastautobackup.Level
+                    when 1
+                      b(class='text-warning')
+                        b
+                          = lastautobackup.Message
+                    when 2
+                      b(class='text-danger')
+                        b
+                          = lastautobackup.Message
+                    default
+                      b
+                        = lastautobackup.Message
+                  | . 
                 else
                   | The system never tried to make an automatic backup.
           .callout.callout-success
