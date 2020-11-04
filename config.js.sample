@@ -4,6 +4,7 @@ config.database = {}
 config.mqtt = {}
 config.web = {}
 config.web.ssl = {}
+config.brainserver = {}
 
 config.database.server = process.env.DATABASE_SERVER || 'localhost'
 config.database.port = process.env.DATABASE_PORT || '3306'
@@ -22,5 +23,10 @@ config.web.ssl.port = process.env.WEB_SSL_PORT || '443'
 config.web.ssl.key = process.env.WEB_SSL_KEY || 'privkey.pem'
 config.web.ssl.cert = process.env.WEB_SSL_CERT || 'cert.pem'
 config.web.ssl.ca = process.env.WEB_SSL_CA || 'chain.pem'
+
+config.brainserver.server = process.env.BRAIN_SERVER || 'domain.tld'
+config.brainserver.checkservice = process.env.BRAIN_CHECK || 'check'
+config.brainserver.backupservice = process.env.BRAIN_BACKUP || 'backup'
+config.brainserver.dyndnsservice = process.env.BRAIN_DYNDNS || 'dyn'
 
 module.exports = config
