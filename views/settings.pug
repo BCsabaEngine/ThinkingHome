@@ -301,7 +301,10 @@ block content
         inputPlaceholder: 'Set ' + title.toLowerCase(),
         showCancelButton: true,
       })
-      .then((result) => { setinline(name, result.value, divtoreload) })
+      .then((result) => { 
+        if (result.isConfirmed)
+          setinline(name, result.value, divtoreload)
+      })
     }
 
     function setinline(name, value, divtoreload)
