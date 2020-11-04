@@ -1,5 +1,8 @@
 const YAML = require('yaml')
+const got = require('got')
+const FormData = require('form-data')
 const passwordStrength = require('pwd-strength')
+
 const OpenWeatherMap = require('../lib/openWeatherMap')
 const BoardBuilder = require('../lib/boardBuilder')
 const BackupBuilder = require('../lib/backupBuilder')
@@ -19,6 +22,7 @@ const topicbootup = 'Bootup'
 const topicrestart = 'Restart'
 const topicmanualbackup = 'Manual backup'
 const topicautobackup = 'Automatic backup'
+const topicdyndns = 'DynDns'
 
 module.exports = (app) => {
   app.get('/settings', async function (req, res, next) {
@@ -27,6 +31,7 @@ module.exports = (app) => {
 
       const boards = await BoardModel.GetAllSync()
       const users = await UserModel.GetAllSync()
+      const lastdns = await SystemLogModel.GetLastTopicLog(topicdyndns)
       const lastboot = await SystemLogModel.GetLastTopicLog(topicbootup)
       const lastrestart = await SystemLogModel.GetLastTopicLog(topicrestart)
       const lastmanualbackup = await SystemLogModel.GetLastTopicLog(topicmanualbackup)
@@ -37,6 +42,7 @@ module.exports = (app) => {
         systemsettings,
         boards,
         users,
+        lastdns,
         lastautobackup,
         lastmanualbackup,
         lastboot,
@@ -55,6 +61,16 @@ module.exports = (app) => {
           try {
             await OpenWeatherMap.check(systemsettings.Latitude, systemsettings.Longitude, value)
           } catch (err) { throw new Error('Invalid OpenWeatherMap API key') }
+          break
+        case 'cloudtoken':
+          if (value) {
+            try {
+              const form = new FormData()
+              form.append('token', value)
+
+              await got.post(config.brainserver.server + config.brainserver.checkservice, { body: form })
+            } catch (err) { throw new Error(`Invalid Token: ${err.message}`) }
+          }
           break
         default:
           break

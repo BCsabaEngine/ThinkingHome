@@ -7,6 +7,7 @@ const BackupBuilder = require('../lib/backupBuilder')
 const SystemLogModel = require('../models/SystemLog')
 
 const topicautobackup = 'Automatic backup'
+const topicdyndns = 'DynDns'
 const endofnight = 6
 const randommorninghour = Math.floor(Math.random() * Math.floor(endofnight))
 
@@ -41,8 +42,23 @@ async function AutoBackup() {
   } catch (err) { SystemLogModel.InsertError(topicautobackup, `Auto backup failed: ${err.message}`) }
 }
 
-// setTimeout(() => { AutoBackup() }, 3 * 1000)
+async function UpdateDynDns() {
+  try {
+    if (!systemsettings.CloudToken) throw new Error('Token not set')
+
+    const form = new FormData()
+    form.append('token', systemsettings.CloudToken)
+
+    const response = await got.post(config.brainserver.server + config.brainserver.dyndnsservice, { body: form })
+    let message = ''
+    try {
+      message = JSON.parse(response.body).operation
+    } catch { }
+
+    SystemLogModel.Insert(topicdyndns, `DNS sync completed: ${message}`)
+  } catch (err) { SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`) }
+}
 
 if (config.brainserver.backupservice) schedule.scheduleJob(`0 ${randommorninghour} * * *`, AutoBackup)
 
-if (config.brainserver.dyndnsservice) schedule.scheduleJob('0 */2 * * *', () => { /* TODO: brain.dyndns */ })
+if (config.brainserver.dyndnsservice) schedule.scheduleJob('0 */2 * * *', UpdateDynDns)

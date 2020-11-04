@@ -198,6 +198,33 @@ block content
                       = middlemask(systemsettings.CloudToken, 75) || 'Not set' 
           .callout.callout-success
             h5
+              i.fa.fa-route.fa-fw.text-success
+              |  Dynamic DNS
+            p
+              small
+                | To access your Thinking Home system remotely, you may need to update your DNS records from time to time. The update is done automatically every few hours. 
+                if lastdns
+                  | The system tried to refresh dynamic DNS at
+                  b
+                    = dayjs(lastdns.DateTime).format('YYYY-MM-DD HH:mm')
+                  |  with message 
+                  case lastdns.Level
+                    when 1
+                      b(class='text-warning')
+                        b
+                          = lastdns.Message
+                    when 2
+                      b(class='text-danger')
+                        b
+                          = lastdns.Message
+                    default
+                      b
+                        = lastdns.Message
+                  | . 
+                else
+                  | The system never refreshed dynamic DNS.
+          .callout.callout-success
+            h5
               i.fa.fa-cloud-upload-alt.fa-fw.text-success
               |  Online backup
             p
@@ -274,11 +301,7 @@ block content
         inputPlaceholder: 'Set ' + title.toLowerCase(),
         showCancelButton: true,
       })
-      .then((result) => {
-        if (result.value) {
-          setinline(name, result.value, divtoreload);
-        }
-      })
+      .then((result) => { setinline(name, result.value, divtoreload) })
     }
 
     function setinline(name, value, divtoreload)
