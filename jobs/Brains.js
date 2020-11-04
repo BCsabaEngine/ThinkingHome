@@ -9,7 +9,9 @@ const SystemLogModel = require('../models/SystemLog')
 const topicautobackup = 'Automatic backup'
 const topicdyndns = 'DynDns'
 const endofnight = 6
+const hourminutes = 60
 const randommorninghour = Math.floor(Math.random() * Math.floor(endofnight))
+const randomminute = Math.floor(Math.random() * Math.floor(hourminutes))
 
 if (!config.brainserver.server) {
   logger.warn('[Brains] No brain server set')
@@ -61,4 +63,4 @@ async function UpdateDynDns() {
 
 if (config.brainserver.backupservice) schedule.scheduleJob(`0 ${randommorninghour} * * *`, AutoBackup)
 
-if (config.brainserver.dyndnsservice) schedule.scheduleJob('0 */2 * * *', UpdateDynDns)
+if (config.brainserver.dyndnsservice) schedule.scheduleJob(`${randomminute} */2 * * *`, UpdateDynDns)
