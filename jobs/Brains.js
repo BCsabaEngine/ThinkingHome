@@ -61,6 +61,10 @@ async function UpdateDynDns() {
   } catch (err) { SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`) }
 }
 
-if (config.brainserver.backupservice) schedule.scheduleJob(`0 ${randommorninghour} * * *`, AutoBackup)
+if (config.brainserver.backupservice) schedule.scheduleJob(`${hourminutes - 1 - randomminute} ${randommorninghour} * * *`, AutoBackup)
 
 if (config.brainserver.dyndnsservice) schedule.scheduleJob(`${randomminute} */2 * * *`, UpdateDynDns)
+
+// setTimeout(() => {
+//   AutoBackup()
+// }, 3 * 1000)
