@@ -9,7 +9,8 @@ config*.js
 *.ips
 
 # Backup
-backup
+backup/*
+!backup/readme.md
 
 # Backup extended data
 backupex/*
