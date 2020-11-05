@@ -18,7 +18,7 @@
     "compression": "^1.7.4",
     "console-log-level": "^1.4.1",
     "cookie-parser": "^1.4.5",
-    "dayjs": "^1.9.4",
+    "dayjs": "^1.9.5",
     "enum": "^3.0.4",
     "error-stack-parser": "^2.0.6",
     "express": "^4.17.1",
