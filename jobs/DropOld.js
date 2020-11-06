@@ -2,11 +2,11 @@ const schedule = require('node-schedule')
 
 function DropOlds() {
   const tables = {
-    Mqtt: 15,
-    OccurenceEvent: 90,
+    Mqtt: 7,
+    OccurenceEvent: 15,
     RuleCodeHistory: 30,
     RuleCodeLog: 30,
-    WebAccess: 15
+    WebAccess: 7
   }
 
   for (const table of Object.keys(tables)) {
