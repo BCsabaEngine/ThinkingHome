@@ -42,19 +42,10 @@ class RangeAction extends Action {
   }
 }
 
-class CustomAction extends Action {
-  onrequest = 0;
-  InitOnRequest(onrequest) {
-    this.onrequest = onrequest
-    return this
-  }
-}
-
 module.exports = {
   Action,
 
   ButtonAction,
   SelectAction,
-  RangeAction,
-  CustomAction
+  RangeAction
 }
