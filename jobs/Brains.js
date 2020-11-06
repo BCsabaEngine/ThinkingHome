@@ -61,10 +61,23 @@ async function UpdateDynDns() {
   } catch (err) { SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`) }
 }
 
-if (config.brainserver.backupservice) schedule.scheduleJob(`${hourminutes - 1 - randomminute} ${randommorninghour} * * *`, AutoBackup)
+if (config.brainserver.dyndnsservice) {
+  const time = `${randomminute} */2 * * *`
+  logger.info(`[Brains] UpdateDynDns scheduled as ${time}`)
+  schedule.scheduleJob(time, UpdateDynDns)
+}
 
-if (config.brainserver.dyndnsservice) schedule.scheduleJob(`${randomminute} */2 * * *`, UpdateDynDns)
+if (config.brainserver.backupservice) {
+  const time = `${hourminutes - 1 - randomminute} ${randommorninghour} * * *`
+  logger.info(`[Brains] AutoBackup scheduled as ${time}`)
+  schedule.scheduleJob(time, AutoBackup)
+}
 
 // setTimeout(() => {
-//   AutoBackup()
+//   var parser = require('cron-parser');
+//   var interval = parser.parseExpression(`${randomminute} */2 * * *`);
+//   console.log('Date: ', interval.next().toString());
+//   console.log(`${randomminute} */2 * * *`)
+//   // console.log(`${hourminutes - 1 - randomminute} ${randommorninghour} * * *`)
+//   // // AutoBackup()
 // }, 3 * 1000)
