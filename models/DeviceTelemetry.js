@@ -25,7 +25,19 @@ const DeviceTelemetryModel = {
       ORDER BY dt.DateTime, dt.Id`, [deviceid, entitycode, days])
   },
 
-  Insert(device, entity, data) {
+  async GetLastData(deviceid, entitycode) {
+    const last = await db.pquery(`
+      SELECT dt.Data
+      FROM DeviceTelemetry dt
+      WHERE dt.Device = ? AND
+            dt.Entity = ?
+      ORDER BY dt.DateTime DESC, dt.Id DESC LIMIT 1`, [deviceid, entitycode])
+    if (last && last.length) return last[0].Data
+
+    return null
+  },
+
+  InsertSync(device, entity, data) {
     return DeviceTelemetryTable.insert({ Device: device, Entity: entity, Data: data })
   }
 

@@ -1,5 +1,5 @@
 const RaspberryPiDevice = require('../RaspberryPiDevice')
-const { NumericValueGaugeEntity, PercentValueEntity } = require('../../Entity')
+const { TelemetryEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 
 class RaspberryPiDisk extends RaspberryPiDevice {
@@ -25,19 +25,25 @@ class RaspberryPiDisk extends RaspberryPiDevice {
 
   get icon() { return 'fa fa-hdd' }
   entities = {
-    free: new NumericValueGaugeEntity(this, 'free', 'Free space', 'fa fa-chart-pie')
+    free: new TelemetryEntity(this, 'free', 'Free space', 'fa fa-chart-pie')
       .InitUnit('GB')
+      .SetSmooth()
       .AddBoardItem(new NumericValueGaugeBoardItem()),
-    usage: new NumericValueGaugeEntity(this, 'usage', 'Used space', 'fa fa-chart-pie')
+    usage: new TelemetryEntity(this, 'usage', 'Used space', 'fa fa-chart-pie')
       .InitUnit('GB')
+      .SetSmooth()
       .AddBoardItem(new NumericValueGaugeBoardItem()),
-    freepercent: new PercentValueEntity(this, 'freepercent', 'Free percent', 'fa fa-chart-pie')
+    freepercent: new TelemetryEntity(this, 'freepercent', 'Free percent', 'fa fa-chart-pie')
+      .InitByPercent()
       // eslint-disable-next-line no-magic-numbers
-      .InitLowLevels(30, 10)
+      .InitLowLevels(20, 10)
+      .SetSmooth()
       .AddBoardItem(new NumericValueGaugeBoardItem()),
-    usagepercent: new PercentValueEntity(this, 'usagepercent', 'Used percent', 'fa fa-chart-pie')
+    usagepercent: new TelemetryEntity(this, 'usagepercent', 'Used percent', 'fa fa-chart-pie')
+      .InitByPercent()
       // eslint-disable-next-line no-magic-numbers
-      .InitHighLevels(70, 90)
+      .InitHighLevels(80, 90)
+      .SetSmooth()
       .AddBoardItem(new NumericValueGaugeBoardItem())
   };
 

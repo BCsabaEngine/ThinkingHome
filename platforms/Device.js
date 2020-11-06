@@ -1,10 +1,11 @@
 const express = require('express')
+const DeviceLogModel = require('../models/DeviceLog')
 const DeviceSettingModel = require('../models/DeviceSetting')
 const DeviceTelemetryModel = require('../models/DeviceTelemetry')
 const DeviceStateSeriesModel = require('../models/DeviceStateSeries')
 const RuleCodeModel = require('../models/RuleCode')
 const timelineConverter = require('../lib/timelineConverter')
-const { NumericValueEntity, StateEntity } = require('./Entity')
+const { TelemetryEntity, StateEntity } = require('./Entity')
 const { ButtonAction, SelectAction, RangeAction } = require('./Action')
 
 class Device {
@@ -28,6 +29,9 @@ class Device {
     this.platform = platform
     this.name = name
   }
+
+  Log(message) { DeviceLogModel.InsertDeviceLogSync(this.id, message) }
+  LogEntity(entity, message) { DeviceLogModel.InsertEntityLogSync(this.id, entity, message) }
 
   async Start() {
     await this.ReadSettings()
@@ -72,12 +76,12 @@ class Device {
 
       rulecode: await RuleCodeModel.GetForDeviceSync(this.id),
 
-      NumericValueEntity: NumericValueEntity,
-      StateEntity: StateEntity,
+      TelemetryEntity,
+      StateEntity,
 
-      ButtonAction: ButtonAction,
-      SelectAction: SelectAction,
-      RangeAction: RangeAction
+      ButtonAction,
+      SelectAction,
+      RangeAction
     })
   }
 
@@ -122,7 +126,6 @@ class Device {
 
   WebGetTelemetryGraph(req, res, next) {
     const maxdays = 30
-    const avgsize = 30
     const hdwidth = 1920
 
     const entitycode = req.params.entity
@@ -132,10 +135,15 @@ class Device {
       .GetByDeviceId(this.id, entitycode, days)
       .then(rows => {
         let timeline = []
-        for (const row of rows) { timeline.push([row.DateTime.getTime(), row.Data]) }
+        for (const row of rows) timeline.push([row.DateTime.getTime(), row.Data])
 
-        timeline = timelineConverter.moveAverage(timeline, avgsize)
-        timeline = timelineConverter.reduceTimeline(timeline, hdwidth)
+        if (timeline.length) {
+          const smoothminute = (this.entities && this.entities[entitycode]) ? this.entities[entitycode].smoothminute : 0
+          if (smoothminute) {
+            timeline = timelineConverter.moveAverage(timeline, smoothminute)
+          }
+          timeline = timelineConverter.reduceTimeline(timeline, hdwidth)
+        }
 
         res.send(JSON.stringify(timeline))
       })

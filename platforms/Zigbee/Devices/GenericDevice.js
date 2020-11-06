@@ -1,6 +1,6 @@
 const dayjs = require('dayjs')
 const ZigbeeDevice = require('../ZigbeeDevice')
-const { NumericValueGaugeEntity } = require('../../Entity')
+const { TelemetryEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 
 const batterywarninglevel = 20
@@ -11,8 +11,10 @@ class GenericDevice extends ZigbeeDevice {
 
   InitEntities() {
     for (const sensor of this.sensors) {
-      this.entities[sensor.code] = new NumericValueGaugeEntity(this, sensor.code, sensor.name, sensor.icon)
+      this.entities[sensor.code] = new TelemetryEntity(this, sensor.code, sensor.name, sensor.icon)
         .InitUnit(sensor.unit)
+        .InitLastValue()
+        .SetSmooth()
         .AddBoardItem(new NumericValueGaugeBoardItem())
       if (sensor.minvalue) this.entities[sensor.code].InitMinValue(sensor.minvalue)
       if (sensor.maxvalue) this.entities[sensor.code].InitMaxValue(sensor.maxvalue)

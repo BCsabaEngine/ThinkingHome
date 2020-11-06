@@ -2,7 +2,7 @@ const lgtv2 = require('lgtv2')
 const wakeonlan = require('wakeonlan')
 
 const MediaDevice = require('../MediaDevice')
-const { NumericValueGaugeEntity, BoolStateEntity } = require('../../Entity')
+const { TelemetryEntity, BoolStateEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 const { ButtonAction } = require('../../Action')
 
@@ -56,10 +56,10 @@ class LgTv extends MediaDevice {
       }))
       .AddAction(new ButtonAction(this, 'switchon', 'Switch On', 'fa fa-toggle-on', () => { if (this.setting.mac) wakeonlan(this.setting.mac) })),
 
-    volume: new NumericValueGaugeEntity(this, 'volume', 'Volume', 'fa fa-volume-up')
-      .InitUnit('')
+    volume: new TelemetryEntity(this, 'volume', 'Volume', 'fa fa-volume-up')
       // eslint-disable-next-line no-magic-numbers
       .InitMinMaxValue(0, 100).InitHighLevels(40, 70)
+      .InitLastValue()
       .AddAction(new ButtonAction(this, 'mute', 'Mute', 'fa fa-volume-mute', () => {
         if (!this.lgtvcli) return
         this.lgtvcli.request('ssap://audio/setMute', { mute: this.volume.value })

@@ -23,12 +23,15 @@ class Entity extends EventEmitter {
     this.code = code
     this.name = name
     this._icon = icon
+
     this.originalemit = this.emit
     this.emit = function (event, entity, ...args) {
       this.originalemit(event, entity, ...args)
       global.runningContext.PublishEntityEvent(event, entity, args)
     }
   }
+
+  Log(message) { if (this.device) this.device.LogEntity(this.code, message) }
 
   LinkUpActions() {
     if (this.actions) {
@@ -40,7 +43,9 @@ class Entity extends EventEmitter {
 
   actions = [];
   GetDefaultAction() {
-    if (this.actions.length > 0) { return this.actions[0] }
+    if (this.actions && this.actions.length) {
+      return this.actions[0]
+    }
     return null
   }
 
@@ -66,47 +71,45 @@ class Entity extends EventEmitter {
   }
 }
 
-//
-// ValueEntity
-//
-
-class ValueEntity extends Entity {
-  publics = ['value', 'lastvaluetime', 'lastchangetime'];
+class TelemetryEntity extends Entity {
+  publics = ['value', 'lastvaluetime', 'lastchangetime', 'minvalue', 'maxvalue', 'percent'];
   emits = {
     update: 'entity, value',
     change: 'entity, value, originalvalue'
   };
 
   value = null;
-  lastvaluetime = null;
-  lastchangetime = null;
-  toString() { return this.value }
-  SetValue(value) {
-    const originalvalue = this.value
-
-    this.value = value
-    this.lastvaluetime = new Date().getTime()
-    this.emit('update', this, value)
-
-    if (originalvalue !== value) {
-      this.lastchangetime = new Date().getTime()
-      this.emit('change', this, value, originalvalue)
-    }
-  }
-}
-
-class NumericValueEntity extends ValueEntity {
-  value = 0;
-  unit = null;
+  unit = '';
+  smoothminute = 0;
   changetolerance = 0;
   lowwarninglevel = null;
   lowerrorlevel = null;
   highwarninglevel = null;
   higherrorlevel = null;
-  toString() { return this.toValueString() }
+  lastvaluetime = null;
+  lastchangetime = null;
+  minvalue = Number.NEGATIVE_INFINITY;
+  maxvalue = Number.POSITIVE_INFINITY;
+  toString() { return `${this.value || '?'} ${this.unit}`.trim() }
 
-  InitUnit(unit) {
-    this.unit = (unit || '').trim()
+  InitByPercent() {
+    this.InitUnit('%')
+    this.InitMinMaxValue(0, 100)
+    return this
+  }
+
+  SetSmooth() {
+    this.InitSmoothMinute()
+    return this
+  }
+
+  InitSmoothMinute(minute = 30) {
+    this.smoothminute = minute
+    return this
+  }
+
+  InitChangeTolerance(changetolerance) {
+    this.changetolerance = changetolerance
     return this
   }
 
@@ -122,33 +125,10 @@ class NumericValueEntity extends ValueEntity {
     return this
   }
 
-  SetValue(value) {
-    const originalvalue = this.value
-
-    this.value = value
-    this.lastvaluetime = new Date().getTime()
-    DeviceTelemetryModel.Insert(this.device.id, this.code, value)
-    this.emit('update', this, value)
-
-    if (Math.abs(originalvalue - value) >= this.changetolerance) {
-      this.lastchangetime = new Date().getTime()
-      this.emit('change', this, value, originalvalue)
-    }
+  InitUnit(unit) {
+    this.unit = (unit || '').trim()
+    return this
   }
-
-  toValueString() { return `${this.value} ${this.unit}`.trim() }
-  toValueColor() {
-    if (this.lowerrorlevel && this.value < this.lowerrorlevel) { return 'red' }
-    if (this.lowwarninglevel && this.value < this.lowwarninglevel) { return 'orange' }
-    if (this.higherrorlevel && this.value > this.higherrorlevel) { return 'red' }
-    if (this.highwarninglevel && this.value > this.highwarninglevel) { return 'orange' }
-    return ''
-  }
-}
-
-class NumericValueGaugeEntity extends NumericValueEntity {
-  minvalue = Number.NEGATIVE_INFINITY;
-  maxvalue = Number.POSITIVE_INFINITY;
 
   InitMinValue(minvalue) {
     this.minvalue = minvalue
@@ -161,34 +141,46 @@ class NumericValueGaugeEntity extends NumericValueEntity {
   }
 
   InitMinMaxValue(minvalue, maxvalue) {
-    this.minvalue = minvalue
-    this.maxvalue = maxvalue
+    this.InitMinValue(minvalue)
+    this.InitMaxValue(maxvalue)
+    return this
+  }
+
+  InitLastValue() {
+    DeviceTelemetryModel.GetLastData(this.device.id, this.code)
+      .then((lastvalue) => {
+        if (lastvalue) {
+          this.value = lastvalue
+          this.lastvaluetime = new Date().getTime()
+        }
+      })
     return this
   }
 
   SetValue(value) {
-    if (this.minvalue > value) { this.minvalue = value }
-    if (this.maxvalue < value) { this.maxvalue = value }
-    super.SetValue(value)
-  }
+    const originalvalue = this.value
 
-  toGaugeValueString() { return `${this.value} ${this.unit} (${this.minvalue}..${this.maxvalue})`.trim() }
+    if (this.minvalue > value) this.minvalue = value
+    if (this.maxvalue < value) this.maxvalue = value
+
+    this.value = value
+    this.lastvaluetime = new Date().getTime()
+    DeviceTelemetryModel.InsertSync(this.device.id, this.code, value)
+    this.emit('update', this, value)
+
+    if (Math.abs(originalvalue - value) >= this.changetolerance) {
+      this.lastchangetime = new Date().getTime()
+      this.emit('change', this, value, originalvalue)
+    }
+  }
 
   get percent() {
     if (this.minvalue === Number.NEGATIVE_INFINITY || this.maxvalue === Number.NEGATIVE_INFINITY) { return 0 }
     return Math.round(100 * (this.value - this.minvalue) / (this.maxvalue - this.minvalue))
   }
-}
 
-class PercentValueEntity extends NumericValueGaugeEntity {
-  constructor(device, code, name, icon) {
-    super(device, code, name, icon)
-    this.minvalue = 0
-    this.maxvalue = 100
-    this.unit = '%'
-  }
-
-  get percent() { return this.value }
+  get iswarning() { return !this.iserror && ((this.lowwarninglevel && this.value < this.lowwarninglevel) || (this.highwarninglevel && this.value > this.highwarninglevel)) }
+  get iserror() { return (this.lowerrorlevel && this.value < this.lowerrorlevel) || (this.higherrorlevel && this.value > this.higherrorlevel) }
 }
 
 //
@@ -364,10 +356,7 @@ class ButtonEntity extends Entity {
 module.exports = {
   Entity,
 
-  ValueEntity,
-  NumericValueEntity,
-  NumericValueGaugeEntity,
-  PercentValueEntity,
+  TelemetryEntity,
 
   StateEntity,
   BoolStateEntity,

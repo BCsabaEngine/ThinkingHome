@@ -1,17 +1,20 @@
 const RaspberryPiDevice = require('../RaspberryPiDevice')
 const si = require('systeminformation')
-const { NumericValueGaugeEntity, PercentValueEntity } = require('../../Entity')
+const { TelemetryEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 
 class RaspberryPiCpu extends RaspberryPiDevice {
   get icon() { return 'fa fa-microchip' }
   entities = {
-    temp: new NumericValueGaugeEntity(this, 'temp', 'Temperature', 'fa fa-thermometer-half')
+    temp: new TelemetryEntity(this, 'temp', 'Temperature', 'fa fa-thermometer-half')
       .InitUnit('°C')
       // eslint-disable-next-line no-magic-numbers
-      .InitMinMaxValue(30, 60).InitHighLevels(60, 70)
+      .InitMinMaxValue(30, 70)
+      .SetSmooth()
       .AddBoardItem(new NumericValueGaugeBoardItem()),
-    loadpercent: new PercentValueEntity(this, 'loadpercent', 'Load percent', 'fa fa-chart-area')
+    loadpercent: new TelemetryEntity(this, 'loadpercent', 'Load percent', 'fa fa-chart-area')
+      .InitByPercent()
+      .SetSmooth()
       .AddBoardItem(new NumericValueGaugeBoardItem())
   };
 
