@@ -33,6 +33,7 @@ class RfDoorSensor extends RfDevice {
     state: new BoolStateEntity(this, 'state', 'State', 'fa fa-door-open')
       .InitStateNames('Closed', 'Open')
       .InitStateIcons('fa fa-door-closed', 'fa fa-door-open')
+      .InitLastState()
       .AddBoardItem(new BoolStateBoardItem())
   };
 

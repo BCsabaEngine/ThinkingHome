@@ -31,7 +31,10 @@ class Entity extends EventEmitter {
     }
   }
 
-  Log(message) { if (this.device) this.device.LogEntity(this.code, message) }
+  Log(message) {
+    logger.debug(`[Entity] ${message} by ${this.code}`)
+    if (this.device) this.device.LogEntity(this.code, message)
+  }
 
   LinkUpActions() {
     if (this.actions) {
@@ -72,7 +75,10 @@ class Entity extends EventEmitter {
 }
 
 class TelemetryEntity extends Entity {
-  publics = ['value', 'lastvaluetime', 'lastchangetime', 'minvalue', 'maxvalue', 'percent'];
+  publics = ['value', 'lastvaluetime', 'lastchangetime']
+    .concat(this.minvalue !== Number.NEGATIVE_INFINITY && this.maxvalue !== Number.POSITIVE_INFINITY ? ['minvalue', 'maxvalue', 'percent'] : [])
+    .concat(this.lowwarninglevel || this.lowerrorlevel || this.highwarninglevel || this.higherrorlevel ? ['iswarning', 'iserror'] : []);
+
   emits = {
     update: 'entity, value',
     change: 'entity, value, originalvalue'
@@ -163,6 +169,8 @@ class TelemetryEntity extends Entity {
     if (this.minvalue > value) this.minvalue = value
     if (this.maxvalue < value) this.maxvalue = value
 
+    logger.debug(`[TelemetryEntity] ${this.code}: ${originalvalue} => ${value}${this.unit}`)
+
     this.value = value
     this.lastvaluetime = new Date().getTime()
     DeviceTelemetryModel.InsertSync(this.device.id, this.code, value)
@@ -175,7 +183,8 @@ class TelemetryEntity extends Entity {
   }
 
   get percent() {
-    if (this.minvalue === Number.NEGATIVE_INFINITY || this.maxvalue === Number.NEGATIVE_INFINITY) { return 0 }
+    if (this.minvalue === Number.NEGATIVE_INFINITY || this.maxvalue === Number.POSITIVE_INFINITY) return 0
+    if (!this.value) return 0
     return Math.round(100 * (this.value - this.minvalue) / (this.maxvalue - this.minvalue))
   }
 
@@ -183,12 +192,9 @@ class TelemetryEntity extends Entity {
   get iserror() { return (this.lowerrorlevel && this.value < this.lowerrorlevel) || (this.higherrorlevel && this.value > this.higherrorlevel) }
 }
 
-//
-// StateEntity
-//
-
 class StateEntity extends Entity {
   publics = ['state', 'laststatetime', 'lastchangetime'];
+
   emits = {
     update: 'entity, state',
     change: 'entity, state, originalstate'
@@ -197,25 +203,44 @@ class StateEntity extends Entity {
   state = null;
   laststatetime = null;
   lastchangetime = null;
-  toString() { return this.state }
-  GetState() { return this.state }
-  SetState(state, icon) {
+  toString() { return this.state ? this.state.toString() : null }
+
+  InitLastState() {
+    DeviceStateModel.GetLastState(this.device.id, this.code)
+      .then((lastvalue) => {
+        if (lastvalue) {
+          this.state = this.StateFromStore(lastvalue)
+          this.laststatetime = new Date().getTime()
+        }
+      })
+    return this
+  }
+
+  SetState(state) {
     const originalstate = this.state
 
+    logger.debug(`[StateEntity] ${this.code}: ${originalstate} => ${state}`)
+
     this.state = state
-    if (icon) { this._icon = icon }
     this.laststatetime = new Date().getTime()
+    DeviceStateModel.InsertSync(this.device.id, this.code, this.StateToStore(this.state))
     this.emit('update', this, state)
 
-    if (originalstate !== state) {
+    if (this.CompareState(originalstate, state)) {
       this.lastchangetime = new Date().getTime()
       this.emit('change', this, state, originalstate)
     }
   }
 
+  CompareState(a, b) { return a !== b }
+
+  StateToStore(state) { return state ? '1' : '0' }
+
+  StateFromStore(state) { return state }
+
   StateToGraph(state) {
     const result = Number.parseFloat(state)
-    if (!Number.isNaN(result)) { return result }
+    if (!Number.isNaN(result)) return result
     return 0
   }
 }
@@ -225,7 +250,7 @@ class BoolStateEntity extends StateEntity {
   statenameon = 'On';
   stateiconoff = null;
   stateiconon = null;
-  toString() { return this.toStateString() }
+  toString() { return this.state ? this.statenameon : this.statenameoff }
 
   InitStateNames(nameoff, nameon) {
     this.statenameoff = (nameoff || '').trim()
@@ -247,109 +272,42 @@ class BoolStateEntity extends StateEntity {
     }
     return super.icon
   }
-
-  Toggle() { this.SetState(!this.GetState()) }
-  SetState(state) {
-    super.SetState(Boolean(state))
-    DeviceStateModel.InsertSync(this.device.id, this.code, state ? '1' : '0')
-  }
-
-  toStateString() { return this.state ? this.statenameon : this.statenameoff }
 }
 
-//
-// InputEntity
-//
+class EventEntity extends Entity {
+  publics = ['input', 'lasteventtime'];
+  emits = {};
 
-class InputEntity extends Entity {
-  publics = ['input', 'lastinputtime', 'lastchangetime'];
-  emits = {
-    update: 'entity, input',
-    change: 'entity, input, originalinput'
-  };
+  events = []
+  lasteventtime = null;
 
-  input = null;
-  lastinputtime = null;
-  lastchangetime = null;
-  toString() { return this.input }
-  GetInput() { return this.input }
-  SetInput(input, icon) {
-    const originalinput = this.input
-
-    this.input = input
-    if (icon) { this._icon = icon }
-    this.lastinputtime = new Date().getTime()
-    this.emit('input', this, input)
-
-    if (originalinput !== input) {
-      this.lastchangetime = new Date().getTime()
-      this.emit('change', this, input, originalinput)
+  InitEvents(events) {
+    this.events = events
+    this.emits = {}
+    for (const event of events) {
+      this.emits[event] = 'entity'
+      this.publics.push(`last_${event}_time`)
     }
+    return this
   }
-}
 
-class SwitchEntity extends Entity { }
-
-class PushButtonEntity extends Entity {
-  publics = ['lastpresstime'];
-  emits = {
-    press: 'entity'
-  };
-
-  lastpresstime = null;
-  DoPress() {
-    this.lastpresstime = new Date().getTime()
-    this.emit('press', this)
+  AddEventWithEmit(event, emit) {
+    this.events.push(event)
+    this.emits[event] = ['entity'].concat(emit)
+    this.publics.push(`last_${event}_time`)
+    return this
   }
-}
 
-class MoveEntity extends Entity {
-  publics = ['lastmovetime'];
-  emits = {
-    move: 'entity'
-  };
+  toString() { return this.name }
+  DoEvent(event, ...args) {
+    this.lasteventtime = new Date().getTime()
+    this[`last_${event}_time`] = new Date().getTime()
 
-  lastmovetime = null;
-  DoMove() {
-    this.lastmovetime = new Date().getTime()
-    this.emit('move', this)
-  }
-}
-
-class ButtonEntity extends Entity {
-  publics = ['lastpresstime'];
-  emits = {
-    press: 'entity, clicks',
-    single: 'entity',
-    double: 'entity',
-    triple: 'entity',
-    hold: 'entity'
-  };
-
-  lastpresstime = null;
-  DoPress(clicks) {
-    this.lastpresstime = new Date().getTime()
-    this.emit('press', this, clicks)
-    switch (clicks) {
-      case 1:
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'single')
-        this.emit('single', this)
-        break
-      case 2:
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'double')
-        this.emit('double', this)
-        break
-      case 3:
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'triple')
-        this.emit('triple', this)
-        break
-      case -1:
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold')
-        this.emit('hold', this)
-        break
-      default:
-        break
-    }
+    let eventstr = event
+    if (args && args.length) for (const arg of args) eventstr += `, ${arg}`
+    logger.debug(`[EventEntity] ${this.code} event: ${eventstr}`)
+    DeviceEventModel.InsertSync(this.device.id, this.code, eventstr)
+    this.emit(event, this, args)
   }
 }
 
@@ -361,9 +319,5 @@ module.exports = {
   StateEntity,
   BoolStateEntity,
 
-  InputEntity,
-  SwitchEntity,
-  PushButtonEntity,
-  MoveEntity,
-  ButtonEntity
+  EventEntity
 }

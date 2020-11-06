@@ -16,8 +16,8 @@ class GenericDevice extends ZigbeeDevice {
         .InitLastValue()
         .SetSmooth()
         .AddBoardItem(new NumericValueGaugeBoardItem())
-      if (sensor.minvalue) this.entities[sensor.code].InitMinValue(sensor.minvalue)
-      if (sensor.maxvalue) this.entities[sensor.code].InitMaxValue(sensor.maxvalue)
+      if (sensor.minvalue !== undefined) this.entities[sensor.code].InitMinValue(sensor.minvalue)
+      if (sensor.maxvalue !== undefined) this.entities[sensor.code].InitMaxValue(sensor.maxvalue)
     }
     this.LinkUpEntities()
   }

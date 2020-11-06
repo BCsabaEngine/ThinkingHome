@@ -33,7 +33,6 @@ class RaspberryPiCpu extends RaspberryPiDevice {
         const currentload = data.currentload
         if (currentload > 0) { this.entities.loadpercent.SetValue(Math.round(currentload)) }
       }.bind(this))
-    // console.log(this.entities.temp.toString() + ": " + this.entities.temp.toGaugeValueString() + " " + this.entities.temp.toValueColor());
   }
 }
 module.exports = RaspberryPiCpu

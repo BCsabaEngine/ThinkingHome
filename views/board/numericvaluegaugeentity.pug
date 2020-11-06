@@ -8,7 +8,7 @@ block list
     .col-md-4
       span.float-rightX.mr-3(id=unique + "_li" class="ui_" + entity.device.name + "_" + entity.code)
         .progress
-          .progress-bar.bg-info(id=unique + "_li_g" role='progressbar', aria-valuenow=entity.value, aria-valuemin=entity.minvalue, aria-valuemax=entity.maxvalue, style='width: ' + entity.percent + '%; background-color: ' + entity.toValueColor() + '!important')
+          .progress-bar.bg-info(id=unique + "_li_g" role='progressbar', aria-valuenow=entity.value, aria-valuemin=entity.minvalue, aria-valuemax=entity.maxvalue, style='width: ' + entity.percent + '%; background-color: green!important')
         span.float-right(id=unique + "_li_t")
           = entity.value
           | 

@@ -51,6 +51,18 @@ const DeviceStateModel = {
       ORDER BY dt.DateTime, dt.Id`, [deviceid, entitycode, days])
   },
 
+  async GetLastState(deviceid, entitycode) {
+    const last = await db.pquery(`
+      SELECT dt.State
+      FROM DeviceState dt
+      WHERE dt.Device = ? AND
+            dt.Entity = ?
+      ORDER BY dt.DateTime DESC, dt.Id DESC LIMIT 1`, [deviceid, entitycode])
+    if (last && last.length) return last[0].State
+
+    return null
+  },
+
   async InsertSync(device, entity, state) {
     return await DeviceStateTable.insert({ Device: device, Entity: entity, State: state })
   }

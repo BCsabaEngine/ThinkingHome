@@ -1,5 +1,5 @@
 const IrSenderDevice = require('../IrSenderDevice')
-const { PushButtonEntity } = require('../../Entity')
+const { EventEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 
 class IrButtonSequence extends IrSenderDevice {
@@ -85,9 +85,9 @@ class IrButtonSequence extends IrSenderDevice {
 
   get icon() { return this.setting.icon || 'fa fa-angle-double-right' }
   entities = {
-    sequence: new PushButtonEntity(this, 'sequence', 'Sequence', 'fa fa-dot-circle')
-      .AddAction(new ButtonAction(this, 'press', 'Press', 'fa fa-rss', function () { this.device.entities.sequence.DoPress() }))
-
+    sequence: new EventEntity(this, 'sequence', 'Sequence', 'fa fa-dot-circle')
+      .InitEvents(['press'])
+      .AddAction(new ButtonAction(this, 'press', 'Press', 'fa fa-rss', function () { this.device.entities.sequence.DoEvent('press') }))
   };
 
   GetStatusInfos() {
@@ -125,19 +125,19 @@ class IrButtonSequence extends IrSenderDevice {
     } else
       if (this.seqstep === 2 && ircode === this.setting.ircode2) {
         if (!this.setting.ircode3) {
-          this.entities.sequence.DoPress()
+          this.entities.sequence.DoEvent('press')
           this.seqstep = 1
         } else { this.seqstep++ }
       } else
         if (this.seqstep === 3 && ircode === this.setting.ircode3) {
           if (!this.setting.ircode4) {
-            this.entities.sequence.DoPress()
+            this.entities.sequence.DoEvent('press')
             this.seqstep = 1
           } else { this.seqstep++ }
         } else
           // eslint-disable-next-line no-magic-numbers
           if (this.seqstep === 4 && ircode === this.setting.ircode4) {
-            this.entities.sequence.DoPress()
+            this.entities.sequence.DoEvent('press')
             this.seqstep = 1
           }
 

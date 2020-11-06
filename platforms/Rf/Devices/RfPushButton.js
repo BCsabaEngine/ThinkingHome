@@ -1,5 +1,5 @@
 const RfDevice = require('../RfDevice')
-const { PushButtonEntity } = require('../../Entity')
+const { EventEntity } = require('../../Entity')
 
 class RfPushButton extends RfDevice {
   buttons = [''];
@@ -7,11 +7,11 @@ class RfPushButton extends RfDevice {
   constructor(id, platform, name) {
     super(id, platform, name)
 
-    for (const button of this.buttons) { this.setting[`rfcode${button}`] = '' }
+    for (const button of this.buttons) this.setting[`rfcode${button}`] = ''
   }
 
   InitEntities() {
-    for (const button of this.buttons) { this.entities[`button${button}`] = new PushButtonEntity(this, `button${button}`, `Button ${button}`.trim(), 'fa fa-dot-circle') }
+    for (const button of this.buttons) this.entities[`button${button}`] = new EventEntity(this, `button${button}`, `Button ${button}`.trim(), 'fa fa-dot-circle').InitEvents(['press'])
 
     this.LinkUpEntities()
   }
@@ -61,7 +61,7 @@ class RfPushButton extends RfDevice {
     for (const button of this.buttons) {
       if (rfcode === this.setting[`rfcode${button}`]) {
         if (this.entities[`button${button}`]) {
-          this.entities[`button${button}`].DoPress()
+          this.entities[`button${button}`].DoEvent('press')
           return true
         }
       }

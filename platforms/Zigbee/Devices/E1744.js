@@ -1,52 +1,32 @@
 const GenericDevice = require('./GenericDevice')
-const { Entity } = require('../../Entity')
-const DeviceEventModel = require('../../../models/DeviceEvent')
+const { EventEntity } = require('../../Entity')
 
-class E1744Entity extends Entity {
-  publics = ['lastpresstime'];
-  emits = {
-    left: 'entity',
-    right: 'entity',
-    click: 'entity',
-    doubleclick: 'entity',
-    tripleclick: 'entity'
-  };
-
-  lastpresstime = null;
-  DoAction(mode) {
-    this.lastpresstime = new Date().getTime()
-    switch (mode) {
+class E1744 extends GenericDevice {
+  ProcessActionObj(actionobj) {
+    switch (actionobj.action) {
       case 'rotate_left':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'left')
-        this.emit('left', this)
+        this.entities.rotator.DoEvent('left')
         break
       case 'rotate_right':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'right')
-        this.emit('right', this)
+        this.entities.rotator.DoEvent('right')
         break
       case 'play_pause':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'click')
-        this.emit('click', this)
+        this.entities.rotator.DoEvent('click')
         break
       case 'skip_forward':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'doubleclick')
-        this.emit('doubleclick', this)
+        this.entities.rotator.DoEvent('doubleclick')
         break
       case 'skip_backward':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'tripleclick')
-        this.emit('tripleclick', this)
+        this.entities.rotator.DoEvent('tripleclick')
         break
       default:
         break
     }
   }
-}
-
-class E1744 extends GenericDevice {
-  ProcessActionObj(actionobj) { this.entities.rotator.DoAction(actionobj.action) }
 
   entities = {
-    rotator: new E1744Entity(this, 'rotator', 'Rotator', 'fa fa-tablets')
+    rotator: new EventEntity(this, 'rotator', 'Rotator', 'fa fa-tablets')
+      .InitEvents(['left', 'right', 'click', 'doubleclick', 'tripleclick'])
   };
 
   get icon() { return 'fa fa-tablets' }

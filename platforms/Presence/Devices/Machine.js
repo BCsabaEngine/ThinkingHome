@@ -54,6 +54,7 @@ class PresenceMachine extends PresenceDevice {
     home: new BoolStateEntity(this, 'home', 'At home', 'fa fa-laptop-house')
       .InitStateNames('Away', 'Home')
       .InitStateIcons('fa fa-microphone-slash', 'fa fa-laptop-house')
+      .InitLastState()
       .AddBoardItem(new PresenceBoardItem())
   };
 

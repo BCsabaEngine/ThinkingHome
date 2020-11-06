@@ -1,52 +1,32 @@
 const GenericDevice = require('./GenericDevice')
-const { Entity } = require('../../Entity')
-const DeviceEventModel = require('../../../models/DeviceEvent')
+const { EventEntity } = require('../../Entity')
 
-class E1743Entity extends Entity {
-  publics = ['lastpresstime'];
-  emits = {
-    on: 'entity',
-    off: 'entity',
-    hold_up: 'entity',
-    hold_down: 'entity',
-    hold_release: 'entity'
-  };
-
-  lastpresstime = null;
-  DoAction(mode) {
-    this.lastpresstime = new Date().getTime()
-    switch (mode) {
+class E1743 extends GenericDevice {
+  ProcessActionObj(actionobj) {
+    switch (actionobj.action) {
       case 'on':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'on')
-        this.emit('on', this)
+        this.entities.pushbutton.DoEvent('on')
         break
       case 'off':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'off')
-        this.emit('off', this)
+        this.entities.pushbutton.DoEvent('off')
         break
       case 'brightness_move_up':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold_up')
-        this.emit('hold_up', this)
+        this.entities.pushbutton.DoEvent('hold_up')
         break
       case 'brightness_move_down':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold_down')
-        this.emit('hold_down', this)
+        this.entities.pushbutton.DoEvent('hold_down')
         break
       case 'brightness_stop':
-        DeviceEventModel.InsertSync(this.device.id, this.code, 'hold_release')
-        this.emit('hold_release', this)
+        this.entities.pushbutton.DoEvent('hold_release')
         break
       default:
         break
     }
   }
-}
-
-class E1743 extends GenericDevice {
-  ProcessActionObj(actionobj) { this.entities.pushbutton.DoAction(actionobj.action) }
 
   entities = {
-    pushbutton: new E1743Entity(this, 'pushbutton', 'Push button', 'fa fa-toggle-on')
+    pushbutton: new EventEntity(this, 'pushbutton', 'Push button', 'fa fa-toggle-on')
+      .InitEvents(['on', 'off', 'hold_up', 'hold_down', 'hold_release'])
   };
 
   get icon() { return 'fa fa-toggle-on' }

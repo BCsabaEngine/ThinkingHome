@@ -1,7 +1,7 @@
 const dayjs = require('dayjs')
 const got = require('got')
 const MqttDevice = require('../MqttDevice')
-const { BoolStateEntity, ButtonEntity } = require('../../Entity')
+const { BoolStateEntity, EventEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 const { ToggleBoardItem } = require('../../BoardItem')
 
@@ -16,8 +16,13 @@ class Tasmota extends MqttDevice {
         .AddBoardItem(new ToggleBoardItem())
     }
     for (let i = 1; i <= this.setting.buttoncount; i++) {
-      this.entities[`button${i}`] = new ButtonEntity(this, `button${i}`, `Button${i}`, 'fa fa-dot-circle')
-        .AddAction(new ButtonAction(this, 'push', 'Push', 'fa fa-dot-circle', function () { this.entity.DoPress(1) }))
+      this.entities[`button${i}`] = new EventEntity(this, `button${i}`, `Button${i}`, 'fa fa-dot-circle')
+        .InitEvents(['push', 'single', 'double', 'triple', 'hold'])
+        .AddEventWithEmit('push', ['clicks'])
+        .AddAction(new ButtonAction(this, 'push', 'Push', 'fa fa-dot-circle', function () {
+          this.entity.DoEvent('single')
+          this.entity.DoEvent('push', 1)
+        }))
     }
     // .AddBoardItem(new PushBoardItem('push'))
     this.LinkUpEntities()
@@ -152,16 +157,20 @@ class Tasmota extends MqttDevice {
         const buttonevent = messageobj.ACTION.toLowerCase()
         switch (buttonevent) {
           case 'SINGLE'.toLowerCase():
-            this.entities.button1.DoPress(1)
+            this.entities[`button${i}`].DoEvent('single')
+            this.entities[`button${i}`].DoEvent('push', 1)
             return true
           case 'DOUBLE'.toLowerCase():
-            this.entities.button1.DoPress(2)
+            this.entities[`button${i}`].DoEvent('double')
+            this.entities[`button${i}`].DoEvent('push', 2)
             return true
           case 'TRIPLE'.toLowerCase():
-            this.entities.button1.DoPress(3)
+            this.entities[`button${i}`].DoEvent('triple')
+            this.entities[`button${i}`].DoEvent('push', 3)
             return true
           case 'HOLD'.toLowerCase():
-            this.entities.button1.DoPress(-1)
+            this.entities[`button${i}`].DoEvent('hold')
+            this.entities[`button${i}`].DoEvent('push', -1)
             return true
           default:
             return false

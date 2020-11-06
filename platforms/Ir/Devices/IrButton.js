@@ -1,5 +1,5 @@
 const IrSenderDevice = require('../IrSenderDevice')
-const { PushButtonEntity } = require('../../Entity')
+const { EventEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 
 class IrButton extends IrSenderDevice {
@@ -14,8 +14,9 @@ class IrButton extends IrSenderDevice {
   InitEntities() {
     for (const button of this.buttons) {
       this.entities[`button${button}`] =
-        new PushButtonEntity(this, `button${button}`, `Button ${button}`.trim(), 'fa fa-dot-circle')
-          .AddAction(new ButtonAction(this, 'press', 'Press', 'fa fa-rss', function () { this.device.entities[`button${button}`].DoPress() }))
+        new EventEntity(this, `button${button}`, `Button ${button}`.trim(), 'fa fa-dot-circle')
+          .InitEvents(['press'])
+          .AddAction(new ButtonAction(this, 'press', 'Press', 'fa fa-rss', function () { this.device.entities[`button${button}`].DoEvent('press') }))
     }
 
     this.LinkUpEntities()
@@ -106,7 +107,7 @@ class IrButton extends IrSenderDevice {
       if (this.setting[`ircode${button}`]) {
         if (ircode === this.setting[`ircode${button}`]) {
           if (this.entities[`button${button}`]) {
-            this.entities[`button${button}`].DoPress()
+            this.entities[`button${button}`].DoEvent('press')
             return true
           }
         }

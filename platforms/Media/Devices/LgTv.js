@@ -50,11 +50,14 @@ class LgTv extends MediaDevice {
 
     state: new BoolStateEntity(this, 'state', 'State', 'fa fa-toggle-on')
       .AddBoardItem(new NumericValueGaugeBoardItem())
+      .InitLastState()
       .AddAction(new ButtonAction(this, 'switchoff', 'Switch Off', 'fa fa-toggle-off', () => {
         if (!this.lgtvcli) return
         this.lgtvcli.request('ssap://system/turnOff')
       }))
-      .AddAction(new ButtonAction(this, 'switchon', 'Switch On', 'fa fa-toggle-on', () => { if (this.setting.mac) wakeonlan(this.setting.mac) })),
+      .AddAction(new ButtonAction(this, 'switchon', 'Switch On', 'fa fa-toggle-on', () => {
+        if (this.setting.mac) wakeonlan(this.setting.mac)
+      })),
 
     volume: new TelemetryEntity(this, 'volume', 'Volume', 'fa fa-volume-up')
       // eslint-disable-next-line no-magic-numbers

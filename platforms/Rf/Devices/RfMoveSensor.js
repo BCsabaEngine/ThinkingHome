@@ -1,5 +1,5 @@
 const RfDevice = require('../RfDevice')
-const { MoveEntity } = require('../../Entity')
+const { EventEntity } = require('../../Entity')
 
 class RfMoveSensor extends RfDevice {
   setting = {
@@ -21,7 +21,7 @@ class RfMoveSensor extends RfDevice {
 
   get icon() { return this.setting.icon || 'fa fa-running' }
   entities = {
-    move: new MoveEntity(this, 'move', 'Move', 'fa fa-running')
+    move: new EventEntity(this, 'move', 'Move', 'fa fa-running').InitEvents(['move'])
   };
 
   GetStatusInfos() {
@@ -32,7 +32,7 @@ class RfMoveSensor extends RfDevice {
 
   ReceiveRfCode(rfcode) {
     if (rfcode === this.setting.rfcode) {
-      this.entities.move.DoMove()
+      this.entities.move.DoEvent('move')
       return true
     }
     return false
