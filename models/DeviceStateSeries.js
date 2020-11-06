@@ -1,7 +1,7 @@
 /* const DeviceStateSeriesTable = */ db.defineTable('DeviceStateSeries', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
-    Device: db.ColTypes.int(10).notNull().index(),
+    Device: db.ColTypes.int(10).notNull(),
     Entity: db.ColTypes.varchar(100).notNull(),
     DateTimeStart: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
     DateTimeEnd: db.ColTypes.datetime(),

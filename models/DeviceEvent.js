@@ -2,7 +2,7 @@ const DeviceEventTable = db.defineTable('DeviceEvent', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp(),
-    Device: db.ColTypes.int(10).notNull().index(),
+    Device: db.ColTypes.int(10).notNull(),
     Entity: db.ColTypes.varchar(100).notNull(),
     Event: db.ColTypes.varchar(100).notNull()
   },

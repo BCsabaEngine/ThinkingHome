@@ -3,9 +3,9 @@ const WebAccessTable = db.defineTable('WebAccess', {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     DateTime: db.ColTypes.datetime().notNull().defaultCurrentTimestamp().index(),
     User: db.ColTypes.int(10).index(),
-    Uri: db.ColTypes.varchar(100).index(),
+    Uri: db.ColTypes.varchar(100),
     Session: db.ColTypes.varchar(100),
-    RemoteIp: db.ColTypes.varchar(100).index()
+    RemoteIp: db.ColTypes.varchar(100)
   },
   keys: [
     db.KeyTypes.foreignKey('User').references('User', 'Id').cascade(),
