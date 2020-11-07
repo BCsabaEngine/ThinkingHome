@@ -139,10 +139,12 @@ class Device {
 
         if (timeline.length) {
           const smoothminute = (this.entities && this.entities[entitycode]) ? this.entities[entitycode].smoothminute : 0
+          timeline = timelineConverter.reduceTimeline(timeline, hdwidth)
           if (smoothminute) {
             timeline = timelineConverter.moveAverage(timeline, smoothminute)
+          } else {
+            timeline = timelineConverter.insertTelemetrySteps(timeline)
           }
-          timeline = timelineConverter.reduceTimeline(timeline, hdwidth)
         }
 
         res.send(JSON.stringify(timeline))
