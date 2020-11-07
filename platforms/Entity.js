@@ -2,6 +2,7 @@ const EventEmitter = require('events')
 const DeviceTelemetryModel = require('../models/DeviceTelemetry')
 const DeviceStateModel = require('../models/DeviceState')
 const DeviceEventModel = require('../models/DeviceEvent')
+// const DebouncerList = require('../lib/debouncerList')
 const { Action } = require('./Action')
 const { BoardItem } = require('./BoardItem')
 
@@ -96,6 +97,7 @@ class TelemetryEntity extends Entity {
   lastchangetime = null;
   minvalue = Number.NEGATIVE_INFINITY;
   maxvalue = Number.POSITIVE_INFINITY;
+  // debouncer = new DebouncerList(1000);
   toString() { return `${this.value || '?'} ${this.unit}`.trim() }
 
   InitByPercent() {
@@ -163,7 +165,13 @@ class TelemetryEntity extends Entity {
     return this
   }
 
-  SetValue(value) {
+  SetValue(value /*, skipdeb = false */) {
+    // if (!skipdeb) {
+    //   this.debouncer.Add('SetValue', function () { this.SetValue(value, true) }.bind(this), value)
+    //   return
+    // }
+    // TODO: Debouncer
+
     const originalvalue = this.value
 
     if (this.minvalue > value) this.minvalue = value
