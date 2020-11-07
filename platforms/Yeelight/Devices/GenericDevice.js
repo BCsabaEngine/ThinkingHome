@@ -46,36 +46,68 @@ class GenericDevice extends YeelightDevice {
         if (this.yeelight) this.yeelight.setPower(true)
       })),
 
-    bright: new TelemetryEntity(this, 'bright', 'Bright', 'fa fa-volume-up')
-      .AddAction(new ButtonAction(this, 'bright1', 'Low bright', 'fa fa-volume-mute', () => {
-        if (this.yeelight) this.yeelight.setBright(1)
+    bright: new TelemetryEntity(this, 'bright', 'Bright', 'fa fa-adjust')
+      .AddAction(new ButtonAction(this, 'bright1', 'Low bright', 'fa fa-adjust', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setBright(1)
       }))
-      .AddAction(new ButtonAction(this, 'bright50', 'Med bright', 'fa fa-volume-mute', () => {
-        if (this.yeelight) this.yeelight.setBright(50)
+      .AddAction(new ButtonAction(this, 'bright50', 'Mid bright', 'fa fa-adjust', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setBright(50)
       }))
-      .AddAction(new ButtonAction(this, 'bright100', 'High bright', 'fa fa-volume-mute', () => {
-        if (this.yeelight) this.yeelight.setBright(100)
+      .AddAction(new ButtonAction(this, 'bright100', 'High bright', 'fa fa-adjust', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setBright(100)
       }))
-      .AddAction(new ButtonAction(this, 'brightup10', '+10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setBright(this.yeelight.bright + 10)
+      .AddAction(new ButtonAction(this, 'brightup', '+10 bright', 'fa fa-plus-circle', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setBright(Math.min(this.yeelight.bright + 10, 100))
       }))
-      .AddAction(new ButtonAction(this, 'brightdown10', '-10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setBright(this.yeelight.bright - 10)
+      .AddAction(new ButtonAction(this, 'brightdown', '-10 bright', 'fa fa-minus-circle', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setBright(Math.max(this.yeelight.bright - 10, 1))
       }))
-      .AddAction(new ButtonAction(this, 'ct2000', '-10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setCT(2000)
+      .AddAction(new ButtonAction(this, 'rgb', 'Custom RGB', 'fa fa-thermometer-quarter', (r, g, b, brightness) => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setRGB([r, g, b])
+        if (brightness) this.yeelight.setBright(brightness)
       }))
-      .AddAction(new ButtonAction(this, 'ct3000', '-10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setCT(3000)
+      .AddAction(new ButtonAction(this, 'ct', 'Custom CT', 'fa fa-thermometer-quarter', (ct, brightness) => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setCT(ct)
+        if (brightness) this.yeelight.setBright(brightness)
       }))
-      .AddAction(new ButtonAction(this, 'ct4500', '-10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setCT(4500)
+      .AddAction(new ButtonAction(this, 'ct2000', '-10 bright', 'fa fa-thermometer-quarter', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setCT(2000)
       }))
-      .AddAction(new ButtonAction(this, 'ct5500', '-10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setCT(5500)
+      .AddAction(new ButtonAction(this, 'ct4500', '-10 bright', 'fa fa-thermometer-quarter', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setCT(4500)
       }))
-      .AddAction(new ButtonAction(this, 'ct6500', '-10 bright', 'fa fa-volume-up', () => {
-        if (this.yeelight) this.yeelight.setCT(6500)
+      .AddAction(new ButtonAction(this, 'ct6500', '-10 bright', 'fa fa-thermometer-quarter', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setCT(6500)
       }))
   }
 
