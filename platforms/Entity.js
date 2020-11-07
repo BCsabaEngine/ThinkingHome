@@ -40,7 +40,7 @@ class Entity extends EventEmitter {
   LinkUpActions() {
     if (this.actions) {
       for (const action of this.actions) {
-        this[action.code] = function (actionparams) { if (action.handler) action.handler(actionparams) }
+        this[action.code] = function (...args) { if (action.handler) action.handler(...args) }
       }
     }
   }
