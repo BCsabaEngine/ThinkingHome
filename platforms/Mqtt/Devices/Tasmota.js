@@ -152,6 +152,8 @@ class Tasmota extends MqttDevice {
   }
 
   ProcessMessageObj(topic, messageobj) {
+    // Tasmota <= v8.5
+    // stat/device/BUTTON1: single
     for (let i = 1; i <= this.setting.buttoncount; i++) {
       if (topic.match(`^stat/${this.GetTopic()}/BUTTON${i}$`)) {
         const buttonevent = messageobj.ACTION.toLowerCase()
@@ -179,6 +181,35 @@ class Tasmota extends MqttDevice {
     }
 
     if (topic.match(`^stat/${this.GetTopic()}/RESULT$`)) {
+      // Tasmota >= v9.0
+      // stat/device/RESULT: {"Button1" : {"Action" : "SINGLE"}}
+      for (let i = 1; i <= this.setting.buttoncount; i++) {
+        const buttonid = `Button${i}`
+        const op = messageobj[buttonid]
+        if (op && op.Action) {
+          switch (op.Action) {
+            case 'SINGLE'.toUpperCase():
+              this.entities[`button${i}`].DoEvent('single')
+              this.entities[`button${i}`].DoEvent('push', 1)
+              return true
+            case 'DOUBLE'.toUpperCase():
+              this.entities[`button${i}`].DoEvent('double')
+              this.entities[`button${i}`].DoEvent('push', 2)
+              return true
+            case 'TRIPLE'.toUpperCase():
+              this.entities[`button${i}`].DoEvent('triple')
+              this.entities[`button${i}`].DoEvent('push', 3)
+              return true
+            case 'HOLD'.toUpperCase():
+              this.entities[`button${i}`].DoEvent('hold')
+              this.entities[`button${i}`].DoEvent('push', -1)
+              return true
+            default:
+              return false
+          }
+        }
+      }
+
       const message = Object.keys(messageobj).map((key) => key + '=' + messageobj[key])
       logger.debug(`[Tasmota] Result message on ${topic}: ${message}`)
       return true
