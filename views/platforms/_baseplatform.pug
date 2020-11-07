@@ -113,7 +113,7 @@ block content
             | Attach discovered device
           .card-footer.p-0
             each autodevice in autodevices
-              button.btn.btn-app.btn-app-wide(onclick="showcreatenewdevice('" + autodevice.type + "', '" + autodevice.devicename + "', " + autodevice.setting + ")")
+              button.btn.btn-app.btn-app-wide(onclick="showcreatenewdevice(" + autodevice.type + ", '" + autodevice.devicename + "', " + autodevice.setting + ")")
                 if (autodevice.badge)
                   .badge.bg-danger
                     =autodevice.badge
