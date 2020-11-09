@@ -3,6 +3,12 @@ const YeelightDevice = require('../YeelightDevice')
 const { TelemetryEntity, BoolStateEntity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 
+const brighthalf = 50
+
+const colortemp2000 = 2000
+const colortemp4500 = 4500
+const colortemp6500 = 6500
+
 class GenericDevice extends YeelightDevice {
   //  sensors = [];
 
@@ -39,6 +45,9 @@ class GenericDevice extends YeelightDevice {
 
   entities = {
     state: new BoolStateEntity(this, 'state', 'State', 'fa fa-toggle-on')
+      .AddAction(new ButtonAction(this, 'toggle', 'Toggle', 'fa fa-toggle-on', () => {
+        if (this.yeelight) this.yeelight.setPower(!this.entities.state.state)
+      }))
       .AddAction(new ButtonAction(this, 'switchoff', 'Switch Off', 'fa fa-toggle-off', () => {
         if (this.yeelight) this.yeelight.setPower(false)
       }))
@@ -47,17 +56,17 @@ class GenericDevice extends YeelightDevice {
       })),
 
     bright: new TelemetryEntity(this, 'bright', 'Bright', 'fa fa-adjust')
+      .AddAction(new ButtonAction(this, 'bright50', 'Mid bright', 'fa fa-adjust', () => {
+        if (!this.yeelight) return
+
+        if (!this.entities.state.state) this.yeelight.setPower(true)
+        this.yeelight.setBright(brighthalf)
+      }))
       .AddAction(new ButtonAction(this, 'bright1', 'Low bright', 'fa fa-adjust', () => {
         if (!this.yeelight) return
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
         this.yeelight.setBright(1)
-      }))
-      .AddAction(new ButtonAction(this, 'bright50', 'Mid bright', 'fa fa-adjust', () => {
-        if (!this.yeelight) return
-
-        if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setBright(50)
       }))
       .AddAction(new ButtonAction(this, 'bright100', 'High bright', 'fa fa-adjust', () => {
         if (!this.yeelight) return
@@ -81,73 +90,70 @@ class GenericDevice extends YeelightDevice {
         if (!this.yeelight) return
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setRGB([r, g, b])
+        if (r && g && b) this.yeelight.setRGB([r, g, b])
         if (brightness) this.yeelight.setBright(brightness)
       }))
       .AddAction(new ButtonAction(this, 'ct', 'Custom CT', 'fa fa-thermometer-quarter', (ct, brightness) => {
         if (!this.yeelight) return
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(ct)
+        if (ct) this.yeelight.setCT(ct)
         if (brightness) this.yeelight.setBright(brightness)
       }))
       .AddAction(new ButtonAction(this, 'ct2000', '-10 bright', 'fa fa-thermometer-quarter', () => {
         if (!this.yeelight) return
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(2000)
+        this.yeelight.setCT(colortemp2000)
       }))
       .AddAction(new ButtonAction(this, 'ct4500', '-10 bright', 'fa fa-thermometer-quarter', () => {
         if (!this.yeelight) return
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(4500)
+        this.yeelight.setCT(colortemp4500)
       }))
       .AddAction(new ButtonAction(this, 'ct6500', '-10 bright', 'fa fa-thermometer-quarter', () => {
         if (!this.yeelight) return
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(6500)
+        this.yeelight.setCT(colortemp6500)
       }))
   }
 
   yeelight = null;
+  yeelighterror = null
 
   GetStatusInfos() {
     const result = []
     if (this.yeelight) {
+      result.push({ device: this, message: 'Connection count', value: this.yeelight.connectioncount || '0' })
       if (!this.yeelight.connected) result.push({ device: this, error: true, message: 'Not connected' })
+      if (this.yeelighterror) result.push({ device: this, error: true, message: 'Error', value: this.yeelighterror })
     }
     return result
   }
 
-  DeviceConnected(device) {
-    console.log('connected')
-  }
+  // DeviceConnected(device) { }
 
-  DeviceDisconnected(device) {
-    console.log('disconnected')
-  }
+  // DeviceDisconnected(device) { }
 
-  DeviceError(device) {
-    console.log('error')
-  }
+  DeviceError(error) { this.yeelighterror = error.response }
 
   DeviceStateUpdate(device) {
     this.entities.state.SetState(device.power)
 
     this.entities.bright.SetValue(device.bright)
-
-    console.log(device)
   }
 
   Init() {
     if (this.setting.host) {
       this.yeelight = new Yeelight()
-      this.yeelight.on('connected', this.DeviceConnected.bind(this))
-      this.yeelight.on('disconnected', this.DeviceDisconnected.bind(this))
-      this.yeelight.on('error', this.DeviceError.bind(this))
+
+      // this.yeelight.on('connected', this.DeviceConnected.bind(this))
+      // this.yeelight.on('disconnected', this.DeviceDisconnected.bind(this))
+      this.yeelight.on('failed', this.DeviceError.bind(this))
       this.yeelight.on('stateUpdate', this.DeviceStateUpdate.bind(this))
+
       this.yeelight.init(this.setting.host)
     }
   }
@@ -155,26 +161,6 @@ class GenericDevice extends YeelightDevice {
   async Start() {
     await super.Start()
     this.Init()
-    // setTimeout(function () { this.Init() }.bind(this), 3000)
   }
-
-  // GetTopic() {
-  //   return (this.setting.topic || this.name).toLowerCase()
-  // }
-
-  // SendCmnd(command, message) {
-  //   const topic = `cmnd/${this.GetTopic()}/${command}`
-  //   // console.log([topic, message]);
-  //   this.platform.SendMessage(topic, message)
-  // }
-
-  // ProcessMessage(topic, message) {
-  //   if (topic === this.GetTopic()) return true
-  //   return false
-  // }
-
-  // ProcessActionObj(action) { }
-
-  // ProcessMessageObj(topic, messageobj) { }
 }
 module.exports = GenericDevice
