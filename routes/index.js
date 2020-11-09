@@ -51,6 +51,7 @@ module.exports = (app) => {
   app.use('/sweetalert2', express.static('./node_modules/sweetalert2/dist', { index: false, maxAge: '1h', redirect: false }))
   app.use('/mousetrap', express.static('./node_modules/mousetrap', { index: false, maxAge: '1h', redirect: false }))
   app.use('/clipboard', express.static('./node_modules/clipboard/dist', { index: false, maxAge: '1h', redirect: false }))
+  app.use('/vis-network/standalone', express.static('./node_modules/vis-network/standalone', { index: false, maxAge: '1h', redirect: false }))
   app.use(favicon(path.resolve('./public/favicon.ico')))
 
   // early loading of common and login routes

@@ -4835,6 +4835,11 @@
       "resolved": "https://registry.npmjs.org/vary/-/vary-1.1.2.tgz",
       "integrity": "sha1-IpnwLG3tMNSllhsLn3RSShj2NPw="
     },
+    "vis-network": {
+      "version": "8.5.2",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-8.5.2.tgz",
+      "integrity": "sha512-JIKeVelCGkO6+nRCTeLmFlVaNGcU3PfuF8Roqfst3Wx8sXKd3wFcigk7SH3rRKFFW4ibK8vYozztC+G7H/yFRg=="
+    },
     "void-elements": {
       "version": "3.1.0",
       "resolved": "https://registry.npmjs.org/void-elements/-/void-elements-3.1.0.tgz",
