@@ -6,9 +6,11 @@ const DeviceModel = require('../../models/Device')
 const ZigbeeDevice = require('./ZigbeeDevice')
 const arrayUtils = require('../../lib/arrayUtils')
 const objectUtils = require('../../lib/objectUtils')
+const stringUtils = require('../../lib/stringUtils')
 
 const http500 = 500
 const lastlogs = 50
+const networkgraphnamemaxlength = 24
 
 class ZigbeePlatform extends Platform {
   setting = {
@@ -171,19 +173,22 @@ class ZigbeePlatform extends Platform {
             this.bridgeNetworkNodes = []
             this.bridgeNetworkLinks = []
             for (const node of messageobj.nodes) {
+              const ieee = node.ieeeAddr
+              const device = this.devices.find(d => d.setting.topic === ieee)
               this.bridgeNetworkNodes.push({
                 type: node.type,
-                ieee: node.ieeeAddr,
+                ieee: ieee,
                 lastSeen: node.lastSeen,
-                name: node.definition ? node.definition.description : ''
+                name: node.definition ? node.definition.description : '',
+                devicename: device ? device.name : ''
               })
-              for (const link of messageobj.links) {
-                this.bridgeNetworkLinks.push({
-                  source: link.sourceIeeeAddr,
-                  target: link.targetIeeeAddr,
-                  lqi: link.lqi
-                })
-              }
+            }
+            for (const link of messageobj.links) {
+              this.bridgeNetworkLinks.push({
+                source: link.sourceIeeeAddr,
+                target: link.targetIeeeAddr,
+                lqi: link.lqi
+              })
             }
             this.bridgeNetworkDateTime = new Date().getTime()
             global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
@@ -309,17 +314,39 @@ class ZigbeePlatform extends Platform {
     result.push('function drawnetwork(elementid)')
     result.push('{')
     result.push('  var nodes = new vis.DataSet([')
-    result.push('    { id: 1, label: "Node\\nxxx", shape: "box", color: "#FFAAAA"  },')
-    result.push('    { id: 2, label: "Node 2" },')
-    result.push('    { id: 3, label: "Router", shape: "triangle" },')
+
+    for (let i = 0; i < this.bridgeNetworkNodes.length; i++) {
+      const node = this.bridgeNetworkNodes[i]
+
+      switch (node.type) {
+        case 'Coordinator':
+          result.push(`    { id: ${i}, label: "Coordinator", shape: "circle", color: "#FFAAAA"  },`)
+          break
+        case 'Router':
+          result.push(`    { id: ${i}, label: "Router", shape: "circle", color: "#AAFFAA"  },`)
+          break
+        default:
+          result.push(`    { id: ${i}, label: "${stringUtils.truncate(node.devicename, networkgraphnamemaxlength)}\\n${stringUtils.truncate(node.name, networkgraphnamemaxlength)}"  },`)
+          break
+      }
+    }
+
     result.push('  ]);')
     result.push('  var edges = new vis.DataSet([')
-    result.push('    { from: 1, to: 2, arrows: "to" },')
-    result.push('    { from: 2, to: 1, arrows: "to" },')
-    result.push('    { from: 2, to: 3, arrows: "to" },')
+
+    for (const link of this.bridgeNetworkLinks) {
+      const sourceindex = this.bridgeNetworkNodes.findIndex(n => n.ieee === link.source)
+      const targetindex = this.bridgeNetworkNodes.findIndex(n => n.ieee === link.target)
+
+      if (sourceindex >= 0 && targetindex >= 0) {
+        if (link.lqi) result.push(`    { from: ${sourceindex}, to: ${targetindex}, arrows: "to", label: "${link.lqi}", font: { align: "horizontal" } },`)
+        else result.push(`    { from: ${sourceindex}, to: ${targetindex}, arrows: "to" },`)
+      }
+    }
+
     result.push('  ]);')
     result.push('  var data = { nodes: nodes, edges: edges };')
-    result.push('  var options = { nodes: { shape: "circle" } };')
+    result.push('  var options = { nodes: { shape: "box" } };')
     result.push('  new vis.Network(document.getElementById(elementid), data, options);')
     result.push('}')
 
