@@ -24,11 +24,15 @@ block content
   .row
     .col-md-8
       .btn-group
-        button.btn.btn-primary(onclick="savecode()")
+        button.btn(class= rulecode.Disabled ? "btn-warning" : "btn-primary" onclick="savecode()")
           i.fa.fa-upload
           |  Upload
+          if rulecode.Disabled
+            | 
+            | disabled
           | 
-          = rulecode.displayname
+          b
+              = rulecode.displayname
           |  rule
         button.btn.btn-default(onclick="formatcode()")
           i.fa.fa-align-left
@@ -105,7 +109,7 @@ block content
           br
           | &lt;device&gt;.&lt;entity&gt;.&lt;property&gt;
           br
-          | &lt;device&gt;.&lt;entity&gt;.&lt;command&gt;()
+          | &lt;device&gt;.&lt;entity&gt;.&lt;command&gt;([params, ...])
           br
           | &lt;device&gt;.&lt;entity&gt;.on('&lt;event&gt;', ([params, ...]) => { })
           small.float-right
@@ -126,7 +130,8 @@ block content
                 - value = (value == null) ? '' : ' = ' + value;
                 - items.push(`${device.name}.${key}.<b>${public}</b> ${value}`)
               each action of device.entities[key].actions
-                - items.push(`${device.name}.${key}.<b>${action.code}</b>()`)
+                - var args = getFunctionArgs(action.handler)
+                - items.push(`${device.name}.${key}.<b>${action.code}</b>(${args.join(', ')})`)
               each emitkey of Object.keys(device.entities[key].emits)
                 - items.push(`${device.name}.${key}.on(<b>\\'${emitkey}\\'</b>, (${device.entities[key].emits[emitkey]}) => { })`)
               - items.push('')

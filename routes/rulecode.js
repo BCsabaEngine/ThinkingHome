@@ -3,6 +3,7 @@ const RuleCodeModel = require('../models/RuleCode')
 const RuleCodeHistoryModel = require('../models/RuleCodeHistory')
 const RuleCodeLogModel = require('../models/RuleCodeLog')
 const RuleCodeExecutor = require('../lib/ruleCodeExecutor')
+const ObjectUtils = require('../lib/objectUtils')
 
 const http411 = 411
 const rulecodeminlines = 30
@@ -43,7 +44,8 @@ module.exports = (app) => {
         runerrormessage: global.runningContext.GetRuleCodeExecutorMessage(id),
         runerrorstack: global.runningContext.GetRuleCodeExecutorStack(id),
         runconsole: global.runningContext.GetRuleCodeExecutorConsoleLines(id),
-        devices: global.runningContext.GetDevices()
+        devices: global.runningContext.GetDevices(),
+        getFunctionArgs: ObjectUtils.getFunctionArgs
       })
     } catch (err) { next(err) }
   })
