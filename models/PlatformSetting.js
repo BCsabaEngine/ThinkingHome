@@ -20,7 +20,7 @@ const PlatformSettingModel = {
 
   async UpdateSettingSync(platformcode, name, value) {
     await PlatformSettingTable.delete('WHERE Platform = ? AND Name = ?', [platformcode, name])
-    if (value) { await PlatformSettingTable.insert({ Platform: platformcode, Name: name, Value: value }) }
+    if (value !== undefined) { await PlatformSettingTable.insert({ Platform: platformcode, Name: name, Value: value }) }
   },
 
   async UpdateSettingsSync(platformcode, settingobj) {
