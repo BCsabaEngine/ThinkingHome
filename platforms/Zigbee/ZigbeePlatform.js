@@ -29,9 +29,15 @@ class ZigbeePlatform extends Platform {
       }
       result.listdevices = {
         type: 'button',
-        title: 'Coordinator devices',
+        title: 'Zigbee devices',
         value: this.bridgeDevices.length ? 'Refresh list' : 'Get list',
         onexecute: function () { this.SendMessage('bridge/config/devices/get', '') }.bind(this)
+      }
+      result.listnetwork = {
+        type: 'button',
+        title: 'Zigbee network',
+        value: this.bridgeNetworkNodes.length ? 'Refresh graph' : 'Get graph',
+        onexecute: function () { this.SendMessage('bridge/networkmap', 'raw') }.bind(this)
       }
 
       return result
@@ -59,6 +65,9 @@ class ZigbeePlatform extends Platform {
   bridgeLoglevel = '';
   bridgeNetworkChannel = '';
   bridgePermitjoin = undefined;
+  bridgeNetworkDateTime = null;
+  bridgeNetworkNodes = [];
+  bridgeNetworkLinks = [];
 
   bridgeDevices = [];
 
@@ -123,6 +132,7 @@ class ZigbeePlatform extends Platform {
             }
           }
           break
+
         case 'bridge/config':
           if (messageobj) {
             this.bridgeVersion = messageobj.version
@@ -135,6 +145,7 @@ class ZigbeePlatform extends Platform {
             global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
           }
           break
+
         case 'bridge/config/devices':
           if (messageobj) {
             this.bridgeDevices = []
@@ -154,6 +165,31 @@ class ZigbeePlatform extends Platform {
             global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
           }
           break
+
+        case 'bridge/networkmap/raw':
+          if (messageobj) {
+            this.bridgeNetworkNodes = []
+            this.bridgeNetworkLinks = []
+            for (const node of messageobj.nodes) {
+              this.bridgeNetworkNodes.push({
+                type: node.type,
+                ieee: node.ieeeAddr,
+                lastSeen: node.lastSeen,
+                name: node.definition ? node.definition.description : ''
+              })
+              for (const link of messageobj.links) {
+                this.bridgeNetworkLinks.push({
+                  source: link.sourceIeeeAddr,
+                  target: link.targetIeeeAddr,
+                  lqi: link.lqi
+                })
+              }
+            }
+            this.bridgeNetworkDateTime = new Date().getTime()
+            global.wss.BroadcastToChannel(`platform_${this.GetCode()}`)
+          }
+          break
+
         default:
           break
       }
@@ -175,6 +211,7 @@ class ZigbeePlatform extends Platform {
     this.approuter.get('/', this.WebMainPage.bind(this))
     this.approuter.post('/adddevice', this.WebAddDevice.bind(this))
     this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this))
+    this.approuter.get('/networkmap.js', this.WebNetworkMapJs.bind(this))
 
     for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode())) { await this.CreateAndStartDevice(device.Type, device.Id, device.Name) }
     await super.Start()
@@ -183,6 +220,7 @@ class ZigbeePlatform extends Platform {
     setTimeout(function () {
       this.SendMessage('bridge/config/permit_join', '') // Retrieve config
       this.SendMessage('bridge/config/devices/get', '') // Retrieve devices
+      this.SendMessage('bridge/networkmap', 'raw') // Retrieve networkmap
     }.bind(this), 2 * 1000)
   }
 
@@ -232,7 +270,8 @@ class ZigbeePlatform extends Platform {
       devicegroups: devicegroups,
       handlers: ZigbeeDevice.GetTypes(),
       bridgedevices: this.bridgeDevices,
-      bridgelogs: this.bridgeLog
+      bridgelogs: this.bridgeLog,
+      bridgenetworkdatetime: this.bridgeNetworkDateTime
     })
   }
 
@@ -262,6 +301,29 @@ class ZigbeePlatform extends Platform {
     await this.StopAndRemoveDevice(id)
 
     res.send('OK')
+  }
+
+  async WebNetworkMapJs(req, res, next) {
+    const result = []
+
+    result.push('function drawnetwork(elementid)')
+    result.push('{')
+    result.push('  var nodes = new vis.DataSet([')
+    result.push('    { id: 1, label: "Node\\nxxx", shape: "box", color: "#FFAAAA"  },')
+    result.push('    { id: 2, label: "Node 2" },')
+    result.push('    { id: 3, label: "Router", shape: "triangle" },')
+    result.push('  ]);')
+    result.push('  var edges = new vis.DataSet([')
+    result.push('    { from: 1, to: 2, arrows: "to" },')
+    result.push('    { from: 2, to: 1, arrows: "to" },')
+    result.push('    { from: 2, to: 3, arrows: "to" },')
+    result.push('  ]);')
+    result.push('  var data = { nodes: nodes, edges: edges };')
+    result.push('  var options = { nodes: { shape: "circle" } };')
+    result.push('  new vis.Network(document.getElementById(elementid), data, options);')
+    result.push('}')
+
+    res.send(result.join('\n'))
   }
 
   static GetHandlerCount() { return Object.keys(ZigbeeDevice.GetTypes()).length }

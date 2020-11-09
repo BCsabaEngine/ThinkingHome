@@ -3,7 +3,7 @@ extends ../_baseplatform
 block command
   center
     .dropdown
-      button#dropdownMenuButton.btn.btn-default.dropdown-toggle(type='button', data-toggle='dropdown', aria-haspopup='true', aria-expanded='false')
+      button#dropdownMenuButton.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
         | Devices 
         small
           | (
@@ -18,6 +18,14 @@ block command
             center
               small
                 = bridgedevice.ieee
+  br
+  center
+    buttonbtn.btn.btn-default(type='button' onclick='shownetwork()')
+      | Zigbee network graph
+      if bridgenetworkdatetime
+        br
+        small
+          = dayjs(bridgenetworkdatetime).fromNow()
 
 block logs
   hr
@@ -55,3 +63,15 @@ block script
           showCancelButton: false,
         })
       }
+
+  script(type='text/javascript' src='/vis-network/standalone/umd/vis-network.min.js')
+  script(type='text/javascript').
+    function shownetwork()
+    {
+      Swal.fire({
+        title: 'Zigbee network graph',
+        html: '<div id="zigbeenetwork" style="height:60vh"></div>',
+        width: '80vw',
+      })
+      $.getScript(`/platform/#{platform.GetCode()}/networkmap.js`, function(data) { if (drawnetwork) drawnetwork('zigbeenetwork') });
+    }
