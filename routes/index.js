@@ -15,8 +15,8 @@ module.exports = (app) => {
       blackLists: [
         'blacklist.ips',
         'https://sslbl.abuse.ch/blacklist/sslipblacklist.txt',
-        'https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt',
-        'https://myip.ms/files/blacklist/general/latest_blacklist.txt'
+        'https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt'
+        // 'https://myip.ms/files/blacklist/general/latest_blacklist.txt'
       ],
       whiteListLifeTimeMs: 1 * 60 * 1000,
       onFailRequest: function (ipAddress) {
