@@ -136,15 +136,15 @@ class GenericDevice extends YeelightDevice {
     const result = []
     if (this.yeelight) {
       result.push({ device: this, message: 'Connection count', value: this.yeelight.connectioncount || '0' })
-      if (!this.yeelight.connected) result.push({ device: this, error: true, message: 'Not connected' })
+      if (!this.yeelight.isConnected()) result.push({ device: this, error: true, message: 'Not connected' })
       if (this.yeelighterror) result.push({ device: this, error: true, message: 'Error', value: this.yeelighterror })
     }
     return result
   }
 
-  // DeviceConnected(device) { }
+  DeviceConnected(device) { this.yeelighterror = null }
 
-  // DeviceDisconnected(device) { }
+  DeviceDisconnected(device) { }
 
   DeviceError(error) { this.yeelighterror = error.response }
 
@@ -158,8 +158,8 @@ class GenericDevice extends YeelightDevice {
     if (this.setting.host) {
       this.yeelight = new Yeelight()
 
-      // this.yeelight.on('connected', this.DeviceConnected.bind(this))
-      // this.yeelight.on('disconnected', this.DeviceDisconnected.bind(this))
+      this.yeelight.on('connected', this.DeviceConnected.bind(this))
+      this.yeelight.on('disconnected', this.DeviceDisconnected.bind(this))
       this.yeelight.on('failed', this.DeviceError.bind(this))
       this.yeelight.on('stateUpdate', this.DeviceStateUpdate.bind(this))
 
