@@ -9,6 +9,7 @@ class ZigbeeDevice extends Device {
       E1743: { displayname: 'TRÅDFRI on/off', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-toggle-on' },
       E1744: { displayname: 'SYMFONISK sound', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-tablets' },
       AqaraCube: { displayname: 'Aqara magic cube', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-cube' }
+      // TODO: Make router device (lqi only)
     }
   }
 
