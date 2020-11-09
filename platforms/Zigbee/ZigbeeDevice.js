@@ -8,8 +8,8 @@ class ZigbeeDevice extends Device {
       MotionSensor: { displayname: 'Motion sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-running' },
       E1743: { displayname: 'TRÅDFRI on/off', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-toggle-on' },
       E1744: { displayname: 'SYMFONISK sound', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-tablets' },
-      AqaraCube: { displayname: 'Aqara magic cube', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-cube' }
-      // TODO: Make router device (lqi only)
+      AqaraCube: { displayname: 'Aqara magic cube', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-cube' },
+      Router: { displayname: 'Router', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-route' }
     }
   }
 
