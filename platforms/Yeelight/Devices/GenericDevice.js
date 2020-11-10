@@ -10,20 +10,12 @@ const colortemp4500 = 4500
 const colortemp6500 = 6500
 
 class GenericDevice extends YeelightDevice {
-  //  sensors = [];
+  additionalentities = {};
 
-  // InitEntities() {
-  //   for (const sensor of this.sensors) {
-  //     this.entities[sensor.code] = new TelemetryEntity(this, sensor.code, sensor.name, sensor.icon)
-  //       .InitUnit(sensor.unit)
-  //       .InitLastValue()
-  //       .SetSmooth()
-  //       .AddBoardItem(new NumericValueGaugeBoardItem())
-  //     if (sensor.minvalue !== undefined) this.entities[sensor.code].InitMinValue(sensor.minvalue)
-  //     if (sensor.maxvalue !== undefined) this.entities[sensor.code].InitMaxValue(sensor.maxvalue)
-  //   }
-  //   this.LinkUpEntities()
-  // }
+  InitAdditionalEntities() {
+    for (const key of Object.keys(this.additionalentities)) this.entities[key] = this.additionalentities[key]
+    this.LinkUpEntities()
+  }
 
   setting = {
     host: '',
@@ -169,6 +161,7 @@ class GenericDevice extends YeelightDevice {
 
   async Start() {
     await super.Start()
+    this.InitAdditionalEntities()
     this.Init()
   }
 }
