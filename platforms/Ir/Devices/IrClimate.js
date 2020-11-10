@@ -13,6 +13,8 @@ class IrClimate extends IrReceiverDevice {
     temp_cool: 22,
     temp_heat: 28,
     swing: false,
+    autooffminutes: 30,
+    autooffextraminutes: 15,
     toDisplayList: function () {
       const result = {}
 
@@ -77,6 +79,25 @@ class IrClimate extends IrReceiverDevice {
         error: false,
         canclear: false
       }
+      const minutes = { 0: 'No auto off', 5: 5, 10: 10, 15: 15, 20: 20, 30: 30, 45: 45, 60: 60 }
+      result.autooffminutes = {
+        type: 'select',
+        title: 'Auto off',
+        value: this.setting.autooffminutes,
+        displayvalue: Number.parseInt(this.setting.autooffminutes) ? ('Off after ' + this.setting.autooffminutes + ' minutes') : 'No auto off',
+        lookup: JSON.stringify(minutes).replace(/["]/g, "'"),
+        error: false,
+        canclear: false
+      }
+      result.autooffextraminutes = {
+        type: 'select',
+        title: 'Auto off extra',
+        value: this.setting.autooffextraminutes,
+        displayvalue: Number.parseInt(this.setting.autooffextraminutes) ? ('Off after ' + this.setting.autooffextraminutes + ' minutes') : 'No auto off',
+        lookup: JSON.stringify(minutes).replace(/["]/g, "'"),
+        error: false,
+        canclear: false
+      }
       return result
     }.bind(this),
     toTitle: function () { return 'Air climate' },
@@ -84,18 +105,32 @@ class IrClimate extends IrReceiverDevice {
   };
 
   get icon() { return this.setting.icon || 'fa fa-icicles' }
+
+  autoofftimer = null
+  createautoofftimer(minutes) {
+    clearTimeout(this.autoofftimer)
+
+    if (!Number.parseInt(minutes)) return
+
+    this.autoofftimer = setTimeout(function () {
+      this.device.SendClimateObject({ command: 'off' })
+    }.bind(this), minutes * 60 * 1000)
+  }
+
   entities = {
     engine: new Entity(this, 'engine', 'Engine', 'fa fa-icicles')
       .AddAction(new ButtonAction(this, 'switchoff', 'Off', 'fa fa-power-off', function () {
         this.device.SendClimateObject({
           command: 'off'
         })
+        this.createautoofftimer(0)
       }))
       .AddAction(new ButtonAction(this, 'fan', 'Fan', 'fa fa-fan', function () {
         this.device.SendClimateObject({
           command: 'on',
           mode: 'fan'
         })
+        this.createautoofftimer(0)
       }))
       .AddAction(new ButtonAction(this, 'cool', 'Cool', 'fa fa-icicles', function () {
         this.device.SendClimateObject({
@@ -104,6 +139,7 @@ class IrClimate extends IrReceiverDevice {
           temp: this.device.setting.temp_cool,
           fan: 'auto'
         })
+        this.createautoofftimer(this.setting.autooffminutes)
       }))
       .AddAction(new ButtonAction(this, 'coolextra', 'Cool+', 'fa fa-icicles', function () {
         this.device.SendClimateObject({
@@ -112,6 +148,7 @@ class IrClimate extends IrReceiverDevice {
           temp: this.device.setting.temp_cool,
           fan: 'high'
         })
+        this.createautoofftimer(this.setting.autooffextraminutes)
       }))
       .AddAction(new ButtonAction(this, 'heat', 'Heat', 'fa fa-hot-tub', function () {
         this.device.SendClimateObject({
@@ -120,6 +157,7 @@ class IrClimate extends IrReceiverDevice {
           temp: this.device.setting.temp_heat,
           fan: 'auto'
         })
+        this.createautoofftimer(this.setting.autooffminutes)
       }))
       .AddAction(new ButtonAction(this, 'heatextra', 'Heat+', 'fa fa-hot-tub', function () {
         this.device.SendClimateObject({
@@ -128,6 +166,7 @@ class IrClimate extends IrReceiverDevice {
           temp: this.device.setting.temp_heat,
           fan: 'high'
         })
+        this.createautoofftimer(this.setting.autooffextraminutestes)
       }))
       .AddBoardItem(new AllActionBoardItem())
   };
