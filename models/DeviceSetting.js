@@ -1,3 +1,5 @@
+const stringUtils = require('../lib/stringUtils')
+
 const DeviceSettingTable = db.defineTable('DeviceSetting', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
@@ -14,19 +16,21 @@ const DeviceSettingModel = {
 
   async GetSettingsSync(deviceid) {
     const result = {}
-    for (const row of await DeviceSettingTable.select(['Name', 'Value'], 'WHERE Device = ?', [deviceid])) { result[row.Name] = row.Value }
+    for (const row of await DeviceSettingTable.select(['Name', 'Value'], 'WHERE Device = ?', [deviceid])) {
+      result[row.Name] = stringUtils.unbox(row.Value)
+    }
     return result
   },
 
   async UpdateSettingSync(deviceid, name, value) {
     await DeviceSettingTable.delete('WHERE Device = ? AND Name = ?', [deviceid, name])
-    if (value) { await DeviceSettingTable.insert({ Device: deviceid, Name: name, Value: value }) }
+    if (value) { await DeviceSettingTable.insert({ Device: deviceid, Name: name, Value: stringUtils.box(value) }) }
   },
 
   async UpdateSettingsSync(deviceid, settingobj) {
     await DeviceSettingTable.delete('WHERE Device = ?', [deviceid])
     for (const [name, value] of Object.entries(settingobj)) {
-      await DeviceSettingTable.insert({ Device: deviceid, Name: name, Value: value })
+      await DeviceSettingTable.insert({ Device: deviceid, Name: name, Value: stringUtils.box(value) })
     }
   }
 
