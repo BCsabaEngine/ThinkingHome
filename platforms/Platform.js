@@ -48,7 +48,6 @@ class Platform {
   async ReadSettings() {
     const settingread = await PlatformSettingModel.GetSettingsSync(this.GetCode())
     for (const key of Object.keys(settingread).filter(key => key in this.setting)) this.setting[key] = settingread[key]
-    // TODO: Convert '0' to false
   }
 
   async AdaptSetting(name, value) {
