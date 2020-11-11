@@ -196,6 +196,8 @@ block content
                     br
                     b
                       = middlemask(systemsettings.CloudToken, 75) || 'Not set' 
+
+
           .callout.callout-success
             h5
               i.fa.fa-route.fa-fw.text-success
@@ -223,6 +225,8 @@ block content
                   | . 
                 else
                   | The system never refreshed dynamic DNS.
+
+
           .callout.callout-success
             h5
               i.fa.fa-cloud-upload-alt.fa-fw.text-success
@@ -250,6 +254,8 @@ block content
                   | . 
                 else
                   | The system never tried to make an automatic backup.
+
+
           .callout.callout-success
             h5
               i.fa.fa-sd-card.fa-fw.text-success
@@ -266,6 +272,59 @@ block content
                 | You decide how often you make backups. It is recommended to make a backup for all major changes.
             a.btn.btn-default.black.ml-3(href="/settings/backup/download")
               | Download backup
+
+
+          .callout.callout-warning
+            h5
+              i.fa.fa-route.fa-fw.text-warning
+              |  IP handling
+            p
+              small
+                | Built-in IP protection prevents certain remote computers from accessing your ThinkingHome system. The list is updated daily. You can check blacklisted IPs.
+                br
+                | You can enable the '404 protection' option below to suspend access for a short time after a few unsuccessful (404 - page not found) requests, thereby protecting your system from malicious attempts or attacks. You can see the actually banned IPs.
+                br
+                | 
+
+              br
+              if systemsettings.BanIPBy404
+                button.btn.btn-default.black.ml-3(onclick="setinline('banipby404', 0, 'vt4')")
+                  | Enabled
+                  br
+                  small
+                    | press to disable
+              else
+                button.btn.btn-warning.black.ml-3(onclick="setinline('banipby404', 1, 'vt4')")
+                  | Disabled
+                  br
+                  small
+                    | press to enable
+
+              if ipblacklist.length
+                - var blacklistediplist = ipblacklist.join('<br/>')
+                button.btn.btn-default.black.ml-3.float-right(onclick="showblacklistedips()")
+                  | Show
+                  | 
+                  = ipblacklist.length
+                  | 
+                  | blacklisted IPs
+              else
+                button.btn.btn-default.disabled.black.ml-3.float-right
+                  | No blacklisted IPs
+
+              if ipbanlist.length
+                - var bannediplist = ipbanlist.join('<br/>')
+                button.btn.btn-default.black.ml-3.float-right(onclick="showbannedips()")
+                  | Show
+                  | 
+                  = ipbanlist.length
+                  | 
+                  | banned IPs
+              else
+                button.btn.btn-default.disabled.black.ml-3.float-right
+                  | No banned IPs
+
+
           .callout.callout-danger#restartbox
             h5
               i.fa.fa-power-off.fa-fw.text-danger
@@ -628,4 +687,22 @@ block content
             });
         }
       })
+    }
+
+    function showbannedips()
+    {
+      Swal.fire({
+        icon: 'info',
+        title: 'Banned IPs',
+        html: '!{bannediplist}',
+      })      
+    }
+
+    function showblacklistedips()
+    {
+      Swal.fire({
+        icon: 'info',
+        title: 'Blacklisted IPs',
+        html: '!{blacklistediplist}',
+      })      
     }

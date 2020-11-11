@@ -10,16 +10,19 @@ const http404 = 404
 const http500 = 500
 
 module.exports = (app) => {
+  app.ipblacklist = []
+  app.ipbanlist = []
+
   if (global.IsProduction) {
     app.use(IpBlacklist.check({
       blackLists: [
         'blacklist.ips',
         'https://sslbl.abuse.ch/blacklist/sslipblacklist.txt',
         'https://sslbl.abuse.ch/blacklist/sslipblacklist_aggressive.txt'
-        // 'https://myip.ms/files/blacklist/general/latest_blacklist.txt'
       ],
       whiteListLifeTimeMs: 1 * 60 * 1000,
       onFailRequest: function (ipAddress) {
+        if (!app.ipblacklist.includes(ipAddress)) app.ipblacklist.push(ipAddress)
         logger.warn(`[IPBlackList] Banned IP ${ipAddress}`)
         fs.appendFile('blacklist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
       }
@@ -27,10 +30,12 @@ module.exports = (app) => {
 
     app.use(IpBan.check({
       onBan: function (ipAddress) {
+        if (!app.ipbanlist.includes(ipAddress)) app.ipbanlist.push(ipAddress)
         logger.warn(`[IPBanList] Banned IP ${ipAddress}`)
         fs.appendFile('banlist.ips', ipAddress + require('os').EOL, 'utf8', () => { })
       },
       onPermit: function (ipAddress) {
+        if (!app.ipbanlist.includes(ipAddress)) app.ipbanlist = app.ipbanlist.filter(function (value) { return value !== ipAddress })
         logger.warn(`[IPBanList] Permit IP ${ipAddress}`)
       }
     }))

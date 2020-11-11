@@ -46,7 +46,9 @@ module.exports = (app) => {
         lastautobackup,
         lastmanualbackup,
         lastboot,
-        lastrestart
+        lastrestart,
+        ipblacklist: app.ipblacklist,
+        ipbanlist: app.ipbanlist
       })
     } catch (err) { next(err) }
   })
@@ -270,12 +272,6 @@ module.exports = (app) => {
         return null
       })
       SystemLogModel.Insert(topicmanualbackup, 'Manual backup created successfully')
-    } catch (err) { next(err) }
-  })
-
-  app.post('/settings/backup/upload', async function (req, res, next) {
-    try {
-      res.send('OK')
     } catch (err) { next(err) }
   })
 }
