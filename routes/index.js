@@ -39,6 +39,8 @@ module.exports = (app) => {
         logger.warn(`[IPBanList] Permit IP ${ipAddress}`)
       }
     }))
+
+    app.IpBan = IpBan
   }
 
   if (config.web.ssl && config.web.ssl.port) {

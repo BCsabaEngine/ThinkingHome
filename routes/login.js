@@ -49,7 +49,10 @@ module.exports = (app) => {
 
     // must login
     if (req.method === 'GET') {
-      if (req.path !== '/') { return res.redirect('/') } else { return res.render('login', { title: 'Login' }) }
+      if (req.path !== '/') {
+        if (app.IpBan) app.IpBan.add404(req)
+        return res.redirect('/')
+      } else return res.render('login', { title: 'Login' })
     }
 
     return res.status(http403).end()
