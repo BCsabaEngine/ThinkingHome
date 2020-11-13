@@ -69,24 +69,24 @@ class GenericDevice extends ZigbeeDevice {
     this.InitEntities()
   }
 
-  GetTopic() {
-    return (this.setting.topic || this.name).toLowerCase()
-  }
+  GetTopic() { return (this.setting.topic || this.name).toLowerCase() }
 
-  SendCmnd(command, message) {
-    const topic = `cmnd/${this.GetTopic()}/${command}`
-    // console.log([topic, message]);
+  SendCommand(command, message) {
+    const topic = `${this.GetTopic()}/${command}`
     this.platform.SendMessage(topic, message)
   }
 
   ProcessMessage(topic, message) {
     if (topic === this.GetTopic()) return true
+    if (topic === `${this.GetTopic()}/get`) return true
     return false
   }
 
-  ProcessActionObj(action) { }
+  ProcessSpecificMessageObj(messageobj) { }
 
   ProcessMessageObj(topic, messageobj) {
+    if (topic === `${this.GetTopic()}/get`) return true
+
     if (topic === this.GetTopic()) {
       this.zigbeeLastTime = new Date().getTime()
       if (messageobj.linkquality) this.zigbeeLinkQuality = messageobj.linkquality
@@ -101,8 +101,7 @@ class GenericDevice extends ZigbeeDevice {
         }
       }
 
-      // console.log(messageobj)
-      if (messageobj.action) this.ProcessActionObj(messageobj)
+      this.ProcessSpecificMessageObj(messageobj)
 
       return true
     }

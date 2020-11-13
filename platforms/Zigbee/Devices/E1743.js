@@ -2,8 +2,8 @@ const GenericDevice = require('./GenericDevice')
 const { EventEntity } = require('../../Entity')
 
 class E1743 extends GenericDevice {
-  ProcessActionObj(actionobj) {
-    switch (actionobj.action) {
+  ProcessSpecificMessageObj(messageobj) {
+    switch (messageobj.action) {
       case 'on':
         this.entities.pushbutton.DoEvent('on')
         break

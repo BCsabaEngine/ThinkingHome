@@ -2,8 +2,8 @@ const GenericDevice = require('./GenericDevice')
 const { EventEntity } = require('../../Entity')
 
 class E1744 extends GenericDevice {
-  ProcessActionObj(actionobj) {
-    switch (actionobj.action) {
+  ProcessSpecificMessageObj(messageobj) {
+    switch (messageobj.action) {
       case 'rotate_left':
         this.entities.rotator.DoEvent('left')
         break

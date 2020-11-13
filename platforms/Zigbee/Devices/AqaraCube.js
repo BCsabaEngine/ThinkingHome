@@ -2,8 +2,8 @@ const GenericDevice = require('./GenericDevice')
 const { EventEntity } = require('../../Entity')
 
 class AqaraCube extends GenericDevice {
-  ProcessActionObj(actionobj) {
-    switch (actionobj.action) {
+  ProcessSpecificMessageObj(messageobj) {
+    switch (messageobj.action) {
       case 'wakeup':
         this.entities.cube.DoEvent('wakeup')
         break
@@ -11,14 +11,14 @@ class AqaraCube extends GenericDevice {
         this.entities.cube.DoEvent('shake')
         break
       case 'rotate_left':
-        this.entities.cube.DoEvent('rotateleft', Math.round(actionobj.angle))
+        this.entities.cube.DoEvent('rotateleft', Math.round(messageobj.angle))
         break
       case 'rotate_right':
-        this.entities.cube.DoEvent('rotateright', Math.round(actionobj.angle))
+        this.entities.cube.DoEvent('rotateright', Math.round(messageobj.angle))
         break
       case 'flip90':
       case 'flip180':
-        this.entities.cube.DoEvent(actionobj.action, actionobj.side)
+        this.entities.cube.DoEvent(messageobj.action, messageobj.side)
         break
       case 'slide':
         this.entities.cube.DoEvent('slide')
