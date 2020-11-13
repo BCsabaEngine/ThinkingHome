@@ -323,7 +323,7 @@ class ZigbeePlatform extends Platform {
           result.push(`    { id: ${i}, label: "Coordinator", shape: "circle", color: "#FFAAAA"  },`)
           break
         case 'Router':
-          result.push(`    { id: ${i}, label: "Router", shape: "circle", color: "#AAFFAA"  },`)
+          result.push(`    { id: ${i}, label: "Router\\n${stringUtils.truncate(node.devicename, networkgraphnamemaxlength)}", shape: "circle", color: "#AAFFAA"  },`)
           break
         default:
           result.push(`    { id: ${i}, label: "${stringUtils.truncate(node.devicename, networkgraphnamemaxlength)}\\n${stringUtils.truncate(node.name, networkgraphnamemaxlength)}"  },`)
