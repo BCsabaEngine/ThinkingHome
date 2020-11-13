@@ -34,6 +34,14 @@ class GenericDevice extends ZigbeeDevice {
         error: false,
         canclear: true
       }
+      if (this.zigbeeUpdateAvailable) {
+        result.sendconfig = {
+          type: 'button',
+          title: 'Update firmware',
+          value: 'Start now',
+          onexecute: function () { this.platform.SendMessage('bridge/ota_update/update', this.GetTopic()) }.bind(this)
+        }
+      }
       return result
     }.bind(this),
     toTitle: function () { return this.constructor.name }.bind(this),
@@ -46,6 +54,7 @@ class GenericDevice extends ZigbeeDevice {
   zigbeeLinkQuality = '';
   zigbeeBatteryPercent = '';
   zigbeeVoltage = '';
+  zigbeeUpdateAvailable = '';
   GetStatusInfos() {
     const result = []
     // if (!this.zigbeeLastTime && (new Date().getTime() - this.starttime) > 3 * 60 * 1000) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
@@ -61,6 +70,7 @@ class GenericDevice extends ZigbeeDevice {
       })
     }
     if (this.zigbeeVoltage) { result.push({ device: this, message: 'Voltage', value: `${this.zigbeeVoltage} mV` }) }
+    if (this.zigbeeUpdateAvailable) { result.push({ device: this, message: 'Update', value: 'Available' }) }
     return result
   }
 
@@ -88,10 +98,12 @@ class GenericDevice extends ZigbeeDevice {
     if (topic === `${this.GetTopic()}/get`) return true
 
     if (topic === this.GetTopic()) {
+      console.log(messageobj)
       this.zigbeeLastTime = new Date().getTime()
       if (messageobj.linkquality) this.zigbeeLinkQuality = messageobj.linkquality
       if (messageobj.battery) this.zigbeeBatteryPercent = messageobj.battery
       if (messageobj.voltage) this.zigbeeVoltage = messageobj.voltage
+      this.zigbeeUpdateAvailable = messageobj.update_available
 
       for (const sensor of this.sensors) {
         let value = messageobj[sensor.code]
