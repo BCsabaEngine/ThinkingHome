@@ -98,7 +98,6 @@ class GenericDevice extends ZigbeeDevice {
     if (topic === `${this.GetTopic()}/get`) return true
 
     if (topic === this.GetTopic()) {
-      console.log(messageobj)
       this.zigbeeLastTime = new Date().getTime()
       if (messageobj.linkquality) this.zigbeeLinkQuality = messageobj.linkquality
       if (messageobj.battery) this.zigbeeBatteryPercent = messageobj.battery
