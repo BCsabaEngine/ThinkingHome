@@ -18,25 +18,36 @@ block content
 
   .row
     .col-md-10.offset-md-1
-      .card
-        .card-body.table-responsive.p-0
-          table.table.table-hover.text-nowrap
-            thead
-              tr
-                th Time
-                if !rulecode
-                  th Rule
-                th Message
-            tbody
-              each rulecodelog in rulecodelogs
-                tr
-                  td(width="10%")
-                    = dayjs(rulecodelog.DateTime).format("YYYY-MM-DD HH:mm:ss").replace(dayjs().format("YYYY-MM-DD"), '')
+
+      each rulecodeloggroup, index in rulecodeloggroups
+        .timeline
+          .time-label
+            span.bg-red
+              = index.replace(dayjs().format("YYYY-MM-DD"), 'Today')
+
+          each rulecodelog in rulecodeloggroup
+            div
+              i.fas.fa-code.bg-green
+              .timeline-item
+                span.time
+                  = dayjs(rulecodelog.DateTime).format("HH:mm:ss")
+                h3.timeline-header.no-border
+                  small
+                    = dayjs(rulecodelog.DateTime).format("HH:mm:ss")
+                  br
                   if !rulecode
-                    td.monospace
+                    b
+                      | [
                       = rulecodelog.RuleCodeName
-                  td.monospace
+                      | ]
+                      | 
+                      small
+                        | 
+                        = rulecodelog.Message
+                  else
                     = rulecodelog.Message
+          div
+            i.fas.fa-clock.bg-gray
 
   script(type='text/javascript')
     | subscribes = { rulecodelog : "content-wrapper" }

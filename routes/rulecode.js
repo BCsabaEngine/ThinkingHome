@@ -1,9 +1,12 @@
+const dayjs = require('dayjs')
+
 const jsbeautify = require('js-beautify').js
 const RuleCodeModel = require('../models/RuleCode')
 const RuleCodeHistoryModel = require('../models/RuleCodeHistory')
 const RuleCodeLogModel = require('../models/RuleCodeLog')
 const RuleCodeExecutor = require('../lib/ruleCodeExecutor')
 const ObjectUtils = require('../lib/objectUtils')
+const ArrayUtils = require('../lib/arrayUtils')
 
 const http411 = 411
 const rulecodeminlines = 30
@@ -128,11 +131,20 @@ module.exports = (app) => {
       const limit = 100
       RuleCodeLogModel.GetLastLogs(null, limit)
         .then(rulecodelogs => {
+          const rulecodeloggroups = ArrayUtils.groupByFn(
+            rulecodelogs,
+            (i) => dayjs(i.DateTime).format('YYYY-MM-DD'),
+            {
+              groupsortfn: (i) => i,
+              groupsortreverse: true,
+              itemsortproperty: '-DateTime'
+            })
+
           res.render('rulecodelog', {
             title: 'Rules log',
-            limit: limit,
-            rulecode: null,
-            rulecodelogs: rulecodelogs
+            limit,
+            rulecodeloggroups,
+            rulecode: null
           })
         })
     } catch (err) { next(err) }
@@ -146,11 +158,20 @@ module.exports = (app) => {
       const limit = 100
       RuleCodeLogModel.GetLastLogs(id, limit)
         .then(rulecodelogs => {
+          const rulecodeloggroups = ArrayUtils.groupByFn(
+            rulecodelogs,
+            (i) => dayjs(i.DateTime).format('YYYY-MM-DD'),
+            {
+              groupsortfn: (i) => i,
+              groupsortreverse: true,
+              itemsortproperty: '-DateTime'
+            })
+
           res.render('rulecodelog', {
             title: 'Rules log',
-            limit: limit,
-            rulecode: rulecode,
-            rulecodelogs: rulecodelogs
+            limit,
+            rulecodeloggroups,
+            rulecode
           })
         })
     } catch (err) { next(err) }
