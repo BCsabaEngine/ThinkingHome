@@ -178,7 +178,7 @@ class IrPlatform extends Platform {
   }
 
   async WebDeleteDevice(req, res, next) {
-    const id = req.body.id
+    const id = Number.parseInt(req.body.id)
 
     await DeviceModel.DeleteSync(id, this.GetCode())
 
