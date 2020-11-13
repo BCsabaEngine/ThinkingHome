@@ -17,17 +17,21 @@ class ZigbeePlatform extends Platform {
     toDisplayList: function () {
       const result = {}
 
-      result.allowjoin = {
-        type: 'button',
-        title: 'Allow join',
-        value: 'Allow',
-        onexecute: function () { this.SendMessage('bridge/config/permit_join', 'true') }.bind(this)
+      if (!this.bridgePermitjoin) {
+        result.allowjoin = {
+          type: 'button',
+          title: 'Allow join',
+          value: 'Allow',
+          onexecute: function () { this.SendMessage('bridge/config/permit_join', 'true') }.bind(this)
+        }
       }
-      result.denyjoin = {
-        type: 'button',
-        title: 'Deny join',
-        value: 'Deny',
-        onexecute: function () { this.SendMessage('bridge/config/permit_join', 'false') }.bind(this)
+      if (this.bridgePermitjoin) {
+        result.denyjoin = {
+          type: 'button',
+          title: 'Deny join',
+          value: 'Deny',
+          onexecute: function () { this.SendMessage('bridge/config/permit_join', 'false') }.bind(this)
+        }
       }
       result.listdevices = {
         type: 'button',
@@ -87,7 +91,7 @@ class ZigbeePlatform extends Platform {
     if (this.bridgeCoordinatorRevision) result.push({ message: 'Coordinator revision', value: this.bridgeCoordinatorRevision })
     if (this.bridgeLoglevel) result.push({ message: 'Log level', value: this.bridgeLoglevel })
     if (this.bridgeNetworkChannel) result.push({ message: 'Network', value: `ch ${this.bridgeNetworkChannel}` })
-    if (this.bridgePermitjoin !== undefined) result.push({ message: 'Join to network', value: this.bridgePermitjoin ? 'Allowed' : 'Denied' })
+    if (this.bridgePermitjoin) result.push({ message: 'Join to network', value: 'Allowed' })
 
     const statusinfos = super.GetStatusInfos()
     if (Array.isArray(statusinfos)) {
@@ -299,7 +303,7 @@ class ZigbeePlatform extends Platform {
   }
 
   async WebDeleteDevice(req, res, next) {
-    const id = req.body.id
+    const id = Number.parseInt(req.body.id)
 
     await DeviceModel.DeleteSync(id, this.GetCode())
 
