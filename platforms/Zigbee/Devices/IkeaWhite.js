@@ -8,7 +8,7 @@ const brightmax = 255
 
 const brightstep = 30
 
-class WhiteDimmLamp extends GenericDevice {
+class IkeaWhite extends GenericDevice {
   ProcessSpecificMessageObj(messageobj) {
     this.entities.state.SetState(messageobj.state === 'ON')
     this.entities.bright.SetValue(messageobj.brightness)
@@ -58,4 +58,4 @@ class WhiteDimmLamp extends GenericDevice {
 
   SendState(data) { this.SendCommand('set', JSON.stringify(data)) }
 }
-module.exports = WhiteDimmLamp
+module.exports = IkeaWhite
