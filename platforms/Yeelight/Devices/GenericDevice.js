@@ -7,10 +7,6 @@ const brightmin = 1
 const brightmid = 50
 const brightmax = 100
 
-const colortempwarm = 2000
-const colortempnatural = 4500
-const colortempcold = 6500
-
 class GenericDevice extends YeelightDevice {
   additionalentities = {};
 
@@ -85,41 +81,6 @@ class GenericDevice extends YeelightDevice {
 
         if (!this.entities.state.state) this.yeelight.setPower(true)
         this.yeelight.setBright(brightness)
-      }))
-      .AddAction(new ButtonAction(this, 'rgb', 'Custom RGB', 'fa fa-thermometer-quarter', (r, g, b, brightness) => {
-        if (!this.yeelight) return
-
-        if (!this.entities.state.state) this.yeelight.setPower(true)
-        if (r && g && b) this.yeelight.setRGB([r, g, b])
-        if (brightness) this.yeelight.setBright(brightness)
-      }))
-      .AddAction(new ButtonAction(this, 'ct', 'Custom CT', 'fa fa-thermometer-quarter', (ct, brightness) => {
-        if (!this.yeelight) return
-
-        if (!this.entities.state.state) this.yeelight.setPower(true)
-        if (ct) this.yeelight.setCT(ct)
-        if (brightness) this.yeelight.setBright(brightness)
-      }))
-      .AddAction(new ButtonAction(this, 'ct2000', '-10 bright', 'fa fa-thermometer-quarter', (brightness) => {
-        if (!this.yeelight) return
-
-        if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(colortempwarm)
-        if (brightness) this.yeelight.setBright(brightness)
-      }))
-      .AddAction(new ButtonAction(this, 'ct4500', '-10 bright', 'fa fa-thermometer-quarter', (brightness) => {
-        if (!this.yeelight) return
-
-        if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(colortempnatural)
-        if (brightness) this.yeelight.setBright(brightness)
-      }))
-      .AddAction(new ButtonAction(this, 'ct6500', '-10 bright', 'fa fa-thermometer-quarter', (brightness) => {
-        if (!this.yeelight) return
-
-        if (!this.entities.state.state) this.yeelight.setPower(true)
-        this.yeelight.setCT(colortempcold)
-        if (brightness) this.yeelight.setBright(brightness)
       }))
   }
 
