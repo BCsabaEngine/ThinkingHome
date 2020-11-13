@@ -115,7 +115,7 @@ class RaspberryPiPlatform extends Platform {
     const maxitemswithoutgrouping = 6
 
     arrayUtils.sortByProperty(this.devices, 'name')
-    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, 'name') : null
+    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name, { itemsortproperty: 'name' }) : null
 
     res.render('platforms/raspberrypi/main', {
       title: 'RaspberryPI platform',

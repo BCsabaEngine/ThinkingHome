@@ -187,7 +187,7 @@ class PresencePlatform extends Platform {
     const maxitemswithoutgrouping = 6
 
     arrayUtils.sortByProperty(this.devices, 'name')
-    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name.replace('Presence', ''), 'name') : null
+    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.constructor.name.replace('Presence', ''), { itemsortproperty: 'name' }) : null
 
     res.render('platforms/presence/main', {
       title: 'Presence platform',

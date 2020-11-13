@@ -265,7 +265,7 @@ class ZigbeePlatform extends Platform {
     const maxitemswithoutgrouping = 6
 
     arrayUtils.sortByProperty(this.devices, 'name')
-    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.setting.toTitle(), 'name') : null
+    const devicegroups = this.devices.length > maxitemswithoutgrouping ? arrayUtils.groupByFn(this.devices, (device) => device.setting.toTitle(), { itemsortproperty: 'name' }) : null
 
     res.render('platforms/zigbee/main', {
       title: 'Zigbee platform',
