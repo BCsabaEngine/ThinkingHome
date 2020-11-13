@@ -126,10 +126,12 @@ block content
                       if !index
                         - text = "<b>" + text + "</b>"
                       if action instanceof ButtonAction
-                        a.dropdown-item(href='#' onclick="executeaction('" + entity.code + "', '" + action.code + "')")
-                          i.text-primary(class=action.icon)
-                          | 
-                          != text
+                        - var args = getFunctionArgs(action.handler)
+                        if args.length == 0
+                          a.dropdown-item(href='#' onclick="executeaction('" + entity.code + "', '" + action.code + "')")
+                            i.text-primary(class=action.icon)
+                            | 
+                            != text
                       else if action instanceof SelectAction
                         a.dropdown-item(href='#' onclick="selectaction('" + entity.code + "', '" + action.code + "', '" + action.name + "', " + action.lookup + ")")
                           i.text-primary(class=action.icon)

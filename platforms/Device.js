@@ -1,10 +1,12 @@
 const express = require('express')
+
 const DeviceLogModel = require('../models/DeviceLog')
 const DeviceSettingModel = require('../models/DeviceSetting')
 const DeviceTelemetryModel = require('../models/DeviceTelemetry')
 const DeviceStateSeriesModel = require('../models/DeviceStateSeries')
 const RuleCodeModel = require('../models/RuleCode')
 const timelineConverter = require('../lib/timelineConverter')
+const ObjectUtils = require('../lib/objectUtils')
 const { TelemetryEntity, StateEntity } = require('./Entity')
 const { ButtonAction, SelectAction, RangeAction } = require('./Action')
 
@@ -75,6 +77,7 @@ class Device {
       device: this,
 
       rulecode: await RuleCodeModel.GetForDeviceSync(this.id),
+      getFunctionArgs: ObjectUtils.getFunctionArgs,
 
       TelemetryEntity,
       StateEntity,
