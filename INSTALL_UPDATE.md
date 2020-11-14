@@ -22,6 +22,7 @@
  curl -sL https://deb.nodesource.com/setup_14.x | sudo -E bash -
  apt-get install -y nodejs
  node -v && npm -v
+ npm config set unsafe-perm true
  apt-get install -y mariadb-server
  mysql_secure_installation
  [mysql:] CREATE DATABASE ThinkingHome;
@@ -41,7 +42,7 @@
  ```sh
  mkdir & cd to your favorite folder
  git clone https://github.com/BCsabaEngine/ThinkingHome.git .
- npm install --production --unsafe-perm
+ npm install --production
  cp ./config.js.sample ./config.js
  NODE_ENV=production pm2 start ./index.js --name ThinkingHome
  pm2 save
@@ -56,7 +57,7 @@
  ```sh
  mkdir & cd to your favorite folder 2
  git clone https://github.com/Koenkk/zigbee2mqtt.git .
- npm ci --unsafe-perm
+ npm ci
  edit /zigbee2mqtt/data/configuration.yaml
  optionally create service file
  npm start
@@ -68,7 +69,7 @@
  
  git reset --hard HEAD
  git pull
- npm update --production --unsafe-perm
+ npm update --production
  
  pm2 start ThinkingHome
 ```
