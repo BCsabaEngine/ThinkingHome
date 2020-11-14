@@ -33,14 +33,14 @@ block content
             .row
               .col-sm-2.offset-md-1
                 .form-group
-                  button.btn.btn-default(onclick="showsetting_text('latitude', 'Latitude', '" + systemsettings.Latitude + "', 'vt1')")
+                  button.btn.btn-default(onclick="showsetting_text('Latitude', 'Latitude', '" + systemsettings.Latitude + "', 'vt1')")
                     | Latitude
                     br
                     b
                       = systemsettings.Latitude || 'Not set'
               .col-sm-2
                 .form-group
-                  button.btn.btn-default(onclick="showsetting_text('longitude', 'Longitude', '" + systemsettings.Longitude + "', 'vt1')")
+                  button.btn.btn-default(onclick="showsetting_text('Longitude', 'Longitude', '" + systemsettings.Longitude + "', 'vt1')")
                     | Longitude
                     br
                     b
@@ -62,7 +62,7 @@ block content
             .row
               .col-sm-4.offset-md-1
                 .form-group
-                  button.btn.btn-default(onclick="showsetting_text('openweathermapapikey', 'OpenweathermapApiKey', '" + systemsettings.OpenweathermapApiKey + "', 'vt1')")
+                  button.btn.btn-default(onclick="showsetting_text('OpenweathermapApiKey', 'OpenweathermapApiKey', '" + systemsettings.OpenweathermapApiKey + "', 'vt1')")
                     | OpenWeatherMap API key
                     br
                     b
@@ -191,7 +191,7 @@ block content
             .row
               .col-sm-6.offset-md-1
                 .form-group
-                  button.btn.btn-default(onclick="showsetting_text('cloudtoken', 'CloudToken', '" + systemsettings.CloudToken + "', 'vt4')")
+                  button.btn.btn-default(onclick="showsetting_text('CloudToken', 'CloudToken', '" + systemsettings.CloudToken + "', 'vt4')")
                     | Token
                     br
                     b
@@ -288,13 +288,13 @@ block content
 
               br
               if systemsettings.BanIPBy404
-                button.btn.btn-default.black.ml-3(onclick="setinline('banipby404', 0, 'vt4')")
+                button.btn.btn-default.black.ml-3(onclick="setinline('BanIPBy404', 0, 'vt4')")
                   | Enabled
                   br
                   small
                     | press to disable
               else
-                button.btn.btn-warning.black.ml-3(onclick="setinline('banipby404', 1, 'vt4')")
+                button.btn.btn-warning.black.ml-3(onclick="setinline('BanIPBy404', 1, 'vt4')")
                   | Disabled
                   br
                   small
@@ -405,8 +405,8 @@ block content
         {
           var latitude = position.coords.latitude.toFixed(6);
           var longitude = position.coords.longitude.toFixed(6);
-          setinline('latitude', latitude, '-');
-          setinline('longitude', longitude, 'vt1');
+          setinline('Latitude', latitude, '-');
+          setinline('Longitude', longitude, 'vt1');
         });
       }
       else
