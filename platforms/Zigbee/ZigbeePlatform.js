@@ -22,7 +22,7 @@ class ZigbeePlatform extends Platform {
           type: 'button',
           title: 'Allow join',
           value: 'Allow',
-          onexecute: function () { this.SendMessage('bridge/config/permit_join', 'true') }.bind(this)
+          onexecute: function () { this.SendMessagePermitJoin(true) }.bind(this)
         }
       }
       if (this.bridgePermitjoin) {
@@ -30,20 +30,20 @@ class ZigbeePlatform extends Platform {
           type: 'button',
           title: 'Deny join',
           value: 'Deny',
-          onexecute: function () { this.SendMessage('bridge/config/permit_join', 'false') }.bind(this)
+          onexecute: function () { this.SendMessagePermitJoin(false) }.bind(this)
         }
       }
       result.listdevices = {
         type: 'button',
         title: 'Zigbee devices',
         value: this.bridgeDevices.length ? 'Refresh list' : 'Get list',
-        onexecute: function () { this.SendMessage('bridge/config/devices/get', '') }.bind(this)
+        onexecute: function () { this.SendMessageGetDevices() }.bind(this)
       }
       result.listnetwork = {
         type: 'button',
         title: 'Zigbee network',
         value: this.bridgeNetworkNodes.length ? 'Refresh graph' : 'Get graph',
-        onexecute: function () { this.SendMessage('bridge/networkmap', 'raw') }.bind(this)
+        onexecute: function () { this.SendMessageNetworkMap() }.bind(this)
       }
 
       return result
@@ -107,6 +107,18 @@ class ZigbeePlatform extends Platform {
     this.msgcounter.outgoing++
     global.runningContext.zigbeeInterCom.SendZigbeeMqtt(topic, message)
   }
+
+  SendMessagePermitJoin(allow) {
+    if (allow === undefined) {
+      this.SendMessage('bridge/config/permit_join', '')
+    } else {
+      this.SendMessage('bridge/config/permit_join', allow ? 'true' : 'false')
+      if (allow) setTimeout(function () { this.SendMessagePermitJoin(false) }.bind(this), 10 * 60 * 1000)
+    }
+  }
+
+  SendMessageGetDevices() { this.SendMessage('bridge/config/devices/get', '') }
+  SendMessageNetworkMap() { this.SendMessage('bridge/networkmap', 'raw') }
 
   OnMessage(topic, message) {
     this.msgcounter.incoming++
@@ -221,16 +233,22 @@ class ZigbeePlatform extends Platform {
     this.approuter.post('/adddevice', this.WebAddDevice.bind(this))
     this.approuter.post('/deletedevice', this.WebDeleteDevice.bind(this))
     this.approuter.get('/networkmap.js', this.WebNetworkMapJs.bind(this))
+    this.approuter.post('/forceremove', this.WebForceRemove.bind(this))
 
     for (const device of await DeviceModel.GetPlatformDevicesSync(this.GetCode())) { await this.CreateAndStartDevice(device.Type, device.Id, device.Name) }
     await super.Start()
     logger.info(`[Platform] ${this.constructor.name} started with ${this.devices.length} device(s)`)
 
     setTimeout(function () {
-      this.SendMessage('bridge/config/permit_join', '') // Retrieve config
-      this.SendMessage('bridge/config/devices/get', '') // Retrieve devices
-      this.SendMessage('bridge/networkmap', 'raw') // Retrieve networkmap
-    }.bind(this), 2 * 1000)
+      this.SendMessagePermitJoin() // Retrieve config
+      this.SendMessageGetDevices()
+      this.SendMessageNetworkMap()
+    }.bind(this), 3 * 1000)
+
+    setInterval(function () {
+      this.SendMessageGetDevices()
+      this.SendMessageNetworkMap()
+    }.bind(this), 60 * 60 * 1000)
   }
 
   async CreateAndStartDevice(type, id, name) {
@@ -355,6 +373,15 @@ class ZigbeePlatform extends Platform {
     result.push('}')
 
     res.send(result.join('\n'))
+  }
+
+  async WebForceRemove(req, res, next) {
+    const ieee = req.body.ieee
+
+    this.SendMessage('bridge/config/force_remove', ieee)
+    this.SendMessageGetDevices()
+
+    res.send('OK')
   }
 
   static GetHandlerCount() { return Object.keys(ZigbeeDevice.GetTypes()).length }

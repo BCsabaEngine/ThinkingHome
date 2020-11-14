@@ -60,7 +60,27 @@ block script
           icon: 'info',
           title: '#{bridgedevice.description || bridgedevice.type}',
           html: '#{bridgedevice.lasttimehuman} (#{bridgedevice.lasttime}) <br/> #{bridgedevice.ieee} <br/> #{bridgedevice.manufacturer} #{bridgedevice.vendor} <br/> #{bridgedevice.model} #{bridgedevice.powersource}',
-          showCancelButton: false,
+          confirmButtonText: 'OK',
+          showCancelButton: true,
+          cancelButtonText: 'Unlink device',
+        }).then((result) => {
+          if (result.isDismissed && result.dismiss === 'cancel')
+          {
+            showconfirmdeletedialog("Device #{bridgedevice.description || bridgedevice.type} will be unlinked from Zigbee coordinator", function() 
+            {
+              $.post("/platform/zigbee/forceremove/", {ieee: '#{bridgedevice.ieee}'})
+                .done(function(data) {
+                  pagereload(750)
+                })
+                .fail(function(error) {
+                  Swal.fire(
+                    'Error occured',
+                    error.responseText,
+                    'error'
+                  )            
+                });
+            });
+          }
         })
       }
 
