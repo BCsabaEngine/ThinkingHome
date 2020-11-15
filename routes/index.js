@@ -44,9 +44,10 @@ module.exports = (app) => {
   }
 
   if (config.web.ssl && config.web.ssl.port) {
-    // Force SSL
+    // Force SSL on NON local network
+    // Can skip it with URI like 'nossl'
     app.use((req, res, next) => {
-      if (!req.secure) return res.redirect(['https://', req.get('Host'), req.url].join(''))
+      if (!req.secure && !app.isLocalIp(req) && !(req.path || '').includes('nossl')) return res.redirect(['https://', req.get('Host'), req.url].join(''))
       return next()
     })
   }

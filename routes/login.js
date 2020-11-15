@@ -16,6 +16,8 @@ module.exports = (app) => {
   }
   logger.debug(`[HTTP] Local cidrs: ${cidrs.join(', ')}`)
 
+  app.isLocalIp = function (req) { return isInSubnet(req.connection.remoteAddress, cidrs) }
+
   // detect session in all request
   app.all('/*', async function (req, res, next) {
     if (req.session.user) return next()
@@ -41,7 +43,7 @@ module.exports = (app) => {
     }
 
     if (!(await UserModel.AnySync())) {
-      if (isInSubnet(req.connection.remoteAddress, cidrs)) return next()
+      if (app.isLocalIp(req)) return next()
     }
 
     // bypass login request
@@ -50,7 +52,7 @@ module.exports = (app) => {
     // must login
     if (req.method === 'GET') {
       if (req.path !== '/') {
-        if (!isInSubnet(req.connection.remoteAddress, cidrs) && app.IpBan) app.IpBan.add404(req)
+        if (!app.isLocalIp(req) && app.IpBan) app.IpBan.add404(req)
         return res.redirect('/')
       } else return res.render('login', { title: 'Login' })
     }
