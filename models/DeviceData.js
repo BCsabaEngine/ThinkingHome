@@ -1,12 +1,14 @@
 const md5 = require('md5')
 const stringUtils = require('../lib/stringUtils')
 
+const md5hashlength = 32
+
 const DeviceDataTable = db.defineTable('DeviceData', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     Device: db.ColTypes.int(10).notNull().index(),
-    KeyHash: db.ColTypes.varchar(100).notNull().unique(),
-    Key: db.ColTypes.varchar(100),
+    KeyHash: db.ColTypes.varchar(md5hashlength).notNull().unique(),
+    Key: db.ColTypes.varchar(1024),
     Value: db.ColTypes.mediumblob()
   },
   keys: [
@@ -26,7 +28,7 @@ const DeviceDataModel = {
 
   async GetDeviceDataSync(deviceid, key) {
     const rows = await DeviceDataTable.select(['KeyHash', 'Key', 'Value'], 'WHERE Device = ? AND KeyHash = ?', [deviceid, md5(key)])
-    if (rows && rows.length) return stringUtils.unbox(rows[0].Value)
+    if (rows && rows.length && rows[0].Key === key) return stringUtils.unbox(rows[0].Value)
     return null
   },
 
