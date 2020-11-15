@@ -50,7 +50,7 @@ module.exports = (app) => {
     // must login
     if (req.method === 'GET') {
       if (req.path !== '/') {
-        if (app.IpBan) app.IpBan.add404(req)
+        if (!isInSubnet(req.connection.remoteAddress, cidrs) && app.IpBan) app.IpBan.add404(req)
         return res.redirect('/')
       } else return res.render('login', { title: 'Login' })
     }
