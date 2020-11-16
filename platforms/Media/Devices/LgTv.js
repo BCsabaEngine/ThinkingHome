@@ -2,7 +2,7 @@ const lgtv2 = require('lgtv2')
 const wakeonlan = require('wakeonlan')
 
 const MediaDevice = require('../MediaDevice')
-const { TelemetryEntity, BoolStateEntity } = require('../../Entity')
+const { Entity, TelemetryEntity, BoolStateEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
 const { ButtonAction } = require('../../Action')
 
@@ -81,7 +81,19 @@ class LgTv extends MediaDevice {
           this.lgtvcli.request('ssap://audio/setVolume', { volume: this.volume.value - 1 })
         }.bind(this))
       }))
-      .AddBoardItem(new NumericValueGaugeBoardItem())
+      .AddBoardItem(new NumericValueGaugeBoardItem()),
+
+    toast: new Entity(this, 'toast', 'Toast', 'fa fa-comment-dots')
+      .AddAction(new ButtonAction(this, 'test', 'Test message', 'fa fa-comment-dots', () => {
+        if (!this.lgtvcli) return
+
+        this.lgtvcli.request('ssap://system.notifications/createToast', { message: 'Hello! This is a test message.' })
+      }))
+      .AddAction(new ButtonAction(this, 'show', 'Show message', 'fa fa-comment-dots', (message) => {
+        if (!this.lgtvcli) return
+
+        this.lgtvcli.request('ssap://system.notifications/createToast', { message: message })
+      }))
 
   };
 
