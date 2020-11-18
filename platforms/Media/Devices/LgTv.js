@@ -1,7 +1,7 @@
 const lgtv2 = require('lgtv2')
 const wakeonlan = require('wakeonlan')
 
-const ExpirationQueue = require('../../../lib/ExpirationQueue')
+const ExpirationQueue = require('../../../lib/expirationQueue')
 const MediaDevice = require('../MediaDevice')
 const { Entity, TelemetryEntity, BoolStateEntity } = require('../../Entity')
 const { NumericValueGaugeBoardItem } = require('../../BoardItem')
