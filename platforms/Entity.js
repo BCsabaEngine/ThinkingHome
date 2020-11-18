@@ -242,7 +242,7 @@ class StateEntity extends Entity {
 
   CompareState(a, b) { return a !== b }
 
-  StateToStore(state) { return state ? '1' : '0' }
+  StateToStore(state) { return state }
 
   StateFromStore(state) { return state }
 
@@ -271,6 +271,10 @@ class BoolStateEntity extends StateEntity {
     this.stateiconon = iconon
     return this
   }
+
+  StateToStore(state) { return state ? 1 : 0 }
+
+  StateFromStore(state) { return state ? 1 : 0 }
 
   get icon() {
     if (this.state) {
