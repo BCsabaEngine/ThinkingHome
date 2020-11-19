@@ -239,8 +239,8 @@ class LgTv extends MediaDevice {
       if (!res.returnValue) return
 
       const id = res.appId
-      const app = this.lgLaunchPoints.find((i) => i.id === id)
-      if (app) this.entities.app.displayvalue = app.title
+      const launchapp = this.lgLaunchPoints.find((i) => i.id === id)
+      if (launchapp) this.entities.app.displayvalue = launchapp.title
     }.bind(this))
 
     this.lgtvcli.subscribe('ssap://audio/getVolume', function (err, res) {
@@ -256,7 +256,7 @@ class LgTv extends MediaDevice {
 
       const id = res.appId
       const launchapp = this.lgLaunchPoints.find((i) => i.id === id)
-      if (launchapp) this.entities.app.xxxx = launchapp.title
+      if (launchapp) this.entities.app.displayvalue = launchapp.title
     }.bind(this))
 
     while (!this.cmdqueue.empty) {
