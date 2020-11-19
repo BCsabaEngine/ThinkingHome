@@ -18,6 +18,11 @@ class Entity extends EventEmitter {
   get icon() { return this._icon }
   toString() { return this.name }
 
+  SetToString(newmethod) {
+    this.toString = newmethod
+    return this
+  }
+
   constructor(device, code, name, icon) {
     super()
     this.device = device

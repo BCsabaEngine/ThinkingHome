@@ -119,6 +119,7 @@ class LgTv extends MediaDevice {
       .AddBoardItem(new NumericValueGaugeBoardItem()),
 
     app: new Entity(this, 'app', 'Application', 'fa fa-dice-d20')
+      .SetToString(function () { return this.displayvalue })
       .AddAction(new ButtonAction(this, 'launch', 'Launch', 'fa fa-dice-d20', (id) => {
         if (!this.lgtvcli) return
 
@@ -176,7 +177,7 @@ class LgTv extends MediaDevice {
   }
 
   InitApps() {
-    for (const app of [
+    for (const favoriteapp of [
       { code: 'livetv', name: 'Live TV', id: 'com.webos.app.livetv' },
       { code: 'av1', name: 'AV', id: 'com.webos.app.externalinput.av1' },
       { code: 'hdmi1', name: 'HDMI-1', id: 'com.webos.app.hdmi1' },
@@ -193,11 +194,11 @@ class LgTv extends MediaDevice {
       { code: 'browser', name: 'Browser', id: 'com.webos.app.browser' },
       { code: 'miracast', name: 'Screen share', id: 'com.webos.app.miracast' }
     ]) {
-      this.entities.app.AddAction(new ButtonAction(this, app.code, app.name, 'fa fa-dice-d20', () => {
+      this.entities.app.AddAction(new ButtonAction(this, favoriteapp.code, favoriteapp.name, 'fa fa-dice-d20', () => {
         if (!this.lgtvcli) return
 
         const fnc = function () {
-          this.lgtvcli.request('ssap://system.launcher/launch', { id: app.id })
+          this.lgtvcli.request('ssap://system.launcher/launch', { id: favoriteapp.id })
         }.bind(this)
 
         if (this.entities.state.state) fnc()
@@ -239,7 +240,7 @@ class LgTv extends MediaDevice {
 
       const id = res.appId
       const app = this.lgLaunchPoints.find((i) => i.id === id)
-      if (app) this.entities.app.name = app.title
+      if (app) this.entities.app.displayvalue = app.title
     }.bind(this))
 
     this.lgtvcli.subscribe('ssap://audio/getVolume', function (err, res) {
@@ -254,8 +255,8 @@ class LgTv extends MediaDevice {
       if (!res.returnValue) return
 
       const id = res.appId
-      const app = this.lgLaunchPoints.find((i) => i.id === id)
-      if (app) this.entities.app.name = app.title
+      const launchapp = this.lgLaunchPoints.find((i) => i.id === id)
+      if (launchapp) this.entities.app.xxxx = launchapp.title
     }.bind(this))
 
     while (!this.cmdqueue.empty) {
