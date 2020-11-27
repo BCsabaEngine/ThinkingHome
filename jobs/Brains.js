@@ -67,9 +67,11 @@ async function UpdateDynDns() {
     } catch { }
 
     SystemLogModel.Insert(topicdyndns, `DNS sync completed: ${message}`)
-
-    userNotify.addToAdmin(null, 0, 'fa fa-blog', 'DNS sync', `DNS sync completed: ${message}`)
-  } catch (err) { SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`) }
+    userNotify.addToAdmin(null, 0, 'fa fa-route', 'DNS sync', `DNS sync completed: ${message}`)
+  } catch (err) {
+    SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`)
+    userNotify.addToAdmin(null, 2, 'fa fa-route', 'DNS sync', `DNS sync failed: ${err.message}`)
+  }
 }
 
 if (config.brainserver.dyndnsservice) {
