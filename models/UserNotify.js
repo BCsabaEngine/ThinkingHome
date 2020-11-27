@@ -20,10 +20,10 @@ const UserNotifyModel = {
 
   GetByUserId(userid, limit = 100) {
     return db.pquery(`
-      SELECT ud.Id, un.DateTime, un.Level, un.Icon, un.Subject, un.Message, un.ReadDateTime
+      SELECT un.Id, un.DateTime, un.Level, un.Icon, un.Subject, un.Message, un.ReadDateTime
       FROM UserNotify un
       WHERE un.User = ?
-      ORDER BY dt.DateTime DESC, dt.Id DESC
+      ORDER BY un.DateTime DESC, un.Id DESC
       LIMIT ?`, [userid, limit])
   },
 
@@ -42,7 +42,12 @@ const UserNotifyModel = {
   },
 
   async MakeReadByIdSync(id, user) {
-    return await UserNotifyTable.update('ReadDateTime = NOW WHERE Id = ? AND User = ?', [id, user])
+    await UserNotifyTable.update('ReadDateTime = NOW() WHERE Id = ? AND User = ?', [id, user])
+    return await UserNotifyTable.select(['Subject', 'Message', 'Level', 'Icon'], 'WHERE Id = ? AND User = ?', [id, user])
+  },
+
+  async MakeReadAllByUserSync(user) {
+    await UserNotifyTable.update('ReadDateTime = NOW() WHERE User = ?', [user])
   },
 
   async RemoveUnreadByCodeSync(code) {

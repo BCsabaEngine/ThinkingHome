@@ -1,0 +1,60 @@
+extends _base
+
+block content
+  section.content-header
+    .container-fluid
+      h4
+        | User notifies
+        small
+          | 
+          | (last
+          | 
+          = limit
+          | 
+          | notify)
+
+  center
+    button.btn.btn-default(onclick="readallusernotify()")
+      | Set all read
+
+  .row
+    .col-md-10.offset-md-1
+
+      each notifygroup, index in notifygroups
+        .timeline
+          .time-label
+            span.bg-info
+              = index.replace(dayjs().format("YYYY-MM-DD"), 'Today')
+
+          each notify in notifygroup
+            div
+              case notify.Level
+                when 1
+                  i.bg-warning(class=notify.Icon || "fa fa-exclamation-triangle")
+                when 2
+                  i.bg-error(class=notify.Icon || "fa fa-exclamation-circle")
+                default
+                  i.bg-info(class=notify.Icon || "fa fa-info-circle")
+              .timeline-item
+                span.time
+                  = dayjs(notify.DateTime).format("HH:mm:ss")
+                h3.timeline-header.no-border
+                  b
+                    = notify.Subject
+                  br
+                  = notify.Message
+          div
+            i.fas.fa-clock.bg-gray
+
+  script(type='text/javascript').
+    if (#{user.id})
+    {
+      if (typeof subscribes === 'undefined') subscribes = {}
+      subscribes['usernotify_#{user.id}'] = "content-wrapper";
+    }
+
+    function readallusernotify()
+    {
+      $.post('/notify/readall')
+       .done(function() { pagereload() });
+    }
