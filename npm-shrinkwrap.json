@@ -4577,9 +4577,9 @@
       "integrity": "sha512-HkpPZVMYsnhFUBLdy/LvkU9snggKP3VAuSVnPhVXjxdg02lWbFx0W8H3m7A+WMWw2diXZS1wIa4m67XkNxdvew=="
     },
     "systeminformation": {
-      "version": "4.30.5",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.5.tgz",
-      "integrity": "sha512-aYWs8yttl8ePpr6VOQ/Ak8cznuc9L/NQODVhbOKhInX73ZMLvV2BS86Mzr7LLfmUteVFR36CTDNQgiJgRqq+SQ=="
+      "version": "4.30.6",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.6.tgz",
+      "integrity": "sha512-NV7zo9NU7fWSuiCORZmMLe90cFrrTS6jfalrQ0/5B7JGQ2ei15c2gmfICBwWdmviyv/FXAFVReySxOtDDkppqw=="
     },
     "table": {
       "version": "5.4.6",

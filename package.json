@@ -52,7 +52,7 @@
     "serve-favicon": "^2.5.0",
     "subnet-check": "^1.10.1",
     "suncalc": "^1.8.0",
-    "systeminformation": "^4.30.5",
+    "systeminformation": "^4.30.6",
     "vis-network": "^8.5.4",
     "wakeonlan": "^0.1.0",
     "ws": "^7.4.0",
