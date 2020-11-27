@@ -3,7 +3,7 @@ const fs = require('fs')
 const got = require('got')
 const FormData = require('form-data')
 
-const userNotify = require('./lib/userNotify')
+const userNotify = require('../lib/userNotify')
 const BackupBuilder = require('../lib/backupBuilder')
 const SystemLogModel = require('../models/SystemLog')
 

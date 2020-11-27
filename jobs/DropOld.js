@@ -1,5 +1,5 @@
 const schedule = require('node-schedule')
-const userNotify = require('./lib/userNotify')
+const userNotify = require('../lib/userNotify')
 
 function DropOlds() {
   const tables = {
