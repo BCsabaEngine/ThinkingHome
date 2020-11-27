@@ -31,29 +31,28 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
         span.d-none.d-md-inline Kert teljes
 
   ul.navbar-nav.ml-auto
-    li.nav-item.dropdown
+    li.nav-item.dropdown#usernotify
       a.nav-link(data-toggle='dropdown' href='#')
         i.far.fa-bell
-        span.badge.badge-warning.navbar-badge 15
+        if usernotifies.length
+          span.badge.badge-warning.navbar-badge
+            = usernotifies.length
       .dropdown-menu.dropdown-menu-lg.dropdown-menu-right
-        span.dropdown-item.dropdown-header 15 értesítés
-        .dropdown-divider
-        a.dropdown-item(href='#')
-          i.fas.fa-envelope.mr-2
-          |  4 new messages
-          span.float-right.text-muted.text-sm 3 mins
-        .dropdown-divider
-        a.dropdown-item(href='#')
-          i.fas.fa-users.mr-2
-          |  8 friend requests
-          span.float-right.text-muted.text-sm 12 hours
-        .dropdown-divider
-        a.dropdown-item(href='#')
-          i.fas.fa-file.mr-2
-          |  3 new reports
-          span.float-right.text-muted.text-sm 2 days
-        .dropdown-divider
-        a.dropdown-item.dropdown-footer(href='#') Összes értesítés
+        each usernotify in usernotifies
+          a.dropdown-item(href='#')
+            case usernotify.Level
+              when 1
+                i.text-warning.mr-2(class=usernotify.Icon || 'fa fa-exclamation-triangle')
+              when 2
+                i.text-danger.mr-2(class=usernotify.Icon || 'fa fa-exclamation-circle')
+              default
+                i.text-info.mr-2(class=usernotify.Icon || 'fa fa-info-circle')
+            = usernotify.Subject
+            span.float-right.text-muted.text-sm
+              = dayjs(usernotify.DateTime).fromNow()
+          .dropdown-divider
+          a.dropdown-item.dropdown-footer(href='/notify/list')
+            | Show all notify
     li.nav-item
       a.nav-link(href='/logout')
         i.fa.fa-lock

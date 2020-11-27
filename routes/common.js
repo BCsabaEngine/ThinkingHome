@@ -1,5 +1,6 @@
 const ipUtils = require('../lib/ipUtils')
 const WebAccessModel = require('../models/WebAccess')
+const UserNotifyModel = require('../models/UserNotify')
 
 module.exports = (app) => {
   // log all request
@@ -10,6 +11,13 @@ module.exports = (app) => {
     const requestip = ipUtils.remoteip(req)
 
     WebAccessModel.Insert(user, uri, session, requestip)
+
+    return next()
+  })
+
+  app.use(async function (req, res, next) {
+    const user = app.getUser(req)
+    app.locals.usernotifies = user && user.id ? await await UserNotifyModel.GetUnreadByUserIdSync(user.id) : []
 
     return next()
   })
