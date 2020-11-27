@@ -1,4 +1,5 @@
 const schedule = require('node-schedule')
+const userNotify = require('./lib/userNotify')
 
 function DropOlds() {
   const tables = {
@@ -12,7 +13,10 @@ function DropOlds() {
   for (const table of Object.keys(tables)) {
     const days = tables[table]
     db.pquery(`DELETE FROM ${table} WHERE DateTime < NOW() - INTERVAL ${days} DAY`)
-      .then(x => logger.info(`[Jobs] DropOld/${table}: ${x.affectedRows} rows`))
+      .then(function (deletions) {
+        logger.info(`[Jobs] DropOld/${table}: ${deletions.affectedRows} rows`)
+        userNotify.addToAdmin(null, 0, 'fa fa-database', `DropOld/${table}`, `${deletions.affectedRows} rows deleted`)
+      })
   }
 }
 

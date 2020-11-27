@@ -3,6 +3,7 @@ const fs = require('fs')
 const got = require('got')
 const FormData = require('form-data')
 
+const userNotify = require('./lib/userNotify')
 const BackupBuilder = require('../lib/backupBuilder')
 const SystemLogModel = require('../models/SystemLog')
 
@@ -41,6 +42,8 @@ async function AutoBackup() {
 
     if (filesizewarn) SystemLogModel.InsertWarn(topicautobackup, `Auto backup uploaded successfully, but file size problem: ${localfilesize} vs. ${remotefilesize}`)
     else SystemLogModel.Insert(topicautobackup, 'Auto backup uploaded successfully')
+
+    userNotify.addToAdmin(null, 0, 'fa fa-file-archive', 'AutoBackup', 'Auto backup uploaded successfully')
   } catch (err) { SystemLogModel.InsertError(topicautobackup, `Auto backup failed: ${err.message}`) }
 }
 
@@ -58,6 +61,8 @@ async function UpdateDynDns() {
     } catch { }
 
     SystemLogModel.Insert(topicdyndns, `DNS sync completed: ${message}`)
+
+    userNotify.addToAdmin(null, 0, 'fa fa-blog', 'DNS sync', `DNS sync completed: ${message}`)
   } catch (err) { SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`) }
 }
 
