@@ -15,7 +15,9 @@ function DropOlds() {
     db.pquery(`DELETE FROM ${table} WHERE DateTime < NOW() - INTERVAL ${days} DAY`)
       .then(function (deletions) {
         logger.info(`[Jobs] DropOld/${table}: ${deletions.affectedRows} rows`)
-        userNotify.addToAdmin(null, 0, 'fa fa-database', `DropOld/${table}`, `${deletions.affectedRows} rows deleted`)
+        if (deletions.affectedRows) {
+          userNotify.addToAdmin(null, 0, 'fa fa-database', `DropOld/${table}`, `${deletions.affectedRows} rows deleted`)
+        }
       })
   }
 }

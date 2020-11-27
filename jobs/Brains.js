@@ -40,11 +40,17 @@ async function AutoBackup() {
 
     const filesizewarn = (!localfilesize || !remotefilesize || localfilesize !== remotefilesize)
 
-    if (filesizewarn) SystemLogModel.InsertWarn(topicautobackup, `Auto backup uploaded successfully, but file size problem: ${localfilesize} vs. ${remotefilesize}`)
-    else SystemLogModel.Insert(topicautobackup, 'Auto backup uploaded successfully')
-
-    userNotify.addToAdmin(null, 0, 'fa fa-file-archive', 'AutoBackup', 'Auto backup uploaded successfully')
-  } catch (err) { SystemLogModel.InsertError(topicautobackup, `Auto backup failed: ${err.message}`) }
+    if (filesizewarn) {
+      SystemLogModel.InsertWarn(topicautobackup, `Auto backup uploaded successfully, but file size problem: ${localfilesize} vs. ${remotefilesize}`)
+      userNotify.addToAdmin(null, 1, 'fa fa-cloud-upload-alt', 'AutoBackup', `Auto backup uploaded successfully, but file size problem: ${localfilesize} vs. ${remotefilesize}`)
+    } else {
+      SystemLogModel.Insert(topicautobackup, 'Auto backup uploaded successfully')
+      userNotify.addToAdmin(null, 0, 'fa fa-cloud-upload-alt', 'AutoBackup', 'Auto backup uploaded successfully')
+    }
+  } catch (err) {
+    SystemLogModel.InsertError(topicautobackup, `Auto backup failed: ${err.message}`)
+    userNotify.addToAdmin(null, 2, 'fa fa-cloud-upload-alt', 'AutoBackup', `Auto backup failed: ${err.message}`)
+  }
 }
 
 async function UpdateDynDns() {
