@@ -1,13 +1,14 @@
 const crypto = require('crypto')
 
+const sha512length = 128
+
 const UserTable = db.defineTable('User', {
   columns: {
     Id: db.ColTypes.int(10).notNull().primaryKey().autoIncrement(),
     IsAdmin: db.ColTypes.tinyint(1).notNull(),
     Email: db.ColTypes.varchar(100).notNull().unique(),
     Name: db.ColTypes.varchar(100).notNull(),
-    // eslint-disable-next-line no-magic-numbers
-    Password: db.ColTypes.varchar(128).notNull() // sha512 in hex format
+    Password: db.ColTypes.varchar(sha512length).notNull() // sha512 in hex format
   }
 })
 
@@ -28,6 +29,12 @@ const UserModel = {
 
   async ExistsSync(email) {
     return await UserTable.exists('WHERE Email = ?', [email.trim()])
+  },
+
+  async GetAdminIdSync() {
+    const rows = await UserTable.select(['Id'], 'WHERE IsAdmin = 1')
+    if (rows && rows.length) return rows[0].Id
+    return null
   },
 
   async GetAllSync() {
