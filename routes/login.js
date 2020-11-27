@@ -18,11 +18,14 @@ module.exports = (app) => {
 
   app.isLocalIp = function (req) { return isInSubnet(req.connection.remoteAddress, cidrs) }
 
+  app.getUser = function (req) { if (req.session && req.session.user) return req.session.user }
+
   // detect session in all request
   app.all('/*', async function (req, res, next) {
     if (req.session.user) return next()
 
-    if (!global.IsProduction) return next()
+    // TODO: Prod mode!
+    // if (!global.IsProduction) return next()
 
     if (req.signedCookies.autologin) {
       try {
