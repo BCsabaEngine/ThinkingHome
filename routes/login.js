@@ -24,7 +24,6 @@ module.exports = (app) => {
   app.all('/*', async function (req, res, next) {
     if (req.session.user) return next()
 
-    // TODO: Prod mode!
     // if (!global.IsProduction) return next()
 
     if (req.signedCookies.autologin) {
