@@ -31,28 +31,65 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
         span.d-none.d-md-inline Kert teljes
 
   ul.navbar-nav.ml-auto
-    li.nav-item.dropdown#usernotify
+    li.nav-item.dropdown#usernotify-wrapper
       a.nav-link(data-toggle='dropdown' href='#')
         i.far.fa-bell
         if usernotifies.length
           span.badge.badge-warning.navbar-badge
             = usernotifies.length
       .dropdown-menu.dropdown-menu-lg.dropdown-menu-right
-        each usernotify in usernotifies
-          a.dropdown-item(href='#')
-            case usernotify.Level
-              when 1
-                i.text-warning.mr-2(class=usernotify.Icon || 'fa fa-exclamation-triangle')
-              when 2
-                i.text-danger.mr-2(class=usernotify.Icon || 'fa fa-exclamation-circle')
-              default
-                i.text-info.mr-2(class=usernotify.Icon || 'fa fa-info-circle')
-            = usernotify.Subject
-            span.float-right.text-muted.text-sm
-              = dayjs(usernotify.DateTime).fromNow()
-          .dropdown-divider
-          a.dropdown-item.dropdown-footer(href='/notify/list')
-            | Show all notify
+        each usernotify,index in usernotifies
+          if index <= 10
+            a.dropdown-item.pointer(onclick='readusernotify(' + usernotify.Id + ')')
+              case usernotify.Level
+                when 1
+                  i.text-warning.mr-2(class=usernotify.Icon || 'fa fa-exclamation-triangle')
+                when 2
+                  i.text-danger.mr-2(class=usernotify.Icon || 'fa fa-exclamation-circle')
+                default
+                  i.text-info.mr-2(class=usernotify.Icon || 'fa fa-info-circle')
+              = usernotify.Subject
+              span.float-right.text-muted.text-sm
+                = dayjs(usernotify.DateTime).fromNow()
+            .dropdown-divider
+        a.dropdown-item.dropdown-footer(href='/notify/list')
+          if !usernotifies.length
+            | Clear! No unread notifies...
+            br
+          if usernotifies.length > 10
+            | + 
+            = usernotifies.length - 10
+            | 
+            | more ...
+            br
+          | Show all
     li.nav-item
       a.nav-link(href='/logout')
         i.fa.fa-lock
+
+script(type='text/javascript').
+  function readusernotify(id)
+  {
+    $.post('/notify/read', { id: id })
+    .done(function(response) {
+      console.log(response)
+      var json = JSON.parse(response)
+
+      var icon = 'info'
+      if (json.level == 1) icon = 'warning';
+      if (json.level == 2) icon = 'error';
+
+      swal.fire({
+        icon: icon,
+        title: json.subject,
+        text: json.message,
+      });
+    })
+  }
+
+  if (#{user.id})
+  {
+    if (typeof subscribes === 'undefined') subscribes = {}
+    subscribes['usernotify_#{user.id}'] = "usernotify-wrapper";
+  }
+

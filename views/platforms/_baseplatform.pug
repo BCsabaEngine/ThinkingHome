@@ -156,7 +156,8 @@ block content
         });      
     });
 
-    var subscribes = { platform_#{platform.GetCode()} : "content" };
+    if (typeof subscribes === 'undefined') subscribes = {}
+    subscribes['platform_#{platform.GetCode()}'] = "content";
 
     function disableplatform(code)
     {

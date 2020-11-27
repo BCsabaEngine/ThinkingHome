@@ -13,19 +13,18 @@ if columns.length == 2
 
   script(type='text/javascript').
 
-    subscribes = {
-      board : function(p) 
+    if (typeof subscribes === 'undefined') subscribes = {}
+    subscribes.board = function(p) 
+    {
+      var device = p.device;
+      var entity = p.entity;
+      if (device != '' && entity != '')
       {
-        var device = p.device;
-        var entity = p.entity;
-        if (device != '' && entity != '')
-        {
-          $('.ui_' + device + '_' + entity).trigger('valuechanged', { value: p.value });
-          if (!#{isproduction})
-            logdebug(p);
-        }
+        $('.ui_' + device + '_' + entity).trigger('valuechanged', { value: p.value });
+        if (!#{isproduction})
+          logdebug(p);
       }
-    };
+    }
 
     $(function () {
       $('.knob').knob({

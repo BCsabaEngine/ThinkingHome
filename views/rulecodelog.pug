@@ -29,8 +29,6 @@ block content
             div
               i.fas.fa-code.bg-green
               .timeline-item
-                span.time
-                  = dayjs(rulecodelog.DateTime).format("HH:mm:ss")
                 h3.timeline-header.no-border
                   small
                     = dayjs(rulecodelog.DateTime).format("HH:mm:ss")
@@ -50,4 +48,5 @@ block content
             i.fas.fa-clock.bg-gray
 
   script(type='text/javascript')
-    | subscribes = { rulecodelog : "content-wrapper" }
+    | if (typeof subscribes === 'undefined') subscribes = {}
+    | subscribes.rulecodelog = "content-wrapper";

@@ -210,7 +210,8 @@ block content
         });      
     });
 
-    subscribes = { device_#{device.name} : "content" };
+    if (typeof subscribes === 'undefined') subscribes = {}
+    subscribes['device_#{device.name}'] = "content";
 
     function executeaction(entity, action, actionparams)
     {
