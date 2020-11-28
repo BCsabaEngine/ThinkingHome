@@ -62,12 +62,17 @@ async function UpdateDynDns() {
 
     const response = await got.post(config.brainserver.server + config.brainserver.dyndnsservice, { body: form })
     let message = ''
+    let updated = false
     try {
-      message = JSON.parse(response.body).operation
+      const json = JSON.parse(response.body)
+      message = json.operation
+      updated = json.updated === 'true'
     } catch { }
 
     SystemLogModel.Insert(topicdyndns, `DNS sync completed: ${message}`)
-    userNotify.addToAdmin(null, 0, 'fa fa-route', 'DNS sync', `DNS sync completed: ${message}`)
+    if (updated) {
+      userNotify.addToAdmin(null, 0, 'fa fa-route', 'DNS sync', `DNS sync completed: ${message}`)
+    }
   } catch (err) {
     SystemLogModel.InsertError(topicdyndns, `DNS sync failed: ${err.message}`)
     userNotify.addToAdmin(null, 2, 'fa fa-route', 'DNS sync', `DNS sync failed: ${err.message}`)
@@ -87,10 +92,11 @@ if (config.brainserver.backupservice) {
 }
 
 // setTimeout(() => {
-//   var parser = require('cron-parser');
-//   var interval = parser.parseExpression(`${randomminute} */2 * * *`);
-//   console.log('Date: ', interval.next().toString());
-//   console.log(`${randomminute} */2 * * *`)
-//   // console.log(`${hourminutes - 1 - randomminute} ${randommorninghour} * * *`)
-//   // // AutoBackup()
+//   //   var parser = require('cron-parser');
+//   //   var interval = parser.parseExpression(`${randomminute} */2 * * *`);
+//   //   console.log('Date: ', interval.next().toString());
+//   //   console.log(`${randomminute} */2 * * *`)
+//   //   // console.log(`${hourminutes - 1 - randomminute} ${randommorninghour} * * *`)
+//   // UpdateDynDns()
+//   // AutoBackup()
 // }, 3 * 1000)
