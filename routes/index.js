@@ -63,8 +63,8 @@ module.exports = (app) => {
   app.use(favicon(path.resolve('./public/favicon.ico')))
 
   // early loading of common and login routes
-  require(path.resolve('./routes/common.js'))(app)
   require(path.resolve('./routes/login.js'))(app)
+  require(path.resolve('./routes/common.js'))(app)
 
   // all other definition files
   for (const file of glob.sync('./routes/*.js')) {
