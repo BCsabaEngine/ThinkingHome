@@ -31,9 +31,9 @@ const UserModel = {
     return await UserTable.exists('WHERE Email = ?', [email.trim()])
   },
 
-  async GetAdminIdSync() {
+  async GetAdminSync() {
     const rows = await UserTable.select(['Id'], 'WHERE IsAdmin = 1')
-    if (rows && rows.length) return rows[0].Id
+    if (rows && rows.length) return rows[0]
     return null
   },
 
