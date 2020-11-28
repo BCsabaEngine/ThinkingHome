@@ -26,7 +26,8 @@ global.db = database(() => {
 
       jobs()
 
-      require('./models/SystemLog').Insert('Bootup', 'Application ready')
+      require('./models/SystemLog').Insert('Bootup', 'Application started')
+      require('./lib/userNotify').addToAdmin(null, 0, 'fa fa-plug', 'Power on', 'ThinkingHome application started')
     })
 })
 
