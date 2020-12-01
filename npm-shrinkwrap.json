@@ -4282,9 +4282,9 @@
       }
     },
     "node_modules/oui": {
-      "version": "11.0.44",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.44.tgz",
-      "integrity": "sha512-JTkP7fDYe0+O3zn2zrirmDAijB9oxmr9BdlPbb1huhhqxDyLvm3gzpdp6lrbB9dS9d9OflgHvwKIa59l2f1mVA==",
+      "version": "11.0.45",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.45.tgz",
+      "integrity": "sha512-X3IlibZwJ39D/PszbaJYwXEyUJVda7CRfO6xuFJ6vQC2YLXCb+vnYvWuQG+EKroUlH2mA/zYGUMEicSLGYDV6g==",
       "dependencies": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -5408,9 +5408,9 @@
       "integrity": "sha512-HkpPZVMYsnhFUBLdy/LvkU9snggKP3VAuSVnPhVXjxdg02lWbFx0W8H3m7A+WMWw2diXZS1wIa4m67XkNxdvew=="
     },
     "node_modules/systeminformation": {
-      "version": "4.30.6",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.6.tgz",
-      "integrity": "sha512-NV7zo9NU7fWSuiCORZmMLe90cFrrTS6jfalrQ0/5B7JGQ2ei15c2gmfICBwWdmviyv/FXAFVReySxOtDDkppqw==",
+      "version": "4.30.10",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.10.tgz",
+      "integrity": "sha512-BndDV7hjRomUGkHK6MO661KUUWcDRbr5SlepDvREidYnR2QJIyHln0iSysH9GPOT7YJgwtswdyg/up/ZFYxHrQ==",
       "os": [
         "darwin",
         "linux",
@@ -5425,6 +5425,10 @@
       },
       "engines": {
         "node": ">=4.0.0"
+      },
+      "funding": {
+        "type": "Buy me a coffee",
+        "url": "https://www.buymeacoffee.com/systeminfo"
       }
     },
     "node_modules/table": {
@@ -9528,9 +9532,9 @@
       }
     },
     "oui": {
-      "version": "11.0.44",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.44.tgz",
-      "integrity": "sha512-JTkP7fDYe0+O3zn2zrirmDAijB9oxmr9BdlPbb1huhhqxDyLvm3gzpdp6lrbB9dS9d9OflgHvwKIa59l2f1mVA==",
+      "version": "11.0.45",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.45.tgz",
+      "integrity": "sha512-X3IlibZwJ39D/PszbaJYwXEyUJVda7CRfO6xuFJ6vQC2YLXCb+vnYvWuQG+EKroUlH2mA/zYGUMEicSLGYDV6g==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -10505,9 +10509,9 @@
       "integrity": "sha512-HkpPZVMYsnhFUBLdy/LvkU9snggKP3VAuSVnPhVXjxdg02lWbFx0W8H3m7A+WMWw2diXZS1wIa4m67XkNxdvew=="
     },
     "systeminformation": {
-      "version": "4.30.6",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.6.tgz",
-      "integrity": "sha512-NV7zo9NU7fWSuiCORZmMLe90cFrrTS6jfalrQ0/5B7JGQ2ei15c2gmfICBwWdmviyv/FXAFVReySxOtDDkppqw=="
+      "version": "4.30.10",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-4.30.10.tgz",
+      "integrity": "sha512-BndDV7hjRomUGkHK6MO661KUUWcDRbr5SlepDvREidYnR2QJIyHln0iSysH9GPOT7YJgwtswdyg/up/ZFYxHrQ=="
     },
     "table": {
       "version": "5.4.6",
