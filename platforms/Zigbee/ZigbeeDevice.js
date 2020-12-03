@@ -9,6 +9,7 @@ class ZigbeeDevice extends Device {
       TempSensor: { displayname: 'Temp sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-thermometer-half' },
       MotionSensor: { displayname: 'Motion sensor', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-running' },
       E1743: { displayname: 'TRÅDFRI on/off', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-toggle-on' },
+      E1766: { displayname: 'TRÅDFRI open/close', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-toggle-on' },
       E1744: { displayname: 'SYMFONISK sound', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-tablets' },
       E1926: { displayname: 'KADRILJ roller', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-scroll' },
       AqaraCube: { displayname: 'Aqara magic cube', devicename: 'ieee_'.toLowerCase(), icon: 'fa fa-cube' },
