@@ -10,7 +10,7 @@
         "eslint:recommended"
     ],
     "plugins": [
-      "babel"
+        "babel"
     ],
     "parserOptions": {
         "ecmaVersion": 12
@@ -19,41 +19,56 @@
         "systemsettings": "readonly",
         "config": "readonly",
         "db": "readonly",
-        "logger": "readonly"
+        "logger": "readonly",
+        "__": "readonly"
     },
     "rules": {
-      //babel as parser makes "standard" incompatible with these two rule, skip its
-      "template-curly-spacing": 0,
-      "indent": 0,
-
-      "space-before-function-paren": 0,
-      "no-magic-numbers": [2, { "ignoreArrayIndexes": true, "ignoreDefaultValues": true, "ignore": [-1, 0, 1, 2, 3, 10, 24, 60, 100, 1000, 1024, 3600] }],
-
-      "no-console": 2,
-      "no-unreachable-loop": 2,
-      
-      "default-case": 2,
-      "default-case-last": 2,
-      "no-constructor-return": 2,
-      "no-eq-null": 2,
-      "no-extra-bind": 2,
-      "no-labels": 2,
-      "no-multi-spaces": 2,
-      "no-new-func": 2,
-      "no-new-wrappers": 2,
-      "no-param-reassign": 2,
-      "no-unused-expressions": 2,
-      "no-useless-return": 2,
-      "yoda": 2,
-
-      "camelcase": 2,
-      "no-multiple-empty-lines": 2,
-      "no-new-object": 2,
-      
-      "no-var": 2,
-      "prefer-const": 2,
-      "prefer-rest-params": 2,
-      
-      "no-extra-parens": 1
+        //babel as parser makes "standard" incompatible with these two rule, skip its
+        "template-curly-spacing": 0,
+        "indent": 0,
+        "space-before-function-paren": 0,
+        "no-magic-numbers": [
+            2,
+            {
+                "ignoreArrayIndexes": true,
+                "ignoreDefaultValues": true,
+                "ignore": [
+                    -1,
+                    0,
+                    1,
+                    2,
+                    3,
+                    10,
+                    24,
+                    60,
+                    100,
+                    1000,
+                    1024,
+                    3600
+                ]
+            }
+        ],
+        "no-console": 2,
+        "no-unreachable-loop": 2,
+        "default-case": 2,
+        "default-case-last": 2,
+        "no-constructor-return": 2,
+        "no-eq-null": 2,
+        "no-extra-bind": 2,
+        "no-labels": 2,
+        "no-multi-spaces": 2,
+        "no-new-func": 2,
+        "no-new-wrappers": 2,
+        "no-param-reassign": 2,
+        "no-unused-expressions": 2,
+        "no-useless-return": 2,
+        "yoda": 2,
+        "camelcase": 2,
+        "no-multiple-empty-lines": 2,
+        "no-new-object": 2,
+        "no-var": 2,
+        "prefer-const": 2,
+        "prefer-rest-params": 2,
+        "no-extra-parens": 1
     }
 }
