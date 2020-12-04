@@ -63,12 +63,13 @@ module.exports = (app) => {
   app.use(favicon(path.resolve('./public/favicon.ico')))
 
   // early loading of common and login routes
+  require(path.resolve('./routes/i18n.js'))(app)
   require(path.resolve('./routes/login.js'))(app)
   require(path.resolve('./routes/common.js'))(app)
 
   // all other definition files
   for (const file of glob.sync('./routes/*.js')) {
-    if (!file.endsWith('index.js') && !file.endsWith('common.js') && !file.endsWith('login.js')) {
+    if (!file.endsWith('index.js') && !file.endsWith('i18n.js') && !file.endsWith('common.js') && !file.endsWith('login.js')) {
       require(path.resolve(file))(app)
     }
   }
