@@ -37,8 +37,10 @@ html(lang='en')
                   = __('Remember me')
 
           center
-            button.btn.btn-primary.btn-blockx(type='button' onclick='login()')#loginbutton
+            button.btn.btn-primary(type='button' onclick='login()')#loginbutton
               = __('Log In')
+              | 
+              span.spinner-border-hidden.spinner-border-sm#loading
 
     include includes/latescripts.pug
     script(src='/plugins/jquery-ui/jquery-ui.min.js')
@@ -49,14 +51,16 @@ html(lang='en')
         var password = $('#password').val();
         var rememberme = $('#rememberme').is(':checked');
 
-        $('#loginbutton').html("<i class='fas fa-sync-alt fa-spin'></i> Please wait...").addClass('disabled');
+        $('#loginbutton').addClass('disabled');
+        $('#loading').addClass('spinner-border');
         $.post('/login', { email: email, password: password, rememberme: rememberme ? 'yes' : '' }, 'json')
         .done(function() {
           window.location = "/";
         })
         .fail(function() {
           $('#password').val('');
-          $('#loginbutton').html("Log in").removeClass('disabled');
+          $('#loginbutton').removeClass('disabled');
+          $('#loading').removeClass('spinner-border');
           $('#card').effect('shake');
           $('#password').focus();
         })
