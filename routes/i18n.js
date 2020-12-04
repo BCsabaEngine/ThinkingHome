@@ -7,9 +7,9 @@ i18n.configure({
   header: 'accept-language',
 
   directory: path.join(__dirname, '../locales'),
-  updateFiles: true,
+  updateFiles: !global.IsProduction,
   autoReload: !global.IsProduction,
-  objectNotation: true,
+  objectNotation: false,
 
   register: global
 })
