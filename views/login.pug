@@ -14,7 +14,8 @@ html(lang='en')
             | HOME
       .card#card
         .card-body.login-card-body
-          p.login-box-msg Log in to access your home now
+          p.login-box-msg
+            = __('Log in to access your home now')
 
           .input-group.mb-3
             input.form-control(type='email' placeholder='Email' onkeydown='if (event.keyCode == 13) login()')#email
@@ -32,11 +33,12 @@ html(lang='en')
             .form-group
               .custom-control.custom-switch
                 input#rememberme.custom-control-input(type='checkbox')
-                label.custom-control-label(for='rememberme') Remember me
+                label.custom-control-label(for='rememberme')
+                  = __('Remember me')
 
           center
             button.btn.btn-primary.btn-blockx(type='button' onclick='login()')#loginbutton
-              | Log In
+              = __('Log In')
 
     include includes/latescripts.pug
     script(src='/plugins/jquery-ui/jquery-ui.min.js')

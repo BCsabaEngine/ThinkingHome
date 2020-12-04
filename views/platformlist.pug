@@ -10,7 +10,7 @@ block content
     hr
     center
       h5
-        | Running platforms
+        = __('Running platforms')
     .row
       each platform in platforms
         if platform.enabled
@@ -34,7 +34,7 @@ block content
     hr
     center
       h5
-        | Available platforms
+        = __('Available platforms')
     .row
       each platform in platforms
         if !platform.enabled
@@ -52,9 +52,7 @@ block content
                 .i.fa.fa-play
                 br
                 b
-                  | Enable
-
-
+                  = __('Enable')
 
   script(type='text/javascript').
     function enableplatform(code)
