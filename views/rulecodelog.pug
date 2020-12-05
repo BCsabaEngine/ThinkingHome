@@ -4,17 +4,13 @@ block content
   section.content-header
     .container-fluid
       h4
-        | Rules log
+        = __('Rules log')
         if rulecode
-          |  for 
-          = rulecode.displayname
+          | 
+          = __('for %s', rulecode.displayname)
         small
           | 
-          | (last
-          | 
-          = limit
-          | 
-          | lines)
+          = __('(last %s)', limit)
 
   .row
     .col-md-10.offset-md-1
@@ -23,7 +19,7 @@ block content
         .timeline
           .time-label
             span.bg-red
-              = index.replace(dayjs().format("YYYY-MM-DD"), 'Today')
+              = index.replace(dayjs().format("YYYY-MM-DD"), __('Today'))
 
           each rulecodelog in rulecodeloggroup
             div

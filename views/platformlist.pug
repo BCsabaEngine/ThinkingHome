@@ -4,7 +4,7 @@ block content
   section.content-header
     .container-fluid
       h4
-        | Platforms
+        = __('Platforms')
 
   if platforms.filter(p => p.enabled).length
     hr
@@ -28,7 +28,8 @@ block content
                       i.fa.fa-times-circle.text-danger.float-right
                   span.info-box-text
                     = platform.devicecount 
-                    |  active device(s)
+                    | 
+                    = __n('device', 'devices', platform.devicecount)
 
   if platforms.filter(p => !p.enabled).length
     hr
@@ -47,7 +48,8 @@ block content
                   = platform.name
                 span.info-box-text
                   = platform.handlercount
-                  |  known device(s)
+                  | 
+                  = __n('known handler', 'known handlers', platform.handlercount)
               .btn.btn-success.btn-hover(onclick="enableplatform('" + platform.code + "')")
                 .i.fa.fa-play
                 br

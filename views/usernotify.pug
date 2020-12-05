@@ -4,18 +4,14 @@ block content
   section.content-header
     .container-fluid
       h4
-        | User notifies
+        = __('User notifications')
         small
           | 
-          | (last
-          | 
-          = limit
-          | 
-          | notify)
+          = __('(last %s)', limit)
 
   center
     button.btn.btn-default(onclick="readallusernotify()")
-      | Set all read
+      = __('I read them all')
 
   .row
     .col-md-10.offset-md-1
@@ -24,7 +20,7 @@ block content
         .timeline
           .time-label
             span.bg-info
-              = index.replace(dayjs().format("YYYY-MM-DD"), 'Today')
+              = index.replace(dayjs().format("YYYY-MM-DD"), __('Today'))
 
           each notify in notifygroup
             div
@@ -56,5 +52,5 @@ block content
     function readallusernotify()
     {
       $.post('/notify/readall')
-       .done(function() { pagereload() });
+        .done(function() { pagereload() });
     }

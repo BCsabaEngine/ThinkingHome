@@ -8,14 +8,17 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
         li.nav-item
           a.nav-link(href='/')
             i.nav-icon.fas.fa-tachometer-alt
-            p Dashboard
+            p
+              = __('Start')
 
-        li.nav-header SYSTEM
+        li.nav-header
+          = __('SYSTEM')
           - var platformwarningcount = runningContext.GetWarningOrErrorPlatformCount()
           li.nav-item
             a.nav-link(href='/platform')
               i.nav-icon.fas.fa-rss(class=platformwarningcount ? "text-warning" : "")
-              p Platforms
+              p
+                = __('Platforms')
                 if (platformwarningcount)
                   span.badge.badge-warning.right
                     = platformwarningcount
@@ -25,16 +28,19 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
           li.nav-item
             a.nav-link(href='/rulecode/list')
               i.nav-icon.fa.fa-code(class=anyrulecodeerror ? "text-danger" : "")
-              p Rules
+              p
+                = __('Rules')
                 if (anyrulecodeerror)
                   span.badge.badge-danger.right !
 
           li.nav-item
             a.nav-link(href='/settings')
               i.nav-icon.fas.fa-wrench
-              p Settings
+              p
+                = __('Settings')
 
         li.nav-item
           a.nav-link(href='/logout')
             i.nav-icon.fas.fa-lock
-            p Logout
+            p
+              = __('Logout')

@@ -4,7 +4,7 @@ block content
   section.content-header
     .container-fluid
       h4
-        | Rules
+        = __('Rules')
 
   if (runerrormessage)
     .row
@@ -12,24 +12,29 @@ block content
         .callout.callout-danger
           span.text-danger
             i.icon.fa.fa-exclamation-triangle
-            |  Error in rules: 
+            | 
+            = __('Error in rules:')
+            | 
             b
               = runerrormessage
-          p.monospace.small.pl-3.pt-3 !{runerrorstack.replace(/\n/g, '<br/>')}
+          if (runerrorstack)
+            p.monospace.small.pl-3.pt-3 !{runerrorstack.replace(/\n/g, '<br/>')}
 
   .row
     .col-md-8
       .btn-group
         button.btn.btn-default(onclick="createnewclick()")
           i.fa.fa-code
+          | 
           if rulecodes.length
-            |  Create new rule
+            = __('Create new rule')
           else
-            |  Create first rule
+            = __('Create first rule')
     .col-md-4
       a.btn.btn-default.float-right(href="/rulecode/loglist" target="_blank")
         i.fa.fa-list
-        |  Show all logs
+        | 
+        = __('Show all logs')
   br
 
   .row
@@ -39,7 +44,7 @@ block content
           .card-header
             h3.card-title
               if rulecode.Disabled
-                | [Disabled]
+                = __('[Disabled]')
                 | 
               = rulecode.displayname
             .card-tools
@@ -52,7 +57,8 @@ block content
                   .callout.callout-danger
                     span.text-danger
                       i.icon.fa.fa-exclamation-triangle
-                      |  Error: 
+                      | 
+                      = __('Error:')
                       b
                         = rulecode.runerrormessage
             .row
@@ -61,24 +67,28 @@ block content
                   = rulecode.linecount 
                   small
                     | 
-                    | lines of code
+                    = __('lines of code')
                 .btn-group
                   a.btn.btn-info(href="/rulecode/edit/" + rulecode.Id)
                     i.fa.fa-edit
-                    |  Edit
+                    | 
+                    = __('Edit')
                   if rulecode.Disabled
                     button.btn.btn-default(onclick="enableclick(" + rulecode.Id + ")")
                       i.fa.fa-check
-                      |  Enable
+                      | 
+                      = __('Enable')
                   else
                     button.btn.btn-default(onclick="disableclick(" + rulecode.Id + ")")
                       i.fa.fa-ban
-                      |  Disable
+                      | 
+                      = __('Disable')
                   a.btn.btn-default(href="/rulecode/loglist/" + rulecode.Id, target="_blank")
                     i.fa.fa-list
-                    |  Logs
+                    | 
+                    = __('Logs')
               .col-md-6
-                | Code analysis
+                = __('Code analysis')
                 br
                 if (rulecode.parsed.devices)
                   each device in rulecode.parsed.devices
@@ -103,7 +113,7 @@ block content
         {
           swal.fire({
             icon: 'error',
-            title: 'Enable failed',
+            title: '#{__('Enable failed')}' , 
             text: response.responseText,
           });
         });
@@ -120,7 +130,7 @@ block content
         {
           swal.fire({
             icon: 'error',
-            title: 'Disable failed',
+            title: '#{__('Disable failed')}' , 
             text: response.responseText,
           });
         });
@@ -139,7 +149,7 @@ block content
           {
             swal.fire({
               icon: 'error',
-              title: 'Delete failed',
+              title: '#{__('Delete failed')}' , 
               text: response.responseText,
             });
           });
@@ -149,9 +159,9 @@ block content
     function createnewclick()
     {
       Swal.fire({
-        title: 'Name of new rule',
+        title: '#{__('Name of new rule')}' ,
         input: 'text',
-        inputPlaceholder: 'Living room light rules',
+        inputPlaceholder: '#{__('Living room light rules')}' ,
         showCancelButton: true,
       })
       .then((result) => {
@@ -163,7 +173,7 @@ block content
             .fail(function(error) {
               swal.fire({
                 icon: 'error',
-                title: 'Create new rule failed',
+                title: '#{__('Create new rule failed')}' ,
                 text: response.responseText,
               });
             });

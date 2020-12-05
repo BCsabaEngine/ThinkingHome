@@ -18,11 +18,11 @@ block content
             small
               a.gray(href="/board-" + nextboardid)
                 i.fa.fa-chevron-right
-      button.btn(style="position: fixed; top: 64px; right: 14px;" onclick="doFullscreen()" title="Press F")#fullscreen
+      button.btn(style="position: fixed; top: 64px; right: 14px;" onclick="doFullscreen()" title=__('Press %s', 'F'))#fullscreen
         i.fa.fa-expand
 
     span#content
-      button.btn(style="position: fixed; top: 20px; left: 20px;" onclick="doRefresh()" title="Press R")#refresh
+      button.btn(style="position: fixed; top: 20px; left: 20px;" onclick="doRefresh()" title=__('Press %s', 'R'))#refresh
         i.fa.fa-sync#refreshicon
 
     if !board
@@ -30,14 +30,14 @@ block content
         h1.mt-5
           i.fa.fa-eye-slash.fa-2x
           br
-          | Sorry, no board to display
+          = __('Sorry, no board to display')
     else if errorcontent
       center
         h1.mt-5
           i.fa.fa-bug.fa-2x
           br
           span.text-danger
-            | Sorry, looks like an error occurred
+            = __('Sorry, looks like an error occurred')
           br
           small
             != errorcontent

@@ -16,10 +16,13 @@ block content
         .callout.callout-danger
           span.text-danger
             i.icon.fa.fa-exclamation-triangle
-            |  Error in rules: 
+            | 
+            = __('Error in rules:')
+            | 
             b
               = runerrormessage
-          p.monospace.small.pl-3.pt-3 !{runerrorstack.replace(/\n/g, '<br/>')}
+          if (runerrorstack)
+            p.monospace.small.pl-3.pt-3 !{runerrorstack.replace(/\n/g, '<br/>')}
 
   .row
     .col-md-8

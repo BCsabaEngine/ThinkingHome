@@ -54,15 +54,18 @@ nav.main-header.navbar.navbar-expand.navbar-white.navbar-light
             .dropdown-divider
         a.dropdown-item.dropdown-footer(href='/notify/list')
           if !usernotifies.length
-            | Clear! No unread notifies...
+            b
+              i.fa.fa-check
+              | 
+              = __('You have no notifications')
             br
           if usernotifies.length > 10
             | + 
             = usernotifies.length - 10
             | 
-            | more ...
+            = __('more ...')
             br
-          | Show all
+          = __('Show all')
     li.nav-item
       a.nav-link(href='/logout')
         i.fa.fa-lock
@@ -72,7 +75,6 @@ script(type='text/javascript').
   {
     $.post('/notify/read', { id: id })
     .done(function(response) {
-      console.log(response)
       var json = JSON.parse(response)
 
       var icon = 'info'
