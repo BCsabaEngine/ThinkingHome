@@ -5,16 +5,16 @@ block command
     button.btn.btn-default(onclick="sendrfcode()")
       i.fa.fa-podcast
       | 
-      | Send custom RF code
+      = __('Send custom RF code')
 
 block script
   script(type='text/javascript').
     function sendrfcode()
     {
       Swal.fire({
-        title: 'Send custom RF code',
+        title: '#{__('Send custom RF code')}' ,
         input: 'text',
-        inputPlaceholder: 'Type RF code 0x??????#24',
+        inputPlaceholder: '#{__('Type RF code 0x??????#24')}' ,
         showCancelButton: true,
       })
       .then((result) => {
@@ -24,11 +24,11 @@ block script
               divreload('settingpanel');
             })
             .fail(function(error) {
-              Swal.fire(
-                'Error occured',
-                error.responseText,
-                'error'
-              )            
+              swal.fire({
+                icon: 'error',
+                title: '#{__('Send code failed')}' ,
+                text: response.responseText,
+              });
             });
         }
       })

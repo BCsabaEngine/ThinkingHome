@@ -4,8 +4,9 @@ block command
   center
     .dropdown
       button#dropdownMenuButton.btn.btn-default.dropdown-toggle(type='button' data-toggle='dropdown' aria-haspopup='true' aria-expanded='false')
-        | Devices 
+        = __('Devices') 
         small
+          | 
           | (
           = bridgedevices.length
           | )
@@ -21,7 +22,7 @@ block command
   br
   center
     buttonbtn.btn.btn-default(type='button' onclick='shownetwork()')
-      | Zigbee network graph
+      = __('Zigbee network graph')
       if bridgenetworkdatetime
         br
         small
@@ -36,9 +37,12 @@ block logs
           table.table.table-hover.text-nowrap
             thead
               tr
-                th Time
-                th Type
-                th Message
+                th
+                  = __('Time')
+                th
+                  = __('Type')
+                th
+                  = __('Message')
             tbody
               each bridgelog in bridgelogs
                 tr
@@ -62,22 +66,22 @@ block script
           html: '#{bridgedevice.lasttimehuman} (#{bridgedevice.lasttime}) <br/> #{bridgedevice.ieee} <br/> #{bridgedevice.manufacturer} #{bridgedevice.vendor} <br/> #{bridgedevice.model} #{bridgedevice.powersource}',
           confirmButtonText: 'OK',
           showCancelButton: true,
-          cancelButtonText: 'Unlink device',
+          cancelButtonText: '#{__('Unlink device')}' ,
         }).then((result) => {
           if (result.isDismissed && result.dismiss === 'cancel')
           {
-            showconfirmdeletedialog("Device #{bridgedevice.description || bridgedevice.type} will be unlinked from Zigbee coordinator", function() 
+            showconfirmdeletedialog("#{__("Device %s will be unlinked from Zigbee coordinator", bridgedevice.description || bridgedevice.type)}", function() 
             {
               $.post("/platform/zigbee/forceremove/", {ieee: '#{bridgedevice.ieee}'})
                 .done(function(data) {
                   pagereload(750)
                 })
                 .fail(function(error) {
-                  Swal.fire(
-                    'Error occured',
-                    error.responseText,
-                    'error'
-                  )            
+                  swal.fire({
+                    icon: 'error',
+                    title: '#{__('Remove device failed')}' ,
+                    text: response.responseText,
+                  });
                 });
             });
           }
@@ -89,7 +93,7 @@ block script
     function shownetwork()
     {
       Swal.fire({
-        title: 'Zigbee network graph',
+        title: '#{__('Zigbee network graph')}' ,
         html: '<div id="zigbeenetwork" style="height:60vh"></div>',
         width: '80vw',
       })
