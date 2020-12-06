@@ -5,6 +5,7 @@ class MqttDevice extends Device {
     return {
       ThSonoffRF: { displayname: 'Thinking Sonoff RF', devicename: 'thinking_'.toLowerCase(), icon: 'fa fa-broadcast-tower' },
       ThBlitzwolfIR: { displayname: 'Thinking BW-RC1', devicename: 'thinking_'.toLowerCase(), icon: 'fa fa-rss' },
+      ThSpeak: { displayname: 'Thinking Speak', devicename: 'thinking_'.toLowerCase(), icon: 'fa fa-bullhorn' },
       Tasmota: { displayname: 'Tasmota', devicename: 'Tasmota_'.toLowerCase(), icon: 'fa fa-sliders-h' }
     }
   }
