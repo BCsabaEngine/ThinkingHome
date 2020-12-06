@@ -7,7 +7,9 @@ block content
         a.black(href="/rulecode/list")
           i.fa.fa-arrow-circle-left
         | 
-        | Rule - 
+        = __('Rule')
+        | 
+        | - 
         = rulecode.displayname
 
   if (runerrormessage)
@@ -29,21 +31,21 @@ block content
       .btn-group
         button.btn(class= rulecode.Disabled ? "btn-warning" : "btn-primary" onclick="savecode()")
           i.fa.fa-upload
-          |  Upload
+          | 
+          = __('Upload %s', rulecode.displayname)
           if rulecode.Disabled
             | 
-            | disabled
+            = __('[disabled]')
           | 
-          b
-            = rulecode.displayname
-          |  rule
         button.btn.btn-default(onclick="formatcode()")
           i.fa.fa-align-left
-          |  Reformat code
+          | 
+          = __('Reformat code')
     .col-md-4
       a.btn.btn-default.float-right(href="/rulecode/loglist/" + rulecode.Id target="_blank")
         i.fa.fa-list
-        |  Show logs
+        | 
+        = __('Show logs')
   br
 
   .row
@@ -58,9 +60,10 @@ block content
         .card-header
           .custom-control.custom-switch.float-right
             input#consoleautorefresh.custom-control-input(type='checkbox')
-            label.custom-control-label(for='consoleautorefresh') Autorefresh
+            label.custom-control-label(for='consoleautorefresh')
+              = __('Auto refresh')
           button.btn.btn-default.btn-sm(onclick="refreshconsole(); return false;")
-            | Console
+            = __('Console')
             | 
             small
               i.fa.fa-sync.text-primary
@@ -71,7 +74,8 @@ block content
 
       .card.card-outline.card-primary
         .card-header
-          h3.card-title Context
+          h3.card-title
+            = __('Context')
         .card-body.small.monospace
           | console("Message to console window");
           small
@@ -122,7 +126,7 @@ block content
       .card.card-outline.card-primary
         .card-header
           h3.card-title
-            | Devices
+            = __('Devices')
         .card-body.small.monospace
           each device in devices
             - var items = [];
@@ -158,7 +162,7 @@ block content
         {
           swal.fire({
             icon: 'error',
-            title: 'Format code failed',
+            title: '#{__('Format code failed')}' ,
             text: response.responseText,
           });
         });
@@ -176,7 +180,7 @@ block content
         {
           swal.fire({
             icon: 'error',
-            title: 'Save code failed',
+            title: '#{__('Save code failed')}' ,
             text: response.responseText,
           });
         });

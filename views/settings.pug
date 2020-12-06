@@ -4,20 +4,20 @@ block content
   section.content-header
     .container-fluid
       h4
-        | System settings
+        = __('System settings')
 
   .row
     .col-md-2.offset-md-1
       #vert-tabs-tab.nav.flex-column.nav-tabs.h-100(role='tablist' aria-orientation='vertical')
 
         a#vt1t.nav-link.black.active(data-toggle='pill' href='#vt1' role='tab' aria-controls='vt1' aria-selected='true')
-          | Your living environment
+          = __('Your living environment')
         a#vt2t.nav-link.black(data-toggle='pill' href='#vt2' role='tab' aria-controls='vt2' aria-selected='false')
-          | Dashboards
+          = __('Dashboards')
         a#vt3t.nav-link.black(data-toggle='pill' href='#vt3' role='tab' aria-controls='vt3' aria-selected='false')
-          | Users
+          = __('Users')
         a#vt4t.nav-link.black(data-toggle='pill' href='#vt4' role='tab' aria-controls='vt4' aria-selected='false')
-          | System
+          = __('System')
 
     .col-md-8
       #vert-tabs-tabContent.tab-content
@@ -26,70 +26,77 @@ block content
           .callout.callout-success
             h5
               i.fa.fa-globe-europe.fa-fw.text-success
-              |  Where are you?
+              | 
+              = __('Where are you?')
             p
               small
-                | By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily detect the geolocation values by pressing the My location button.
+                = __('By entering your location, you can get accurate sunrise and sunset information. We also use the same data to access weather data. You can easily detect the geolocation values by pressing the My location button.')
             .row
               .col-sm-2.offset-md-1
                 .form-group
                   button.btn.btn-default(onclick="showsetting_text('Latitude', 'Latitude', '" + systemsettings.Latitude + "', 'vt1')")
-                    | Latitude
+                    = __('Latitude')
                     br
                     b
-                      = systemsettings.Latitude || 'Not set'
+                      = systemsettings.Latitude || __('Not set')
               .col-sm-2
                 .form-group
                   button.btn.btn-default(onclick="showsetting_text('Longitude', 'Longitude', '" + systemsettings.Longitude + "', 'vt1')")
-                    | Longitude
+                    = __('Longitude')
                     br
                     b
-                      = systemsettings.Longitude || 'Not set'
+                      = systemsettings.Longitude || __('Not set')
               .col-sm-2
                 .form-group
                   button.form-control.btn.btn-default(onclick="geodetect()")
                     i.fa.fa-search-location
-                    |  My location
+                    | 
+                    = __('My location')
           .callout.callout-warning
             h5
               i.fa.fa-cloud-sun.fa-fw.text-warning
-              |  What is the weather?
+              | 
+              = __('What is the weather?')
               a.black.no-underline.btn-sm.float-right(href="https://openweathermap.org" target="_blank")
-                |  Go to homepage
+                | 
+                = __('Go to homepage')
             p
               small
-                | Create an OpenWeatherMap API key to get fast and accurate weather data. For each point on the globe, OpenWeatherMap provides historical, current and forecasted weather data via light-speed APIs. The validity of the API key will be checked after pressing the button.
+                = __('Create an OpenWeatherMap API key to get fast and accurate weather data. For each point on the globe, OpenWeatherMap provides historical, current and forecasted weather data via light-speed APIs. The validity of the API key will be checked after pressing the button.')
             .row
               .col-sm-4.offset-md-1
                 .form-group
                   button.btn.btn-default(onclick="showsetting_text('OpenweathermapApiKey', 'OpenweathermapApiKey', '" + systemsettings.OpenweathermapApiKey + "', 'vt1')")
-                    | OpenWeatherMap API key
+                    = __('OpenWeatherMap API key')
                     br
                     b
-                      = systemsettings.OpenweathermapApiKey || 'Not set'
+                      = systemsettings.OpenweathermapApiKey || __('Not set')
 
         #vt2.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt2t')
           if boards.length == 0
             p.text-warning
-              | At least one board must be created to see how the devices work.
+              = __('At least one board must be created to see how the devices work.')
             .input-group
               button.btn.btn-info.btn-sm(onclick="addboard();return false;")
                 i.fa.fa-plus
-                |  Create primary board
+                | 
+                = __('Create primary board')
           else if boards.length == 1
             p.small
-              | Only the default board exists. By creating additional boards, users can scroll through different views.
+              = __('Only the default board exists. By creating additional boards, users can scroll through different views.')
             .input-group
               button.btn.btn-default.btn-sm(onclick="addboard();return false;")
                 i.fa.fa-plus
-                |  Add alternative board
+                | 
+                = __('Add alternative board')
           else 
             p.small
-              | The following is a list of boards that can be assigned to users.
+              = __('The following is a list of boards that can be assigned to users.')
             .input-group
               button.btn.btn-default.btn-sm(onclick="addboard();return false;")
                 i.fa.fa-plus
-                |  Add more board
+                | 
+                = __('Add more board')
           if boards.length > 0
             br
             .table-responsive.p-0
@@ -98,9 +105,12 @@ block content
                   tr
                     th
                       |  
-                    th Name
-                    th Yaml
-                    th Users
+                    th
+                      = __('Name')
+                    th
+                      = __('Yaml')
+                    th
+                      = __('Users')
                     th
                       |  
                 tbody
@@ -121,7 +131,7 @@ block content
                           i.fa.fa-edit
                       td
                         div(style="cursor:pointer" onclick="associateuserstoboard(" + board.Id + ", '" + board.Name + "')")
-                          = board.Users || "Everybody"
+                          = board.Users || __('Everybody')
                       td(align="right")
                         button.btn.btn-hover.btn-danger.btn-sm(onclick="deleteboard(" + board.Id + ", '" + board.Name + "');return false;")
                           i.fa.fa-ban
@@ -129,25 +139,28 @@ block content
         #vt3.tab-pane.text-left.fade(role='tabpanel' aria-labelledby='vt3t')
           if users.length == 0
             p.text-danger
-              | Without users, everyone on the local network is free to use the system. It is highly recommended that you create at least one Admin user!
+              = __('Without users, everyone on the local network is free to use the system. It is highly recommended that you create at least one Admin user!')
             .input-group
               button.btn.btn-success.btn-sm(onclick="adduser();return false;")
                 i.fa.fa-plus
-                |  Create admin user
+                | 
+                = __('Create admin user')
           else if users.length == 1
             p.text-warning
-              | Only the Admin user exists in the system. We recommend that you create individual users for family members!
+              = __('Only the Admin user exists in the system. We recommend that you create individual users for family members!')
             .input-group
               button.btn.btn-default.btn-sm(onclick="adduser();return false;")
                 i.fa.fa-plus
-                |  Add first family member
+                | 
+                = __('Add first family member')
           else 
             p.small
-              | In the list you can see the users of the system. Simply create a new user with the Add button.
+              = __('In the list you can see the users of the system. Simply create a new user with the Add button.')
             .input-group
               button.btn.btn-default.btn-sm(onclick="adduser();return false;")
                 i.fa.fa-plus
-                |  Add more family member
+                | 
+                = __('Add more family member')
           if users.length > 0
             br
             .table-responsive.p-0
@@ -156,9 +169,12 @@ block content
                   tr
                     th
                       |  
-                    th Email
-                    th Name
-                    th Last login
+                    th
+                      = __('Email')
+                    th
+                      = __('Name')
+                    th
+                      = __('Last login')
                     th
                       |  
                 tbody
@@ -172,7 +188,7 @@ block content
                         = user.Email
                       td
                         div(style="cursor:pointer" onclick="modifyuser('" + user.Name + "', '" + user.Email + "')")
-                          = user.Name || '[Not set]'
+                          = user.Name || __('Not set')
                       td
                         = user.LastActivity ? dayjs(user.LastActivity.getTime()).fromNow() : '-'
                       td(align="right")
@@ -184,32 +200,33 @@ block content
           .callout.callout-info
             h5
               i.fa.fa-id-badge.fa-fw.text-info
-              |  ThinkingHome token
+              | 
+              = __('ThinkingHome token')
             p
               small
-                | With your personal ThinkingHome token, you can use our online services: online backup, dynamic DNS, speech to text, etc. Do not share your token with anyone, otherwise your data may be compromised! The token may be replaced occasionally and automatically. 
+                = __('With your personal ThinkingHome token, you can use our online services: online backup, dynamic DNS, speech to text, etc. Do not share your token with anyone, otherwise your data may be compromised! The token may be replaced occasionally and automatically.')
             .row
               .col-sm-6.offset-md-1
                 .form-group
                   button.btn.btn-default(onclick="showsetting_text('CloudToken', 'CloudToken', '" + systemsettings.CloudToken + "', 'vt4')")
-                    | Token
+                    = __('Token')
                     br
                     b
-                      = middlemask(systemsettings.CloudToken, 75) || 'Not set' 
+                      = middlemask(systemsettings.CloudToken, 75) || __('Not set')
 
 
           .callout.callout-success
             h5
               i.fa.fa-route.fa-fw.text-success
-              |  Dynamic DNS
+              | 
+              = __('Dynamic DNS')
             p
               small
-                | To access your Thinking Home system remotely, you may need to update your DNS records from time to time. The update is done automatically every few hours. 
+                = __('To access your Thinking Home system remotely, you may need to update your DNS records from time to time. The update is done automatically every few hours.')
+                | 
                 if lastdns
-                  | The system tried to refresh dynamic DNS at
-                  b
-                    = dayjs(lastdns.DateTime).format('YYYY-MM-DD HH:mm')
-                  |  with message 
+                  != __('The system tried to refresh dynamic DNS at <b>%s</b> with message', dayjs(lastdns.DateTime).format('YYYY-MM-DD HH:mm'))
+                  | 
                   case lastdns.Level
                     when 1
                       b(class='text-warning')
@@ -224,21 +241,21 @@ block content
                         = lastdns.Message
                   | . 
                 else
-                  | The system never refreshed dynamic DNS.
+                  = __('The system never refreshed dynamic DNS.')
 
 
           .callout.callout-success
             h5
               i.fa.fa-cloud-upload-alt.fa-fw.text-success
-              |  Online backup
+              | 
+              = __('Online backup')
             p
               small
-                | At regular intervals (typically once a day) you back up your ThinkingHome yourself. It is uploaded encrypted and stored on the central server for several months. 
+                = __('At regular intervals (typically once a day) you back up your ThinkingHome yourself. It is uploaded encrypted and stored on the central server for several months.')
+                | 
                 if lastautobackup
-                  | The system tried to make an automatic backup at 
-                  b
-                    = dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm')
-                  |  with message 
+                  != __('The system tried to make an automatic backup at <b>%s</b> with message', dayjs(lastautobackup.DateTime).format('YYYY-MM-DD HH:mm'))
+                  | 
                   case lastautobackup.Level
                     when 1
                       b(class='text-warning')
@@ -253,105 +270,94 @@ block content
                         = lastautobackup.Message
                   | . 
                 else
-                  | The system never tried to make an automatic backup.
+                  = __('The system never tried to make an automatic backup.')
 
 
           .callout.callout-success
             h5
               i.fa.fa-sd-card.fa-fw.text-success
-              |  Backup
+              | 
+              = __('Backup')
             p
               small
-                | By pressing the button, you can make a full backup of the system and download it to your own computer. 
+                = __('By pressing the button, you can make a full backup of the system and download it to your own computer.')
+                | 
                 if lastmanualbackup
-                  | (You last made and downloaded a backup at 
-                  b
-                    = dayjs(lastmanualbackup.DateTime).format('YYYY-MM-DD HH:mm') 
-                  | ). 
-                | Make sure you put it in a safe place! Your ThinkingHome station will only store the last 7 backups you have made. 
-                | You decide how often you make backups. It is recommended to make a backup for all major changes.
+                  != __('You last made and downloaded a backup at <b>%s</b>.', dayjs(lastmanualbackup.DateTime).format('YYYY-MM-DD HH:mm'))
+                  | 
+                = __('Make sure you put it in a safe place! Your ThinkingHome station will only store the last 7 backups you have made.')
+                | 
+                = __('You decide how often you make backups. It is recommended to make a backup for all major changes.')
             a.btn.btn-default.black.ml-3(href="/settings/backup/download")
-              | Download backup
+              = __('Download backup')
 
 
           .callout.callout-warning
             h5
               i.fa.fa-route.fa-fw.text-warning
-              |  IP handling
+              | 
+              = __('IP handling')
             p
               small
-                | Built-in IP protection prevents certain remote computers from accessing your ThinkingHome system. The list is updated daily. You can check blacklisted IPs.
+                = __('Built-in IP protection prevents certain remote computers from accessing your ThinkingHome system. The list is updated daily. You can check blacklisted IPs.')
                 br
-                | You can enable the '404 protection' option below to suspend access for a short time after a few unsuccessful (404 - page not found) requests, thereby protecting your system from malicious attempts or attacks. You can see the actually banned IPs.
+                = __('You can enable the \'404 protection\' option below to suspend access for a short time after a few unsuccessful (404 - page not found) requests, thereby protecting your system from malicious attempts or attacks. You can see the actually banned IPs.')
                 br
                 | 
 
               br
               if systemsettings.BanIPBy404
                 button.btn.btn-default.black.ml-3(onclick="setinline('BanIPBy404', 0, 'vt4')")
-                  | Enabled
+                  = __('Enabled')
                   br
                   small
-                    | press to disable
+                    = __('press to disable')
               else
                 button.btn.btn-warning.black.ml-3(onclick="setinline('BanIPBy404', 1, 'vt4')")
-                  | Disabled
+                  = __('Disabled')
                   br
                   small
-                    | press to enable
+                    = __('press to enable')
 
               if ipblacklist.length
                 - var blacklistediplist = ipblacklist.join('<br/>')
                 button.btn.btn-default.black.ml-3.float-right(onclick="showblacklistedips()")
-                  | Show
-                  | 
-                  = ipblacklist.length
-                  | 
-                  | blacklisted IPs
+                  = __('Show %s blacklisted IPs', ipblacklist.length)
               else
                 span.badge.badge-success.ml-3.float-right
                   i.fa.fa-check
                   | 
-                  | No blacklisted IPs
+                  = __('No blacklisted IPs')
 
               if ipbanlist.length
                 - var bannediplist = ipbanlist.join('<br/>')
                 button.btn.btn-default.black.ml-3.float-right(onclick="showbannedips()")
-                  | Show
-                  | 
-                  = ipbanlist.length
-                  | 
-                  | banned IPs
+                  = __('Show %s banned IPs', ipbanlist.length)
               else
                 span.badge.badge-success.ml-3.float-right
                   i.fa.fa-check
                   | 
-                  | No banned IPs
+                  = __('No banned IPs')
 
 
           .callout.callout-danger#restartbox
             h5
               i.fa.fa-power-off.fa-fw.text-danger
-              |  Restart
+              | 
+              = __('Restart')
             p
               small
                 if lastboot
-                  | The system was launched 
-                  b
-                    = dayjs(lastboot.DateTime).fromNow()
+                  != __('The system was launched <b>%s</b> (at %s).', dayjs(lastboot.DateTime).fromNow(), dayjs(lastboot.DateTime).format('YYYY-MM-DD HH:mm'))
                   | 
-                  | (at 
-                  = dayjs(lastboot.DateTime).format('YYYY-MM-DD HH:mm')
-                  | ). 
-                | You can restart the ThinkingHome system by pressing the button. 
+                = __('You can restart the ThinkingHome system by pressing the button.')
+                | 
                 if lastrestart
-                  | (We know someone had already restarted the system at 
-                  b
-                    = dayjs(lastrestart.DateTime).format('YYYY-MM-DD HH:mm')
-                  | ). 
-                | After restart we will redirect you to the main page shortly, because you will need to log in again.
+                  != __('(We know someone had already restarted the system at <b>%s</b>.)', dayjs(lastrestart.DateTime).format('YYYY-MM-DD HH:mm'))
+                  | 
+                = __('After restart we will redirect you to the main page shortly, because you will need to log in again.')
             button.btn.btn-danger.ml-3(onclick="restartthinkinghome(); return false;")#restartbutton
-              | Restart now
+              = __('Restart now')
 
 
   script(type='text/javascript').

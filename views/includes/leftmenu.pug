@@ -39,8 +39,10 @@ aside.main-sidebar.sidebar-dark-primary.elevation-4.sidebar-dark-warning
               p
                 = __('Settings')
 
-        li.nav-item
-          a.nav-link(href='/logout')
-            i.nav-icon.fas.fa-lock
-            p
-              = __('Logout')
+        li.nav-header
+          = __('USER')
+          li.nav-item
+            a.nav-link(href='/logout')
+              i.nav-icon.fas.fa-lock
+              p
+                = __('Logout')
