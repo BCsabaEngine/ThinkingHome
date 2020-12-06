@@ -4,6 +4,7 @@ const DeviceLogModel = require('../models/DeviceLog')
 const DeviceSettingModel = require('../models/DeviceSetting')
 const DeviceTelemetryModel = require('../models/DeviceTelemetry')
 const DeviceStateSeriesModel = require('../models/DeviceStateSeries')
+const DeviceDataModel = require('../models/DeviceData')
 const RuleCodeModel = require('../models/RuleCode')
 const timelineConverter = require('../lib/timelineConverter')
 const ObjectUtils = require('../lib/objectUtils')
@@ -239,6 +240,11 @@ class Device {
   async WriteSettings() {
     await DeviceSettingModel.UpdateSettingsSync(this.id, this.setting)
   }
+
+  async GetDataKeys() { return await DeviceDataModel.GetDeviceKeysSync(this.id) }
+  async GetData(key) { return await DeviceDataModel.GetDeviceDataSync(this.id, key) }
+  async UpdateData(key, value) { return await DeviceDataModel.UpdateDataSync(this.id, key, value) }
+  async DeleteData(key) { return await DeviceDataModel.DeleteDataSync(this.id, key) }
 
   static IsValidDeviceName(name) { return name.match(/^[a-z0-9_]{1,32}$/) }
 }
