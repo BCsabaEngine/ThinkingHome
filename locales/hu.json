@@ -223,9 +223,9 @@
 	"Version": "Verzió",
 	"Start reason": "Indítás oka",
 	"Uptime": "Működési idő",
-	"Boot count": "Bekapcsolás szám",
-	"Wifi link count": "Wifi csatl. szám",
-	"Mqtt link count": "Mqtt csatl. szám",
+	"Boot count": "Bekapcsolások száma",
+	"Wifi link count": "Wifi csatl. száma",
+	"Mqtt link count": "Mqtt csatl. száma",
 	"Freemem": "Szabad memória",
 	"Module": "Modul",
 	"Product": "Termék",
@@ -249,5 +249,8 @@
 	"Bot token": "Bot token",
 	"Chat ID not set": "Chat azonosító nincs beállítva",
 	"Chat ID": "Chat azonosító",
-	"Bot token not set": "Bot token nincs beállítva"
+	"Bot token not set": "Bot token nincs beállítva",
+	"Connection count": "Kapcsolódások száma",
+	"Discover devices": "Eszköz felderítés",
+	"Refresh list": "Lista frissítés"
 }

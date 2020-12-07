@@ -21,7 +21,7 @@ class GenericDevice extends YeelightDevice {
       const result = {}
       result.host = {
         type: 'text',
-        title: 'Host/IP',
+        title: __('IP address'),
         value: this.setting.host,
         error: !this.setting.host,
         canclear: false,
@@ -90,9 +90,9 @@ class GenericDevice extends YeelightDevice {
   GetStatusInfos() {
     const result = []
     if (this.yeelight) {
-      result.push({ device: this, message: 'Connection count', value: this.yeelight.connectioncount || '0' })
-      if (!this.yeelight.isConnected()) result.push({ device: this, error: true, message: 'Not connected' })
-      if (this.yeelighterror) result.push({ device: this, error: true, message: 'Error', value: this.yeelighterror })
+      result.push({ device: this, message: __('Connection count'), value: this.yeelight.connectioncount || '0' })
+      if (!this.yeelight.isConnected()) result.push({ device: this, error: true, message: __('Not connected') })
+      if (this.yeelighterror) result.push({ device: this, error: true, message: __('Error'), value: this.yeelighterror })
     }
     return result
   }

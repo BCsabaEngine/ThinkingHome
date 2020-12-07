@@ -14,8 +14,8 @@ class YeelightPlatform extends Platform {
 
       result.listdevices = {
         type: 'button',
-        title: 'Discover devices',
-        value: 'Refresh list',
+        title: __('Discover devices'),
+        value: __('Refresh list'),
         onexecute: function () {
           this.newdevices = {}
           this.scanner.Scan(this.newdevices)
