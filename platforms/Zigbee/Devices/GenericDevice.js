@@ -28,7 +28,7 @@ class GenericDevice extends ZigbeeDevice {
       const result = {}
       result.topic = {
         type: 'text',
-        title: 'MQTT topic',
+        title: __('MQTT topic'),
         value: this.setting.topic,
         displayvalue: function () { return this.setting.topic || `${this.name} (default)` }.bind(this)(),
         error: false,
@@ -37,8 +37,8 @@ class GenericDevice extends ZigbeeDevice {
       if (this.zigbeeUpdateAvailable) {
         result.sendconfig = {
           type: 'button',
-          title: 'Update firmware',
-          value: 'Start now',
+          title: __('Update firmware'),
+          value: __('Start update now'),
           onexecute: function () { this.platform.SendMessage('bridge/ota_update/update', this.GetTopic()) }.bind(this)
         }
       }
@@ -58,19 +58,19 @@ class GenericDevice extends ZigbeeDevice {
   GetStatusInfos() {
     const result = []
     // if (!this.zigbeeLastTime && (new Date().getTime() - this.starttime) > 3 * 60 * 1000) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
-    if (this.zigbeeLastTime) { result.push({ device: this, message: 'Info time', value: this.zigbeeLastTime ? dayjs(this.zigbeeLastTime).fromNow() : '' }) }
-    if (this.zigbeeLinkQuality) { result.push({ device: this, message: 'Link quality', value: `${this.zigbeeLinkQuality} lqi` }) }
+    if (this.zigbeeLastTime) { result.push({ device: this, message: __('Info time'), value: this.zigbeeLastTime ? dayjs(this.zigbeeLastTime).fromNow() : '' }) }
+    if (this.zigbeeLinkQuality) { result.push({ device: this, message: __('Link quality'), value: `${this.zigbeeLinkQuality} lqi` }) }
     if (this.zigbeeBatteryPercent) {
       result.push({
         device: this,
         warning: this.zigbeeBatteryPercent < batterywarninglevel && this.zigbeeBatteryPercent >= batteryerrorlevel,
         error: this.zigbeeBatteryPercent < batteryerrorlevel,
-        message: 'Battery',
+        message: __('Battery'),
         value: `${this.zigbeeBatteryPercent} %`
       })
     }
-    if (this.zigbeeVoltage) { result.push({ device: this, message: 'Voltage', value: `${this.zigbeeVoltage} mV` }) }
-    if (this.zigbeeUpdateAvailable) { result.push({ device: this, message: 'Update', value: 'Available' }) }
+    if (this.zigbeeVoltage) { result.push({ device: this, message: __('Voltage'), value: `${this.zigbeeVoltage} mV` }) }
+    if (this.zigbeeUpdateAvailable) { result.push({ device: this, message: __('Firmware Update'), value: __('Available') }) }
     return result
   }
 

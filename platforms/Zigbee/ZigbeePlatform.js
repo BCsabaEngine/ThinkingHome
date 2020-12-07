@@ -20,29 +20,29 @@ class ZigbeePlatform extends Platform {
       if (!this.bridgePermitjoin) {
         result.allowjoin = {
           type: 'button',
-          title: 'Allow join',
-          value: 'Allow',
+          title: __('Allow join'),
+          value: __('Allow'),
           onexecute: function () { this.SendMessagePermitJoin(true) }.bind(this)
         }
       }
       if (this.bridgePermitjoin) {
         result.denyjoin = {
           type: 'button',
-          title: 'Deny join',
-          value: 'Deny',
+          title: __('Deny join'),
+          value: __('Deny'),
           onexecute: function () { this.SendMessagePermitJoin(false) }.bind(this)
         }
       }
       result.listdevices = {
         type: 'button',
-        title: 'Zigbee devices',
-        value: this.bridgeDevices.length ? 'Refresh list' : 'Get list',
+        title: __('Zigbee devices'),
+        value: this.bridgeDevices.length ? __('Refresh list') : __('Get list'),
         onexecute: function () { this.SendMessageGetDevices() }.bind(this)
       }
       result.listnetwork = {
         type: 'button',
-        title: 'Zigbee network',
-        value: this.bridgeNetworkNodes.length ? 'Refresh graph' : 'Get graph',
+        title: __('Zigbee network'),
+        value: this.bridgeNetworkNodes.length ? __('Refresh graph') : __('Get graph'),
         onexecute: function () { this.SendMessageNetworkMap() }.bind(this)
       }
 
@@ -59,9 +59,9 @@ class ZigbeePlatform extends Platform {
       const minutes = (now - this.startdate) / 1000 / 60
       if (minutes > 0) {
         const value = ((this.incoming + this.outgoing) / minutes).toFixed(0)
-        return `${value} /min`
+        return __('%s /min', value)
       }
-      return '0 /min'
+      return __('0 /min')
     }
   };
 
@@ -81,17 +81,17 @@ class ZigbeePlatform extends Platform {
 
   GetStatusInfos() {
     const result = []
-    result.push({ message: 'Received', value: this.msgcounter.incoming || '0' })
-    result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' })
-    result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() })
+    result.push({ message: __('Received'), value: this.msgcounter.incoming || '0' })
+    result.push({ message: __('Sent'), value: this.msgcounter.outgoing || '0' })
+    result.push({ message: __('Load'), value: this.msgcounter.GetMinuteRatio() })
 
     result.push({ message: '' })
-    if (this.bridgeVersion) result.push({ message: 'Zigbe2mqtt version', value: `v${this.bridgeVersion}` })
-    if (this.bridgeCoordinatorType) result.push({ message: 'Coordinator type', value: this.bridgeCoordinatorType })
-    if (this.bridgeCoordinatorRevision) result.push({ message: 'Coordinator revision', value: this.bridgeCoordinatorRevision })
-    if (this.bridgeLoglevel) result.push({ message: 'Log level', value: this.bridgeLoglevel })
-    if (this.bridgeNetworkChannel) result.push({ message: 'Network', value: `ch ${this.bridgeNetworkChannel}` })
-    if (this.bridgePermitjoin) result.push({ message: 'Join to network', value: 'Allowed' })
+    if (this.bridgeVersion) result.push({ message: __('Zigbee2mqtt version'), value: `v${this.bridgeVersion}` })
+    if (this.bridgeCoordinatorType) result.push({ message: __('Coordinator type'), value: this.bridgeCoordinatorType })
+    if (this.bridgeCoordinatorRevision) result.push({ message: __('Coordinator revision'), value: this.bridgeCoordinatorRevision })
+    if (this.bridgeLoglevel) result.push({ message: __('Log level'), value: this.bridgeLoglevel })
+    if (this.bridgeNetworkChannel) result.push({ message: __('Network'), value: `ch ${this.bridgeNetworkChannel}` })
+    if (this.bridgePermitjoin) result.push({ message: __('Join to network'), value: __('Allowed') })
 
     const statusinfos = super.GetStatusInfos()
     if (Array.isArray(statusinfos)) {
