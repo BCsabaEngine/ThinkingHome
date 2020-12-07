@@ -8,14 +8,14 @@ class RfMoveSensor extends RfDevice {
       const result = {}
       result.rfcode = {
         type: 'text',
-        title: 'Open RF code',
+        title: __('Move RF code'),
         value: this.setting.rfcode,
         error: !this.setting.rfcode,
         canclear: false
       }
       return result
     }.bind(this),
-    toTitle: function () { return 'Move sensor' },
+    toTitle: function () { return __('Move sensor') },
     toSubTitle: function () { return '' }
   };
 
@@ -26,7 +26,7 @@ class RfMoveSensor extends RfDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.rfcode) result.push({ device: this, error: true, message: 'RF code not set' })
+    if (!this.setting.rfcode) result.push({ device: this, error: true, message: __('RF code not set') })
     return result
   }
 

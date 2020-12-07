@@ -10,21 +10,21 @@ class RfDoorSensor extends RfDevice {
       const result = {}
       result.rfcodeopen = {
         type: 'text',
-        title: 'Open RF code',
+        title: __('Open RF code'),
         value: this.setting.rfcodeopen,
         error: !this.setting.rfcodeopen,
         canclear: false
       }
       result.rfcodeclose = {
         type: 'text',
-        title: 'Close RF code',
+        title: __('Close RF code'),
         value: this.setting.rfcodeclose,
         error: !this.setting.rfcodeclose,
         canclear: false
       }
       return result
     }.bind(this),
-    toTitle: function () { return 'Door sensor' },
+    toTitle: function () { return __('Door sensor') },
     toSubTitle: function () { return '' }
   };
 
@@ -39,8 +39,8 @@ class RfDoorSensor extends RfDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.rfcodeopen) result.push({ device: this, error: true, message: 'Open RF code not set' })
-    if (!this.setting.rfcodeclose) result.push({ device: this, error: true, message: 'Close RF code not set' })
+    if (!this.setting.rfcodeopen) result.push({ device: this, error: true, message: __('Open RF code not set') })
+    if (!this.setting.rfcodeclose) result.push({ device: this, error: true, message: __('Close RF code not set') })
     return result
   }
 

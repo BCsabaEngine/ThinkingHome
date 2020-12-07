@@ -22,7 +22,7 @@ class RfPushButton extends RfDevice {
       for (const button of this.buttons) {
         result[`rfcode${button}`] = {
           type: 'text',
-          title: `RF code ${button}`.trim(),
+          title: __('RF code %s', button).trim(),
           value: this.setting[`rfcode${button}`],
           error: false,
           canclear: this.buttons.length > 1
@@ -30,14 +30,14 @@ class RfPushButton extends RfDevice {
       }
       return result
     }.bind(this),
-    toTitle: function () { return this.buttons.length > 1 ? `${this.buttons.length}ch button` : 'Push button' }.bind(this),
+    toTitle: function () { return this.buttons.length > 1 ? __('%sch button', this.buttons.length) : __('Push button') }.bind(this),
     toSubTitle: function () {
       if (this.buttons.length === 1) { return this.setting.rfcode }
       let count = 0
       for (const button of this.buttons) {
         if (this.setting[`rfcode${button}`]) { count++ }
       }
-      return `${count} / ${this.buttons.length} codes`
+      return __('%s / %s codes', count, this.buttons.length)
     }.bind(this)
   };
 
@@ -48,7 +48,7 @@ class RfPushButton extends RfDevice {
     for (const button of this.buttons) {
       if (this.setting[`rfcode${button}`]) { anyfilled = true }
     }
-    if (!anyfilled) result.push({ device: this, error: true, message: 'None of code set' })
+    if (!anyfilled) result.push({ device: this, error: true, message: __('None of code set') })
     return result
   }
 

@@ -12,28 +12,28 @@ class RfSwitch extends RfDevice {
       const result = {}
       result.rfcodeon = {
         type: 'text',
-        title: 'On RF code',
+        title: __('On RF code'),
         value: this.setting.rfcodeon,
         error: !this.setting.rfcodeon,
         canclear: false
       }
       result.rfcodetoggle = {
         type: 'text',
-        title: 'Toggle RF code',
+        title: __('Toggle RF code'),
         value: this.setting.rfcodetoggle,
         error: false,
         canclear: true
       }
       result.rfcodeoff = {
         type: 'text',
-        title: 'Off RF code',
+        title: __('Off RF code'),
         value: this.setting.rfcodeoff,
         error: !this.setting.rfcodeoff,
         canclear: false
       }
       return result
     }.bind(this),
-    toTitle: function () { return 'RF switch' },
+    toTitle: function () { return __('RF switch') },
     toSubTitle: function () { return '' }
   };
 
@@ -48,8 +48,8 @@ class RfSwitch extends RfDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.rfcodeon) result.push({ device: this, error: true, message: 'On RF code not set' })
-    if (!this.setting.rfcodeoff) result.push({ device: this, error: true, message: 'Off RF code not set' })
+    if (!this.setting.rfcodeon) result.push({ device: this, error: true, message: __('On RF code not set') })
+    if (!this.setting.rfcodeoff) result.push({ device: this, error: true, message: __('Off RF code not set') })
     return result
   }
 }

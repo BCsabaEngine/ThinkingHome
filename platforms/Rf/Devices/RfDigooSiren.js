@@ -9,7 +9,7 @@ class RfDigooSiren extends RfDevice {
       const result = {}
       result.rfprefix = {
         type: 'text',
-        title: 'RF prefix (4 hex digit)',
+        title: __('RF prefix (4 hex digit)'),
         value: this.setting.rfprefix,
         error: !this.setting.rfprefix,
         canclear: true
@@ -17,18 +17,18 @@ class RfDigooSiren extends RfDevice {
       if (this.setting.rfprefix) {
         result.rfsos = {
           type: 'label',
-          title: 'SOS RF code',
+          title: __('SOS RF code'),
           value: this.GetSOSCode()
         }
         result.rfdisarm = {
           type: 'label',
-          title: 'Disarm RF code',
+          title: __('Disarm RF code'),
           value: this.GetDisarmCode()
         }
         result.sendsos = {
           type: 'button',
-          title: 'Send SOS code',
-          value: 'Learn or test',
+          title: __('Send SOS code'),
+          value: __('Learn or test'),
           onexecute: function () {
             const sos = this.GetSOSCode()
             if (sos) {
@@ -38,8 +38,8 @@ class RfDigooSiren extends RfDevice {
         }
         result.senddisarm = {
           type: 'button',
-          title: 'Send disarm',
-          value: 'Make silence',
+          title: __('Send disarm'),
+          value: __('Make silence'),
           onexecute: function () {
             const disarm = this.GetDisarmCode()
             if (disarm) { this.SendRfCode(disarm) }
@@ -48,7 +48,7 @@ class RfDigooSiren extends RfDevice {
       }
       return result
     }.bind(this),
-    toTitle: function () { return 'Digoo Siren' },
+    toTitle: function () { return __('Digoo Siren') },
     toSubTitle: function () { return this.GetSOSCode() }.bind(this)
   };
 
@@ -71,7 +71,7 @@ class RfDigooSiren extends RfDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.rfprefix) result.push({ device: this, error: true, message: 'RF prefix not set' })
+    if (!this.setting.rfprefix) result.push({ device: this, error: true, message: __('RF prefix not set') })
     return result
   }
 }

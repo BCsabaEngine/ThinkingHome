@@ -17,9 +17,9 @@ class RfPlatform extends Platform {
       const minutes = (now - this.startdate) / 1000 / 60
       if (minutes > 0) {
         const value = ((this.incoming + this.outgoing) / minutes).toFixed(0)
-        return `${value} /min`
+        return __('%s /min', value)
       }
-      return '0 /min'
+      return __('0 /min')
     }
   };
 
@@ -30,23 +30,23 @@ class RfPlatform extends Platform {
     const recdevs = global.runningContext.rfInterCom.GetReceiverDevices()
     if (recdevs.length) {
       let rc = 1
-      for (const recdev of recdevs) { result.push({ message: `Receiver #${rc++}`, value: recdev.name }) }
-    } else { result.push({ message: 'Receiver device not found', value: '' }) }
+      for (const recdev of recdevs) { result.push({ message: __('Receiver #%s', rc++), value: recdev.name }) }
+    } else { result.push({ message: __('Receiver device not found'), value: '' }) }
 
     const snddevs = global.runningContext.rfInterCom.GetSenderDevices()
     if (snddevs.length) {
       let rs = 1
-      for (const snddev of snddevs) { result.push({ message: `Sender #${rs++}`, value: snddev.name }) }
-    } else { result.push({ message: 'Sender device not found', value: '' }) }
+      for (const snddev of snddevs) { result.push({ message: __('Sender #%s', rs++), value: snddev.name }) }
+    } else { result.push({ message: __('Sender device not found'), value: '' }) }
 
     result.push({ message: '', value: '' })
-    result.push({ message: 'Received', value: this.msgcounter.incoming || '0' })
-    result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' })
-    result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() })
+    result.push({ message: __('Received'), value: this.msgcounter.incoming || '0' })
+    result.push({ message: __('Sent'), value: this.msgcounter.outgoing || '0' })
+    result.push({ message: __('Load'), value: this.msgcounter.GetMinuteRatio() })
 
     if (this.lastrfcodestatus.length) {
       result.push({ message: '' })
-      result.push({ message: 'Last RF codes handled by platform' })
+      result.push({ message: __('Last RF codes handled by platform') })
       for (const rfcodestatus of this.lastrfcodestatus) { result.push(rfcodestatus) }
     }
 
@@ -76,7 +76,7 @@ class RfPlatform extends Platform {
     }
 
     if (!found) {
-      this.lastrfcodestatus.push({ message: 'Not handled', value: rfcode })
+      this.lastrfcodestatus.push({ message: __('Not handled'), value: rfcode })
     } else {
       this.lastrfcodestatus.push({ message: '', value: rfcode })
     }
