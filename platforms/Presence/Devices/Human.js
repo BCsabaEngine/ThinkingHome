@@ -21,7 +21,7 @@ class PresenceHuman extends PresenceDevice {
         const value = this.setting[name]
         result[name] = {
           type: 'select',
-          title: `Owned device #${i}`,
+          title: __('Owned device #%s', i),
           value: value,
           displayvalue: function () {
             if (value) {
@@ -51,7 +51,7 @@ class PresenceHuman extends PresenceDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.device1) result.push({ device: this, error: true, message: 'One device needed' })
+    if (!this.setting.device1) result.push({ device: this, error: true, message: __('One device needed') })
     return result
   }
 

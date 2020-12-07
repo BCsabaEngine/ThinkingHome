@@ -5,11 +5,11 @@ class PresenceDevice extends Device {
     return {
       Mobile: { displayname: 'Mobile', devicename: 'PresenceMobile'.toLowerCase(), icon: 'fa fa-mobile-alt' },
       Laptop: { displayname: 'Laptop', devicename: 'PresenceLaptop'.toLowerCase(), icon: 'fa fa-laptop' },
-      Desktop: { displayname: 'Desktop computer', devicename: 'PresenceDesktop'.toLowerCase(), icon: 'fa fa-desktop' },
+      Desktop: { displayname: 'Desktop', devicename: 'PresenceDesktop'.toLowerCase(), icon: 'fa fa-desktop' },
       Tv: { displayname: 'TV', devicename: 'PresenceTv'.toLowerCase(), icon: 'fa fa-tv' },
       Console: { displayname: 'Game console', devicename: 'PresenceConsole'.toLowerCase(), icon: 'fa fa-gamepad' },
 
-      Human: { displayname: 'Family member', devicename: 'PresenceHuman'.toLowerCase(), icon: 'fa fa-user-circle' }
+      Human: { displayname: 'Family', devicename: 'PresenceHuman'.toLowerCase(), icon: 'fa fa-user-circle' }
     }
   }
 

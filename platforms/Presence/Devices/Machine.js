@@ -17,7 +17,7 @@ class PresenceMachine extends PresenceDevice {
       }
       result.macaddress = {
         type: 'select',
-        title: 'MAC address',
+        title: __('MAC address'),
         value: this.setting.macaddress,
         lookup: JSON.stringify(macaddresslist).replace(/["]/g, "'"),
         error: !this.setting.macaddress,
@@ -25,19 +25,22 @@ class PresenceMachine extends PresenceDevice {
       }
       result.macaddress2 = {
         type: 'select',
-        title: 'MAC address #2',
+        title: __('MAC address #2'),
         value: this.setting.macaddress2,
         lookup: JSON.stringify(macaddresslist).replace(/["]/g, "'"),
         error: false,
         canclear: true
       }
 
-      const intervallist = { 1: '1 minute', 2: '2 minutes', 3: '3 minutes', 4: '4 minutes', 5: '5 minutes', 10: '10 minutes', 15: '15 minutes' }
+      const intervallist = {}
+      // eslint-disable-next-line no-magic-numbers
+      for (const interval of [1, 2, 3, 4, 5, 10, 15]) intervallist[interval] = __n('%s minute', '%s minutes', interval)
+
       result.leavetoleranceminutes = {
         type: 'select',
-        title: 'Leave tolerance',
+        title: __('Leave tolerance'),
         value: this.setting.leavetoleranceminutes,
-        displayvalue: `${this.setting.leavetoleranceminutes} minutes`,
+        displayvalue: __('%s minutes', this.setting.leavetoleranceminutes),
         lookup: JSON.stringify(intervallist).replace(/["]/g, "'"),
         error: false,
         canclear: false
@@ -60,7 +63,7 @@ class PresenceMachine extends PresenceDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.macaddress) result.push({ device: this, error: true, message: 'MAC address not set' })
+    if (!this.setting.macaddress) result.push({ device: this, error: true, message: __('MAC address not set') })
     return result
   }
 

@@ -21,6 +21,10 @@
 	"(last %s)": "(utolsó %s)",
 	"I read them all": "Elolvastam az összeset",
 	"Today": "Ma",
+	"%s minute": {
+		"one": "%s perc",
+		"other": "%s perc"
+	},
 	"device": {
 		"one": "eszköz",
 		"other": "eszköz"
@@ -201,5 +205,10 @@
 	"MAC address not set": "MAC cím nincs beállítva",
 	"IP address": "IP cím",
 	"MAC address": "MAC cím",
-	"Secret key": "Titkos kulcs"
+	"MAC address #2": "MAC cím #2",
+	"Secret key": "Titkos kulcs",
+	"Leave tolerance": "Távozási késleltetés",
+	"%s minutes": "%s minutes",
+	"Owned device #%s": "Eszköz #%s",
+	"One device needed": "Egy eszköz szükséges"
 }
