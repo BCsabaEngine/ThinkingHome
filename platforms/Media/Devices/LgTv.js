@@ -22,7 +22,7 @@ class LgTv extends MediaDevice {
       const result = {}
       result.ip = {
         type: 'text',
-        title: 'IP address',
+        title: __('IP address'),
         value: this.setting.ip,
         error: !this.setting.ip,
         canclear: false,
@@ -30,14 +30,14 @@ class LgTv extends MediaDevice {
       }
       result.mac = {
         type: 'text',
-        title: 'MAC address',
+        title: __('MAC address'),
         value: this.setting.mac,
         error: !this.setting.mac,
         canclear: false
       }
       result.tvkey = {
         type: 'label',
-        title: 'Secret key',
+        title: __('Secret key'),
         value: this.setting.tvkey,
         displayvalue: this.setting.tvkey ? `${this.setting.tvkey.substr(0, 10)}...[${this.setting.tvkey.length}]` : '',
         error: false,
@@ -166,13 +166,13 @@ class LgTv extends MediaDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.ip) result.push({ error: true, message: 'IP address not set' })
-    if (!this.setting.mac) result.push({ error: true, message: 'MAC address not set' })
+    if (!this.setting.ip) result.push({ error: true, message: __('IP address not set') })
+    if (!this.setting.mac) result.push({ error: true, message: __('MAC address not set') })
 
-    if (this.lgProductName) result.push({ message: 'Product', value: this.lgProductName })
-    if (this.lgVersion) result.push({ message: 'Version', value: `v${this.lgVersion}` })
+    if (this.lgProductName) result.push({ message: __('Product'), value: this.lgProductName })
+    if (this.lgVersion) result.push({ message: __('Version'), value: `v${this.lgVersion}` })
     if (this.lgModelName) result.push({ message: 'Model', value: this.lgModelName })
-    if (this.lgCountry || this.lgLanguageCode) result.push({ message: 'Country / lang', value: `${this.lgCountry} / ${this.lgLanguageCode}` })
+    if (this.lgCountry || this.lgLanguageCode) result.push({ message: __('Country / lang'), value: `${this.lgCountry} / ${this.lgLanguageCode}` })
     return result
   }
 

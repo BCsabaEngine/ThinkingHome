@@ -196,5 +196,10 @@
 	"Auto off extra": "Auto kikapcsolás (+ mód)",
 	"Off after %s minutes": "Kikapcsolás %s perc után",
 	"Brand and model not set": "Gyártó és model nincs beállítva",
-	"No auto off": "Nincs auto kikapcsolás"
+	"No auto off": "Nincs auto kikapcsolás",
+	"IP address not set": "IP cím nincs beállítva",
+	"MAC address not set": "MAC cím nincs beállítva",
+	"IP address": "IP cím",
+	"MAC address": "MAC cím",
+	"Secret key": "Titkos kulcs"
 }
