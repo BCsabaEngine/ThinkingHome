@@ -134,5 +134,6 @@
 	"The system was launched <b>%s</b> (at %s).": "A rendszert <b>%s</b> indították újra (%s-kor).",
 	"You can restart the ThinkingHome system by pressing the button.": "A gomb megnyomásával újraindíthatod a ThinkingHome rendszered.",
 	"(We know someone had already restarted the system at <b>%s</b>.)": "(Tudjuk, hogy valaki újraindította a rendszert <b>%s</b>-kor.)",
-	"After restart we will redirect you to the main page shortly, because you will need to log in again.": "Az újraindítás után átirányítunk a főoldalra, mert újra be kell jelentkezned."
+	"After restart we will redirect you to the main page shortly, because you will need to log in again.": "Az újraindítás után átirányítunk a főoldalra, mert újra be kell jelentkezned.",
+	"Sorry, looks like an error occurred": "Ooops, úgy néz ki valami hiba történt"
 }
