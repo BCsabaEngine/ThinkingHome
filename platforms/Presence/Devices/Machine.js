@@ -40,7 +40,7 @@ class PresenceMachine extends PresenceDevice {
         type: 'select',
         title: __('Leave tolerance'),
         value: this.setting.leavetoleranceminutes,
-        displayvalue: __('%s minutes', this.setting.leavetoleranceminutes),
+        displayvalue: __n('%s minute', '%s minutes', this.setting.leavetoleranceminutes),
         lookup: JSON.stringify(intervallist).replace(/["]/g, "'"),
         error: false,
         canclear: false
