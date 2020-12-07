@@ -11,7 +11,7 @@ class RaspberryPiDisk extends RaspberryPiDevice {
       for (const data of this.platform.fssize) { availabledisks[data.fs] = data.fs }
       result.diskname = {
         type: 'select',
-        title: 'Disk name',
+        title: __('Disk name'),
         value: this.setting.diskname,
         lookup: JSON.stringify(availabledisks).replace(/["]/g, "'"),
         error: !this.setting.diskname,
@@ -19,7 +19,7 @@ class RaspberryPiDisk extends RaspberryPiDevice {
       }
       return result
     }.bind(this),
-    toTitle: function () { return 'Used: ' + this.entities.usagepercent }.bind(this),
+    toTitle: function () { return __('Used: %s%%', this.entities.usagepercent.value || '?') }.bind(this),
     toSubTitle: function () { return this.setting.diskname }.bind(this)
   };
 
@@ -49,7 +49,7 @@ class RaspberryPiDisk extends RaspberryPiDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.diskname) result.push({ error: true, message: 'Disk name not set' })
+    if (!this.setting.diskname) result.push({ error: true, message: __('Disk name not set') })
     return result
   }
 

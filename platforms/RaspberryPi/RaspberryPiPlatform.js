@@ -17,12 +17,24 @@ class RaspberryPiPlatform extends Platform {
     toDisplayList: function () {
       const result = {}
 
-      const intervallist = { 5: '5 seconds', 15: '15 seconds', 30: '30 seconds', 60: '1 minute', 120: '2 minutes', 300: '5 minutes', 600: '10 minutes' }
+      const intervallist = {
+        // eslint-disable-next-line no-magic-numbers
+        5: __n('%s second', '%s seconds', 5),
+        // eslint-disable-next-line no-magic-numbers
+        15: __n('%s second', '%s seconds', 15),
+        // eslint-disable-next-line no-magic-numbers
+        30: __n('%s second', '%s seconds', 30),
+        60: __n('%s minute', '%s minutes', 1),
+        120: __n('%s minute', '%s minutes', 2),
+        // eslint-disable-next-line no-magic-numbers
+        300: __n('%s minute', '%s minutes', 5),
+        600: __n('%s minute', '%s minutes', 10)
+      }
       result.freshinterval = {
         type: 'select',
-        title: 'Refresh interval',
+        title: __('Refresh interval'),
         value: this.setting.freshinterval,
-        displayvalue: this.setting.freshinterval >= 60 ? `${this.setting.freshinterval / 60} minutes` : `${this.setting.freshinterval} seconds`,
+        displayvalue: this.setting.freshinterval >= 60 ? __n('%s minute', '%s minutes', this.setting.freshinterval / 60) : __n('%s second', '%s seconds', this.setting.freshinterval),
         lookup: JSON.stringify(intervallist).replace(/["]/g, "'"),
         error: false,
         canclear: false
