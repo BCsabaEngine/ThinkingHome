@@ -62,14 +62,23 @@ module.exports = (app) => {
   app.use('/vis-network/standalone', express.static('./node_modules/vis-network/standalone', { index: false, maxAge: '1h', redirect: false }))
   app.use(favicon(path.resolve('./public/favicon.ico')))
 
-  // early loading of common and login routes
-  require(path.resolve('./routes/i18n.js'))(app)
-  require(path.resolve('./routes/login.js'))(app)
-  require(path.resolve('./routes/common.js'))(app)
+  // early loading of important login routes in given order
+  const earlyroutes = ['i18n', 'login', 'common']
+  for (const earlyroute of earlyroutes) {
+    require(path.resolve(`./routes/${earlyroute}.js`))(app)
+  }
 
-  // all other definition files
+  // load all other route definition files
   for (const file of glob.sync('./routes/*.js')) {
-    if (!file.endsWith('index.js') && !file.endsWith('i18n.js') && !file.endsWith('common.js') && !file.endsWith('login.js')) {
+    let alreadyloaded = file.endsWith('index.js')
+
+    for (const earlyroute of earlyroutes) {
+      if (file.endsWith(`${earlyroute}.js`)) {
+        alreadyloaded = true
+      }
+    }
+
+    if (!alreadyloaded) {
       require(path.resolve(file))(app)
     }
   }
