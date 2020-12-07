@@ -81,9 +81,9 @@ class MqttPlatform extends Platform {
       const minutes = (now - this.startdate) / 1000 / 60
       if (minutes > 0) {
         const value = ((this.incoming + this.outgoing) / minutes).toFixed(0)
-        return `${value} /min`
+        return __('%s /min', value)
       }
-      return '0 /min'
+      return __('0 /min')
     }
   };
 

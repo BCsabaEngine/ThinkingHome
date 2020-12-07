@@ -19,9 +19,9 @@ class IrPlatform extends Platform {
       const minutes = (now - this.startdate) / 1000 / 60
       if (minutes > 0) {
         const value = ((this.incoming + this.outgoing) / minutes).toFixed(0)
-        return `${value} /min`
+        return __('%s /min', value)
       }
-      return '0 /min'
+      return __('0 /min')
     }
   };
 
@@ -33,30 +33,30 @@ class IrPlatform extends Platform {
     if (recdevs.length) {
       let rc = 1
       for (const recdev of recdevs) {
-        result.push({ message: `Receiver #${rc++}`, value: recdev.name })
+        result.push({ message: __('Receiver #%s', rc++), value: recdev.name })
       }
     } else {
-      result.push({ message: 'Receiver device not found', value: '' })
+      result.push({ message: __('Receiver device not found'), value: '' })
     }
 
     const snddevs = global.runningContext.irInterCom.GetSenderDevices()
     if (snddevs.length) {
       let rc = 1
       for (const snddev of snddevs) {
-        result.push({ message: `Sender #${rc++}`, value: snddev.name })
+        result.push({ message: __('Sender #%s', rc++), value: snddev.name })
       }
     } else {
-      result.push({ message: 'Sender device not found', value: '' })
+      result.push({ message: __('Sender device not found'), value: '' })
     }
 
     result.push({ message: '', value: '' })
-    result.push({ message: 'Received', value: this.msgcounter.incoming || '0' })
-    result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' })
-    result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() })
+    result.push({ message: __('Received'), value: this.msgcounter.incoming || '0' })
+    result.push({ message: __('Sent'), value: this.msgcounter.outgoing || '0' })
+    result.push({ message: __('Load'), value: this.msgcounter.GetMinuteRatio() })
 
     if (this.lastircodestatus.length) {
       result.push({ message: '' })
-      result.push({ message: 'Last IR codes handled by platform' })
+      result.push({ message: __('Last IR codes handled by platform') })
       for (const ircodestatus of this.lastircodestatus) { result.push(ircodestatus) }
     }
 
@@ -88,7 +88,7 @@ class IrPlatform extends Platform {
     }
 
     if (!found) {
-      this.lastircodestatus.push({ message: 'Not handled', value: ircode })
+      this.lastircodestatus.push({ message: __('Not handled'), value: ircode })
     } else {
       this.lastircodestatus.push({ message: '', value: ircode })
     }

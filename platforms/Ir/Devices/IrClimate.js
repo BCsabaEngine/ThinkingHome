@@ -24,7 +24,7 @@ class IrClimate extends IrReceiverDevice {
       for (const device of senders) { devicelist[device.id] = device.name }
       result.handlerdevice = {
         type: 'select',
-        title: 'Handler device',
+        title: __('Handler device'),
         value: this.setting.handlerdevice,
         displayvalue: function () {
           if (this.setting.handlerdevice) {
@@ -46,7 +46,7 @@ class IrClimate extends IrReceiverDevice {
       }
       result.brandmodel = {
         type: 'select',
-        title: 'Brand and model',
+        title: __('Brand and model'),
         value: this.setting.brandmodel,
         lookup: JSON.stringify(brandmodels).replace(/["]/g, "'"),
         error: !this.setting.brandmodel,
@@ -56,7 +56,7 @@ class IrClimate extends IrReceiverDevice {
       for (let i = mintemp; i <= maxtemp; i++) temps[i] = `${i} ℃`
       result.temp_cool = {
         type: 'select',
-        title: 'Cool temperature',
+        title: __('Cool temperature'),
         value: this.setting.temp_cool,
         displayvalue: this.setting.temp_cool + ' ℃',
         lookup: JSON.stringify(temps).replace(/["]/g, "'"),
@@ -65,7 +65,7 @@ class IrClimate extends IrReceiverDevice {
       }
       result.temp_heat = {
         type: 'select',
-        title: 'Heat temperature',
+        title: __('Heat temperature'),
         value: this.setting.temp_heat,
         displayvalue: this.setting.temp_heat + ' ℃',
         lookup: JSON.stringify(temps).replace(/["]/g, "'"),
@@ -74,26 +74,26 @@ class IrClimate extends IrReceiverDevice {
       }
       result.swing = {
         type: 'bool',
-        title: 'Swing',
-        value: this.setting.swing ? 'Enabled' : 'Disabled',
+        title: __('Swing'),
+        value: this.setting.swing ? __('Enabled') : __('Disabled'),
         error: false,
         canclear: false
       }
-      const minutes = { 0: 'No auto off', 5: 5, 10: 10, 15: 15, 20: 20, 30: 30, 45: 45, 60: 60 }
+      const minutes = { 0: __('No auto off'), 5: 5, 10: 10, 15: 15, 20: 20, 30: 30, 45: 45, 60: 60 }
       result.autooffminutes = {
         type: 'select',
-        title: 'Auto off',
+        title: __('Auto off'),
         value: this.setting.autooffminutes,
-        displayvalue: Number.parseInt(this.setting.autooffminutes) ? ('Off after ' + this.setting.autooffminutes + ' minutes') : 'No auto off',
+        displayvalue: Number.parseInt(this.setting.autooffminutes) ? __('Off after %s minutes', this.setting.autooffminutes) : __('No auto off'),
         lookup: JSON.stringify(minutes).replace(/["]/g, "'"),
         error: false,
         canclear: false
       }
       result.autooffextraminutes = {
         type: 'select',
-        title: 'Auto off extra',
+        title: __('Auto off extra'),
         value: this.setting.autooffextraminutes,
-        displayvalue: Number.parseInt(this.setting.autooffextraminutes) ? ('Off after ' + this.setting.autooffextraminutes + ' minutes') : 'No auto off',
+        displayvalue: Number.parseInt(this.setting.autooffextraminutes) ? __('Off after %s minutes', this.setting.autooffextraminutes) : __('No auto off'),
         lookup: JSON.stringify(minutes).replace(/["]/g, "'"),
         error: false,
         canclear: false
@@ -173,8 +173,8 @@ class IrClimate extends IrReceiverDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.handlerdevice) result.push({ device: this, error: true, message: 'Handler device not set' })
-    if (!this.setting.brandmodel) result.push({ device: this, error: true, message: 'Brand and model not set' })
+    if (!this.setting.handlerdevice) result.push({ device: this, error: true, message: __('Handler device not set') })
+    if (!this.setting.brandmodel) result.push({ device: this, error: true, message: __('Brand and model not set') })
     return result
   }
 

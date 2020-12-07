@@ -19,7 +19,7 @@ class IrButtonSequence extends IrSenderDevice {
       for (const device of receivers) { devicelist[device.id] = device.name }
       result.handlerdevice = {
         type: 'select',
-        title: 'Handler device',
+        title: __('Handler device'),
         value: this.setting.handlerdevice,
         displayvalue: function () {
           if (this.setting.handlerdevice) {
@@ -34,28 +34,28 @@ class IrButtonSequence extends IrSenderDevice {
       }
       result.ircode1 = {
         type: 'text',
-        title: 'IR code 1st',
+        title: __('IR code 1st'),
         value: this.setting.ircode1,
         error: !this.setting.ircode1,
         canclear: false
       }
       result.ircode2 = {
         type: 'text',
-        title: 'IR code 2nd',
+        title: __('IR code 2nd'),
         value: this.setting.ircode2,
         error: !this.setting.ircode2,
         canclear: false
       }
       result.ircode3 = {
         type: 'text',
-        title: 'IR code 3rd',
+        title: __('IR code 3rd'),
         value: this.setting.ircode3,
         error: false,
         canclear: true
       }
       result.ircode4 = {
         type: 'text',
-        title: 'IR code 4th',
+        title: __('IR code 4th'),
         value: this.setting.ircode4,
         error: false,
         canclear: true
@@ -63,7 +63,7 @@ class IrButtonSequence extends IrSenderDevice {
       const latencyintervallist = { 1000: '1000 ms', 1500: '1500 ms', 2000: '2000 ms', 2500: '2500 ms' }
       result.latency = {
         type: 'select',
-        title: 'Delay time',
+        title: __('Delay time'),
         value: this.setting.latency,
         displayvalue: this.setting.latency + ' ms',
         lookup: JSON.stringify(latencyintervallist).replace(/["]/g, "'"),
@@ -92,9 +92,9 @@ class IrButtonSequence extends IrSenderDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.handlerdevice) result.push({ device: this, error: true, message: 'Handler device not set' })
-    if (!this.setting.ircode1) result.push({ device: this, error: true, message: 'IR code 1st not set' })
-    if (!this.setting.ircode2) result.push({ device: this, error: true, message: 'IR code 2nd not set' })
+    if (!this.setting.handlerdevice) result.push({ device: this, error: true, message: __('Handler device not set') })
+    if (!this.setting.ircode1) result.push({ device: this, error: true, message: __('IR code 1st not set') })
+    if (!this.setting.ircode2) result.push({ device: this, error: true, message: __('IR code 2nd not set') })
     return result
   }
 

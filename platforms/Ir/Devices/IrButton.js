@@ -33,7 +33,7 @@ class IrButton extends IrSenderDevice {
       for (const device of receivers) { devicelist[device.id] = device.name }
       result.handlerdevice = {
         type: 'select',
-        title: 'Handler device',
+        title: __('Handler device'),
         value: this.setting.handlerdevice,
         displayvalue: function () {
           if (this.setting.handlerdevice) {
@@ -50,7 +50,7 @@ class IrButton extends IrSenderDevice {
       for (const button of this.buttons) {
         result[`ircode${button}`] = {
           type: 'text',
-          title: `IR code ${button}`.trim(),
+          title: __('IR code %s', button).trim(),
           value: this.setting[`ircode${button}`],
           error: false,
           canclear: this.buttons.length > 1
@@ -58,7 +58,7 @@ class IrButton extends IrSenderDevice {
       }
       return result
     }.bind(this),
-    toTitle: function () { return this.buttons.length > 1 ? `${this.buttons.length} button` : 'Button' }.bind(this),
+    toTitle: function () { return this.buttons.length > 1 ? `${this.buttons.length} buttons` : 'Button' }.bind(this),
     toSubTitle: function () {
       if (this.buttons.length === 1) { return this.setting.ircode }
       let count = 0
@@ -72,12 +72,12 @@ class IrButton extends IrSenderDevice {
   get icon() { return this.setting.icon || 'fa fa-hockey-puck' }
   GetStatusInfos() {
     const result = []
-    if (!this.setting.handlerdevice) result.push({ device: this, error: true, message: 'Handler device not set' })
+    if (!this.setting.handlerdevice) result.push({ device: this, error: true, message: __('Handler device not set') })
     let anyfilled = false
     for (const button of this.buttons) {
       if (this.setting[`ircode${button}`]) { anyfilled = true }
     }
-    if (!anyfilled) result.push({ device: this, error: true, message: 'None of code set' })
+    if (!anyfilled) result.push({ device: this, error: true, message: __('None of code set') })
     return result
   }
 
