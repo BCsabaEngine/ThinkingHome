@@ -135,5 +135,12 @@
 	"You can restart the ThinkingHome system by pressing the button.": "A gomb megnyomásával újraindíthatod a ThinkingHome rendszered.",
 	"(We know someone had already restarted the system at <b>%s</b>.)": "(Tudjuk, hogy valaki újraindította a rendszert <b>%s</b>-kor.)",
 	"After restart we will redirect you to the main page shortly, because you will need to log in again.": "Az újraindítás után átirányítunk a főoldalra, mert újra be kell jelentkezned.",
-	"Sorry, looks like an error occurred": "Ooops, úgy néz ki valami hiba történt"
+	"Sorry, looks like an error occurred": "Ooops, úgy néz ki valami hiba történt",
+	"The following is a list of boards that can be assigned to users.": "Az alábbi táblákat lehet felhasználókhoz rendelni.",
+	"Add more board": "További tábla",
+	"Without users, everyone on the local network is free to use the system. It is highly recommended that you create at least one Admin user!": "Felhasználók nélkül a helyi hálózaton mindenki szabadon használhatja a rendszert. Nagyon ajánlott, hogy hozz létre legalább egy rendszergazdai felhasználót!",
+	"Create admin user": "Admin felhasználó létrehozása",
+	"The system never refreshed dynamic DNS.": "A rendszer soha nem frissítette a dinamikus DNS bejegyzéseket.",
+	"At least one board must be created to see how the devices work.": "Legalább egy tábla kell hogy lássuk a rendszer működését.",
+	"Create primary board": "Első tábla létrehozása"
 }
