@@ -89,7 +89,7 @@ script(type='text/javascript').
     })
   }
 
-  if (#{user.id})
+  if (#{user.id || 0})
   {
     if (typeof subscribes === 'undefined') subscribes = {}
     subscribes['usernotify_#{user.id}'] = "usernotify-wrapper";
