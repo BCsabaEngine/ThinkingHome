@@ -19,12 +19,12 @@ class Thinking extends MqttDevice {
   thinkingWifiRSSI = 0;
   GetStatusInfos() {
     const result = []
-    if ((!this.thinkingTime && (new Date().getTime() - this.starttime) > 10 * 1000) || (this.thinkingTime && (new Date().getTime() - this.thinkingTime) > maxlatenceminutes * 60 * 1000)) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
-    if (this.thinkingTime) { result.push({ device: this, message: 'Info time', value: this.thinkingTime ? dayjs(this.thinkingTime).fromNow() : '' }) }
+    if ((!this.thinkingTime && (new Date().getTime() - this.starttime) > 10 * 1000) || (this.thinkingTime && (new Date().getTime() - this.thinkingTime) > maxlatenceminutes * 60 * 1000)) { result.push({ device: this, error: true, message: __('No info, maybe offline?') }) }
+    if (this.thinkingTime) { result.push({ device: this, message: __('Info time'), value: this.thinkingTime ? dayjs(this.thinkingTime).fromNow() : '' }) }
     if (this.thinkingChipID) { result.push({ device: this, message: 'Chip IP', value: this.thinkingChipID }) }
     if (this.thinkingFirmware) { result.push({ device: this, message: 'Firmware', value: this.thinkingFirmware }) }
-    if (this.thinkingUptime) { result.push({ device: this, message: 'Uptime', value: timeUtils.secondsToTime(this.thinkingUptime) }) }
-    if (this.thinkingFreemem) { result.push({ device: this, message: 'Freemem', value: stringUtils.thousand(this.thinkingFreemem) + ' bytes' }) }
+    if (this.thinkingUptime) { result.push({ device: this, message: __('Uptime'), value: timeUtils.secondsToTime(this.thinkingUptime) }) }
+    if (this.thinkingFreemem) { result.push({ device: this, message: __('Freemem'), value: stringUtils.thousand(this.thinkingFreemem) + ' bytes' }) }
     if (this.thinkingIPAddress) { result.push({ device: this, message: 'Wifi IP', value: this.thinkingIPAddress }) }
     if (this.thinkingWifiSSId) { result.push({ device: this, message: 'Wifi SSID', value: this.thinkingWifiSSId }) }
     if (this.thinkingWifiRSSI) { result.push({ device: this, message: 'Wifi RSSI', value: this.thinkingWifiRSSI }) }

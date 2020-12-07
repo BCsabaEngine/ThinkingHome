@@ -37,7 +37,7 @@ class Tasmota extends MqttDevice {
       const result = {}
       result.topic = {
         type: 'text',
-        title: 'MQTT topic',
+        title: __('MQTT topic'),
         value: this.setting.topic,
         displayvalue: function () { return this.setting.topic || `${this.name} (default)` }.bind(this)(),
         error: false,
@@ -45,7 +45,7 @@ class Tasmota extends MqttDevice {
       }
       result.powercount = {
         type: 'select',
-        title: 'Power count',
+        title: __('Power count'),
         value: this.setting.powercount,
         lookup: JSON.stringify({ 0: 'None', 1: 1, 2: 2, 3: 3, 4: 4 }).replace(/["]/g, "'"),
         error: false,
@@ -53,7 +53,7 @@ class Tasmota extends MqttDevice {
       }
       result.buttoncount = {
         type: 'select',
-        title: 'Button count',
+        title: __('Button count'),
         value: this.setting.buttoncount,
         lookup: JSON.stringify({ 0: 'None', 1: 1, 2: 2 }).replace(/["]/g, "'"),
         error: false,
@@ -61,7 +61,7 @@ class Tasmota extends MqttDevice {
       }
       result.icon = {
         type: 'text',
-        title: 'Device icon',
+        title: __('Icon'),
         value: this.setting.icon,
         displayvalue: function () { return this.setting.icon || 'fa fa-sliders-h (default)' }.bind(this)(),
         error: false,
@@ -95,18 +95,18 @@ class Tasmota extends MqttDevice {
   tasmotaWifiLinkCount = 0;
   GetStatusInfos() {
     const result = []
-    if (!this.tasmotaTime && (new Date().getTime() - this.starttime) > 10 * 1000) { result.push({ device: this, error: true, message: 'No info, maybe offline? ' }) }
-    if (this.tasmotaTime) { result.push({ device: this, message: 'Info time', value: this.tasmotaTime ? dayjs(this.tasmotaTime).fromNow() : '' }) }
-    if (this.tasmotaVersion) { result.push({ device: this, message: 'Version', value: this.tasmotaVersion }) }
-    if (this.tasmotaModule) { result.push({ device: this, message: 'Module', value: this.tasmotaModule }) }
-    if (this.tasmotaRestartReason) { result.push({ device: this, message: 'Start reason', value: this.tasmotaRestartReason }) }
-    if (this.tasmotaUptime) { result.push({ device: this, message: 'Uptime', value: this.tasmotaUptime }) }
-    if (this.tasmotaBootCount) { result.push({ device: this, message: 'Boot count', value: this.tasmotaBootCount }) }
+    if (!this.tasmotaTime && (new Date().getTime() - this.starttime) > 10 * 1000) { result.push({ device: this, error: true, message: __('No info, maybe offline?') }) }
+    if (this.tasmotaTime) { result.push({ device: this, message: __('Info time'), value: this.tasmotaTime ? dayjs(this.tasmotaTime).fromNow() : '' }) }
+    if (this.tasmotaVersion) { result.push({ device: this, message: __('Version'), value: this.tasmotaVersion }) }
+    if (this.tasmotaModule) { result.push({ device: this, message: __('Module'), value: this.tasmotaModule }) }
+    if (this.tasmotaRestartReason) { result.push({ device: this, message: __('Start reason'), value: this.tasmotaRestartReason }) }
+    if (this.tasmotaUptime) { result.push({ device: this, message: __('Uptime'), value: this.tasmotaUptime }) }
+    if (this.tasmotaBootCount) { result.push({ device: this, message: __('Boot count'), value: this.tasmotaBootCount }) }
     if (this.tasmotaIPAddress) { result.push({ device: this, message: 'Wifi IP', value: this.tasmotaIPAddress }) }
     if (this.tasmotaWifiSSId) { result.push({ device: this, message: 'Wifi SSID', value: this.tasmotaWifiSSId }) }
     if (this.tasmotaWifiRSSI) { result.push({ device: this, message: 'Wifi RSSI', value: this.tasmotaWifiRSSI }) }
-    if (this.tasmotaWifiLinkCount) { result.push({ device: this, message: 'Wifi link count', value: this.tasmotaWifiLinkCount }) }
-    if (this.tasmotaMqttCount) { result.push({ device: this, message: 'Mqtt link count', value: this.tasmotaMqttCount }) }
+    if (this.tasmotaWifiLinkCount) { result.push({ device: this, message: __('Wifi link count'), value: this.tasmotaWifiLinkCount }) }
+    if (this.tasmotaMqttCount) { result.push({ device: this, message: __('Mqtt link count'), value: this.tasmotaMqttCount }) }
     return result
   }
 

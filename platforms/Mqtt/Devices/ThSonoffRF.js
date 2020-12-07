@@ -22,20 +22,20 @@ class ThSonoffRF extends Thinking {
       if (this.thinking_configlasttime) {
         result.lastconfig = {
           type: 'label',
-          title: 'Last config time',
+          title: __('Last config time'),
           value: dayjs(this.thinking_configlasttime).fromNow()
         }
       }
       result.sendconfig = {
         type: 'button',
-        title: 'Send config to device',
-        value: 'Push now',
+        title: __('Send config to device'),
+        value: __('Push now'),
         onexecute: function () { this.SendConfig() }.bind(this)
       }
       for (let i = 1; i <= 10; i++) {
         result[`rfcode${i}`] = {
           type: 'text',
-          title: `RF code ${i}`,
+          title: __('RF code %s', i),
           value: this.setting[`rfcode${i}`],
           displayvalue: function () { return this.setting[`rfcode${i}`] || '' }.bind(this)(),
           error: false,
@@ -44,14 +44,14 @@ class ThSonoffRF extends Thinking {
       }
       result.startdiscovery = {
         type: 'button',
-        title: 'RF discovery mode',
-        value: 'Start',
+        title: __('RF discovery mode'),
+        value: __('Start'),
         onexecute: function () { this.SendCmd('rfdiscovery', '1') }.bind(this)
       }
       result.finishdiscovery = {
         type: 'button',
-        title: 'RF discovery mode',
-        value: 'Finish',
+        title: __('RF discovery mode'),
+        value: __('Finish'),
         onexecute: function () { this.SendCmd('rfdiscovery', '0') }.bind(this)
       }
       return result
@@ -65,7 +65,7 @@ class ThSonoffRF extends Thinking {
     const result = super.GetStatusInfos()
     if (this.lastrfcodes.length) {
       result.push({ device: this, message: '' })
-      result.push({ device: this, message: 'Last RF codes by this device' })
+      result.push({ device: this, message: __('Last RF codes by this device') })
       for (const rfcode of this.lastrfcodes) { result.push({ device: this, message: '', value: rfcode }) }
     }
     return result

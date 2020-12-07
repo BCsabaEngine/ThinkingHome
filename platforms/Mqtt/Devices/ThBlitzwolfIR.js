@@ -13,26 +13,26 @@ class ThBlitzwolfIR extends Thinking {
       if (this.thinking_configlasttime) {
         result.lastconfig = {
           type: 'label',
-          title: 'Last config time',
+          title: __('Last config time'),
           value: dayjs(this.thinking_configlasttime).fromNow()
         }
       }
       result.sendconfig = {
         type: 'button',
-        title: 'Send config to device',
-        value: 'Push now',
+        title: __('Send config to device'),
+        value: __('Push now'),
         onexecute: function () { this.SendConfig() }.bind(this)
       }
       result.startdiscovery = {
         type: 'button',
-        title: 'IR discovery mode',
-        value: 'Start',
+        title: __('IR discovery mode'),
+        value: __('Start'),
         onexecute: function () { this.SendCmd('irdiscovery', '1') }.bind(this)
       }
       result.finishdiscovery = {
         type: 'button',
-        title: 'IR discovery mode',
-        value: 'Finish',
+        title: __('IR discovery mode'),
+        value: __('Finish'),
         onexecute: function () { this.SendCmd('irdiscovery', '0') }.bind(this)
       }
       return result
@@ -49,13 +49,13 @@ class ThBlitzwolfIR extends Thinking {
     arrayUtils.sortByProperty(handleddevices, 'name')
     if (handleddevices.length) {
       result.push({ device: this, message: '' })
-      result.push({ device: this, message: 'Handled devices' })
+      result.push({ device: this, message: __('Handled devices') })
       for (const handleddevice of handleddevices) { result.push({ message: '', value: handleddevice.name }) }
     }
 
     if (this.lastircodes.length) {
       result.push({ device: this, message: '' })
-      result.push({ device: this, message: 'Last IR codes by this device' })
+      result.push({ device: this, message: __('Last IR codes by this device') })
       for (const ircode of this.lastircodes) { result.push({ device: this, message: '', value: ircode }) }
     }
     return result
