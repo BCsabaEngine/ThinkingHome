@@ -19,15 +19,18 @@ block content
             = device.platform.GetName()
           .btn.btn-sm.btn-danger.float-left(onclick="deletedevice(" + device.id + ")")
             .fa.fa-stop
-            |  Delete
+            | 
+            = __('Delete')
           if !rulecode
             button.btn.btn-sm.btn-warning.float-right(onclick="createrulecode(" + device.id + ")")
               .fa.fa-code
-              |  Create rule
+              | 
+              = __('Create rule')
           else
             a.btn.btn-sm.btn-warning.float-right(href="/rulecode/edit/" + rulecode.Id)
               .fa.fa-code
-              |  Edit rule
+              | 
+              = __('Edit rule')
         .widget-user-image
           .img-box.elevation-3
             center
@@ -53,7 +56,7 @@ block content
 
           if Object.keys(device.setting.toDisplayList() || {}).length
             b
-              | Settings
+              = __('Settings')
           ul.nav.flex-column
             each settingitem, index in device.setting.toDisplayList() || {}
               li.nav-item.noborder.pt-2.pl-2
@@ -158,9 +161,12 @@ block content
                   span#telemetrytitle
               .card-tools
                 .btn-group
-                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 1; loadtelemetrygraph();') Today
-                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 7; loadtelemetrygraph();') Last week
-                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 30; loadtelemetrygraph();') Last month
+                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 1; loadtelemetrygraph();')
+                    = __('Today')
+                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 7; loadtelemetrygraph();') 
+                    = __('Last week')
+                  button.btn.btn-default.btn-sm(type='button' onclick='telemetrydays = 30; loadtelemetrygraph();') 
+                    = __('Last month')
             .card-body
               .row
                 .col-md-12
@@ -175,9 +181,12 @@ block content
                   span#statetitle
               .card-tools
                 .btn-group
-                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 1; loadstategraph();') Today
-                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 7; loadstategraph();') Last week
-                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 30; loadstategraph();') Last month
+                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 1; loadstategraph();')
+                    = __('Today')
+                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 7; loadstategraph();')
+                    = __('Last week')
+                  button.btn.btn-default.btn-sm(type='button' onclick='statedays = 30; loadstategraph();')
+                    = __('Last month')
             .card-body
               .row
                 .col-md-1
@@ -201,7 +210,7 @@ block content
             icon: 'success',
             toast: true,
             position: 'center-start',
-            title: 'Copied to clipboard',
+            title: '#{__('Copied to clipboard')}' ,
             text: e.text,
             showConfirmButton: false,
             timer: 1000,
@@ -236,7 +245,7 @@ block content
       Swal.fire({
         title: title,
         input: 'select',
-        inputPlaceholder: 'Select ' + title.toLowerCase(),
+        inputPlaceholder: '#{__('Select action')}' ,
         showCancelButton: true,
         inputOptions: lookup,
         inputValue: Object.keys(lookup)[0],
@@ -403,7 +412,7 @@ block content
         .fail(function(error) {
           swal.fire({
             icon: 'error',
-            title: 'Create new rule failed',
+            title: '#{__('Error occured')}' ,
             text: response.responseText,
           });
         });
@@ -411,18 +420,18 @@ block content
 
     function deletedevice(id)
     {
-      showconfirmdeletedialog("All device data, telemetry and setting will be deleted", function() 
+      showconfirmdeletedialog('#{__('All device data, telemetry and setting will be deleted')}' , function() 
       {
         $.post("/platform/#{device.platform.GetCode()}/deletedevice/", {id: id})
           .done(function(data) {
             window.location.href = '/platform/#{device.platform.GetCode()}/';
           })
           .fail(function(error) {
-            Swal.fire(
-              'Error occured',
-              error.responseText,
-              'error'
-            )            
+            swal.fire({
+              icon: 'error',
+              title: '#{__('Error occured')}' ,
+              text: response.responseText,
+            });
           });
       });
     }
@@ -433,11 +442,11 @@ block content
           divreload('settingpanel');
         })
         .fail(function(error) {
-          Swal.fire(
-            'Error occured',
-            error.responseText,
-            'error'
-          )            
+          swal.fire({
+            icon: 'error',
+            title: '#{__('Error occured')}' ,
+            text: response.responseText,
+          });
         });
     }
     function togglesetting_bool(name, event)
@@ -449,11 +458,11 @@ block content
           divreload('settingpanel');
         })
         .fail(function(error) {
-          Swal.fire(
-            'Error occured',
-            error.responseText,
-            'error'
-          )            
+          swal.fire({
+            icon: 'error',
+            title: '#{__('Error occured')}' ,
+            text: response.responseText,
+          });
         });
     }
     function showsetting_text(name, title, value)
@@ -462,7 +471,7 @@ block content
         title: title,
         input: 'text',
         inputValue: value, 
-        inputPlaceholder: 'Type ' + title.toLowerCase(),
+        inputPlaceholder: '#{__('Type setting')}' ,
         showCancelButton: true,
       })
       .then((result) => {
@@ -472,11 +481,11 @@ block content
               divreload('settingpanel');
             })
             .fail(function(error) {
-              Swal.fire(
-                'Error occured',
-                error.responseText,
-                'error'
-              )            
+              swal.fire({
+                icon: 'error',
+                title: '#{__('Error occured')}' ,
+                text: response.responseText,
+              });
             });
         }
       })
@@ -487,7 +496,7 @@ block content
         title: title,
         input: 'select',
         inputValue: value, 
-        inputPlaceholder: 'Select ' + title.toLowerCase(),
+        inputPlaceholder: '#{__('Select setting')}' ,
         showCancelButton: true,
         inputOptions: lookup,
       })
@@ -498,11 +507,11 @@ block content
               divreload('settingpanel');
             })
             .fail(function(error) {
-              Swal.fire(
-                'Error occured',
-                error.responseText,
-                'error'
-              )            
+              swal.fire({
+                icon: 'error',
+                title: '#{__('Error occured')}' ,
+                text: response.responseText,
+              });
             });
         }
       })
@@ -515,7 +524,7 @@ block content
             icon: 'success',
             toast: true,
             position: 'center-start',
-            title: 'Command sent',
+            title: '#{__('Command sent')}' ,
             text: displaytext,
             showConfirmButton: false,
             timer: 1500,
@@ -524,10 +533,10 @@ block content
           divreload('settingpanel', null, 2500);
         })
         .fail(function(error) {
-          Swal.fire(
-            'Error occured',
-            error.responseText,
-            'error'
-          )            
+          swal.fire({
+            icon: 'error',
+            title: '#{__('Error occured')}' ,
+            text: response.responseText,
+          });
         });
     }

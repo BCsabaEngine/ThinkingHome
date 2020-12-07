@@ -139,8 +139,17 @@
 	"The following is a list of boards that can be assigned to users.": "Az alábbi táblákat lehet felhasználókhoz rendelni.",
 	"Add more board": "További tábla",
 	"Without users, everyone on the local network is free to use the system. It is highly recommended that you create at least one Admin user!": "Felhasználók nélkül a helyi hálózaton mindenki szabadon használhatja a rendszert. Nagyon ajánlott, hogy hozz létre legalább egy rendszergazdai felhasználót!",
-	"Create admin user": "Admin felhasználó létrehozása",
+	"Create admin user": "Admin felhasználó létrehozás",
 	"The system never refreshed dynamic DNS.": "A rendszer soha nem frissítette a dinamikus DNS bejegyzéseket.",
 	"At least one board must be created to see how the devices work.": "Legalább egy tábla kell hogy lássuk a rendszer működését.",
-	"Create primary board": "Első tábla létrehozása"
+	"Create primary board": "Első tábla létrehozás",
+	"Create a new device": "Új eszköz létrehozás",
+	"Type setting": "Beállítás megadás",
+	"Select setting": "Beállítás kiválasztás",
+	"Delete": "Törlés",
+	"Create rule": "Szabály létrehozás",
+	"Last week": "Utolsó 7 nap",
+	"Last month": "Utolsó 30 nap",
+	"Select action": "Művelet kiválasztás",
+	"All device data, telemetry and setting will be deleted": "Minden adat, telemetrikus információ és beállítás törlésre kerül"
 }

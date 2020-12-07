@@ -198,7 +198,7 @@ block content
         .then(data => data.suggestion);
 
       Swal.fire({
-        title: 'Create a new ' + type,
+        title: '#{__('Create a new device')}' ,
         text: '#{__('Type unique name for this device. We suggest this one for example...')}' ,
         input: 'text',
         inputValue: inputValue,
@@ -260,7 +260,7 @@ block content
         title: title,
         input: 'text',
         inputValue: value, 
-        inputPlaceholder: 'Type ' + title.toLowerCase(),
+        inputPlaceholder: '#{__('Type setting')}' ,
         showCancelButton: true,
       })
       .then((result) => {
@@ -285,7 +285,7 @@ block content
         title: title,
         input: 'select',
         inputValue: value, 
-        inputPlaceholder: 'Select ' + title.toLowerCase(),
+        inputPlaceholder: '#{__('Select setting')}' ,
         showCancelButton: true,
         inputOptions: lookup,
       })
