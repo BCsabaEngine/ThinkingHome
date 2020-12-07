@@ -80,7 +80,7 @@ block content
                 if (settingitem.type == 'label')
                   span.float-right
                     small
-                      = settingitem.displayvalue || settingitem.value || 'Not set'
+                      = settingitem.displayvalue || settingitem.value || __('Not set')
                 else
                   span.pointer
                     span.float-right.badge(class = 
@@ -92,7 +92,7 @@ block content
                       : 
                       "bg-gray", 
                         onclick=onclick)
-                      = settingitem.displayvalue || settingitem.value || 'Not set'
+                      = settingitem.displayvalue || settingitem.value || __('Not set')
 
 
     .col-md-9
@@ -230,11 +230,11 @@ block content
           divreload('content', null, 350);
         })
         .fail(function(error) {
-          Swal.fire(
-            'Error occured',
-            error.responseText,
-            'error'
-          )            
+          swal.fire({
+            icon: 'error',
+            title: '#{__('Error occured')}' ,
+            text: response.responseText,
+          });
         });
     }
     function selectaction(entity, action, title, lookup)
