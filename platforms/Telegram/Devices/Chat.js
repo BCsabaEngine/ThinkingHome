@@ -9,7 +9,7 @@ class Chat extends TelegramDevice {
       const result = {}
       result.id = {
         type: 'text',
-        title: 'Chat ID',
+        title: __('Chat ID'),
         value: this.setting.id,
         error: !this.setting.id,
         canclear: false
@@ -33,7 +33,7 @@ class Chat extends TelegramDevice {
 
   GetStatusInfos() {
     const result = []
-    if (!this.setting.id) result.push({ error: true, message: 'Chat ID not set' })
+    if (!this.setting.id) result.push({ error: true, message: __('Chat ID not set') })
     return result
   }
 

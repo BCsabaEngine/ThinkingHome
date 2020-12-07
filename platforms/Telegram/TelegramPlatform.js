@@ -21,11 +21,11 @@ class TelegramPlatform extends Platform {
 
       result.bottoken = {
         type: 'text',
-        title: 'Bot token',
+        title: __('Bot token'),
         value: this.setting.bottoken,
         displayvalue: this.setting.bottoken ? `${this.setting.bottoken.substr(0, 10)}...[${this.setting.bottoken.length}]` : '',
         error: !this.setting.bottoken,
-        canclear: false,
+        canclear: true,
         onchange: function () { this.InitBot() }.bind(this)
       }
 
@@ -76,7 +76,7 @@ class TelegramPlatform extends Platform {
 
   GetStatusInfos() {
     let result = []
-    if (!this.setting.bottoken) result.push({ error: true, message: 'Bot token not set' })
+    if (!this.setting.bottoken) result.push({ error: true, message: __('Bot token not set') })
     const statusinfos = super.GetStatusInfos()
     if (Array.isArray(statusinfos)) { result = result.concat(statusinfos) }
     return result

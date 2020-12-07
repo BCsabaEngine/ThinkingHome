@@ -245,5 +245,9 @@
 	"Off RF code": "Ki RF kód",
 	"RF code not set": "RF kód nincs beállítva",
 	"Move RF code": "Mozgás RF kód",
-	"Move sensor": "Mozgásérzékelő"
+	"Move sensor": "Mozgásérzékelő",
+	"Bot token": "Bot token",
+	"Chat ID not set": "Chat azonosító nincs beállítva",
+	"Chat ID": "Chat azonosító",
+	"Bot token not set": "Bot token nincs beállítva"
 }
