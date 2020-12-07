@@ -26,8 +26,8 @@ class MqttPlatform extends Platform {
 
       result.zigbee2mqtt = {
         type: 'bool',
-        title: 'Zigbee transmit over MQTT',
-        value: this.setting.zigbee2mqtt ? 'Enabled' : 'Disabled',
+        title: __('Zigbee transmit over MQTT'),
+        value: this.setting.zigbee2mqtt ? __('Enabled') : __('Disabled'),
         error: false,
         canclear: false
       }
@@ -35,7 +35,7 @@ class MqttPlatform extends Platform {
       if (this.setting.zigbee2mqtt) {
         result.zigbee_basetopic = {
           type: 'text',
-          title: 'Zigbee base topic',
+          title: __('Zigbee base topic'),
           value: this.setting.zigbee_basetopic,
           displayvalue: function () { return this.setting.zigbee_basetopic || `${this.ZIGBEE_BASETOPIC} (default)` }.bind(this)(),
           error: false,
@@ -45,24 +45,24 @@ class MqttPlatform extends Platform {
 
       result.log_message_known = {
         type: 'bool',
-        title: 'Log processed MQTTs',
-        value: this.setting.log_message_known ? 'Log' : 'Disabled',
+        title: __('Log processed MQTTs'),
+        value: this.setting.log_message_known ? __('Enabled') : __('Disabled'),
         error: false,
         canclear: false
       }
 
       result.log_message_unknown = {
         type: 'bool',
-        title: 'Log MQTTs for unknown device',
-        value: this.setting.log_message_unknown ? 'Log' : 'Disabled',
+        title: __('Log MQTTs for unknown device'),
+        value: this.setting.log_message_unknown ? __('Enabled') : __('Disabled'),
         error: false,
         canclear: false
       }
 
       result.log_message_error = {
         type: 'bool',
-        title: 'Log malformed MQTTs',
-        value: this.setting.log_message_error ? 'Log' : 'Disabled',
+        title: __('Log malformed MQTTs'),
+        value: this.setting.log_message_error ? __('Enabled') : __('Disabled'),
         error: false,
         canclear: false
       }
@@ -89,10 +89,10 @@ class MqttPlatform extends Platform {
 
   GetStatusInfos() {
     const result = []
-    if (!this.mqtt.connected) { result.push({ error: true, message: 'Not connected to MQTT broker' }) } else {
-      result.push({ message: 'Received', value: this.msgcounter.incoming || '0' })
-      result.push({ message: 'Sent', value: this.msgcounter.outgoing || '0' })
-      result.push({ message: 'Load', value: this.msgcounter.GetMinuteRatio() })
+    if (!this.mqtt.connected) { result.push({ error: true, message: __('Not connected to MQTT broker') }) } else {
+      result.push({ message: __('Received'), value: this.msgcounter.incoming || '0' })
+      result.push({ message: __('Sent'), value: this.msgcounter.outgoing || '0' })
+      result.push({ message: __('Load'), value: this.msgcounter.GetMinuteRatio() })
     }
 
     const statusinfos = super.GetStatusInfos()

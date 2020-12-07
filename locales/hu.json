@@ -35,10 +35,10 @@
 	"Create new rule": "Új szabály létrehozása",
 	"Create first rule": "Első szabály létrehozása",
 	"Show all logs": "Napló megjelenítése",
-	"Disabled": "[Letiltott]",
+	"Disabled": "Letiltott",
 	"[Disabled]": "[Letiltott]",
 	"Enabled": "Engedélyezett",
-	"[Enabled]": "Engedélyezett",
+	"[Enabled]": "[Engedélyezett]",
 	"lines of code": "kódsor",
 	"Edit": "Szerkesztés",
 	"Logs": "Naplók",
@@ -151,5 +151,13 @@
 	"Last week": "Utolsó 7 nap",
 	"Last month": "Utolsó 30 nap",
 	"Select action": "Művelet kiválasztás",
-	"All device data, telemetry and setting will be deleted": "Minden adat, telemetrikus információ és beállítás törlésre kerül"
+	"All device data, telemetry and setting will be deleted": "Minden adat, telemetrikus információ és beállítás törlésre kerül",
+	"Received": "Fogadott",
+	"Sent": "Küldött",
+	"Load": "Terhelés",
+	"Zigbee transmit over MQTT": "Zigbee forgalom MQTT felett",
+	"Zigbee base topic": "Zigbee MQTT téma",
+	"Log processed MQTTs": "MQTT üzenet naplózás",
+	"Log MQTTs for unknown device": "Ismeretlen MQTT üzenet naplózás",
+	"Log malformed MQTTs": "Hibás MQTT üzenet naplózás"
 }
