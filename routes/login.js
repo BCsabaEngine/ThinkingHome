@@ -16,7 +16,14 @@ module.exports = (app) => {
   }
   logger.debug(`[HTTP] Local cidrs: ${cidrs.join(', ')}`)
 
-  app.isLocalIp = function (req) { return isInSubnet(req.connection.remoteAddress, cidrs) }
+  app.isLocalIp = function (req) {
+    const ipv6prefix = '::ffff:'
+
+    let remoteip = req.connection.remoteAddress
+    if (remoteip.startsWith(ipv6prefix)) remoteip = remoteip.substr(ipv6prefix.length)
+
+    return remoteip === '127.0.0.1' || remoteip === '::1' || isInSubnet(remoteip, cidrs)
+  }
 
   app.getUser = function (req) { if (req.session && req.session.user) return req.session.user }
 
