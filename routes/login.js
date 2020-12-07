@@ -20,7 +20,9 @@ module.exports = (app) => {
     const ipv6prefix = '::ffff:'
 
     let remoteip = req.connection.remoteAddress
-    if (remoteip.startsWith(ipv6prefix)) remoteip = remoteip.substr(ipv6prefix.length)
+    if (remoteip && remoteip.length) {
+      if (remoteip.startsWith(ipv6prefix)) remoteip = remoteip.substr(ipv6prefix.length)
+    }
 
     return remoteip === '127.0.0.1' || remoteip === '::1' || isInSubnet(remoteip, cidrs)
   }
