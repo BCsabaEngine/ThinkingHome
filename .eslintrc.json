@@ -20,7 +20,8 @@
         "config": "readonly",
         "db": "readonly",
         "logger": "readonly",
-        "__": "readonly"
+        "__": "readonly",
+        "__n": "readonly"
     },
     "rules": {
         //babel as parser makes "standard" incompatible with these two rule, skip its
