@@ -1,0 +1,10 @@
+{
+	"Use i18n function": {
+		"scope": "javascript",
+		"prefix": "lng",
+		"body": [
+			"__(${TM_SELECTED_TEXT})"
+		],
+		"description": "Use i18n function"
+	}
+}
