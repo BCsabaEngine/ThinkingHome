@@ -21,7 +21,7 @@ class Thinking extends MqttDevice {
     const result = []
     if ((!this.thinkingTime && (new Date().getTime() - this.starttime) > 10 * 1000) || (this.thinkingTime && (new Date().getTime() - this.thinkingTime) > maxlatenceminutes * 60 * 1000)) { result.push({ device: this, error: true, message: __('No info, maybe offline?') }) }
     if (this.thinkingTime) { result.push({ device: this, message: __('Info time'), value: this.thinkingTime ? dayjs(this.thinkingTime).fromNow() : '' }) }
-    if (this.thinkingChipID) { result.push({ device: this, message: 'Chip IP', value: this.thinkingChipID }) }
+    if (this.thinkingChipID) { result.push({ device: this, message: 'Chip ID', value: this.thinkingChipID }) }
     if (this.thinkingFirmware) { result.push({ device: this, message: 'Firmware', value: this.thinkingFirmware }) }
     if (this.thinkingUptime) { result.push({ device: this, message: __('Uptime'), value: timeUtils.secondsToTime(this.thinkingUptime) }) }
     if (this.thinkingFreemem) { result.push({ device: this, message: __('Freemem'), value: stringUtils.thousand(this.thinkingFreemem) + ' bytes' }) }
