@@ -58,6 +58,9 @@ module.exports = (app) => {
     // bypass login request
     if (req.method === 'POST' && req.path === '/login') return next()
 
+    // bypass noauth request
+    if ((req.path || '').includes('noauth')) return next()
+
     // must login
     if (req.method === 'GET') {
       if (req.path !== '/') {
