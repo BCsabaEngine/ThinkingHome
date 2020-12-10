@@ -24,7 +24,7 @@ class ThSpeak extends Thinking {
           const uri = this.GetMp3Uri(ids)
           this.SendCmd('playmp3', { url: uri, volume: 20 })
         }
-      }))
+      }.bind(this)))
   }
 
   setting = {
