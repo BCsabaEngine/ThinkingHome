@@ -45,7 +45,7 @@ class PresencePlatform extends Platform {
   }
 
   Tick(seconds) {
-    if (seconds % 60 !== 0) { return }
+    if (seconds % 60 !== 0) return
 
     const nets = os.networkInterfaces()
     this.netinterfaces = Object.keys(nets)
