@@ -20,24 +20,28 @@ const DeviceDataModel = {
 
   async GetDeviceKeysSync(deviceid) {
     const result = {}
-    for (const row of await DeviceDataTable.select(['KeyHash', 'Key'], 'WHERE Device = ?', [deviceid])) {
-      result[row.KeyHash] = row.Key
+    for (const row of await DeviceDataTable.select(['Id', 'Key'], 'WHERE Device = ?', [deviceid])) {
+      result[row.Id] = row.Key
     }
     return result
   },
 
-  async GetDeviceDataSync(deviceid, key) {
+  async GetDeviceDataByIdSync(deviceid, id) {
+    const rows = await DeviceDataTable.select(['KeyHash', 'Key', 'Value'], 'WHERE Device = ? AND Id = ?', [deviceid, id])
+    if (rows && rows.length) return stringUtils.unbox(rows[0].Value)
+  },
+
+  async GetDeviceDataByKeySync(deviceid, key) {
     const rows = await DeviceDataTable.select(['KeyHash', 'Key', 'Value'], 'WHERE Device = ? AND KeyHash = ?', [deviceid, md5(key)])
     if (rows && rows.length && rows[0].Key === key) return stringUtils.unbox(rows[0].Value)
-    return null
   },
 
-  async UpdateDataSync(deviceid, key, value) {
-    await this.DeleteDataSync(deviceid, key)
-    await DeviceDataTable.insert({ Device: deviceid, KeyHash: md5(key), Key: key, Value: stringUtils.box(value) })
+  async UpdateDataByKeySync(deviceid, key, value) {
+    await this.DeleteDataByKeySync(deviceid, key)
+    return await DeviceDataTable.insert({ Device: deviceid, KeyHash: md5(key), Key: key, Value: stringUtils.box(value) })
   },
 
-  async DeleteDataSync(deviceid, key) {
+  async DeleteDataByKeySync(deviceid, key) {
     await DeviceDataTable.delete('WHERE Device = ? AND KeyHash = ?', [deviceid, md5(key)])
   }
 

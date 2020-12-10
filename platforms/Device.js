@@ -242,9 +242,10 @@ class Device {
   }
 
   async GetDataKeys() { return await DeviceDataModel.GetDeviceKeysSync(this.id) }
-  async GetData(key) { return await DeviceDataModel.GetDeviceDataSync(this.id, key) }
-  async UpdateData(key, value) { return await DeviceDataModel.UpdateDataSync(this.id, key, value) }
-  async DeleteData(key) { return await DeviceDataModel.DeleteDataSync(this.id, key) }
+  async GetDataById(id) { return await DeviceDataModel.GetDeviceDataByIdSync(this.id, id) }
+  async GetDataByKey(key) { return await DeviceDataModel.GetDeviceDataByKeySync(this.id, key) }
+  async UpdateDataByKey(key, value) { return await DeviceDataModel.UpdateDataByKeySync(this.id, key, value) }
+  async DeleteDataByKey(key) { return await DeviceDataModel.DeleteDataByKeySync(this.id, key) }
 
   static IsValidDeviceName(name) { return name.match(/^[a-z0-9_]{1,32}$/) }
 }
