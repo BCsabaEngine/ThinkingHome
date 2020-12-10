@@ -272,5 +272,6 @@
 	"Deny join": "Csatlakozás tiltás",
 	"Deny": "Tiltás",
 	"Get list": "Lista lekérdezés",
-	"Get graph": "Térkép lekérdezés"
+	"Get graph": "Térkép lekérdezés",
+	"TH IP address": "TH IP cím"
 }
