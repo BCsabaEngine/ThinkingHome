@@ -164,7 +164,7 @@
 	"Received": "Fogadott",
 	"Sent": "Küldött",
 	"Load": "Terhelés",
-	"Zigbee transmit over MQTT": "Zigbee forgalom MQTT felett",
+	"Zigbee transmit over MQTT": "Zigbee működés MQTT-vel",
 	"Zigbee base topic": "Zigbee MQTT téma",
 	"Log processed MQTTs": "MQTT üzenet naplózás",
 	"Log MQTTs for unknown device": "Ismeretlen MQTT üzenet naplózás",
@@ -220,7 +220,7 @@
 	"Disk name": "Lemez neve",
 	"Disk name not set": "Lemez neve nincs beállítva",
 	"Used %s": "Used %s",
-	"Info time": "Utolsó életjel ideje",
+	"Info time": "Életjel",
 	"Version": "Verzió",
 	"Start reason": "Indítás oka",
 	"Uptime": "Működési idő",
@@ -273,5 +273,5 @@
 	"Deny": "Tiltás",
 	"Get list": "Lista lekérdezés",
 	"Get graph": "Térkép lekérdezés",
-	"TH IP address": "TH IP cím"
+	"TH IP address": "TH hoszt IP cím"
 }
