@@ -55,7 +55,7 @@ module.exports = (app) => {
   app.use(express.static('public', { index: false, maxAge: '1h', redirect: false }))
   app.use('/dist', express.static('./node_modules/admin-lte/dist', { index: false, maxAge: '1h', redirect: false }))
   app.use('/plugins', express.static('./node_modules/admin-lte/plugins', { index: false, maxAge: '1h', redirect: false }))
-  app.use('/material-icons', express.static('./node_modules/material-icons', { index: false, maxAge: '1h', redirect: false }))
+  app.use('/bootstrap-icons', express.static('./node_modules/bootstrap-icons', { index: false, maxAge: '1h', redirect: false }))
   app.use('/sweetalert2', express.static('./node_modules/sweetalert2/dist', { index: false, maxAge: '1h', redirect: false }))
   app.use('/mousetrap', express.static('./node_modules/mousetrap', { index: false, maxAge: '1h', redirect: false }))
   app.use('/clipboard', express.static('./node_modules/clipboard/dist', { index: false, maxAge: '1h', redirect: false }))

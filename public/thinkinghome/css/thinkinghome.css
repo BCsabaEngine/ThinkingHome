@@ -107,51 +107,51 @@ tr:hover .btn-hover {
   border: none;
 }
 
-.mi.mi-50 {
+.bi.bi-50 {
   font-size: 12px;
 }
 
-.mi.mi-75 {
+.bi.bi-75 {
   font-size: 18px;
 }
 
-.mi.mi-1x {
+.bi.bi-1x {
   font-size: 24px;
 }
 
-.mi.mi-150 {
+.bi.bi-150 {
   font-size: 36px;
 }
 
-.mi.mi-2x {
+.bi.bi-2x {
   font-size: 48px;
 }
 
-.mi.mi-200 {
+.bi.bi-200 {
   font-size: 48px;
 }
 
-.mi.mi-3x {
+.bi.bi-3x {
   font-size: 72px;
 }
 
-.mi.mi-300 {
+.bi.bi-300 {
   font-size: 72px;
 }
 
-.mi.mi-4x {
+.bi.bi-4x {
   font-size: 96px;
 }
 
-.mi.mi-400 {
+.bi.bi-400 {
   font-size: 96px;
 }
 
-.mi.mi-inactive {
+.bi.bi-inactive {
   color: rgba(0, 0, 0, 0.26);
 }
 
-.mi.mi-light {
+.bi.bi-light {
   color: rgba(255, 255, 255, 1);
 }
 
