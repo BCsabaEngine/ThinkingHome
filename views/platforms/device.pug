@@ -72,6 +72,10 @@ block content
                     - onclick = "togglesetting_bool('" + index + "', event)";
 
                 = settingitem.title
+                if settingitem.tooltip
+                  | 
+                  small
+                    i.fa.fa-info-circle(title=settingitem.tooltip)
                 if settingitem.canclear && settingitem.value
                   | 
                   a(href="#")
