@@ -29,7 +29,7 @@ block content
   .row
     .col-md-8
       .btn-group
-        button.btn(class= rulecode.Disabled ? "btn-warning" : "btn-primary" onclick="savecode()")
+        button.btn(class= rulecode.Disabled ? "btn-warning" : "btn-primary" onclick="savecode()" title="ALT+SHIFT+S")
           i.fa.fa-upload
           | 
           = __('Upload %s', rulecode.displayname)
@@ -37,7 +37,7 @@ block content
             | 
             = __('[disabled]')
           | 
-        button.btn.btn-default(onclick="formatcode()")
+        button.btn.btn-default(onclick="formatcode()" title="ALT+SHIFT+F")
           i.fa.fa-align-left
           | 
           = __('Reformat code')
@@ -51,7 +51,7 @@ block content
   .row
     .col-md-8
       .form-group
-        textarea.form-control.monospace(rows=rulecodelinecount onkeypress="editorkeypress(event)")#codeeditor
+        textarea.form-control.monospace(rows=rulecodelinecount onkeypress="editorkeypress(event)" onkeydown="editorkeydown(event)")#codeeditor
           = rulecode.JsCode
 
     .col-md-4
@@ -167,6 +167,7 @@ block content
           });
         });
     }
+    Mousetrap.bind('alt+shift+f', formatcode);
 
     function savecode()
     {
@@ -185,6 +186,7 @@ block content
           });
         });
     }
+    Mousetrap.bind('alt+shift+s', savecode);
 
     function editorkeypress(e)
     {
@@ -208,6 +210,14 @@ block content
           editor.prop({ selectionStart: start + indentation, selectionEnd: start + indentation });
         }, 1);
       }
+    }
+
+    function editorkeydown(e)
+    {
+      if (e.key == 'F' && e.altKey && e.shiftKey)
+        formatcode();
+      if (e.key == 'S' && e.altKey && e.shiftKey)
+        savecode();
     }
 
     function refreshconsole()
