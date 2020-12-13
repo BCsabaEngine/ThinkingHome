@@ -167,7 +167,7 @@
 	"Load": "Terhelés",
 	"Zigbee transmit over MQTT": "Zigbee működés MQTT-vel",
 	"Zigbee base topic": "Zigbee MQTT téma",
-	"Log processed MQTTs": "MQTT üzenet naplózás",
+	"Log processed MQTTs": "Sikeres MQTT üzenet naplózás",
 	"Log MQTTs for unknown device": "Ismeretlen MQTT üzenet naplózás",
 	"Log malformed MQTTs": "Hibás MQTT üzenet naplózás",
 	"Send config to device": "Konfiguráció küldés",
@@ -274,5 +274,6 @@
 	"Deny": "Tiltás",
 	"Get list": "Lista lekérdezés",
 	"Get graph": "Térkép lekérdezés",
-	"TH IP address": "TH hoszt IP cím"
+	"TH IP address": "TH hoszt IP cím",
+	"Required for device auto discovery": "Szükséges az automatikus eszközfelderítéshez"
 }

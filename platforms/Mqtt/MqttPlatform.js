@@ -54,6 +54,7 @@ class MqttPlatform extends Platform {
       result.log_message_unknown = {
         type: 'bool',
         title: __('Log MQTTs for unknown device'),
+        tooltip: __('Required for device auto discovery'),
         value: this.setting.log_message_unknown ? __('Enabled') : __('Disabled'),
         error: false,
         canclear: false
