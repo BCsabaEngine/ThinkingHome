@@ -275,5 +275,6 @@
 	"Get list": "Lista lekérdezés",
 	"Get graph": "Térkép lekérdezés",
 	"TH IP address": "TH hoszt IP cím",
-	"Required for device auto discovery": "Szükséges az automatikus eszközfelderítéshez"
+	"Required for device auto discovery": "Szükséges az automatikus eszközfelderítéshez",
+	"Intro sound": "Kezdő dallam"
 }

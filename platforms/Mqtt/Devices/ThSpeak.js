@@ -1,13 +1,16 @@
 const os = require('os')
-const { isInSubnet } = require('subnet-check')
+const fs = require('fs')
+const path = require('path')
 const got = require('got')
 const FormData = require('form-data')
+const { isInSubnet } = require('subnet-check')
 
 const { Entity } = require('../../Entity')
 const { ButtonAction } = require('../../Action')
 const Thinking = require('./Thinking')
 
 const urimp3 = '/noauth-nossl/tts-mp3'
+const mp3folder = path.join(__dirname, '/SpeakMp3/')
 
 class ThSpeak extends Thinking {
   get icon() { return 'fa fa-bullhorn' }
@@ -28,7 +31,28 @@ class ThSpeak extends Thinking {
   }
 
   setting = {
-    toDisplayList: function () { return [] },
+    intro: '',
+    toDisplayList: function () {
+      const result = {}
+      const availableintros = {
+        chimn: 'Chimn',
+        chimnlong: 'Chimn the long',
+        miracle: 'Miracle',
+        spank: 'Spank',
+        tada: 'Tada',
+        tititi: 'Ti-Ti-Ti'
+      }
+      result.intro = {
+        type: 'select',
+        title: __('Intro sound'),
+        value: this.setting.intro,
+        displayvalue: function () { if (this.setting.intro) return availableintros[this.setting.intro] }.bind(this)(),
+        lookup: JSON.stringify(availableintros).replace(/["]/g, "'"),
+        error: false,
+        canclear: true
+      }
+      return result
+    }.bind(this),
     toTitle: function () { return this.constructor.name }.bind(this),
     toSubTitle: function () { return '' }
   }
@@ -116,6 +140,18 @@ class ThSpeak extends Thinking {
     const ids = req.query.ids.split(' ')
 
     let mp3merge = Buffer.alloc(0)
+
+    const silence = fs.readFileSync(path.join(mp3folder, '_.mp3'))
+    mp3merge = Buffer.concat([mp3merge, silence])
+
+    if (this.setting.intro) {
+      const introfile = path.join(mp3folder, this.setting.intro + '.mp3')
+      if (fs.existsSync(introfile)) {
+        const intro = fs.readFileSync(introfile)
+        mp3merge = Buffer.concat([mp3merge, intro])
+      }
+    }
+
     for (const id of ids) {
       const mp3data = await this.GetDataById(id)
       if (mp3data) {
