@@ -44,8 +44,8 @@ async function AutoBackup() {
       SystemLogModel.InsertWarn(topicautobackup, `Auto backup uploaded successfully, but file size problem: ${localfilesize} vs. ${remotefilesize}`)
       userNotify.addToAdmin(null, 1, 'fa fa-cloud-upload-alt', 'AutoBackup', `Auto backup uploaded successfully, but file size problem: ${localfilesize} vs. ${remotefilesize}`)
     } else {
-      SystemLogModel.Insert(topicautobackup, 'Auto backup uploaded successfully')
-      userNotify.addToAdmin(null, 0, 'fa fa-cloud-upload-alt', 'AutoBackup', 'Auto backup uploaded successfully')
+      // SystemLogModel.Insert(topicautobackup, 'Auto backup uploaded successfully')
+      // userNotify.addToAdmin(null, 0, 'fa fa-cloud-upload-alt', 'AutoBackup', 'Auto backup uploaded successfully')
     }
   } catch (err) {
     SystemLogModel.InsertError(topicautobackup, `Auto backup failed: ${err.message}`)
