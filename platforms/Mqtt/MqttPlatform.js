@@ -1,4 +1,5 @@
 const mqttCli = require('../../lib/mqttCli')
+const githubLatest = require('../../lib/githubLatest')
 
 const Device = require('../Device')
 const Platform = require('../Platform')
@@ -88,6 +89,8 @@ class MqttPlatform extends Platform {
     }
   };
 
+  tasmotaLatestVersion = ''
+
   GetStatusInfos() {
     const result = []
     if (!this.mqtt.connected) { result.push({ error: true, message: __('Not connected to MQTT broker') }) } else {
@@ -95,6 +98,7 @@ class MqttPlatform extends Platform {
       result.push({ message: __('Sent'), value: this.msgcounter.outgoing || '0' })
       result.push({ message: __('Load'), value: this.msgcounter.GetMinuteRatio() })
     }
+    if (this.tasmotaLatestVersion) result.push({ message: __('Tasmota latest'), value: `v${this.tasmotaLatestVersion}` })
 
     const statusinfos = super.GetStatusInfos()
     if (Array.isArray(statusinfos)) {
@@ -161,6 +165,21 @@ class MqttPlatform extends Platform {
       logger.warn(`[Platform] No device found for mqtt message on ${topic}: ${messagestr}`)
       if (this.setting.log_message_unknown) { MqttModel.InsertUnknownDevice(devicenamematch[1], topic, messagestr || null) }
     }
+  }
+
+  GetLatestTasmotaVersion() {
+    const tasmotaUser = 'arendst'
+    const tasmotaRepo = 'Tasmota'
+    githubLatest(tasmotaUser, tasmotaRepo)
+      .then((lastver) => { this.tasmotaLatestVersion = lastver })
+      .catch((err) => {
+        logger.warn(`[Platform] Cannot get Tasmota version ${err}`)
+        this.tasmotaLatestVersion = ''
+      })
+  }
+
+  Tick(seconds) {
+    if (seconds % (60 * 60) === 0) this.GetLatestTasmotaVersion()
   }
 
   async Start() {
