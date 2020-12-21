@@ -1,4 +1,5 @@
 const dayjs = require('dayjs')
+const semver = require('semver')
 const got = require('got')
 const MqttDevice = require('../MqttDevice')
 const { BoolStateEntity, EventEntity } = require('../../Entity')
@@ -97,7 +98,18 @@ class Tasmota extends MqttDevice {
     const result = []
     if (!this.tasmotaTime && (new Date().getTime() - this.starttime) > 10 * 1000) { result.push({ device: this, error: true, message: __('No info, maybe offline?') }) }
     if (this.tasmotaTime) { result.push({ device: this, message: __('Info time'), value: this.tasmotaTime ? dayjs(this.tasmotaTime).fromNow() : '' }) }
-    if (this.tasmotaVersion) { result.push({ device: this, message: __('Version'), value: this.tasmotaVersion }) }
+    if (this.tasmotaVersion) {
+      let displayversion = this.tasmotaVersion
+      const match = this.tasmotaVersion.match(/([0-9.]*)/)
+      if (match) {
+        const deviceversion = semver.coerce(match[1])
+        displayversion = deviceversion
+        if (this.platform.tasmotaLatestVersion) {
+          if (semver.lt(deviceversion, semver.coerce(this.platform.tasmotaLatestVersion))) displayversion += __(' (can upgrade)')
+        }
+      }
+      result.push({ device: this, message: __('Version'), value: displayversion })
+    }
     if (this.tasmotaModule) { result.push({ device: this, message: __('Module'), value: this.tasmotaModule }) }
     if (this.tasmotaRestartReason) { result.push({ device: this, message: __('Start reason'), value: this.tasmotaRestartReason }) }
     if (this.tasmotaUptime) { result.push({ device: this, message: __('Uptime'), value: this.tasmotaUptime }) }

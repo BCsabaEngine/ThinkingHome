@@ -277,5 +277,6 @@
 	"TH IP address": "TH hoszt IP cím",
 	"Required for device auto discovery": "Szükséges az automatikus eszközfelderítéshez",
 	"Intro sound": "Kezdő dallam",
-	"Tasmota latest": "Legfrissebb Tasmota"
+	"Tasmota latest": "Legfrissebb Tasmota",
+	" (can upgrade)": " (frissíthető)"
 }
