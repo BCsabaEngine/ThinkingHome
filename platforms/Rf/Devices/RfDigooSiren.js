@@ -32,7 +32,7 @@ class RfDigooSiren extends RfDevice {
           onexecute: function () {
             const sos = this.GetSOSCode()
             if (sos) {
-              this.SendRfCode(sos)
+              this.SendRfCode(null, sos)
             }
           }.bind(this)
         }
@@ -42,7 +42,7 @@ class RfDigooSiren extends RfDevice {
           value: __('Make silence'),
           onexecute: function () {
             const disarm = this.GetDisarmCode()
-            if (disarm) { this.SendRfCode(disarm) }
+            if (disarm) { this.SendRfCode(null, disarm) }
           }.bind(this)
         }
       }
@@ -65,8 +65,8 @@ class RfDigooSiren extends RfDevice {
   get icon() { return this.setting.icon || 'fa fa-volume-up' }
   entities = {
     alarm: new Entity(this, 'alarm', 'Alarm', 'fa fa-volume-up')
-      .AddAction(new ButtonAction(this, 'alarm', 'Alarm', 'fa fa-volume-up', function () { if (this.device.GetSOSCode()) this.device.SendRfCode(this.device.GetSOSCode()) }))
-      .AddAction(new ButtonAction(this, 'disarm', 'Disarm', 'fa fa-volume-mute', function () { if (this.device.GetDisarmCode()) this.device.SendRfCode(this.device.GetDisarmCode()) }))
+      .AddAction(new ButtonAction(this, 'alarm', 'Alarm', 'fa fa-volume-up', function () { if (this.device.GetSOSCode()) this.device.SendRfCode(null, this.device.GetSOSCode()) }))
+      .AddAction(new ButtonAction(this, 'disarm', 'Disarm', 'fa fa-volume-mute', function () { if (this.device.GetDisarmCode()) this.device.SendRfCode(null, this.device.GetDisarmCode()) }))
   };
 
   GetStatusInfos() {

@@ -59,9 +59,9 @@ class RfPlatform extends Platform {
     return result
   }
 
-  SendRfCode(rfcode) {
+  SendRfCode(handlerdevice, rfcode) {
     this.msgcounter.outgoing++
-    global.runningContext.rfInterCom.SendRf(rfcode)
+    global.runningContext.rfInterCom.SendRf(handlerdevice, rfcode)
   }
 
   OnReceiveRfCode(rfcode) {
@@ -178,7 +178,7 @@ class RfPlatform extends Platform {
   async WebSendRfCode(req, res, next) {
     const rfcode = req.body.rfcode
 
-    this.SendRfCode(rfcode)
+    this.SendRfCode(null, rfcode)
 
     res.send('OK')
   }

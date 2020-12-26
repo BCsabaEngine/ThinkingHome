@@ -24,7 +24,7 @@ class RfDevice extends Device {
 
   get icon() { return 'fa fa-broadcast-tower' }
 
-  SendRfCode(rfcode) { this.platform.SendRfCode(rfcode) }
+  SendRfCode(handlerdevice, rfcode) { this.platform.SendRfCode(handlerdevice, rfcode) }
   ReceiveRfCode(rfcode) { return false }
 }
 module.exports = RfDevice

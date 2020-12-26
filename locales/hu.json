@@ -278,5 +278,11 @@
 	"Required for device auto discovery": "Szükséges az automatikus eszközfelderítéshez",
 	"Intro sound": "Kezdő dallam",
 	"Tasmota latest": "Legfrissebb Tasmota",
-	" (can upgrade)": " (frissíthető)"
+	" (can upgrade)": " (frissíthető)",
+	"Last RF codes by this device": "Eszköz utolsó RF kódjai",
+	"Last RF codes handled by platform": "Eszköz utolsó kezelt RF kódjai",
+	"Not handled": "Nem kezelt",
+	"All device": "Bármely eszköz",
+	"Last IR codes by this device": "Eszköz utolsó IR kódjai",
+	"Last IR codes handled by platform": "Eszköz utolsó kezelt IR kódjai"
 }
