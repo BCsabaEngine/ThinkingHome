@@ -279,7 +279,7 @@ class BoolStateEntity extends StateEntity {
 
   StateToStore(state) { return state ? 1 : 0 }
 
-  StateFromStore(state) { return state ? 1 : 0 }
+  StateFromStore(state) { return Number(state) }
 
   get icon() {
     if (this.state) {
