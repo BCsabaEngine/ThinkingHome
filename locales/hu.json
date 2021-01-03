@@ -284,5 +284,7 @@
 	"Not handled": "Nem kezelt",
 	"All device": "Bármely eszköz",
 	"Last IR codes by this device": "Eszköz utolsó IR kódjai",
-	"Last IR codes handled by platform": "Eszköz utolsó kezelt IR kódjai"
+	"Last IR codes handled by platform": "Eszköz utolsó kezelt IR kódjai",
+	"Username": "Felhasználó",
+	"Password": "Jelszó"
 }
