@@ -71,22 +71,23 @@ class HikvisionIsapi extends GenericCamera {
   GetStatusInfos() {
     const result = []
     if (!this.setting.ip) result.push({ error: true, message: __('IP address not set') })
+    else {
+      if (this.hikvisionModel) result.push({ message: 'Model', value: `${this.hikvisionModel} (${this.hikvisionDeviceType})` })
+      if (this.hikvisionFirmware) result.push({ message: __('Version'), value: this.hikvisionFirmware })
+      if (this.hikvisionDeviceName) result.push({ message: __('Name'), value: this.hikvisionDeviceName })
 
-    if (this.hikvisionModel) result.push({ message: 'Model', value: `${this.hikvisionModel} (${this.hikvisionDeviceType})` })
-    if (this.hikvisionFirmware) result.push({ message: __('Version'), value: this.hikvisionFirmware })
-    if (this.hikvisionDeviceName) result.push({ message: __('Name'), value: this.hikvisionDeviceName })
-
-    if (this.lastpicture) {
-      result.push({ message: __('Picture size'), value: Math.round(this.lastpicture.length / 1024) + ' kB' })
-      if (this.lastpicturedimension) result.push({ message: __('Picture resolution'), value: this.lastpicturedimension + ' px' })
-      if (this.lastthumbnale) {
-        result.push({
-          // message: __('Last picture'),
-          thumbnaleurl: `/platform/security/device/${this.name}/lastthumbnale`,
-          pictureurl: `/platform/security/device/${this.name}/lastpicture`
-        })
-      }
-    } else result.push({ warning: true, message: __('Cannot get picture') })
+      if (this.lastpicture) {
+        result.push({ message: __('Picture size'), value: Math.round(this.lastpicture.length / 1024) + ' kB' })
+        if (this.lastpicturedimension) result.push({ message: __('Picture resolution'), value: this.lastpicturedimension + ' px' })
+        if (this.lastthumbnale) {
+          result.push({
+            // message: __('Last picture'),
+            thumbnaleurl: `/platform/security/device/${this.name}/lastthumbnale`,
+            pictureurl: `/platform/security/device/${this.name}/lastpicture`
+          })
+        }
+      } else result.push({ warning: true, message: __('Cannot get picture') })
+    }
 
     return result
   }
@@ -103,6 +104,8 @@ class HikvisionIsapi extends GenericCamera {
   }
 
   async GetISAPI(uri, raw = false) {
+    if (!this.setting.ip) return null
+
     const url = path.join(`http://${this.setting.ip}`, uri)
     try {
       const options = {
@@ -170,9 +173,9 @@ class HikvisionIsapi extends GenericCamera {
     if (this.imagechannelid < 0) return null
 
     const picture = await this.GetISAPI(`/ISAPI/Streaming/channels/${this.imagechannelid}/picture`, true)
-    this.lastpicture = Buffer.from(picture)
+    if (picture) {
+      this.lastpicture = Buffer.from(picture)
 
-    if (this.lastpicture) {
       const image = sharp(this.lastpicture)
 
       image
