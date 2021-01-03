@@ -14,7 +14,7 @@ module.exports = (app) => {
       if (net.family === 'IPv4' && !net.internal && net.cidr) cidrs.push(net.cidr)
     }
   }
-  logger.debug(`[HTTP] Local cidrs: ${cidrs.join(', ')}`)
+  logger.debug(`[HTTP] Local CIDRs: ${cidrs.join(', ')}`)
 
   app.isLocalIp = function (req) {
     const ipv6prefix = '::ffff:'
