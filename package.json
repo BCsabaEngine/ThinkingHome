@@ -38,6 +38,7 @@
     "error-stack-parser": "^2.0.6",
     "express": "^4.17.1",
     "express-session": "^1.17.1",
+    "fast-xml-parser": "^3.17.6",
     "form-data": "^3.0.0",
     "glob": "^7.1.6",
     "got": "^11.8.0",

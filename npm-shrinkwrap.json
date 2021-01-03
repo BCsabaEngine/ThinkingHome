@@ -25,6 +25,7 @@
         "error-stack-parser": "^2.0.6",
         "express": "^4.17.1",
         "express-session": "^1.17.1",
+        "fast-xml-parser": "^3.17.6",
         "form-data": "^3.0.0",
         "glob": "^7.1.6",
         "got": "^11.8.0",
@@ -2813,6 +2814,18 @@
       "version": "2.5.2",
       "resolved": "https://registry.npmjs.org/fast-memoize/-/fast-memoize-2.5.2.tgz",
       "integrity": "sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw=="
+    },
+    "node_modules/fast-xml-parser": {
+      "version": "3.17.6",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-3.17.6.tgz",
+      "integrity": "sha512-40WHI/5d2MOzf1sD2bSaTXlPn1lueJLAX6j1xH5dSAr6tNeut8B9ktEL6sjAK9yVON4uNj9//axOdBJUuruCzw==",
+      "bin": {
+        "xml2js": "cli.js"
+      },
+      "funding": {
+        "type": "paypal",
+        "url": "https://paypal.me/naturalintelligence"
+      }
     },
     "node_modules/fastclick": {
       "version": "1.0.6",
@@ -8763,6 +8776,11 @@
       "version": "2.5.2",
       "resolved": "https://registry.npmjs.org/fast-memoize/-/fast-memoize-2.5.2.tgz",
       "integrity": "sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw=="
+    },
+    "fast-xml-parser": {
+      "version": "3.17.6",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-3.17.6.tgz",
+      "integrity": "sha512-40WHI/5d2MOzf1sD2bSaTXlPn1lueJLAX6j1xH5dSAr6tNeut8B9ktEL6sjAK9yVON4uNj9//axOdBJUuruCzw=="
     },
     "fastclick": {
       "version": "1.0.6",
