@@ -49,6 +49,12 @@ block content
             if statusinfo.value
               span.pointer.float-right.badge.bg-primary.clipboard(data-clipboard-text=statusinfo.value)
                 = statusinfo.value
+            if statusinfo.thumbnaleurl
+              center
+                if statusinfo.pictureurl
+                  img.pointer(src=statusinfo.thumbnaleurl style='width:100%' onclick='showimage("' + statusinfo.pictureurl + '")')
+                else
+                  img(src=statusinfo.thumbnaleurl style='width:100%')
             br
 
           if (device.GetStatusInfos() || []).length
@@ -543,4 +549,12 @@ block content
             text: response.responseText,
           });
         });
+    }
+
+    function showimage(url)
+    {
+      swal.fire({
+        width: '75%',
+        imageUrl: url,
+      })      
     }
