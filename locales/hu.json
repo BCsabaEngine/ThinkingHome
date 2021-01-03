@@ -10,6 +10,9 @@
 	"Show all": "Mutasd mindet",
 	"more ...": "további ...",
 	"You have no notifications": "Nincs értesítésed",
+	"Username": "Felhasználónév",
+	"Password": "Jelszó",
+	"Never": "Soha",
 	"Start page": "Kezdőlap",
 	"Platforms": "Platformok",
 	"Rules": "Szabályok",
@@ -285,6 +288,9 @@
 	"All device": "Bármely eszköz",
 	"Last IR codes by this device": "Eszköz utolsó IR kódjai",
 	"Last IR codes handled by platform": "Eszköz utolsó kezelt IR kódjai",
-	"Username": "Felhasználó",
-	"Password": "Jelszó"
+	"Picture size": "Kép méret",
+	"Picture resolution": "Kép felbontás",
+	"Last picture": "Utolsó kép",
+	"Cannot get picture": "Kép nem elérhető",
+	"Refresh picture": "Kép frissítés"
 }
