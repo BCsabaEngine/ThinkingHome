@@ -63,7 +63,7 @@
     "suncalc": "^1.8.0",
     "systeminformation": "^4.33.0",
     "telegraf": "^3.38.0",
-    "vis-network": "^8.5.5",
+    "vis-network": "^9.0.0",
     "wakeonlan": "^0.1.0",
     "ws": "^7.4.1",
     "yaml": "^2.0.0-1"
