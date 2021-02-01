@@ -48,6 +48,10 @@
  pm2 save
  pm2 startup
 
+# SSL cert (webrrot mode - recommended)
+ certbot certonly --webroot -d yourdomain.tld
+
+# SSL cert (standalone/manual)
  pm2 stop ThinkingHome
  certbot certonly --standalone -d yourdomain.tld
  pm2 start ThinkingHome
@@ -73,3 +77,5 @@
  
  pm2 start ThinkingHome
 ```
+# Update SSL cert in every 3 months
+ certbot renew
