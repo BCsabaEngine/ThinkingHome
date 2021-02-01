@@ -47,11 +47,15 @@
  NODE_ENV=production pm2 start ./index.js --name ThinkingHome
  pm2 save
  pm2 startup
+ ```
 
-# SSL cert (webrrot mode - recommended)
+# Install SSL cert (webrrot mode - recommended)
+ ```sh
  certbot certonly --webroot -d yourdomain.tld
+ ```
 
-# SSL cert (standalone/manual)
+# Install SSL cert (standalone/manual)
+ ```sh
  pm2 stop ThinkingHome
  certbot certonly --standalone -d yourdomain.tld
  pm2 start ThinkingHome
@@ -77,5 +81,8 @@
  
  pm2 start ThinkingHome
 ```
-# Update SSL cert in every 3 months
+
+# Update SSL cert (every 3 months)
+ ```sh
  certbot renew
+```
