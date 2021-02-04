@@ -49,7 +49,7 @@
  pm2 startup
  ```
 
-# Install SSL cert (webrrot mode - recommended)
+# Install SSL cert (webroot mode - recommended)
  ```sh
  certbot certonly --webroot -d yourdomain.tld
  ```
@@ -82,7 +82,7 @@
  pm2 start ThinkingHome
 ```
 
-# Update SSL cert (every 3 months)
+# Update SSL cert (use in every 3 months)
  ```sh
  certbot renew
 ```
