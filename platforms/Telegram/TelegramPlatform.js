@@ -1,5 +1,4 @@
-const Telegraf = require('telegraf')
-const Telegram = require('telegraf/telegram')
+const { Telegraf } = require('telegraf')
 
 const Device = require('../Device')
 const Platform = require('../Platform')
@@ -37,7 +36,6 @@ class TelegramPlatform extends Platform {
     if (!this.setting.bottoken) return
 
     this.bot = new Telegraf(this.setting.bottoken)
-    this.telegram = new Telegram(this.setting.bottoken)
 
     logger.debug(`[Platform] Telegram bot created with token ${this.setting.bottoken}`)
 
@@ -61,7 +59,7 @@ class TelegramPlatform extends Platform {
       // ctx.replyWithMarkdown(`Unknown command: *${ctx.message.text}*`);
     })
 
-    this.telegram
+    this.bot.telegram
       .setMyCommands(JSON.stringify([
         { command: 'chatid', description: 'Get chat ID...' }
       ]))
@@ -69,9 +67,9 @@ class TelegramPlatform extends Platform {
   }
 
   SendMessage(chatid, message) {
-    if (!this.telegram) return
+    if (!this.bot || !this.bot.telegram) return
 
-    this.telegram.sendMessage(chatid, message)
+    this.bot.telegram.sendMessage(chatid, message)
   }
 
   GetStatusInfos() {
@@ -98,7 +96,6 @@ class TelegramPlatform extends Platform {
 
   async Stop() {
     this.bot = null
-    this.telegram = null
 
     await super.Stop()
   }
