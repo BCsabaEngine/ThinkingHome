@@ -30,7 +30,7 @@ class RaspberryPiCpu extends RaspberryPiDevice {
     si
       .currentLoad()
       .then(function (data) {
-        const currentload = data.currentload
+        const currentload = data.currentLoad
         if (currentload > 0) { this.entities.loadpercent.SetValue(Math.round(currentload)) }
       }.bind(this))
   }
