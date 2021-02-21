@@ -4745,9 +4745,9 @@
       }
     },
     "node_modules/oui": {
-      "version": "11.0.54",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.54.tgz",
-      "integrity": "sha512-TkaLwbzI1LchEOyrudDZFyuAg6OuDZA8l9gW4v1HIwnYXtwO4HmZrLmeL+AYHZOhyHE/EC+bQBg0td3E5NXMIg==",
+      "version": "11.0.55",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.55.tgz",
+      "integrity": "sha512-xrnR05PHKPXY3+oNHjlniUjpIY9mwVq/NS8KEr5Hck1l3hhtJgkmxUYNg6txwkuhscybAES3IDJhtDPEiIIcdA==",
       "dependencies": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -6273,9 +6273,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.3.3",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.3.tgz",
-      "integrity": "sha512-s9tCz3GQfJ3L5S7KwI3k6jpSPPj1AR1ZoTqtG0UITtA01+1LAeOYz2pzCisCq9XD/KNTuHUl/AXE3zgvy+OR6Q==",
+      "version": "5.3.4",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.4.tgz",
+      "integrity": "sha512-lMrSxwkDHjn9Ot0xJwnCcYJF1tFTsjqp5TRDVDiZ5QC39T99j3xelUfpiGeCbmMdiY7Nu6CUYMwdRLb2bgOm8g==",
       "os": [
         "darwin",
         "linux",
@@ -6396,9 +6396,9 @@
       }
     },
     "node_modules/telegraf": {
-      "version": "4.0.3",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.0.3.tgz",
-      "integrity": "sha512-QWn9r7IAX4C0kHiP2skieI4pry1SO3YGe2n34a3ymqENeu6bJposut6uR1zLNzOhSPvAxqdlO59bJWGXnADqHQ==",
+      "version": "4.1.0",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.0.tgz",
+      "integrity": "sha512-Kradl4x8QjIWXbpaJYcG2Ts+2HR/C6576iskjowuJK11kvjn+TUxiJg+csPE4qQkfTHFmuCoqBBRwo2SaQsVQg==",
       "dependencies": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -10802,9 +10802,9 @@
       }
     },
     "oui": {
-      "version": "11.0.54",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.54.tgz",
-      "integrity": "sha512-TkaLwbzI1LchEOyrudDZFyuAg6OuDZA8l9gW4v1HIwnYXtwO4HmZrLmeL+AYHZOhyHE/EC+bQBg0td3E5NXMIg==",
+      "version": "11.0.55",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.55.tgz",
+      "integrity": "sha512-xrnR05PHKPXY3+oNHjlniUjpIY9mwVq/NS8KEr5Hck1l3hhtJgkmxUYNg6txwkuhscybAES3IDJhtDPEiIIcdA==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -12039,9 +12039,9 @@
       "integrity": "sha512-HkpPZVMYsnhFUBLdy/LvkU9snggKP3VAuSVnPhVXjxdg02lWbFx0W8H3m7A+WMWw2diXZS1wIa4m67XkNxdvew=="
     },
     "systeminformation": {
-      "version": "5.3.3",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.3.tgz",
-      "integrity": "sha512-s9tCz3GQfJ3L5S7KwI3k6jpSPPj1AR1ZoTqtG0UITtA01+1LAeOYz2pzCisCq9XD/KNTuHUl/AXE3zgvy+OR6Q=="
+      "version": "5.3.4",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.4.tgz",
+      "integrity": "sha512-lMrSxwkDHjn9Ot0xJwnCcYJF1tFTsjqp5TRDVDiZ5QC39T99j3xelUfpiGeCbmMdiY7Nu6CUYMwdRLb2bgOm8g=="
     },
     "table": {
       "version": "6.0.7",
@@ -12128,9 +12128,9 @@
       }
     },
     "telegraf": {
-      "version": "4.0.3",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.0.3.tgz",
-      "integrity": "sha512-QWn9r7IAX4C0kHiP2skieI4pry1SO3YGe2n34a3ymqENeu6bJposut6uR1zLNzOhSPvAxqdlO59bJWGXnADqHQ==",
+      "version": "4.1.0",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.0.tgz",
+      "integrity": "sha512-Kradl4x8QjIWXbpaJYcG2Ts+2HR/C6576iskjowuJK11kvjn+TUxiJg+csPE4qQkfTHFmuCoqBBRwo2SaQsVQg==",
       "requires": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
