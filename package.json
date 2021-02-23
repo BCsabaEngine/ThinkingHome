@@ -58,7 +58,7 @@
     "pwd-strength": "^1.0.4",
     "semver": "^7.3.4",
     "serve-favicon": "^2.5.0",
-    "sharp": "^0.27.0",
+    "sharp": "^0.27.2",
     "subnet-check": "^1.10.1",
     "suncalc": "^1.8.0",
     "systeminformation": "^5.3.3",
