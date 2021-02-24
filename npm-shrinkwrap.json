@@ -48,7 +48,7 @@
         "sharp": "^0.27.0",
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
-        "systeminformation": "^5.3.3",
+        "systeminformation": "^5.3.5",
         "telegraf": "^4.0.3",
         "vis-network": "^9.0.0",
         "wakeonlan": "^0.1.0",
@@ -2239,8 +2239,7 @@
       "dependencies": {
         "esprima": "~1.0.4",
         "estraverse": "~1.5.0",
-        "esutils": "~1.0.0",
-        "source-map": "~0.1.30"
+        "esutils": "~1.0.0"
       },
       "bin": {
         "escodegen": "bin/escodegen.js",
@@ -3865,7 +3864,6 @@
       "integrity": "sha512-B5cVcCkfs7Ezia1Zs8bEfVacYD/GvaASyqQeidApR/NJ1C4igcExk9VULVsgLcTPkxohcZrrz5uCaPXvuKeZWw==",
       "dependencies": {
         "jquery": "^3.0 || ^2.0 || ^1.0",
-        "jquery-mousewheel": "^3.1",
         "raphael": "^2.2.0 || ^2.1.1"
       },
       "optionalDependencies": {
@@ -4003,7 +4001,6 @@
       "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-6.1.0.tgz",
       "integrity": "sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==",
       "dependencies": {
-        "graceful-fs": "^4.1.6",
         "universalify": "^2.0.0"
       },
       "optionalDependencies": {
@@ -4248,9 +4245,6 @@
       "version": "4.3.0",
       "resolved": "https://registry.npmjs.org/make-plural/-/make-plural-4.3.0.tgz",
       "integrity": "sha512-xTYd4JVHpSCW+aqDof6w/MebaMVNTVYBZhbB/vi513xXdiPT92JMVCo0Jq8W2UZnzYRFeVbQiQ+I25l13JuKvA==",
-      "dependencies": {
-        "minimist": "^1.2.0"
-      },
       "bin": {
         "make-plural": "bin/make-plural"
       },
@@ -5935,8 +5929,7 @@
         "esprima": "^4.0.1",
         "estraverse": "^4.2.0",
         "esutils": "^2.0.2",
-        "optionator": "^0.8.1",
-        "source-map": "~0.6.1"
+        "optionator": "^0.8.1"
       },
       "bin": {
         "escodegen": "bin/escodegen.js",
@@ -6048,8 +6041,7 @@
         "esprima": "^4.0.1",
         "estraverse": "^4.2.0",
         "esutils": "^2.0.2",
-        "optionator": "^0.8.1",
-        "source-map": "~0.6.1"
+        "optionator": "^0.8.1"
       },
       "bin": {
         "escodegen": "bin/escodegen.js",
@@ -6276,9 +6268,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.3.4",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.4.tgz",
-      "integrity": "sha512-lMrSxwkDHjn9Ot0xJwnCcYJF1tFTsjqp5TRDVDiZ5QC39T99j3xelUfpiGeCbmMdiY7Nu6CUYMwdRLb2bgOm8g==",
+      "version": "5.3.5",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.5.tgz",
+      "integrity": "sha512-8iQhngRztKDw1PB9+NBTcA4ruYc9twB16+VJL0pT4MsHYK3PQAsoNs56duBNwJvMRNpKNK7CF2PIzvWLwDn23w==",
       "os": [
         "darwin",
         "linux",
@@ -12056,9 +12048,9 @@
       "integrity": "sha512-zHZqVpsEyfBVy/O25D7RMYyh+/h0jbmHXGK9DWEDnkPvsl4JlMueJRSEidAFS+mtYDLI8fFkGKltgHRvDPRV1g=="
     },
     "systeminformation": {
-      "version": "5.3.4",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.4.tgz",
-      "integrity": "sha512-lMrSxwkDHjn9Ot0xJwnCcYJF1tFTsjqp5TRDVDiZ5QC39T99j3xelUfpiGeCbmMdiY7Nu6CUYMwdRLb2bgOm8g=="
+      "version": "5.3.5",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.3.5.tgz",
+      "integrity": "sha512-8iQhngRztKDw1PB9+NBTcA4ruYc9twB16+VJL0pT4MsHYK3PQAsoNs56duBNwJvMRNpKNK7CF2PIzvWLwDn23w=="
     },
     "table": {
       "version": "6.0.7",
