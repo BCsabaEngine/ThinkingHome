@@ -49,7 +49,7 @@
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
         "systeminformation": "^5.3.5",
-        "telegraf": "^4.0.3",
+        "telegraf": "^4.1.2",
         "vis-network": "^9.0.0",
         "wakeonlan": "^0.1.0",
         "ws": "^7.4.1",
@@ -1046,6 +1046,20 @@
         "ieee754": "^1.1.13"
       }
     },
+    "node_modules/buffer-alloc": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/buffer-alloc/-/buffer-alloc-1.2.0.tgz",
+      "integrity": "sha512-CFsHQgjtW1UChdXgbyJGtnm+O/uLQeZdtbDo8mfUgYXCHSM1wgrVxXm6bSyrUuErEb+4sYVGCzASBRot7zyrow==",
+      "dependencies": {
+        "buffer-alloc-unsafe": "^1.1.0",
+        "buffer-fill": "^1.0.0"
+      }
+    },
+    "node_modules/buffer-alloc-unsafe": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/buffer-alloc-unsafe/-/buffer-alloc-unsafe-1.1.0.tgz",
+      "integrity": "sha512-TEM2iMIEQdJ2yjPJoSIsldnleVaAk1oW3DBVUykyOLsEsFmEc9kn+SFFPz+gl54KQNxlDnAwCXosOS9Okx2xAg=="
+    },
     "node_modules/buffer-equal": {
       "version": "0.0.1",
       "resolved": "https://registry.npmjs.org/buffer-equal/-/buffer-equal-0.0.1.tgz",
@@ -1053,6 +1067,11 @@
       "engines": {
         "node": ">=0.4.0"
       }
+    },
+    "node_modules/buffer-fill": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/buffer-fill/-/buffer-fill-1.0.0.tgz",
+      "integrity": "sha1-+PeLdniYiO858gXNY39o5wISKyw="
     },
     "node_modules/buffer-from": {
       "version": "1.1.1",
@@ -2238,8 +2257,7 @@
       "dependencies": {
         "esprima": "~1.0.4",
         "estraverse": "~1.5.0",
-        "esutils": "~1.0.0",
-        "source-map": "~0.1.30"
+        "esutils": "~1.0.0"
       },
       "bin": {
         "escodegen": "bin/escodegen.js",
@@ -3864,7 +3882,6 @@
       "integrity": "sha512-B5cVcCkfs7Ezia1Zs8bEfVacYD/GvaASyqQeidApR/NJ1C4igcExk9VULVsgLcTPkxohcZrrz5uCaPXvuKeZWw==",
       "dependencies": {
         "jquery": "^3.0 || ^2.0 || ^1.0",
-        "jquery-mousewheel": "^3.1",
         "raphael": "^2.2.0 || ^2.1.1"
       },
       "optionalDependencies": {
@@ -4002,7 +4019,6 @@
       "resolved": "https://registry.npmjs.org/jsonfile/-/jsonfile-6.1.0.tgz",
       "integrity": "sha512-5dgndWOriYSm5cnYaJNhalLNDKOqFwyDB/rr1E9ZsGciGvKPs8R2xYGCacuf3z6K1YKDz182fd+fY3cn3pMqXQ==",
       "dependencies": {
-        "graceful-fs": "^4.1.6",
         "universalify": "^2.0.0"
       },
       "optionalDependencies": {
@@ -4247,9 +4263,6 @@
       "version": "4.3.0",
       "resolved": "https://registry.npmjs.org/make-plural/-/make-plural-4.3.0.tgz",
       "integrity": "sha512-xTYd4JVHpSCW+aqDof6w/MebaMVNTVYBZhbB/vi513xXdiPT92JMVCo0Jq8W2UZnzYRFeVbQiQ+I25l13JuKvA==",
-      "dependencies": {
-        "minimist": "^1.2.0"
-      },
       "bin": {
         "make-plural": "bin/make-plural"
       },
@@ -5507,6 +5520,14 @@
       "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
       "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
     },
+    "node_modules/safe-compare": {
+      "version": "1.1.4",
+      "resolved": "https://registry.npmjs.org/safe-compare/-/safe-compare-1.1.4.tgz",
+      "integrity": "sha512-b9wZ986HHCo/HbKrRpBJb2kqXMK9CEWIE1egeEvZsYn69ay3kdfl9nG3RyOcR+jInTDf7a86WQ1d4VJX7goSSQ==",
+      "dependencies": {
+        "buffer-alloc": "^1.2.0"
+      }
+    },
     "node_modules/safer-buffer": {
       "version": "2.1.2",
       "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
@@ -5934,8 +5955,7 @@
         "esprima": "^4.0.1",
         "estraverse": "^4.2.0",
         "esutils": "^2.0.2",
-        "optionator": "^0.8.1",
-        "source-map": "~0.6.1"
+        "optionator": "^0.8.1"
       },
       "bin": {
         "escodegen": "bin/escodegen.js",
@@ -6047,8 +6067,7 @@
         "esprima": "^4.0.1",
         "estraverse": "^4.2.0",
         "esutils": "^2.0.2",
-        "optionator": "^0.8.1",
-        "source-map": "~0.6.1"
+        "optionator": "^0.8.1"
       },
       "bin": {
         "escodegen": "bin/escodegen.js",
@@ -6398,9 +6417,9 @@
       }
     },
     "node_modules/telegraf": {
-      "version": "4.1.1",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.1.tgz",
-      "integrity": "sha512-VGcFfTZzjlZquBHX5VwIzhREnDHQSHV+PkirqGKXzLWun/c/qkzJKeAFc3qv5AGJBrdfNbVbHNtZT7mjpmMPtg==",
+      "version": "4.1.2",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.2.tgz",
+      "integrity": "sha512-YZljmryOhcZgrRWU28AV7UhZ3y+jKRwPwB49PSDDmW7tKtQHrSLBkW0pCoLniDlQVz+ICBGCWXZlHfqDkQ2iNQ==",
       "dependencies": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -6408,6 +6427,7 @@
         "module-alias": "^2.2.2",
         "node-fetch": "^2.6.1",
         "p-timeout": "^4.1.0",
+        "safe-compare": "^1.1.4",
         "sandwich-stream": "^2.0.2",
         "typegram": "^3.1.10"
       },
@@ -7791,10 +7811,29 @@
         "ieee754": "^1.1.13"
       }
     },
+    "buffer-alloc": {
+      "version": "1.2.0",
+      "resolved": "https://registry.npmjs.org/buffer-alloc/-/buffer-alloc-1.2.0.tgz",
+      "integrity": "sha512-CFsHQgjtW1UChdXgbyJGtnm+O/uLQeZdtbDo8mfUgYXCHSM1wgrVxXm6bSyrUuErEb+4sYVGCzASBRot7zyrow==",
+      "requires": {
+        "buffer-alloc-unsafe": "^1.1.0",
+        "buffer-fill": "^1.0.0"
+      }
+    },
+    "buffer-alloc-unsafe": {
+      "version": "1.1.0",
+      "resolved": "https://registry.npmjs.org/buffer-alloc-unsafe/-/buffer-alloc-unsafe-1.1.0.tgz",
+      "integrity": "sha512-TEM2iMIEQdJ2yjPJoSIsldnleVaAk1oW3DBVUykyOLsEsFmEc9kn+SFFPz+gl54KQNxlDnAwCXosOS9Okx2xAg=="
+    },
     "buffer-equal": {
       "version": "0.0.1",
       "resolved": "https://registry.npmjs.org/buffer-equal/-/buffer-equal-0.0.1.tgz",
       "integrity": "sha1-kbx0sR6kBbyRa8aqkI+q+ltKrEs="
+    },
+    "buffer-fill": {
+      "version": "1.0.0",
+      "resolved": "https://registry.npmjs.org/buffer-fill/-/buffer-fill-1.0.0.tgz",
+      "integrity": "sha1-+PeLdniYiO858gXNY39o5wISKyw="
     },
     "buffer-from": {
       "version": "1.1.1",
@@ -11439,6 +11478,14 @@
       "resolved": "https://registry.npmjs.org/safe-buffer/-/safe-buffer-5.1.2.tgz",
       "integrity": "sha512-Gd2UZBJDkXlY7GbJxfsE8/nvKkUEU1G38c1siN6QP6a9PT9MmHB8GnpscSmMJSoF8LOIrt8ud/wPtojys4G6+g=="
     },
+    "safe-compare": {
+      "version": "1.1.4",
+      "resolved": "https://registry.npmjs.org/safe-compare/-/safe-compare-1.1.4.tgz",
+      "integrity": "sha512-b9wZ986HHCo/HbKrRpBJb2kqXMK9CEWIE1egeEvZsYn69ay3kdfl9nG3RyOcR+jInTDf7a86WQ1d4VJX7goSSQ==",
+      "requires": {
+        "buffer-alloc": "^1.2.0"
+      }
+    },
     "safer-buffer": {
       "version": "2.1.2",
       "resolved": "https://registry.npmjs.org/safer-buffer/-/safer-buffer-2.1.2.tgz",
@@ -12143,9 +12190,9 @@
       }
     },
     "telegraf": {
-      "version": "4.1.1",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.1.tgz",
-      "integrity": "sha512-VGcFfTZzjlZquBHX5VwIzhREnDHQSHV+PkirqGKXzLWun/c/qkzJKeAFc3qv5AGJBrdfNbVbHNtZT7mjpmMPtg==",
+      "version": "4.1.2",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.2.tgz",
+      "integrity": "sha512-YZljmryOhcZgrRWU28AV7UhZ3y+jKRwPwB49PSDDmW7tKtQHrSLBkW0pCoLniDlQVz+ICBGCWXZlHfqDkQ2iNQ==",
       "requires": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -12153,6 +12200,7 @@
         "module-alias": "^2.2.2",
         "node-fetch": "^2.6.1",
         "p-timeout": "^4.1.0",
+        "safe-compare": "^1.1.4",
         "sandwich-stream": "^2.0.2",
         "typegram": "^3.1.10"
       }
