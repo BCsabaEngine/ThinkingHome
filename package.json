@@ -54,7 +54,7 @@
     "node-schedule": "^2.0.0",
     "node-ssdp": "^4.0.1",
     "oui": "^11.0.56",
-    "pug": "^3.0.0",
+    "pug": "^3.0.2",
     "pwd-strength": "^1.0.4",
     "semver": "^7.3.4",
     "serve-favicon": "^2.5.0",
