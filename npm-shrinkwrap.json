@@ -2947,14 +2947,15 @@
       "integrity": "sha1-FhYlsnsaWAZAWTa9qaLBkm0Gvmo="
     },
     "node_modules/fetch-enhanced": {
-      "version": "4.2.2",
-      "resolved": "https://registry.npmjs.org/fetch-enhanced/-/fetch-enhanced-4.2.2.tgz",
-      "integrity": "sha512-yKBIHCAQk4Fy/vYacjFtpqb/9iugVksLvG7ge+JP5Wvma4Vboomfff9uJBIesIXceDLT9eoj23Ywjh/pF9DHpg==",
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/fetch-enhanced/-/fetch-enhanced-5.0.1.tgz",
+      "integrity": "sha512-7wce9yn2dhEy9PhQnGmevaRuuOiZ2Ce9/zNat86zhEGMPqveFban7c9CXNLPWZ5q9ukZAedTJFL0vWqMZnJUyQ==",
       "dependencies": {
         "agentkeepalive": "^4.1.3",
         "http-proxy-agent": "^4.0.1",
         "https-proxy-agent": "^5.0.0",
-        "proxy-from-env": "^1.1.0"
+        "proxy-from-env": "^1.1.0",
+        "quick-lru": "5.1.1"
       },
       "engines": {
         "node": ">=10"
@@ -4808,13 +4809,13 @@
       }
     },
     "node_modules/oui": {
-      "version": "11.0.56",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.56.tgz",
-      "integrity": "sha512-VJJs/ig6OhwRdtbDmCgGgIlRxfsNyT8goDmdsK74YaXB2zv7XDuStq7LfOB30fNO/8L89yKb5CHG/BXq6VWFgQ==",
+      "version": "11.0.57",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.57.tgz",
+      "integrity": "sha512-XZZsIwvl4AbQXh8rqL/OVWS3I4w2/JH2HHU8t+7BeIF9t0Bsulz4Qvgj6ilIZ+NFY/HGAc3MXotcQxSnYZQRjw==",
       "dependencies": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
-        "fetch-enhanced": "^4.0.5",
+        "fetch-enhanced": "^5.0.1",
         "json-stable-stringify": "^1.0.1",
         "minimatch": "^3.0.4",
         "minimist": "^1.2.5",
@@ -9485,14 +9486,15 @@
       "integrity": "sha1-FhYlsnsaWAZAWTa9qaLBkm0Gvmo="
     },
     "fetch-enhanced": {
-      "version": "4.2.2",
-      "resolved": "https://registry.npmjs.org/fetch-enhanced/-/fetch-enhanced-4.2.2.tgz",
-      "integrity": "sha512-yKBIHCAQk4Fy/vYacjFtpqb/9iugVksLvG7ge+JP5Wvma4Vboomfff9uJBIesIXceDLT9eoj23Ywjh/pF9DHpg==",
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/fetch-enhanced/-/fetch-enhanced-5.0.1.tgz",
+      "integrity": "sha512-7wce9yn2dhEy9PhQnGmevaRuuOiZ2Ce9/zNat86zhEGMPqveFban7c9CXNLPWZ5q9ukZAedTJFL0vWqMZnJUyQ==",
       "requires": {
         "agentkeepalive": "^4.1.3",
         "http-proxy-agent": "^4.0.1",
         "https-proxy-agent": "^5.0.0",
-        "proxy-from-env": "^1.1.0"
+        "proxy-from-env": "^1.1.0",
+        "quick-lru": "5.1.1"
       }
     },
     "file-entry-cache": {
@@ -10952,13 +10954,13 @@
       }
     },
     "oui": {
-      "version": "11.0.56",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.56.tgz",
-      "integrity": "sha512-VJJs/ig6OhwRdtbDmCgGgIlRxfsNyT8goDmdsK74YaXB2zv7XDuStq7LfOB30fNO/8L89yKb5CHG/BXq6VWFgQ==",
+      "version": "11.0.57",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.57.tgz",
+      "integrity": "sha512-XZZsIwvl4AbQXh8rqL/OVWS3I4w2/JH2HHU8t+7BeIF9t0Bsulz4Qvgj6ilIZ+NFY/HGAc3MXotcQxSnYZQRjw==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
-        "fetch-enhanced": "^4.0.5",
+        "fetch-enhanced": "^5.0.1",
         "json-stable-stringify": "^1.0.1",
         "minimatch": "^3.0.4",
         "minimist": "^1.2.5",
