@@ -22,7 +22,7 @@
   "author": "Balázs Csaba",
   "license": "ISC",
   "dependencies": {
-    "adm-zip": "^0.5.1",
+    "adm-zip": "^0.5.4",
     "admin-lte": "^3.1.0-rc",
     "body-parser": "^1.19.0",
     "bootstrap-icons": "^1.2.1",
