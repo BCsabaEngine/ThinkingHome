@@ -4835,9 +4835,9 @@
       "integrity": "sha512-gIQfzgGgu1wy80EB4/6DaJGHMEGmizq27xHIESrzXq0Y/J0Ay1P3DWk6tuVmEPIZH15zaBlxeEJOqdJKmowHCQ=="
     },
     "node_modules/p-cancelable": {
-      "version": "2.0.0",
-      "resolved": "https://registry.npmjs.org/p-cancelable/-/p-cancelable-2.0.0.tgz",
-      "integrity": "sha512-wvPXDmbMmu2ksjkB4Z3nZWTSkJEb9lqVdMaCKpZUGJG9TMiNp9XcbG3fn9fPKjem04fJMJnXoyFPk2FmgiaiNg==",
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/p-cancelable/-/p-cancelable-2.1.0.tgz",
+      "integrity": "sha512-HAZyB3ZodPo+BDpb4/Iu7Jv4P6cSazBz9ZM0ChhEXp70scx834aWCEjQRwgt41UzzejUAPdbqqONfRWTPYrPAQ==",
       "engines": {
         "node": ">=8"
       }
@@ -6466,9 +6466,9 @@
       }
     },
     "node_modules/telegraf": {
-      "version": "4.1.2",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.2.tgz",
-      "integrity": "sha512-YZljmryOhcZgrRWU28AV7UhZ3y+jKRwPwB49PSDDmW7tKtQHrSLBkW0pCoLniDlQVz+ICBGCWXZlHfqDkQ2iNQ==",
+      "version": "4.2.0",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.2.0.tgz",
+      "integrity": "sha512-OBZk4OEdo+w0Dr/OQoKoLkAtf4rcL/hBovO+bWILEJgOJlPnKdFjG0g7wmFk7RrVh75VNc7RSp9qgb9J3TMx9A==",
       "dependencies": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -6478,7 +6478,7 @@
         "p-timeout": "^4.1.0",
         "safe-compare": "^1.1.4",
         "sandwich-stream": "^2.0.2",
-        "typegram": "^3.1.10"
+        "typegram": "^3.2.0"
       },
       "bin": {
         "telegraf": "bin/telegraf"
@@ -6683,9 +6683,9 @@
       }
     },
     "node_modules/typegram": {
-      "version": "3.2.0",
-      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.2.0.tgz",
-      "integrity": "sha512-Pi8FtelaMfPXQIRdiAL9SiFaHYdttQS1eLQj2lNBbb0qM+PD/ttrv+u4Ea7z9mVA5Pc60LFj79Qqz06pIJrLdQ=="
+      "version": "3.2.1",
+      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.2.1.tgz",
+      "integrity": "sha512-Vq3kOF/UtsSvlS+goKMfRerXi3hGSDanEoB4UztZLvcPkAX9GS0ejYruAb5MpVSZjxX89szxf+2gxrNeZyuhBg=="
     },
     "node_modules/uid-safe": {
       "version": "2.1.5",
@@ -10974,9 +10974,9 @@
       "integrity": "sha512-gIQfzgGgu1wy80EB4/6DaJGHMEGmizq27xHIESrzXq0Y/J0Ay1P3DWk6tuVmEPIZH15zaBlxeEJOqdJKmowHCQ=="
     },
     "p-cancelable": {
-      "version": "2.0.0",
-      "resolved": "https://registry.npmjs.org/p-cancelable/-/p-cancelable-2.0.0.tgz",
-      "integrity": "sha512-wvPXDmbMmu2ksjkB4Z3nZWTSkJEb9lqVdMaCKpZUGJG9TMiNp9XcbG3fn9fPKjem04fJMJnXoyFPk2FmgiaiNg=="
+      "version": "2.1.0",
+      "resolved": "https://registry.npmjs.org/p-cancelable/-/p-cancelable-2.1.0.tgz",
+      "integrity": "sha512-HAZyB3ZodPo+BDpb4/Iu7Jv4P6cSazBz9ZM0ChhEXp70scx834aWCEjQRwgt41UzzejUAPdbqqONfRWTPYrPAQ=="
     },
     "p-limit": {
       "version": "1.3.0",
@@ -12288,9 +12288,9 @@
       }
     },
     "telegraf": {
-      "version": "4.1.2",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.1.2.tgz",
-      "integrity": "sha512-YZljmryOhcZgrRWU28AV7UhZ3y+jKRwPwB49PSDDmW7tKtQHrSLBkW0pCoLniDlQVz+ICBGCWXZlHfqDkQ2iNQ==",
+      "version": "4.2.0",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.2.0.tgz",
+      "integrity": "sha512-OBZk4OEdo+w0Dr/OQoKoLkAtf4rcL/hBovO+bWILEJgOJlPnKdFjG0g7wmFk7RrVh75VNc7RSp9qgb9J3TMx9A==",
       "requires": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -12300,7 +12300,7 @@
         "p-timeout": "^4.1.0",
         "safe-compare": "^1.1.4",
         "sandwich-stream": "^2.0.2",
-        "typegram": "^3.1.10"
+        "typegram": "^3.2.0"
       }
     },
     "tempusdominus-bootstrap-4": {
@@ -12455,9 +12455,9 @@
       }
     },
     "typegram": {
-      "version": "3.2.0",
-      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.2.0.tgz",
-      "integrity": "sha512-Pi8FtelaMfPXQIRdiAL9SiFaHYdttQS1eLQj2lNBbb0qM+PD/ttrv+u4Ea7z9mVA5Pc60LFj79Qqz06pIJrLdQ=="
+      "version": "3.2.1",
+      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.2.1.tgz",
+      "integrity": "sha512-Vq3kOF/UtsSvlS+goKMfRerXi3hGSDanEoB4UztZLvcPkAX9GS0ejYruAb5MpVSZjxX89szxf+2gxrNeZyuhBg=="
     },
     "uid-safe": {
       "version": "2.1.5",
