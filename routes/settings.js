@@ -59,12 +59,12 @@ module.exports = (app) => {
       const value = req.body.value
 
       switch (name) {
-        case 'openweathermapapikey':
+        case 'OpenweathermapApiKey':
           try {
             await OpenWeatherMap.check(systemsettings.Latitude, systemsettings.Longitude, value)
           } catch (err) { throw new Error('Invalid OpenWeatherMap API key') }
           break
-        case 'cloudtoken':
+        case 'CloudToken':
           if (value) {
             try {
               const form = new FormData()
@@ -75,7 +75,7 @@ module.exports = (app) => {
           }
           break
         default:
-          break
+          throw new Error(`Invalid data to store: ${name}`)
       }
 
       systemsettings.SetByName(name, value)
