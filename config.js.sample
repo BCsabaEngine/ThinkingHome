@@ -26,6 +26,7 @@ config.web.ssl.ca = process.env.WEB_SSL_CA || 'chain.pem'
 
 config.brainserver.server = process.env.BRAIN_SERVER || 'domain.tld'
 config.brainserver.checkservice = process.env.BRAIN_CHECK || 'check'
+config.brainserver.checkdyndnsremote = process.env.BRAIN_CHECKDYNDNSREMOTE || '/checkdyndnsremote'
 config.brainserver.backupservice = process.env.BRAIN_BACKUP || 'backup'
 config.brainserver.dyndnsservice = process.env.BRAIN_DYNDNS || 'dyn'
 config.brainserver.ttsservice = process.env.BRAIN_TTS || 'tts'

@@ -243,6 +243,10 @@ block content
                 else
                   = __('The system never refreshed dynamic DNS.')
 
+            span#checkdyndns.badge.ml-3.float-right
+              = __('Checking DynDns...')
+            br
+
 
           .callout.callout-success
             h5
@@ -361,6 +365,23 @@ block content
 
 
   script(type='text/javascript').
+    $(function() {
+      
+      $.get('/settings/checkdyndnsremote')
+      .done(function(data) {
+        var result = JSON.parse(data);
+        $('#checkdyndns')
+          .addClass('badge-success')
+          .html(result.domain + " available (" + result.time + "ms)");
+      })
+      .fail(function(data) {
+        $('#checkdyndns')
+          .addClass('badge-danger')
+          .html(data.responseText);
+      })
+
+    });
+
     function showsetting_text(name, title, value, divtoreload)
     {
       Swal.fire({

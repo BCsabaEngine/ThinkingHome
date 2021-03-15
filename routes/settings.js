@@ -95,6 +95,24 @@ module.exports = (app) => {
     } catch (err) { res.status(http403).send(err.message) }
   })
 
+  app.get('/settings/checkdyndnsremote', async function (req, res, next) {
+    try {
+      if (!systemsettings.CloudToken) throw new Error('Token not set')
+
+      if (!config.brainserver.checkdyndnsremote) throw new Error('Check DynDns not configured')
+
+      const form = new FormData()
+      form.append('token', systemsettings.CloudToken)
+
+      const resp = await got.post(config.brainserver.server + config.brainserver.checkdyndnsremote, { body: form })
+      const stat = JSON.parse(resp.body)
+
+      if (stat.status === 'success') return res.send(JSON.stringify({ domain: stat.domain, time: stat.time }))
+
+      throw new Error(stat.text)
+    } catch (err) { res.status(http403).send(err.message) }
+  })
+
   app.post('/settings/user/add', async function (req, res, next) {
     try {
       const email = req.body.email
