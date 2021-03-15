@@ -53,7 +53,7 @@
         "vis-network": "^9.0.0",
         "wakeonlan": "^0.1.0",
         "ws": "^7.4.1",
-        "yaml": "^2.0.0-1"
+        "yaml": "^2.0.0-4"
       },
       "devDependencies": {
         "babel-eslint": "^10.1.0",
@@ -4425,7 +4425,6 @@
       "version": "0.5.33",
       "resolved": "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.33.tgz",
       "integrity": "sha512-PTc2vcT8K9J5/9rDEPe5czSIKgLoGsH8UNpA4qZTVw0Vd/Uz19geE9abbIOQKaAQFcnQ3v5YEXrbSc5BpshH+w==",
-      "peer": true,
       "dependencies": {
         "moment": ">= 2.9.0"
       },
@@ -7080,9 +7079,9 @@
       "integrity": "sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI="
     },
     "node_modules/yaml": {
-      "version": "2.0.0-3",
-      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-3.tgz",
-      "integrity": "sha512-gvtVaY+/mQ0OsXgaWy2Tf830JuXN7qEUYdXWsuiJVSkMRsBBQ90YVpQQofaURbhoA1xSbLBf7965oH6ddzNbBQ==",
+      "version": "2.0.0-4",
+      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-4.tgz",
+      "integrity": "sha512-MoQoNhTFI400tkaeod+X0Vety1KD2L9dUa6pa1CVcyfcATjC/iDxoMLvqZ6U3D8c5KzxBrU2HnJH+PfaXOqI7w==",
       "engines": {
         "node": ">= 10"
       }
@@ -10267,6 +10266,7 @@
       "resolved": "https://registry.npmjs.org/jquery-mapael/-/jquery-mapael-2.2.0.tgz",
       "integrity": "sha512-B5cVcCkfs7Ezia1Zs8bEfVacYD/GvaASyqQeidApR/NJ1C4igcExk9VULVsgLcTPkxohcZrrz5uCaPXvuKeZWw==",
       "requires": {
+        "jquery": "^3.0 || ^2.0 || ^1.0",
         "jquery-mousewheel": "^3.1",
         "raphael": "^2.2.0 || ^2.1.1"
       }
@@ -10662,7 +10662,6 @@
       "version": "0.5.33",
       "resolved": "https://registry.npmjs.org/moment-timezone/-/moment-timezone-0.5.33.tgz",
       "integrity": "sha512-PTc2vcT8K9J5/9rDEPe5czSIKgLoGsH8UNpA4qZTVw0Vd/Uz19geE9abbIOQKaAQFcnQ3v5YEXrbSc5BpshH+w==",
-      "peer": true,
       "requires": {
         "moment": ">= 2.9.0"
       }
@@ -12325,14 +12324,24 @@
       "version": "5.39.0",
       "resolved": "https://registry.npmjs.org/tempusdominus-bootstrap-4/-/tempusdominus-bootstrap-4-5.39.0.tgz",
       "integrity": "sha512-vYnkmQYQq4+A51WyRc/6e03eM0BHDoPaxd556K1pd4Nhr0eGeB3+Mi9b+3CDx4189fg3gQlrsKzgJiHPRwSX3Q==",
-      "requires": {}
+      "requires": {
+        "bootstrap": "^4.5.2",
+        "jquery": "^3.5.1",
+        "moment": "^2.29.0",
+        "moment-timezone": "^0.5.31",
+        "popper.js": "^1.16.1"
+      }
     },
     "tempusdominus-core": {
       "version": "5.19.0",
       "resolved": "https://registry.npmjs.org/tempusdominus-core/-/tempusdominus-core-5.19.0.tgz",
       "integrity": "sha512-7a4oBQw4cjz6C87BLRg3KHVvzpnPlnRTkuDZ7SwcJayQQ4QgOryX5u6wj0q07TXhgtMQLCntZO6nVhHIKPaeUw==",
       "peer": true,
-      "requires": {}
+      "requires": {
+        "jquery": "^3.5.0",
+        "moment": "~2.24.0",
+        "moment-timezone": "^0.5.28"
+      }
     },
     "text-table": {
       "version": "0.2.0",
@@ -12770,9 +12779,9 @@
       "integrity": "sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI="
     },
     "yaml": {
-      "version": "2.0.0-3",
-      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-3.tgz",
-      "integrity": "sha512-gvtVaY+/mQ0OsXgaWy2Tf830JuXN7qEUYdXWsuiJVSkMRsBBQ90YVpQQofaURbhoA1xSbLBf7965oH6ddzNbBQ=="
+      "version": "2.0.0-4",
+      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-4.tgz",
+      "integrity": "sha512-MoQoNhTFI400tkaeod+X0Vety1KD2L9dUa6pa1CVcyfcATjC/iDxoMLvqZ6U3D8c5KzxBrU2HnJH+PfaXOqI7w=="
     }
   }
 }
