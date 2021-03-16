@@ -383,9 +383,9 @@
       }
     },
     "node_modules/@types/node": {
-      "version": "14.14.34",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-14.14.34.tgz",
-      "integrity": "sha512-dBPaxocOK6UVyvhbnpFIj2W+S+1cBTkHQbFQfeeJhoKFbzYcVUGHvddeWPSucKATb3F0+pgDq0i6ghEaZjsugA=="
+      "version": "14.14.35",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-14.14.35.tgz",
+      "integrity": "sha512-Lt+wj8NVPx0zUmUwumiVXapmaLUcAk3yPuHCFVXras9k5VT9TdhJqKqGVUQCD60OTMCl0qxJ57OiTL0Mic3Iag=="
     },
     "node_modules/@types/responselike": {
       "version": "1.0.0",
@@ -6355,9 +6355,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.6.3",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.3.tgz",
-      "integrity": "sha512-xG0Fha8qyePA2twefxV+xSGhRHhyqDeMLN9uPcugYroVaG4q07DBoLHpCCb7a5t68S68jnoC1m21K7Jftzg96g==",
+      "version": "5.6.5",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.5.tgz",
+      "integrity": "sha512-XIezA8mQCwFWe1jJ99FrYMJM2DRk4XyFIqowuHSqBThQ+delD+vUTObgOuLXCOM7lmul21yHbFhE9DlzUjgiJg==",
       "os": [
         "darwin",
         "linux",
@@ -6882,9 +6882,9 @@
       }
     },
     "node_modules/vis-network": {
-      "version": "9.0.3",
-      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.3.tgz",
-      "integrity": "sha512-E15vF2AocxepDG7Sd8vudSUrE3nANE7cKY7eNYFSi3CDPAqF1kU5a0EKUW7aw0T7Fk5nvC8jeW63+CgjGoqqYw==",
+      "version": "9.0.4",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.4.tgz",
+      "integrity": "sha512-F/pq8yBJUuB9lNKXHhtn4GP2h91FV0c2O2nvfU34RX4VCYOlqs+mINdz+J+QkWiYhiPdlVy15gzVEzkhJ9hpaw==",
       "hasInstallScript": true,
       "funding": {
         "type": "opencollective",
@@ -7361,9 +7361,9 @@
       }
     },
     "@types/node": {
-      "version": "14.14.34",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-14.14.34.tgz",
-      "integrity": "sha512-dBPaxocOK6UVyvhbnpFIj2W+S+1cBTkHQbFQfeeJhoKFbzYcVUGHvddeWPSucKATb3F0+pgDq0i6ghEaZjsugA=="
+      "version": "14.14.35",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-14.14.35.tgz",
+      "integrity": "sha512-Lt+wj8NVPx0zUmUwumiVXapmaLUcAk3yPuHCFVXras9k5VT9TdhJqKqGVUQCD60OTMCl0qxJ57OiTL0Mic3Iag=="
     },
     "@types/responselike": {
       "version": "1.0.0",
@@ -12217,9 +12217,9 @@
       "integrity": "sha512-zHZqVpsEyfBVy/O25D7RMYyh+/h0jbmHXGK9DWEDnkPvsl4JlMueJRSEidAFS+mtYDLI8fFkGKltgHRvDPRV1g=="
     },
     "systeminformation": {
-      "version": "5.6.3",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.3.tgz",
-      "integrity": "sha512-xG0Fha8qyePA2twefxV+xSGhRHhyqDeMLN9uPcugYroVaG4q07DBoLHpCCb7a5t68S68jnoC1m21K7Jftzg96g=="
+      "version": "5.6.5",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.5.tgz",
+      "integrity": "sha512-XIezA8mQCwFWe1jJ99FrYMJM2DRk4XyFIqowuHSqBThQ+delD+vUTObgOuLXCOM7lmul21yHbFhE9DlzUjgiJg=="
     },
     "table": {
       "version": "6.0.7",
@@ -12634,9 +12634,9 @@
       "requires": {}
     },
     "vis-network": {
-      "version": "9.0.3",
-      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.3.tgz",
-      "integrity": "sha512-E15vF2AocxepDG7Sd8vudSUrE3nANE7cKY7eNYFSi3CDPAqF1kU5a0EKUW7aw0T7Fk5nvC8jeW63+CgjGoqqYw==",
+      "version": "9.0.4",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.4.tgz",
+      "integrity": "sha512-F/pq8yBJUuB9lNKXHhtn4GP2h91FV0c2O2nvfU34RX4VCYOlqs+mINdz+J+QkWiYhiPdlVy15gzVEzkhJ9hpaw==",
       "requires": {}
     },
     "vis-util": {
