@@ -11,6 +11,7 @@
       "dependencies": {
         "adm-zip": "^0.5.1",
         "admin-lte": "^3.1.0-rc",
+        "axios": "^0.21.1",
         "body-parser": "^1.19.0",
         "bootstrap-icons": "^1.2.1",
         "chalk": "^4.1.0",
@@ -761,6 +762,14 @@
       "integrity": "sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg==",
       "engines": {
         "node": ">= 4.0.0"
+      }
+    },
+    "node_modules/axios": {
+      "version": "0.21.1",
+      "resolved": "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz",
+      "integrity": "sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==",
+      "dependencies": {
+        "follow-redirects": "^1.10.0"
       }
     },
     "node_modules/babel-eslint": {
@@ -3083,6 +3092,25 @@
       "version": "4.2.2",
       "resolved": "https://registry.npmjs.org/flot/-/flot-4.2.2.tgz",
       "integrity": "sha512-Strct/A27o0TA25X7Z0pxKhwK4djiP1Kjeqj0tkiqrkRu1qYPqfbp5BYuxEL8CWDNtj85Uc0PnG2E2plo1+VMg=="
+    },
+    "node_modules/follow-redirects": {
+      "version": "1.13.3",
+      "resolved": "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.3.tgz",
+      "integrity": "sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA==",
+      "funding": [
+        {
+          "type": "individual",
+          "url": "https://github.com/sponsors/RubenVerborgh"
+        }
+      ],
+      "engines": {
+        "node": ">=4.0"
+      },
+      "peerDependenciesMeta": {
+        "debug": {
+          "optional": true
+        }
+      }
     },
     "node_modules/fontkit": {
       "version": "1.8.1",
@@ -7716,6 +7744,14 @@
       "resolved": "https://registry.npmjs.org/at-least-node/-/at-least-node-1.0.0.tgz",
       "integrity": "sha512-+q/t7Ekv1EDY2l6Gda6LLiX14rU9TV20Wa3ofeQmwPFZbOMo9DXrLbOjFaaclkXKWidIaopwAObQDqwWtGUjqg=="
     },
+    "axios": {
+      "version": "0.21.1",
+      "resolved": "https://registry.npmjs.org/axios/-/axios-0.21.1.tgz",
+      "integrity": "sha512-dKQiRHxGD9PPRIUNIWvZhPTPpl1rf/OxTYKsqKUDjBwYylTvV7SjSHJb9ratfyzM6wCdLCOYLzs73qpg5c4iGA==",
+      "requires": {
+        "follow-redirects": "^1.10.0"
+      }
+    },
     "babel-eslint": {
       "version": "10.1.0",
       "resolved": "https://registry.npmjs.org/babel-eslint/-/babel-eslint-10.1.0.tgz",
@@ -9660,6 +9696,11 @@
       "version": "4.2.2",
       "resolved": "https://registry.npmjs.org/flot/-/flot-4.2.2.tgz",
       "integrity": "sha512-Strct/A27o0TA25X7Z0pxKhwK4djiP1Kjeqj0tkiqrkRu1qYPqfbp5BYuxEL8CWDNtj85Uc0PnG2E2plo1+VMg=="
+    },
+    "follow-redirects": {
+      "version": "1.13.3",
+      "resolved": "https://registry.npmjs.org/follow-redirects/-/follow-redirects-1.13.3.tgz",
+      "integrity": "sha512-DUgl6+HDzB0iEptNQEXLx/KhTmDb8tZUHSeLqpnjpknR70H0nC2t9N73BK6fN4hOvJ84pKlIQVQ4k5FFlBedKA=="
     },
     "fontkit": {
       "version": "1.8.1",
