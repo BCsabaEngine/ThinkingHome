@@ -42,7 +42,7 @@
         "node-ssdp": "^4.0.1",
         "oui": "^11.0.56",
         "pug": "^3.0.2",
-        "pwd-strength": "^1.0.4",
+        "pwd-strength": "^1.0.6",
         "semver": "^7.3.4",
         "serve-favicon": "^2.5.0",
         "sharp": "^0.27.0",
@@ -5351,9 +5351,9 @@
       }
     },
     "node_modules/pwd-strength": {
-      "version": "1.0.4",
-      "resolved": "https://registry.npmjs.org/pwd-strength/-/pwd-strength-1.0.4.tgz",
-      "integrity": "sha512-JmyL+CEONm8xQVBBAeiiNMJjqJZ+NtDdYR2U4dMdr0C+UTo+VUGGHzRD7QqYJ0JRrDDGhTve1krQHM5Xrl98ig=="
+      "version": "1.0.6",
+      "resolved": "https://registry.npmjs.org/pwd-strength/-/pwd-strength-1.0.6.tgz",
+      "integrity": "sha512-noqVFSQ5P18/Ph4vdAbEqyUdjIMGGpxj84GG8dii9zrXuNwuK5DlpW3YWI5B/ESNGPnYIGYI/jxthcoB7Xp/xA=="
     },
     "node_modules/qs": {
       "version": "6.7.0",
@@ -11442,9 +11442,9 @@
       "dev": true
     },
     "pwd-strength": {
-      "version": "1.0.4",
-      "resolved": "https://registry.npmjs.org/pwd-strength/-/pwd-strength-1.0.4.tgz",
-      "integrity": "sha512-JmyL+CEONm8xQVBBAeiiNMJjqJZ+NtDdYR2U4dMdr0C+UTo+VUGGHzRD7QqYJ0JRrDDGhTve1krQHM5Xrl98ig=="
+      "version": "1.0.6",
+      "resolved": "https://registry.npmjs.org/pwd-strength/-/pwd-strength-1.0.6.tgz",
+      "integrity": "sha512-noqVFSQ5P18/Ph4vdAbEqyUdjIMGGpxj84GG8dii9zrXuNwuK5DlpW3YWI5B/ESNGPnYIGYI/jxthcoB7Xp/xA=="
     },
     "qs": {
       "version": "6.7.0",
