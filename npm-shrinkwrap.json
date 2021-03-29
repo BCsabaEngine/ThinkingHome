@@ -48,7 +48,7 @@
         "sharp": "^0.27.0",
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
-        "systeminformation": "^5.3.5",
+        "systeminformation": "^5.6.9",
         "telegraf": "^4.0.3",
         "vis-network": "^9.0.0",
         "wakeonlan": "^0.1.0",
@@ -6375,9 +6375,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.6.8",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.8.tgz",
-      "integrity": "sha512-GfNOuME4LbpYWbdznVbC5kDDucsxp+IvJWE44j4p4E0WUHwAASBbdnu+NMRqp3waepWCHXpmfoScznpNTv6ynw==",
+      "version": "5.6.9",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.9.tgz",
+      "integrity": "sha512-XtX2uYU67FyZVazuqW1s1ecmBEcSUsBK8L42JEaee9DmiNuehGnSL+SN+WE7yO101iMZ8KrnYdCVcjO76gc8rw==",
       "os": [
         "darwin",
         "linux",
@@ -12257,9 +12257,9 @@
       "integrity": "sha512-elLyVvVwBBsgkT0NrxiiVuEv077gqGhm7WEdBjXRHN+TOX+MoC4LpDW2kbdSeJtjjU1sPdqGKfGLoJElIXfVWA=="
     },
     "systeminformation": {
-      "version": "5.6.8",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.8.tgz",
-      "integrity": "sha512-GfNOuME4LbpYWbdznVbC5kDDucsxp+IvJWE44j4p4E0WUHwAASBbdnu+NMRqp3waepWCHXpmfoScznpNTv6ynw=="
+      "version": "5.6.9",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.9.tgz",
+      "integrity": "sha512-XtX2uYU67FyZVazuqW1s1ecmBEcSUsBK8L42JEaee9DmiNuehGnSL+SN+WE7yO101iMZ8KrnYdCVcjO76gc8rw=="
     },
     "table": {
       "version": "6.0.7",
