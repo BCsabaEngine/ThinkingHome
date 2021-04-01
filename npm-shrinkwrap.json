@@ -462,9 +462,9 @@
       }
     },
     "node_modules/adm-zip": {
-      "version": "0.5.4",
-      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.4.tgz",
-      "integrity": "sha512-GMQg1a1cAegh+/EgWbz+XHZrwB467iB/IgtToldvxs7Xa5Br8mPmvCeRfY/Un2fLzrlIPt6Yu7Cej+8Ut9TGPg==",
+      "version": "0.5.5",
+      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.5.tgz",
+      "integrity": "sha512-IWwXKnCbirdbyXSfUDvCCrmYrOHANRZcc8NcRrvTlIApdl7PwE9oGcsYvNeJPAVY1M+70b4PxXGKIf8AEuiQ6w==",
       "engines": {
         "node": ">=6.0"
       }
@@ -6433,9 +6433,9 @@
       }
     },
     "node_modules/table/node_modules/ajv": {
-      "version": "8.0.1",
-      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.0.1.tgz",
-      "integrity": "sha512-46ZA4TalFcLLqX1dEU3dhdY38wAtDydJ4e7QQTVekLUTzXkb1LfqU6VOBXC/a9wiv4T094WURqJH6ZitF92Kqw==",
+      "version": "8.0.3",
+      "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.0.3.tgz",
+      "integrity": "sha512-Df6NAivu9KpZw+q8ySijAgLvr1mUA5ihkRvCLCxpdYR21ann5yIuN+PpFxmweSj7i3yjJ0x5LN5KVs0RRzskAQ==",
       "dev": true,
       "dependencies": {
         "fast-deep-equal": "^3.1.1",
@@ -7464,9 +7464,9 @@
       "integrity": "sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA=="
     },
     "adm-zip": {
-      "version": "0.5.4",
-      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.4.tgz",
-      "integrity": "sha512-GMQg1a1cAegh+/EgWbz+XHZrwB467iB/IgtToldvxs7Xa5Br8mPmvCeRfY/Un2fLzrlIPt6Yu7Cej+8Ut9TGPg=="
+      "version": "0.5.5",
+      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.5.tgz",
+      "integrity": "sha512-IWwXKnCbirdbyXSfUDvCCrmYrOHANRZcc8NcRrvTlIApdl7PwE9oGcsYvNeJPAVY1M+70b4PxXGKIf8AEuiQ6w=="
     },
     "admin-lte": {
       "version": "3.1.0",
@@ -12312,9 +12312,9 @@
       },
       "dependencies": {
         "ajv": {
-          "version": "8.0.1",
-          "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.0.1.tgz",
-          "integrity": "sha512-46ZA4TalFcLLqX1dEU3dhdY38wAtDydJ4e7QQTVekLUTzXkb1LfqU6VOBXC/a9wiv4T094WURqJH6ZitF92Kqw==",
+          "version": "8.0.3",
+          "resolved": "https://registry.npmjs.org/ajv/-/ajv-8.0.3.tgz",
+          "integrity": "sha512-Df6NAivu9KpZw+q8ySijAgLvr1mUA5ihkRvCLCxpdYR21ann5yIuN+PpFxmweSj7i3yjJ0x5LN5KVs0RRzskAQ==",
           "dev": true,
           "requires": {
             "fast-deep-equal": "^3.1.1",
