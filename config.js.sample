@@ -5,6 +5,7 @@ config.mqtt = {}
 config.web = {}
 config.web.ssl = {}
 config.brainserver = {}
+config.tunnelserver = null
 
 config.database.server = process.env.DATABASE_SERVER || 'localhost'
 config.database.port = process.env.DATABASE_PORT || '3306'
@@ -27,8 +28,11 @@ config.web.ssl.ca = process.env.WEB_SSL_CA || 'chain.pem'
 config.brainserver.server = process.env.BRAIN_SERVER || 'domain.tld'
 config.brainserver.checkservice = process.env.BRAIN_CHECK || 'check'
 config.brainserver.checkdyndnsremote = process.env.BRAIN_CHECKDYNDNSREMOTE || '/checkdyndnsremote'
+config.brainserver.checktunnelremote = process.env.BRAIN_CHECKTUNNELREMOTE || '/checktunnelremote'
 config.brainserver.backupservice = process.env.BRAIN_BACKUP || 'backup'
 config.brainserver.dyndnsservice = process.env.BRAIN_DYNDNS || 'dyn'
 config.brainserver.ttsservice = process.env.BRAIN_TTS || 'tts'
+
+config.tunnelserver = process.env.TUNNEL_SERVER || 'tunnel.domain.tld'
 
 module.exports = config

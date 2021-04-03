@@ -23,6 +23,7 @@ const topicrestart = 'Restart'
 const topicmanualbackup = 'Manual backup'
 const topicautobackup = 'Automatic backup'
 const topicdyndns = 'DynDns'
+const topictunnel = 'Tunnel'
 
 module.exports = (app) => {
   app.get('/settings', async function (req, res, next) {
@@ -32,6 +33,7 @@ module.exports = (app) => {
       const boards = await BoardModel.GetAllSync()
       const users = await UserModel.GetAllSync()
       const lastdns = await SystemLogModel.GetLastTopicLog(topicdyndns)
+      const lasttunnel = await SystemLogModel.GetLastTopicLog(topictunnel)
       const lastboot = await SystemLogModel.GetLastTopicLog(topicbootup)
       const lastrestart = await SystemLogModel.GetLastTopicLog(topicrestart)
       const lastmanualbackup = await SystemLogModel.GetLastTopicLog(topicmanualbackup)
@@ -43,6 +45,7 @@ module.exports = (app) => {
         boards,
         users,
         lastdns,
+        lasttunnel,
         lastautobackup,
         lastmanualbackup,
         lastboot,
@@ -105,6 +108,24 @@ module.exports = (app) => {
       form.append('token', systemsettings.CloudToken)
 
       const resp = await got.post(config.brainserver.server + config.brainserver.checkdyndnsremote, { body: form })
+      const stat = JSON.parse(resp.body)
+
+      if (stat.status === 'success') return res.send(JSON.stringify({ domain: stat.domain, time: stat.time }))
+
+      throw new Error(stat.text)
+    } catch (err) { res.status(http403).send(err.message) }
+  })
+
+  app.get('/settings/checktunnelremote', async function (req, res, next) {
+    try {
+      if (!systemsettings.CloudToken) throw new Error('Token not set')
+
+      if (!config.brainserver.checktunnelremote) throw new Error('Check tunnel not configured')
+
+      const form = new FormData()
+      form.append('token', systemsettings.CloudToken)
+
+      const resp = await got.post(config.brainserver.server + config.brainserver.checktunnelremote, { body: form })
       const stat = JSON.parse(resp.body)
 
       if (stat.status === 'success') return res.send(JSON.stringify({ domain: stat.domain, time: stat.time }))

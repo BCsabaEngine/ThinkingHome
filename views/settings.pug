@@ -250,6 +250,39 @@ block content
 
           .callout.callout-success
             h5
+              i.fa.fa-archway.fa-fw.text-success
+              | 
+              = __('Network tunnel')
+            p
+              small
+                = __('If your Thinking Home system is behind a firewall, the DynDNS service may not be enough. Then you need to build a tunnel through which your system can be accessed from the outside world.')
+                | 
+                if lasttunnel
+                  != __('The system tried to build up tunnel at <b>%s</b> with message', dayjs(lasttunnel.DateTime).format('YYYY-MM-DD HH:mm'))
+                  | 
+                  case lasttunnel.Level
+                    when 1
+                      b(class='text-warning')
+                        b
+                          = lasttunnel.Message
+                    when 2
+                      b(class='text-danger')
+                        b
+                          = lasttunnel.Message
+                    default
+                      b
+                        = lasttunnel.Message
+                  | . 
+                else
+                  = __('The system never built up tunnel.')
+
+            span#checktunnel.badge.ml-3.float-right
+              = __('Checking tunnel...')
+            br
+
+
+          .callout.callout-success
+            h5
               i.fa.fa-cloud-upload-alt.fa-fw.text-success
               | 
               = __('Online backup')
@@ -376,6 +409,19 @@ block content
       })
       .fail(function(data) {
         $('#checkdyndns')
+          .addClass('badge-danger')
+          .html(data.responseText);
+      })
+
+      $.get('/settings/checktunnelremote')
+      .done(function(data) {
+        var result = JSON.parse(data);
+        $('#checktunnel')
+          .addClass('badge-success')
+          .html(result.domain + " available (" + result.time + "ms)");
+      })
+      .fail(function(data) {
+        $('#checktunnel')
           .addClass('badge-danger')
           .html(data.responseText);
       })

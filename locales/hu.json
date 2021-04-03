@@ -293,5 +293,10 @@
 	"Last picture": "Utolsó kép",
 	"Cannot get picture": "Kép nem elérhető",
 	"Refresh picture": "Kép frissítés",
-	"Checking DynDns...": "DynDns ellenőrzése..."
+	"Checking DynDns...": "DynDns ellenőrzése...",
+	"Network tunnel": "Hálózati alagút",
+	"If your Thinking Home system is behind a firewall, the DynDNS service may not be enough. Then you need to build a tunnel through which your system can be accessed from the outside world.": "Ha a Thinking Home rendszered egy tűzfal mögött van, akkor nem biztos hogy elég a DynDNS szolgáltatás. Ekkor egy alagutat kell kiépítened, amelyen keresztül a rendszered elérhető a külvilág felől.",
+	"The system never built up tunnel.": "A rendszer soha nem építette fel a hálózati alagutat.",
+	"Checking tunnel...": "Alagút ellenőrzése...",
+	"The system tried to build up tunnel at <b>%s</b> with message": "A rendszer megpróbálta frissíteni az alagutat <b>%s</b>-kor az alábbi eredménnyel:"
 }

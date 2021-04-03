@@ -6,9 +6,11 @@ const FormData = require('form-data')
 const userNotify = require('../lib/userNotify')
 const BackupBuilder = require('../lib/backupBuilder')
 const SystemLogModel = require('../models/SystemLog')
+const Tunnel = require('../lib/localtunnel/Tunnel')
 
 const topicautobackup = 'Automatic backup'
 const topicdyndns = 'DynDns'
+const topictunnel = 'Tunnel'
 const endofnight = 6
 const hourminutes = 60
 const randommorninghour = Math.floor(Math.random() * Math.floor(endofnight))
@@ -79,10 +81,60 @@ async function UpdateDynDns() {
   }
 }
 
+let tunnel = null
+async function UpdateTunnel() {
+  try {
+    if (!systemsettings.CloudToken) throw new Error('Token not set')
+
+    if (!tunnel) {
+      tunnel = new Tunnel({
+        host: config.tunnelserver,
+        port: 80,
+        subdomain: systemsettings.CloudToken
+      })
+
+      tunnel.on('debug', (iserror, message) => {
+        if (iserror) {
+          logger.debug(`[Tunnel] Error: ${message}`)
+        } else {
+          logger.debug(`[Tunnel] Debug: ${message}`)
+        }
+      })
+
+      tunnel.on('close', () => {
+        logger.debug('[Tunnel] Closed')
+        // delete tunnel
+        tunnel = null
+      })
+
+      tunnel.on('error', async (err) => {
+        logger.debug(`[Tunnel] Error: ${err}`)
+        if (tunnel) {
+          await tunnel.close()
+        }
+      })
+
+      tunnel.open(() => {
+        logger.debug(`[Tunnel] Built up on url ${tunnel.url}`)
+        SystemLogModel.Insert(topictunnel, `Tunnel built up: ${tunnel.url}`)
+      })
+    }
+  } catch (err) {
+    SystemLogModel.InsertError(topictunnel, `Tunnel failed: ${err.message}`)
+    // userNotify.addToAdmin(null, 2, 'fa fa-route', 'DNS sync', `DNS sync failed: ${err.message}`)
+  }
+}
+
 if (config.brainserver.dyndnsservice) {
   const time = `${randomminute} */2 * * *`
   logger.info(`[Brains] UpdateDynDns scheduled as ${time}`)
   schedule.scheduleJob(time, UpdateDynDns)
+}
+
+if (config.tunnelserver) {
+  const time = '*/2 * * * *'
+  logger.info(`[Tunnel] UpdateTunnel scheduled as ${time}`)
+  schedule.scheduleJob(time, UpdateTunnel)
 }
 
 if (config.brainserver.backupservice) {
@@ -98,5 +150,6 @@ if (config.brainserver.backupservice) {
 //   //   console.log(`${randomminute} */2 * * *`)
 //   //   // console.log(`${hourminutes - 1 - randomminute} ${randommorninghour} * * *`)
 //   // UpdateDynDns()
+//   //UpdateTunnel()
 //   // AutoBackup()
 // }, 3 * 1000)
