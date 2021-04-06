@@ -814,9 +814,9 @@
       }
     },
     "node_modules/balanced-match": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz",
-      "integrity": "sha1-ibTRmasr7kneFk6gK4nORi1xt2c="
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.1.tgz",
+      "integrity": "sha512-qyTw2VPYRg31SlVU5WDdvCSyMTJ3YSP4Kz2CidWZFPFawCiHJdCyKyZeXIGMJ5ebMQYXEI56kDR8tcnDkbZstg=="
     },
     "node_modules/base64-js": {
       "version": "1.5.1",
@@ -5051,9 +5051,9 @@
       }
     },
     "node_modules/pdfkit": {
-      "version": "0.11.0",
-      "resolved": "https://registry.npmjs.org/pdfkit/-/pdfkit-0.11.0.tgz",
-      "integrity": "sha512-1s9gaumXkYxcVF1iRtSmLiISF2r4nHtsTgpwXiK8Swe+xwk/1pm8FJjYqN7L3x13NsWnGyUFntWcO8vfqq+wwA==",
+      "version": "0.12.0",
+      "resolved": "https://registry.npmjs.org/pdfkit/-/pdfkit-0.12.0.tgz",
+      "integrity": "sha512-DnfNzX4WKfnxuk90V+focyck01QEmfSc0VBm2g9ElPKVWLcJEg66dd+t1TdaEPL3TKgDFXQOpIquEh6in6UWoA==",
       "dependencies": {
         "crypto-js": "^3.1.9-1",
         "fontkit": "^1.8.0",
@@ -5062,13 +5062,13 @@
       }
     },
     "node_modules/pdfmake": {
-      "version": "0.1.70",
-      "resolved": "https://registry.npmjs.org/pdfmake/-/pdfmake-0.1.70.tgz",
-      "integrity": "sha512-xPhkblaQ71U97qhRTPj/1HknAHHFZ3cPRmRdrqEWD2xXBcEjEM3Yw0MIjML8DRy9Dt9n6QRjHVf662f0eLtd7Q==",
+      "version": "0.1.71",
+      "resolved": "https://registry.npmjs.org/pdfmake/-/pdfmake-0.1.71.tgz",
+      "integrity": "sha512-uXUy+NZ8R5pwJ6rYLJRu7VRw/w5ogBScNk440CHpMZ6Z0+E1uc1XvwK4I1U5ry0UZQ3qPD0dpSvbzAkRBKYoJA==",
       "dependencies": {
         "iconv-lite": "^0.6.2",
         "linebreak": "^1.0.2",
-        "pdfkit": "^0.11.0",
+        "pdfkit": "^0.12.0",
         "svg-to-pdfkit": "^0.1.8",
         "xmldoc": "^1.1.2"
       },
@@ -5797,15 +5797,15 @@
       "integrity": "sha1-QV9CcC1z2BAzApLMXuhurhoRoXA="
     },
     "node_modules/sharp": {
-      "version": "0.28.0",
-      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.28.0.tgz",
-      "integrity": "sha512-kGTaWLNMCkLYxkH2Pv7s+5LQBnWQ4mRKXs1XD19AWOxShWvU8b78qaWqTR/4ryNcPORO+qBoBnFF/Lzda5HgkQ==",
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.28.1.tgz",
+      "integrity": "sha512-4mCGMEN4ntaVuFGwHx7FvkJQkIgbI+S+F9a3bI7ugdvKjPr4sF7/ibvlRKhJyzhoQi+ODM+XYY1de8xs7MHbfA==",
       "hasInstallScript": true,
       "dependencies": {
         "color": "^3.1.3",
         "detect-libc": "^1.0.3",
         "node-addon-api": "^3.1.0",
-        "prebuild-install": "^6.0.1",
+        "prebuild-install": "^6.1.1",
         "semver": "^7.3.5",
         "simple-get": "^3.1.0",
         "tar-fs": "^2.1.1",
@@ -7747,9 +7747,9 @@
       }
     },
     "balanced-match": {
-      "version": "1.0.0",
-      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.0.tgz",
-      "integrity": "sha1-ibTRmasr7kneFk6gK4nORi1xt2c="
+      "version": "1.0.1",
+      "resolved": "https://registry.npmjs.org/balanced-match/-/balanced-match-1.0.1.tgz",
+      "integrity": "sha512-qyTw2VPYRg31SlVU5WDdvCSyMTJ3YSP4Kz2CidWZFPFawCiHJdCyKyZeXIGMJ5ebMQYXEI56kDR8tcnDkbZstg=="
     },
     "base64-js": {
       "version": "1.5.1",
@@ -11181,9 +11181,9 @@
       }
     },
     "pdfkit": {
-      "version": "0.11.0",
-      "resolved": "https://registry.npmjs.org/pdfkit/-/pdfkit-0.11.0.tgz",
-      "integrity": "sha512-1s9gaumXkYxcVF1iRtSmLiISF2r4nHtsTgpwXiK8Swe+xwk/1pm8FJjYqN7L3x13NsWnGyUFntWcO8vfqq+wwA==",
+      "version": "0.12.0",
+      "resolved": "https://registry.npmjs.org/pdfkit/-/pdfkit-0.12.0.tgz",
+      "integrity": "sha512-DnfNzX4WKfnxuk90V+focyck01QEmfSc0VBm2g9ElPKVWLcJEg66dd+t1TdaEPL3TKgDFXQOpIquEh6in6UWoA==",
       "requires": {
         "crypto-js": "^3.1.9-1",
         "fontkit": "^1.8.0",
@@ -11192,13 +11192,13 @@
       }
     },
     "pdfmake": {
-      "version": "0.1.70",
-      "resolved": "https://registry.npmjs.org/pdfmake/-/pdfmake-0.1.70.tgz",
-      "integrity": "sha512-xPhkblaQ71U97qhRTPj/1HknAHHFZ3cPRmRdrqEWD2xXBcEjEM3Yw0MIjML8DRy9Dt9n6QRjHVf662f0eLtd7Q==",
+      "version": "0.1.71",
+      "resolved": "https://registry.npmjs.org/pdfmake/-/pdfmake-0.1.71.tgz",
+      "integrity": "sha512-uXUy+NZ8R5pwJ6rYLJRu7VRw/w5ogBScNk440CHpMZ6Z0+E1uc1XvwK4I1U5ry0UZQ3qPD0dpSvbzAkRBKYoJA==",
       "requires": {
         "iconv-lite": "^0.6.2",
         "linebreak": "^1.0.2",
-        "pdfkit": "^0.11.0",
+        "pdfkit": "^0.12.0",
         "svg-to-pdfkit": "^0.1.8",
         "xmldoc": "^1.1.2"
       },
@@ -11822,14 +11822,14 @@
       "integrity": "sha1-QV9CcC1z2BAzApLMXuhurhoRoXA="
     },
     "sharp": {
-      "version": "0.28.0",
-      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.28.0.tgz",
-      "integrity": "sha512-kGTaWLNMCkLYxkH2Pv7s+5LQBnWQ4mRKXs1XD19AWOxShWvU8b78qaWqTR/4ryNcPORO+qBoBnFF/Lzda5HgkQ==",
+      "version": "0.28.1",
+      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.28.1.tgz",
+      "integrity": "sha512-4mCGMEN4ntaVuFGwHx7FvkJQkIgbI+S+F9a3bI7ugdvKjPr4sF7/ibvlRKhJyzhoQi+ODM+XYY1de8xs7MHbfA==",
       "requires": {
         "color": "^3.1.3",
         "detect-libc": "^1.0.3",
         "node-addon-api": "^3.1.0",
-        "prebuild-install": "^6.0.1",
+        "prebuild-install": "^6.1.1",
         "semver": "^7.3.5",
         "simple-get": "^3.1.0",
         "tar-fs": "^2.1.1",
