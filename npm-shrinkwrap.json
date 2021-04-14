@@ -4025,9 +4025,9 @@
       }
     },
     "node_modules/js-beautify": {
-      "version": "1.13.5",
-      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.5.tgz",
-      "integrity": "sha512-MsXlH6Z/BiRYSkSRW3clNDqDjSpiSNOiG8xYVUBXt4k0LnGvDhlTGOlHX1VFtAdoLmtwjxMG5qiWKy/g+Ipv5w==",
+      "version": "1.13.11",
+      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.11.tgz",
+      "integrity": "sha512-+3CW1fQqkV7aXIvprevNYfSrKrASQf02IstAZCVSNh+/IS5ciaOtE7erfjyowdMYZZmP2A7SMFkcJ28qCl84+A==",
       "dependencies": {
         "config-chain": "^1.1.12",
         "editorconfig": "^0.15.3",
@@ -6380,9 +6380,9 @@
       }
     },
     "node_modules/sweetalert2": {
-      "version": "10.16.0",
-      "resolved": "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.16.0.tgz",
-      "integrity": "sha512-qJp4nIpx0MPDnAdY6MurwH/mAovfCzWo07hFoQ41C46XGLpNkxiqBbJDNdhGfMFwbDY1e9jfttNFxe5IsrkEtA==",
+      "version": "10.16.1",
+      "resolved": "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.16.1.tgz",
+      "integrity": "sha512-kPOk5xs9CuDLhcuMD0MHPofXnYzl+wD2ix5bsovrbUG8xAbi6LWJyaAhhzT8gmv4C19DwjMMToCN4Nvtmyv1zQ==",
       "funding": {
         "url": "https://sweetalert2.github.io/#donations"
       }
@@ -6412,9 +6412,9 @@
       }
     },
     "node_modules/table": {
-      "version": "6.0.9",
-      "resolved": "https://registry.npmjs.org/table/-/table-6.0.9.tgz",
-      "integrity": "sha512-F3cLs9a3hL1Z7N4+EkSscsel3z55XT950AvB05bwayrNg5T1/gykXtigioTAjbltvbMSJvvhFCbnf6mX+ntnJQ==",
+      "version": "6.1.0",
+      "resolved": "https://registry.npmjs.org/table/-/table-6.1.0.tgz",
+      "integrity": "sha512-T4G5KMmqIk6X87gLKWyU5exPpTjLjY5KyrFWaIjv3SvgaIUGXV7UEzGEnZJdTA38/yUS6f9PlKezQ0bYXG3iIQ==",
       "dev": true,
       "dependencies": {
         "ajv": "^8.0.1",
@@ -10364,9 +10364,9 @@
       }
     },
     "js-beautify": {
-      "version": "1.13.5",
-      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.5.tgz",
-      "integrity": "sha512-MsXlH6Z/BiRYSkSRW3clNDqDjSpiSNOiG8xYVUBXt4k0LnGvDhlTGOlHX1VFtAdoLmtwjxMG5qiWKy/g+Ipv5w==",
+      "version": "1.13.11",
+      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.11.tgz",
+      "integrity": "sha512-+3CW1fQqkV7aXIvprevNYfSrKrASQf02IstAZCVSNh+/IS5ciaOtE7erfjyowdMYZZmP2A7SMFkcJ28qCl84+A==",
       "requires": {
         "config-chain": "^1.1.12",
         "editorconfig": "^0.15.3",
@@ -12278,9 +12278,9 @@
       }
     },
     "sweetalert2": {
-      "version": "10.16.0",
-      "resolved": "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.16.0.tgz",
-      "integrity": "sha512-qJp4nIpx0MPDnAdY6MurwH/mAovfCzWo07hFoQ41C46XGLpNkxiqBbJDNdhGfMFwbDY1e9jfttNFxe5IsrkEtA=="
+      "version": "10.16.1",
+      "resolved": "https://registry.npmjs.org/sweetalert2/-/sweetalert2-10.16.1.tgz",
+      "integrity": "sha512-kPOk5xs9CuDLhcuMD0MHPofXnYzl+wD2ix5bsovrbUG8xAbi6LWJyaAhhzT8gmv4C19DwjMMToCN4Nvtmyv1zQ=="
     },
     "systeminformation": {
       "version": "5.6.12",
@@ -12288,9 +12288,9 @@
       "integrity": "sha512-prJAt+iS2ITeygjLt/FGtN1qsIQHrRePCUqWtP0hGv6JsS0LSQTR+y5hWAd4frUIM/sjG95jHFUK1gx244KwUA=="
     },
     "table": {
-      "version": "6.0.9",
-      "resolved": "https://registry.npmjs.org/table/-/table-6.0.9.tgz",
-      "integrity": "sha512-F3cLs9a3hL1Z7N4+EkSscsel3z55XT950AvB05bwayrNg5T1/gykXtigioTAjbltvbMSJvvhFCbnf6mX+ntnJQ==",
+      "version": "6.1.0",
+      "resolved": "https://registry.npmjs.org/table/-/table-6.1.0.tgz",
+      "integrity": "sha512-T4G5KMmqIk6X87gLKWyU5exPpTjLjY5KyrFWaIjv3SvgaIUGXV7UEzGEnZJdTA38/yUS6f9PlKezQ0bYXG3iIQ==",
       "dev": true,
       "requires": {
         "ajv": "^8.0.1",
