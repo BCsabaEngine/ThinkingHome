@@ -33,7 +33,7 @@
         "helmet": "^4.3.1",
         "hpp": "^0.2.3",
         "i18n": "^0.13.2",
-        "js-beautify": "^1.13.0",
+        "js-beautify": "^1.13.11",
         "lgtv2": "^1.6.3",
         "md5": "^2.3.0",
         "mousetrap": "^1.6.5",
@@ -4025,9 +4025,9 @@
       }
     },
     "node_modules/js-beautify": {
-      "version": "1.13.5",
-      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.5.tgz",
-      "integrity": "sha512-MsXlH6Z/BiRYSkSRW3clNDqDjSpiSNOiG8xYVUBXt4k0LnGvDhlTGOlHX1VFtAdoLmtwjxMG5qiWKy/g+Ipv5w==",
+      "version": "1.13.11",
+      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.11.tgz",
+      "integrity": "sha512-+3CW1fQqkV7aXIvprevNYfSrKrASQf02IstAZCVSNh+/IS5ciaOtE7erfjyowdMYZZmP2A7SMFkcJ28qCl84+A==",
       "dependencies": {
         "config-chain": "^1.1.12",
         "editorconfig": "^0.15.3",
@@ -10364,9 +10364,9 @@
       }
     },
     "js-beautify": {
-      "version": "1.13.5",
-      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.5.tgz",
-      "integrity": "sha512-MsXlH6Z/BiRYSkSRW3clNDqDjSpiSNOiG8xYVUBXt4k0LnGvDhlTGOlHX1VFtAdoLmtwjxMG5qiWKy/g+Ipv5w==",
+      "version": "1.13.11",
+      "resolved": "https://registry.npmjs.org/js-beautify/-/js-beautify-1.13.11.tgz",
+      "integrity": "sha512-+3CW1fQqkV7aXIvprevNYfSrKrASQf02IstAZCVSNh+/IS5ciaOtE7erfjyowdMYZZmP2A7SMFkcJ28qCl84+A==",
       "requires": {
         "config-chain": "^1.1.12",
         "editorconfig": "^0.15.3",
