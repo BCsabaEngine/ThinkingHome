@@ -3782,9 +3782,9 @@
       }
     },
     "node_modules/is-date-object": {
-      "version": "1.0.2",
-      "resolved": "https://registry.npmjs.org/is-date-object/-/is-date-object-1.0.2.tgz",
-      "integrity": "sha512-USlDT524woQ08aoZFzh3/Z6ch9Y/EWXEHQ/AaRN0SkKq4t2Jw2R2339tSXmwuVoY7LLlBCbOIlx2myP/L5zk0g==",
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/is-date-object/-/is-date-object-1.0.3.tgz",
+      "integrity": "sha512-tDpEUInNcy2Yw3lNSepK3Wdw1RnXLcIVienz6Ou631Acl15cJyRWK4dgA1vCmOEgIbtOV0W7MHg+AR2Gdg1NXQ==",
       "engines": {
         "node": ">= 0.4"
       },
@@ -6387,9 +6387,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.6.16",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.16.tgz",
-      "integrity": "sha512-3sQ6SnHhXEWeciQ3ocgGjE3j/KquJmEcd6w36c9ETAQDZZUXqGj8Ogp0HTll4X4/k6uiHvyjfWeRhE7O0HN0vQ==",
+      "version": "5.6.17",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.17.tgz",
+      "integrity": "sha512-l60ARpjFBYObdmACdsKPqTZymudpIB2/aGzXLHWFy+DDSOKxR+EfNZP9eRe8T/i0Zbok6LMSrAcHfKw6SCmKgg==",
       "os": [
         "darwin",
         "linux",
@@ -10189,9 +10189,9 @@
       }
     },
     "is-date-object": {
-      "version": "1.0.2",
-      "resolved": "https://registry.npmjs.org/is-date-object/-/is-date-object-1.0.2.tgz",
-      "integrity": "sha512-USlDT524woQ08aoZFzh3/Z6ch9Y/EWXEHQ/AaRN0SkKq4t2Jw2R2339tSXmwuVoY7LLlBCbOIlx2myP/L5zk0g=="
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/is-date-object/-/is-date-object-1.0.3.tgz",
+      "integrity": "sha512-tDpEUInNcy2Yw3lNSepK3Wdw1RnXLcIVienz6Ou631Acl15cJyRWK4dgA1vCmOEgIbtOV0W7MHg+AR2Gdg1NXQ=="
     },
     "is-expression": {
       "version": "4.0.0",
@@ -12279,9 +12279,9 @@
       "integrity": "sha512-8w7UMU+joJro3r7CyyqLOK5Agc0/TI2OqC2T8odOOYRKbPvq2Bq9GF3HoQT2tFnjiqP5QEpVugayowoIl2ZlWw=="
     },
     "systeminformation": {
-      "version": "5.6.16",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.16.tgz",
-      "integrity": "sha512-3sQ6SnHhXEWeciQ3ocgGjE3j/KquJmEcd6w36c9ETAQDZZUXqGj8Ogp0HTll4X4/k6uiHvyjfWeRhE7O0HN0vQ=="
+      "version": "5.6.17",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.6.17.tgz",
+      "integrity": "sha512-l60ARpjFBYObdmACdsKPqTZymudpIB2/aGzXLHWFy+DDSOKxR+EfNZP9eRe8T/i0Zbok6LMSrAcHfKw6SCmKgg=="
     },
     "table": {
       "version": "6.6.0",
