@@ -41,7 +41,7 @@
     "express-session": "^1.17.1",
     "fast-xml-parser": "^3.17.6",
     "form-data": "^4.0.0",
-    "glob": "^7.1.6",
+    "glob": "^7.1.7",
     "got": "^11.8.2",
     "helmet": "^4.3.1",
     "hpp": "^0.2.3",
