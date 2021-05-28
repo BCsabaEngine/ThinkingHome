@@ -2157,9 +2157,9 @@
       }
     },
     "node_modules/es-abstract": {
-      "version": "1.18.2",
-      "resolved": "https://registry.npmjs.org/es-abstract/-/es-abstract-1.18.2.tgz",
-      "integrity": "sha512-byRiNIQXE6HWNySaU6JohoNXzYgbBjztwFnBLUTiJmWXjaU9bSq3urQLUlNLQ292tc+gc07zYZXNZjaOoAX3sw==",
+      "version": "1.18.3",
+      "resolved": "https://registry.npmjs.org/es-abstract/-/es-abstract-1.18.3.tgz",
+      "integrity": "sha512-nQIr12dxV7SSxE6r6f1l3DtAeEYdsGpps13dR0TwJg1S8gyp4ZPgy3FZcHBgbiQqnoqSTb+oC+kO4UQ0C/J8vw==",
       "dev": true,
       "dependencies": {
         "call-bind": "^1.0.2",
@@ -6429,9 +6429,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.7.3",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.3.tgz",
-      "integrity": "sha512-J8zxA+YuOLeO3ztK8ceJkRycQQlH72vqf/t/bsmFid5Ac4KM3DnPBXJa5gcxGUxCT9ZTd/vJ7vFfZ5QrHFNHxQ==",
+      "version": "5.7.4",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.4.tgz",
+      "integrity": "sha512-m6oziAu2zP8IMnNZpVWptzpcaXG6x59c2sQB8BI7DTcfBOTLXj5jGgjWxCVP65c5k7Fwhn35yVTCIZEypc1n9A==",
       "os": [
         "darwin",
         "linux",
@@ -8943,9 +8943,9 @@
       }
     },
     "es-abstract": {
-      "version": "1.18.2",
-      "resolved": "https://registry.npmjs.org/es-abstract/-/es-abstract-1.18.2.tgz",
-      "integrity": "sha512-byRiNIQXE6HWNySaU6JohoNXzYgbBjztwFnBLUTiJmWXjaU9bSq3urQLUlNLQ292tc+gc07zYZXNZjaOoAX3sw==",
+      "version": "1.18.3",
+      "resolved": "https://registry.npmjs.org/es-abstract/-/es-abstract-1.18.3.tgz",
+      "integrity": "sha512-nQIr12dxV7SSxE6r6f1l3DtAeEYdsGpps13dR0TwJg1S8gyp4ZPgy3FZcHBgbiQqnoqSTb+oC+kO4UQ0C/J8vw==",
       "dev": true,
       "requires": {
         "call-bind": "^1.0.2",
@@ -12337,9 +12337,9 @@
       "integrity": "sha512-oNe+md5tmmS3fGfVHa7gVPlun7Td2oANSacnZCeghnrr3OHBi6UPVPU+GFrymwaDqwQspACilLRmRnM7aTjNPA=="
     },
     "systeminformation": {
-      "version": "5.7.3",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.3.tgz",
-      "integrity": "sha512-J8zxA+YuOLeO3ztK8ceJkRycQQlH72vqf/t/bsmFid5Ac4KM3DnPBXJa5gcxGUxCT9ZTd/vJ7vFfZ5QrHFNHxQ=="
+      "version": "5.7.4",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.4.tgz",
+      "integrity": "sha512-m6oziAu2zP8IMnNZpVWptzpcaXG6x59c2sQB8BI7DTcfBOTLXj5jGgjWxCVP65c5k7Fwhn35yVTCIZEypc1n9A=="
     },
     "table": {
       "version": "6.7.1",
