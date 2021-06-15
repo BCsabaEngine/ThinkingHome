@@ -55,7 +55,7 @@
         "vis-network": "^9.0.0",
         "wakeonlan": "^0.1.0",
         "ws": "^7.4.6",
-        "yaml": "^2.0.0-4"
+        "yaml": "^2.0.0-6"
       },
       "devDependencies": {
         "babel-eslint": "^10.1.0",
@@ -7185,11 +7185,11 @@
       "integrity": "sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI="
     },
     "node_modules/yaml": {
-      "version": "2.0.0-5",
-      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-5.tgz",
-      "integrity": "sha512-qH5L5eqW8cyv/N1U6rkK/O0M7kOK3BSo48d05Ptm03ITNsVFwg6TQ47wR72Db/ULWH5RfNJv+CqnG17Pyn8eqQ==",
+      "version": "2.0.0-6",
+      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-6.tgz",
+      "integrity": "sha512-YPUm0Z0sei53zauT7HWkkxyIBJhb9Gnf5jv4w4ahw5/v3PjFGhZOt4paXH6g9hzcMJqmNxZwoGfF1JzE2jvSgg==",
       "engines": {
-        "node": ">= 10"
+        "node": ">= 12"
       }
     }
   },
@@ -12916,9 +12916,9 @@
       "integrity": "sha1-HBH5IY8HYImkfdUS+TxmmaaoHVI="
     },
     "yaml": {
-      "version": "2.0.0-5",
-      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-5.tgz",
-      "integrity": "sha512-qH5L5eqW8cyv/N1U6rkK/O0M7kOK3BSo48d05Ptm03ITNsVFwg6TQ47wR72Db/ULWH5RfNJv+CqnG17Pyn8eqQ=="
+      "version": "2.0.0-6",
+      "resolved": "https://registry.npmjs.org/yaml/-/yaml-2.0.0-6.tgz",
+      "integrity": "sha512-YPUm0Z0sei53zauT7HWkkxyIBJhb9Gnf5jv4w4ahw5/v3PjFGhZOt4paXH6g9hzcMJqmNxZwoGfF1JzE2jvSgg=="
     }
   }
 }
