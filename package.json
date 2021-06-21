@@ -57,7 +57,7 @@
     "node-ssdp": "^4.0.1",
     "oui": "^11.0.56",
     "pug": "^3.0.2",
-    "pwd-strength": "^1.0.4",
+    "pwd-strength": "^1.1.2",
     "semver": "^7.3.4",
     "serve-favicon": "^2.5.0",
     "sharp": "^0.28.0",
