@@ -51,7 +51,7 @@
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
         "systeminformation": "^5.3.5",
-        "telegraf": "^4.0.3",
+        "telegraf": "^4.4.0",
         "vis-network": "^9.0.0",
         "wakeonlan": "^0.1.0",
         "ws": "^7.4.6",
@@ -6472,9 +6472,9 @@
       }
     },
     "node_modules/telegraf": {
-      "version": "4.3.0",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.3.0.tgz",
-      "integrity": "sha512-MuDUtSMipzMzQp8fXbQx76jp4ZD70KREdnpH1idUzN9Zlgm6EzatBQFU4Ps0ipxtEmnBBdghBMumQwrjRe3eqg==",
+      "version": "4.4.0",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.4.0.tgz",
+      "integrity": "sha512-DjVVEz37/5Hp0n8eLhAVjErwoyrWsqLyFAoRj8sU5XiD2CVAbBOx9J6a7cLn/B46pPgDqgbrdjiOeK0fQMiLOA==",
       "dependencies": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -6484,13 +6484,13 @@
         "p-timeout": "^4.1.0",
         "safe-compare": "^1.1.4",
         "sandwich-stream": "^2.0.2",
-        "typegram": "^3.2.0"
+        "typegram": "^3.4.0"
       },
       "bin": {
         "telegraf": "bin/telegraf"
       },
       "engines": {
-        "node": ">=12"
+        "node": "^12.20.0 || >=14.13.1"
       }
     },
     "node_modules/tempusdominus-bootstrap-4": {
@@ -6671,9 +6671,9 @@
       }
     },
     "node_modules/typegram": {
-      "version": "3.3.1",
-      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.3.1.tgz",
-      "integrity": "sha512-Y1bR17IZ9Shj1Ih8wTLtrmOOMHJ20ve0Bd5SPymmw53uO4WLp/JjNM55s2b6PEziBvMISRdCQSZ+m6JiUKEobA=="
+      "version": "3.4.0",
+      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.4.0.tgz",
+      "integrity": "sha512-GUE1LV3LJruTThJaUBUvTnaEpTswFhuxhEx9LaVLIA6WRw9CdPQmb87OIA0rCvoMSPBC8gZiHrrPqX9VJGDXwQ=="
     },
     "node_modules/uid-safe": {
       "version": "2.1.5",
@@ -12214,9 +12214,9 @@
       }
     },
     "telegraf": {
-      "version": "4.3.0",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.3.0.tgz",
-      "integrity": "sha512-MuDUtSMipzMzQp8fXbQx76jp4ZD70KREdnpH1idUzN9Zlgm6EzatBQFU4Ps0ipxtEmnBBdghBMumQwrjRe3eqg==",
+      "version": "4.4.0",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.4.0.tgz",
+      "integrity": "sha512-DjVVEz37/5Hp0n8eLhAVjErwoyrWsqLyFAoRj8sU5XiD2CVAbBOx9J6a7cLn/B46pPgDqgbrdjiOeK0fQMiLOA==",
       "requires": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -12226,7 +12226,7 @@
         "p-timeout": "^4.1.0",
         "safe-compare": "^1.1.4",
         "sandwich-stream": "^2.0.2",
-        "typegram": "^3.2.0"
+        "typegram": "^3.4.0"
       }
     },
     "tempusdominus-bootstrap-4": {
@@ -12363,9 +12363,9 @@
       }
     },
     "typegram": {
-      "version": "3.3.1",
-      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.3.1.tgz",
-      "integrity": "sha512-Y1bR17IZ9Shj1Ih8wTLtrmOOMHJ20ve0Bd5SPymmw53uO4WLp/JjNM55s2b6PEziBvMISRdCQSZ+m6JiUKEobA=="
+      "version": "3.4.0",
+      "resolved": "https://registry.npmjs.org/typegram/-/typegram-3.4.0.tgz",
+      "integrity": "sha512-GUE1LV3LJruTThJaUBUvTnaEpTswFhuxhEx9LaVLIA6WRw9CdPQmb87OIA0rCvoMSPBC8gZiHrrPqX9VJGDXwQ=="
     },
     "uid-safe": {
       "version": "2.1.5",
