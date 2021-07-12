@@ -42,7 +42,7 @@
         "mysql-plus": "^0.16.2",
         "node-schedule": "^2.0.0",
         "node-ssdp": "^4.0.1",
-        "oui": "^11.0.56",
+        "oui": "^11.0.75",
         "pug": "^3.0.2",
         "pwd-strength": "^1.0.4",
         "semver": "^7.3.4",
@@ -4880,9 +4880,9 @@
       }
     },
     "node_modules/oui": {
-      "version": "11.0.74",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.74.tgz",
-      "integrity": "sha512-RS8PJnYkjFlQlpy8Ihd/wIiCiAW4yTYoQAb5nXYJQOPtD3/2j/a9M21DTlJSsZpjxt6oBNDoVYrYi6WTEo+PZg==",
+      "version": "11.0.75",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.75.tgz",
+      "integrity": "sha512-S+PVR3qNh7FIUVqe3JCBD6XY79nmVOe/cweflgLO8fkrcaUIR44Ayozk8ngqmO1gNl2jEossdkhYDAArYMRBkg==",
       "dependencies": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -10949,9 +10949,9 @@
       }
     },
     "oui": {
-      "version": "11.0.74",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.74.tgz",
-      "integrity": "sha512-RS8PJnYkjFlQlpy8Ihd/wIiCiAW4yTYoQAb5nXYJQOPtD3/2j/a9M21DTlJSsZpjxt6oBNDoVYrYi6WTEo+PZg==",
+      "version": "11.0.75",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.75.tgz",
+      "integrity": "sha512-S+PVR3qNh7FIUVqe3JCBD6XY79nmVOe/cweflgLO8fkrcaUIR44Ayozk8ngqmO1gNl2jEossdkhYDAArYMRBkg==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
