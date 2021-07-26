@@ -449,9 +449,9 @@
       }
     },
     "node_modules/@types/node": {
-      "version": "16.4.1",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-16.4.1.tgz",
-      "integrity": "sha512-UW7cbLqf/Wu5XH2RKKY1cHwUNLicIDRLMraYKz+HHAerJ0ZffUEk+fMnd8qU2JaS6cAy0r8tsaf7yqHASf/Y0Q=="
+      "version": "16.4.3",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-16.4.3.tgz",
+      "integrity": "sha512-GKM4FLMkWDc0sfx7tXqPWkM6NBow1kge0fgQh0bOnlqo4iT1kvTvMEKE0c1RtUGnbLlGRXiAA8SumE//90uKAg=="
     },
     "node_modules/@types/responselike": {
       "version": "1.0.0",
@@ -4866,9 +4866,9 @@
       }
     },
     "node_modules/oui": {
-      "version": "11.0.76",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.76.tgz",
-      "integrity": "sha512-/ukMSb82gSMq+wF6NGmMPAj8y8WcD3pojp7nUVzgRPQgXzoOeMepo3vV6wNieGGPUxoKExFYEKx+Iv4tVoBXnQ==",
+      "version": "11.0.77",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.77.tgz",
+      "integrity": "sha512-yGUtiDU7bGc6vl4WDZFdtRdhIVTye7NlrHTbf9Tr6nhOADpXNgjC2H+gkBcVKcMLx43y/Z2y9TZLEOOa1z2e5g==",
       "dependencies": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -6373,9 +6373,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.7.8",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.8.tgz",
-      "integrity": "sha512-gpFGDPtOtWDxMaQ6/7oe2XM/4ErgSvev1l3sdxChnm1AqDJKzZ3cu+VK7Dq1N02pChPiNNsIbUwe6dCLixfWRg==",
+      "version": "5.7.9",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.9.tgz",
+      "integrity": "sha512-cFmIeKOPVYG4pil6GGyAhtwMa2jk8qObOoCQ/AHC3VzdOQBXzHC2BZJqXaOb0UBY6jMz/lh6wLrOuQe/lcA4lg==",
       "os": [
         "darwin",
         "linux",
@@ -6878,9 +6878,9 @@
       }
     },
     "node_modules/vis-network": {
-      "version": "9.0.4",
-      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.4.tgz",
-      "integrity": "sha512-F/pq8yBJUuB9lNKXHhtn4GP2h91FV0c2O2nvfU34RX4VCYOlqs+mINdz+J+QkWiYhiPdlVy15gzVEzkhJ9hpaw==",
+      "version": "9.0.5",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.5.tgz",
+      "integrity": "sha512-+pun7tQP5UruDo+4GZemeZXoD9fIEApWp5IMwHZ8J29kAGvLN5CPJsqAwaSlty6vEVfmIElfOMZk5bilSRQU5Q==",
       "hasInstallScript": true,
       "funding": {
         "type": "opencollective",
@@ -7377,9 +7377,9 @@
       }
     },
     "@types/node": {
-      "version": "16.4.1",
-      "resolved": "https://registry.npmjs.org/@types/node/-/node-16.4.1.tgz",
-      "integrity": "sha512-UW7cbLqf/Wu5XH2RKKY1cHwUNLicIDRLMraYKz+HHAerJ0ZffUEk+fMnd8qU2JaS6cAy0r8tsaf7yqHASf/Y0Q=="
+      "version": "16.4.3",
+      "resolved": "https://registry.npmjs.org/@types/node/-/node-16.4.3.tgz",
+      "integrity": "sha512-GKM4FLMkWDc0sfx7tXqPWkM6NBow1kge0fgQh0bOnlqo4iT1kvTvMEKE0c1RtUGnbLlGRXiAA8SumE//90uKAg=="
     },
     "@types/responselike": {
       "version": "1.0.0",
@@ -10951,9 +10951,9 @@
       }
     },
     "oui": {
-      "version": "11.0.76",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.76.tgz",
-      "integrity": "sha512-/ukMSb82gSMq+wF6NGmMPAj8y8WcD3pojp7nUVzgRPQgXzoOeMepo3vV6wNieGGPUxoKExFYEKx+Iv4tVoBXnQ==",
+      "version": "11.0.77",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.77.tgz",
+      "integrity": "sha512-yGUtiDU7bGc6vl4WDZFdtRdhIVTye7NlrHTbf9Tr6nhOADpXNgjC2H+gkBcVKcMLx43y/Z2y9TZLEOOa1z2e5g==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -12178,9 +12178,9 @@
       "integrity": "sha512-oNe+md5tmmS3fGfVHa7gVPlun7Td2oANSacnZCeghnrr3OHBi6UPVPU+GFrymwaDqwQspACilLRmRnM7aTjNPA=="
     },
     "systeminformation": {
-      "version": "5.7.8",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.8.tgz",
-      "integrity": "sha512-gpFGDPtOtWDxMaQ6/7oe2XM/4ErgSvev1l3sdxChnm1AqDJKzZ3cu+VK7Dq1N02pChPiNNsIbUwe6dCLixfWRg=="
+      "version": "5.7.9",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.7.9.tgz",
+      "integrity": "sha512-cFmIeKOPVYG4pil6GGyAhtwMa2jk8qObOoCQ/AHC3VzdOQBXzHC2BZJqXaOb0UBY6jMz/lh6wLrOuQe/lcA4lg=="
     },
     "table": {
       "version": "6.7.1",
@@ -12582,9 +12582,9 @@
       "requires": {}
     },
     "vis-network": {
-      "version": "9.0.4",
-      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.4.tgz",
-      "integrity": "sha512-F/pq8yBJUuB9lNKXHhtn4GP2h91FV0c2O2nvfU34RX4VCYOlqs+mINdz+J+QkWiYhiPdlVy15gzVEzkhJ9hpaw==",
+      "version": "9.0.5",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.5.tgz",
+      "integrity": "sha512-+pun7tQP5UruDo+4GZemeZXoD9fIEApWp5IMwHZ8J29kAGvLN5CPJsqAwaSlty6vEVfmIElfOMZk5bilSRQU5Q==",
       "requires": {}
     },
     "vis-util": {
