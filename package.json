@@ -55,19 +55,19 @@
     "mysql-plus": "^0.16.2",
     "node-schedule": "^2.0.0",
     "node-ssdp": "^4.0.1",
-    "oui": "^11.0.80",
+    "oui": "^11.0.81",
     "pug": "^3.0.2",
     "pwd-strength": "^1.1.2",
     "semver": "^7.3.5",
     "serve-favicon": "^2.5.0",
-    "sharp": "^0.28.3",
+    "sharp": "^0.29.0",
     "subnet-check": "^1.10.1",
     "suncalc": "^1.8.0",
     "systeminformation": "^5.8.0",
     "telegraf": "^4.4.1",
     "vis-network": "^9.0.5",
     "wakeonlan": "^0.1.0",
-    "ws": "^8.1.0",
+    "ws": "^8.2.0",
     "yaml": "^2.0.0-4"
   },
   "devDependencies": {
@@ -76,7 +76,7 @@
     "eslint": "^7.32.0",
     "eslint-config-standard": "^16.0.3",
     "eslint-plugin-babel": "^5.3.1",
-    "eslint-plugin-import": "^2.24.0",
+    "eslint-plugin-import": "^2.24.1",
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^5.1.0"
   }
