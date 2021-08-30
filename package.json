@@ -67,7 +67,7 @@
     "telegraf": "^4.4.1",
     "vis-network": "^9.0.5",
     "wakeonlan": "^0.1.0",
-    "ws": "^8.2.0",
+    "ws": "^8.2.1",
     "yaml": "^2.0.0-4"
   },
   "devDependencies": {
