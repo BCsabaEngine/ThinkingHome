@@ -50,11 +50,11 @@
         "sharp": "^0.29.0",
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
-        "systeminformation": "^5.8.6",
+        "systeminformation": "^5.8.7",
         "telegraf": "^4.4.1",
-        "vis-network": "^9.0.5",
+        "vis-network": "^9.1.0",
         "wakeonlan": "^0.1.0",
-        "ws": "^8.2.0",
+        "ws": "^8.2.1",
         "yaml": "^2.0.0-4"
       },
       "devDependencies": {
@@ -6425,9 +6425,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.8.6",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.6.tgz",
-      "integrity": "sha512-R37NZR9f6OejKvERiatjh1vK49xkJ/MOgFpwpCw2h0NoD+1nKAgGzxkyjNX7bsf6ADaKzyAZ2SFK1mXddytIaA==",
+      "version": "5.8.7",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.7.tgz",
+      "integrity": "sha512-e7b47PXn+GvPHLZm7FxC+IgPs5lqqsrmw7xtdxrr0U8aivYZO6V3CawMqCy5bfGB/ghZh/7AWlJEoXUPLyH3iw==",
       "os": [
         "darwin",
         "linux",
@@ -6931,9 +6931,9 @@
       }
     },
     "node_modules/vis-network": {
-      "version": "9.0.5",
-      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.5.tgz",
-      "integrity": "sha512-+pun7tQP5UruDo+4GZemeZXoD9fIEApWp5IMwHZ8J29kAGvLN5CPJsqAwaSlty6vEVfmIElfOMZk5bilSRQU5Q==",
+      "version": "9.1.0",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.1.0.tgz",
+      "integrity": "sha512-rx96L144RJWcqOa6afjiFyxZKUerRRbT/YaNMpsusHdwzxrVTO2LlduR45PeJDEztrAf3AU5l2zmiG+1ydUZCw==",
       "hasInstallScript": true,
       "funding": {
         "type": "opencollective",
@@ -7075,9 +7075,9 @@
       "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
     },
     "node_modules/ws": {
-      "version": "8.2.0",
-      "resolved": "https://registry.npmjs.org/ws/-/ws-8.2.0.tgz",
-      "integrity": "sha512-uYhVJ/m9oXwEI04iIVmgLmugh2qrZihkywG9y5FfZV2ATeLIzHf93qs+tUNqlttbQK957/VX3mtwAS+UfIwA4g==",
+      "version": "8.2.1",
+      "resolved": "https://registry.npmjs.org/ws/-/ws-8.2.1.tgz",
+      "integrity": "sha512-XkgWpJU3sHU7gX8f13NqTn6KQ85bd1WU7noBHTT8fSohx7OS1TPY8k+cyRPCzFkia7C4mM229yeHr1qK9sM4JQ==",
       "engines": {
         "node": ">=10.0.0"
       },
@@ -12256,9 +12256,9 @@
       "integrity": "sha512-oNe+md5tmmS3fGfVHa7gVPlun7Td2oANSacnZCeghnrr3OHBi6UPVPU+GFrymwaDqwQspACilLRmRnM7aTjNPA=="
     },
     "systeminformation": {
-      "version": "5.8.6",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.6.tgz",
-      "integrity": "sha512-R37NZR9f6OejKvERiatjh1vK49xkJ/MOgFpwpCw2h0NoD+1nKAgGzxkyjNX7bsf6ADaKzyAZ2SFK1mXddytIaA=="
+      "version": "5.8.7",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.7.tgz",
+      "integrity": "sha512-e7b47PXn+GvPHLZm7FxC+IgPs5lqqsrmw7xtdxrr0U8aivYZO6V3CawMqCy5bfGB/ghZh/7AWlJEoXUPLyH3iw=="
     },
     "table": {
       "version": "6.7.1",
@@ -12661,9 +12661,9 @@
       "requires": {}
     },
     "vis-network": {
-      "version": "9.0.5",
-      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.0.5.tgz",
-      "integrity": "sha512-+pun7tQP5UruDo+4GZemeZXoD9fIEApWp5IMwHZ8J29kAGvLN5CPJsqAwaSlty6vEVfmIElfOMZk5bilSRQU5Q==",
+      "version": "9.1.0",
+      "resolved": "https://registry.npmjs.org/vis-network/-/vis-network-9.1.0.tgz",
+      "integrity": "sha512-rx96L144RJWcqOa6afjiFyxZKUerRRbT/YaNMpsusHdwzxrVTO2LlduR45PeJDEztrAf3AU5l2zmiG+1ydUZCw==",
       "requires": {}
     },
     "vis-util": {
@@ -12763,9 +12763,9 @@
       "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
     },
     "ws": {
-      "version": "8.2.0",
-      "resolved": "https://registry.npmjs.org/ws/-/ws-8.2.0.tgz",
-      "integrity": "sha512-uYhVJ/m9oXwEI04iIVmgLmugh2qrZihkywG9y5FfZV2ATeLIzHf93qs+tUNqlttbQK957/VX3mtwAS+UfIwA4g==",
+      "version": "8.2.1",
+      "resolved": "https://registry.npmjs.org/ws/-/ws-8.2.1.tgz",
+      "integrity": "sha512-XkgWpJU3sHU7gX8f13NqTn6KQ85bd1WU7noBHTT8fSohx7OS1TPY8k+cyRPCzFkia7C4mM229yeHr1qK9sM4JQ==",
       "requires": {}
     },
     "xmldoc": {
