@@ -9,7 +9,7 @@
       "version": "0.7.0",
       "license": "ISC",
       "dependencies": {
-        "adm-zip": "^0.5.5",
+        "adm-zip": "^0.5.6",
         "admin-lte": "^3.1.0",
         "axios": "^0.21.4",
         "body-parser": "^1.19.0",
@@ -21,12 +21,12 @@
         "compression": "^1.7.4",
         "console-log-level": "^1.4.1",
         "cookie-parser": "^1.4.5",
-        "dayjs": "^1.10.6",
+        "dayjs": "^1.10.7",
         "enum": "^3.0.4",
         "error-stack-parser": "^2.0.6",
         "express": "^4.17.1",
         "express-session": "^1.17.2",
-        "fast-xml-parser": "^3.19.0",
+        "fast-xml-parser": "^3.20.0",
         "form-data": "^4.0.0",
         "glob": "^7.1.7",
         "got": "^11.8.2",
@@ -42,7 +42,7 @@
         "mysql-plus": "^0.16.2",
         "node-schedule": "^2.0.0",
         "node-ssdp": "^4.0.1",
-        "oui": "^11.0.82",
+        "oui": "^11.0.83",
         "pug": "^3.0.2",
         "pwd-strength": "^1.1.2",
         "semver": "^7.3.5",
@@ -50,8 +50,8 @@
         "sharp": "^0.29.1",
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
-        "systeminformation": "^5.8.7",
-        "telegraf": "^4.4.1",
+        "systeminformation": "^5.8.8",
+        "telegraf": "^4.4.2",
         "vis-network": "^9.1.0",
         "wakeonlan": "^0.1.0",
         "ws": "^8.2.2",
@@ -534,9 +534,9 @@
       }
     },
     "node_modules/adm-zip": {
-      "version": "0.5.5",
-      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.5.tgz",
-      "integrity": "sha512-IWwXKnCbirdbyXSfUDvCCrmYrOHANRZcc8NcRrvTlIApdl7PwE9oGcsYvNeJPAVY1M+70b4PxXGKIf8AEuiQ6w==",
+      "version": "0.5.6",
+      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.6.tgz",
+      "integrity": "sha512-nUeYhBHLG08VFOkVwai0pLXge6NNlahH+ccwxXodvl+SLa5l9mXHjg40jRVzofRPz29goiTGze7vIKmCltKtSA==",
       "engines": {
         "node": ">=6.0"
       }
@@ -1925,9 +1925,9 @@
       }
     },
     "node_modules/dayjs": {
-      "version": "1.10.6",
-      "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.10.6.tgz",
-      "integrity": "sha512-AztC/IOW4L1Q41A86phW5Thhcrco3xuAA+YX/BLpLWWjRcTj5TOt/QImBLmCKlrF7u7k47arTnOyL6GnbG8Hvw=="
+      "version": "1.10.7",
+      "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz",
+      "integrity": "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
     },
     "node_modules/debug": {
       "version": "4.3.2",
@@ -3033,9 +3033,12 @@
       "integrity": "sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw=="
     },
     "node_modules/fast-xml-parser": {
-      "version": "3.19.0",
-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-3.19.0.tgz",
-      "integrity": "sha512-4pXwmBplsCPv8FOY1WRakF970TjNGnGnfbOnLqjlYvMiF1SR3yOHyxMR/YCXpPTOspNF5gwudqktIP4VsWkvBg==",
+      "version": "3.20.0",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-3.20.0.tgz",
+      "integrity": "sha512-cMQwDJYVDjMPU56DviszewgMKuNzuf4NQSBuDf9RgZ6FKm5QEMxW05Za8lvnuL6moxoeZVUWBlL733WmovvV6g==",
+      "dependencies": {
+        "strnum": "^1.0.3"
+      },
       "bin": {
         "xml2js": "cli.js"
       },
@@ -4926,9 +4929,9 @@
       }
     },
     "node_modules/oui": {
-      "version": "11.0.82",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.82.tgz",
-      "integrity": "sha512-bzuZIs7sg/ti63cuCSDZmZWe8ZSJxk7/ruUuk1nfw/COMdr/1IblamHNmT7nIAjr+iTYE8p34JKrwwoif6uKwg==",
+      "version": "11.0.83",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.83.tgz",
+      "integrity": "sha512-at1MsA68eXt8YtZQsu0KXN+o9L87frOdWPNsHHqHxBB0yjum/wNkp5oSS7boaoocJ27dYcy5VXYXHBH5oCuesQ==",
       "dependencies": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -6379,6 +6382,11 @@
         "url": "https://github.com/sponsors/sindresorhus"
       }
     },
+    "node_modules/strnum": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/strnum/-/strnum-1.0.3.tgz",
+      "integrity": "sha512-GVoRjsqAYZkAH16GDzfTuafuwKxzKdaaCQyLaWf37gOP1e2PPbAKWoME1OmO+c4RCKMfNrrPRDLFCNBFU45N/A=="
+    },
     "node_modules/subnet-check": {
       "version": "1.10.1",
       "resolved": "https://registry.npmjs.org/subnet-check/-/subnet-check-1.10.1.tgz",
@@ -6425,9 +6433,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.8.7",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.7.tgz",
-      "integrity": "sha512-e7b47PXn+GvPHLZm7FxC+IgPs5lqqsrmw7xtdxrr0U8aivYZO6V3CawMqCy5bfGB/ghZh/7AWlJEoXUPLyH3iw==",
+      "version": "5.8.8",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.8.tgz",
+      "integrity": "sha512-wss1OIzo2jP176PyNZ6W4LcMw7tytRltQJetu3S9BJ8ZHzPWd+R8C/UVLp8hOgQZlc/ADBQr4BlHVrLU9wsmXw==",
       "os": [
         "darwin",
         "linux",
@@ -6550,9 +6558,9 @@
       }
     },
     "node_modules/telegraf": {
-      "version": "4.4.1",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.4.1.tgz",
-      "integrity": "sha512-jxV8fC/K6abcUTlhy/l8txJAmEJIkJoDu/cN0yXOJWLp9csfLIp+cD4qlwJ6ko+4EgOJmNZvWK7Tr2dxKolJQQ==",
+      "version": "4.4.2",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.4.2.tgz",
+      "integrity": "sha512-OGt9w1LbxYUOsRk3htAavBnL9hqWycmJNiOmS74oARzxKFnYS/MdwW8b5CX9VLCJt537AXkm8/eBNiEYD8E7lQ==",
       "dependencies": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
@@ -7498,9 +7506,9 @@
       "integrity": "sha512-OPdCF6GsMIP+Az+aWfAAOEt2/+iVDKE7oy6lJ098aoe59oAmK76qV6Gw60SbZ8jHuG2wH058GF4pLFbYamYrVA=="
     },
     "adm-zip": {
-      "version": "0.5.5",
-      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.5.tgz",
-      "integrity": "sha512-IWwXKnCbirdbyXSfUDvCCrmYrOHANRZcc8NcRrvTlIApdl7PwE9oGcsYvNeJPAVY1M+70b4PxXGKIf8AEuiQ6w=="
+      "version": "0.5.6",
+      "resolved": "https://registry.npmjs.org/adm-zip/-/adm-zip-0.5.6.tgz",
+      "integrity": "sha512-nUeYhBHLG08VFOkVwai0pLXge6NNlahH+ccwxXodvl+SLa5l9mXHjg40jRVzofRPz29goiTGze7vIKmCltKtSA=="
     },
     "admin-lte": {
       "version": "3.1.0",
@@ -8701,9 +8709,9 @@
       }
     },
     "dayjs": {
-      "version": "1.10.6",
-      "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.10.6.tgz",
-      "integrity": "sha512-AztC/IOW4L1Q41A86phW5Thhcrco3xuAA+YX/BLpLWWjRcTj5TOt/QImBLmCKlrF7u7k47arTnOyL6GnbG8Hvw=="
+      "version": "1.10.7",
+      "resolved": "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz",
+      "integrity": "sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig=="
     },
     "debug": {
       "version": "4.3.2",
@@ -9572,9 +9580,12 @@
       "integrity": "sha512-Ue0LwpDYErFbmNnZSF0UH6eImUwDmogUO1jyE+JbN2gsQz/jICm1Ve7t9QT0rNSsfJt+Hs4/S3GnsDVjL4HVrw=="
     },
     "fast-xml-parser": {
-      "version": "3.19.0",
-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-3.19.0.tgz",
-      "integrity": "sha512-4pXwmBplsCPv8FOY1WRakF970TjNGnGnfbOnLqjlYvMiF1SR3yOHyxMR/YCXpPTOspNF5gwudqktIP4VsWkvBg=="
+      "version": "3.20.0",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-3.20.0.tgz",
+      "integrity": "sha512-cMQwDJYVDjMPU56DviszewgMKuNzuf4NQSBuDf9RgZ6FKm5QEMxW05Za8lvnuL6moxoeZVUWBlL733WmovvV6g==",
+      "requires": {
+        "strnum": "^1.0.3"
+      }
     },
     "fastclick": {
       "version": "1.0.6",
@@ -11042,9 +11053,9 @@
       }
     },
     "oui": {
-      "version": "11.0.82",
-      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.82.tgz",
-      "integrity": "sha512-bzuZIs7sg/ti63cuCSDZmZWe8ZSJxk7/ruUuk1nfw/COMdr/1IblamHNmT7nIAjr+iTYE8p34JKrwwoif6uKwg==",
+      "version": "11.0.83",
+      "resolved": "https://registry.npmjs.org/oui/-/oui-11.0.83.tgz",
+      "integrity": "sha512-at1MsA68eXt8YtZQsu0KXN+o9L87frOdWPNsHHqHxBB0yjum/wNkp5oSS7boaoocJ27dYcy5VXYXHBH5oCuesQ==",
       "requires": {
         "char-spinner": "^1.0.1",
         "country-data": "^0.0.31",
@@ -12219,6 +12230,11 @@
       "integrity": "sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==",
       "dev": true
     },
+    "strnum": {
+      "version": "1.0.3",
+      "resolved": "https://registry.npmjs.org/strnum/-/strnum-1.0.3.tgz",
+      "integrity": "sha512-GVoRjsqAYZkAH16GDzfTuafuwKxzKdaaCQyLaWf37gOP1e2PPbAKWoME1OmO+c4RCKMfNrrPRDLFCNBFU45N/A=="
+    },
     "subnet-check": {
       "version": "1.10.1",
       "resolved": "https://registry.npmjs.org/subnet-check/-/subnet-check-1.10.1.tgz",
@@ -12256,9 +12272,9 @@
       "integrity": "sha512-oNe+md5tmmS3fGfVHa7gVPlun7Td2oANSacnZCeghnrr3OHBi6UPVPU+GFrymwaDqwQspACilLRmRnM7aTjNPA=="
     },
     "systeminformation": {
-      "version": "5.8.7",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.7.tgz",
-      "integrity": "sha512-e7b47PXn+GvPHLZm7FxC+IgPs5lqqsrmw7xtdxrr0U8aivYZO6V3CawMqCy5bfGB/ghZh/7AWlJEoXUPLyH3iw=="
+      "version": "5.8.8",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.8.8.tgz",
+      "integrity": "sha512-wss1OIzo2jP176PyNZ6W4LcMw7tytRltQJetu3S9BJ8ZHzPWd+R8C/UVLp8hOgQZlc/ADBQr4BlHVrLU9wsmXw=="
     },
     "table": {
       "version": "6.7.1",
@@ -12347,9 +12363,9 @@
       }
     },
     "telegraf": {
-      "version": "4.4.1",
-      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.4.1.tgz",
-      "integrity": "sha512-jxV8fC/K6abcUTlhy/l8txJAmEJIkJoDu/cN0yXOJWLp9csfLIp+cD4qlwJ6ko+4EgOJmNZvWK7Tr2dxKolJQQ==",
+      "version": "4.4.2",
+      "resolved": "https://registry.npmjs.org/telegraf/-/telegraf-4.4.2.tgz",
+      "integrity": "sha512-OGt9w1LbxYUOsRk3htAavBnL9hqWycmJNiOmS74oARzxKFnYS/MdwW8b5CX9VLCJt537AXkm8/eBNiEYD8E7lQ==",
       "requires": {
         "abort-controller": "^3.0.0",
         "debug": "^4.3.1",
