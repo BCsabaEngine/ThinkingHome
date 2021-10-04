@@ -22,9 +22,9 @@
   "author": "Balázs Csaba",
   "license": "ISC",
   "dependencies": {
-    "adm-zip": "^0.5.6",
+    "adm-zip": "^0.5.7",
     "admin-lte": "^3.1.0",
-    "axios": "^0.21.4",
+    "axios": "^0.22.0",
     "body-parser": "^1.19.0",
     "bootstrap-icons": "^1.5.0",
     "chalk": "^4.1.2",
@@ -55,7 +55,7 @@
     "mysql-plus": "^0.16.2",
     "node-schedule": "^2.0.0",
     "node-ssdp": "^4.0.1",
-    "oui": "^11.0.85",
+    "oui": "^11.0.86",
     "pug": "^3.0.2",
     "pwd-strength": "^1.1.2",
     "semver": "^7.3.5",
@@ -67,7 +67,7 @@
     "telegraf": "^4.4.2",
     "vis-network": "^9.1.0",
     "wakeonlan": "^0.1.0",
-    "ws": "^8.2.2",
+    "ws": "^8.2.3",
     "yaml": "^2.0.0-4"
   },
   "devDependencies": {
