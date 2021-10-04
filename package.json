@@ -55,7 +55,7 @@
     "mysql-plus": "^0.16.2",
     "node-schedule": "^2.0.0",
     "node-ssdp": "^4.0.1",
-    "oui": "^11.0.85",
+    "oui": "^11.0.86",
     "pug": "^3.0.2",
     "pwd-strength": "^1.1.2",
     "semver": "^7.3.5",
