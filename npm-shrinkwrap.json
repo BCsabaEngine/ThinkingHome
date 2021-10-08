@@ -669,9 +669,9 @@
       }
     },
     "node_modules/ansi-regex": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.0.tgz",
-      "integrity": "sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==",
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
       "dev": true,
       "engines": {
         "node": ">=8"
@@ -1652,9 +1652,9 @@
       "integrity": "sha512-Vy4dx7gquTeMcQR/hDkYLGUnwVil6vk4FOOct+djUnHOUWt+zJPJAaRIXaAFkPXtJjvlY7o3rfRu0/3hpnwoUA=="
     },
     "node_modules/datatables.net": {
-      "version": "1.10.25",
-      "resolved": "https://registry.npmjs.org/datatables.net/-/datatables.net-1.10.25.tgz",
-      "integrity": "sha512-y0+C7all+MC/h1acwnjErhaJPjYGKpWTvbXrfEUbR8+P+nnhgjNn5nL1udgsTwBObMhlj1KITNBRrM/ZLSoj+Q==",
+      "version": "1.11.3",
+      "resolved": "https://registry.npmjs.org/datatables.net/-/datatables.net-1.11.3.tgz",
+      "integrity": "sha512-VMj5qEaTebpNurySkM6jy6sGpl+s6onPK8xJhYr296R/vUBnz1+id16NVqNf9z5aR076OGcpGHCuiTuy4E05oQ==",
       "dependencies": {
         "jquery": ">=1.7"
       }
@@ -1679,11 +1679,11 @@
       }
     },
     "node_modules/datatables.net-bs4": {
-      "version": "1.10.25",
-      "resolved": "https://registry.npmjs.org/datatables.net-bs4/-/datatables.net-bs4-1.10.25.tgz",
-      "integrity": "sha512-leoiWJWxoPKHBNC9dkFRE84PRybQcAI2Aw4UiS5zisROcYRx8YG1uQOTtID4jbqakmbwwXap/c2eH+sdVP5t2w==",
+      "version": "1.11.3",
+      "resolved": "https://registry.npmjs.org/datatables.net-bs4/-/datatables.net-bs4-1.11.3.tgz",
+      "integrity": "sha512-UPT2F1nvZZzKJSSHb+3+bTeQy1ULLMT1BexBHCkh5PhMnAZNPbTEZD+6To1RCBfUF1rtPwIJTwJ+Jjjxy86xRw==",
       "dependencies": {
-        "datatables.net": "1.10.25",
+        "datatables.net": ">=1.10.25",
         "jquery": ">=1.7"
       }
     },
@@ -7621,9 +7621,9 @@
       "dev": true
     },
     "ansi-regex": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.0.tgz",
-      "integrity": "sha512-bY6fj56OUQ0hU1KjFNDQuJFezqKdrAyFdIevADiqrWHwSlbmBNMHp5ak2f40Pm8JTFyM2mqxkG6ngkHO11f/lg==",
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/ansi-regex/-/ansi-regex-5.0.1.tgz",
+      "integrity": "sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==",
       "dev": true
     },
     "ansi-styles": {
@@ -8436,9 +8436,9 @@
       "integrity": "sha512-Vy4dx7gquTeMcQR/hDkYLGUnwVil6vk4FOOct+djUnHOUWt+zJPJAaRIXaAFkPXtJjvlY7o3rfRu0/3hpnwoUA=="
     },
     "datatables.net": {
-      "version": "1.10.25",
-      "resolved": "https://registry.npmjs.org/datatables.net/-/datatables.net-1.10.25.tgz",
-      "integrity": "sha512-y0+C7all+MC/h1acwnjErhaJPjYGKpWTvbXrfEUbR8+P+nnhgjNn5nL1udgsTwBObMhlj1KITNBRrM/ZLSoj+Q==",
+      "version": "1.11.3",
+      "resolved": "https://registry.npmjs.org/datatables.net/-/datatables.net-1.11.3.tgz",
+      "integrity": "sha512-VMj5qEaTebpNurySkM6jy6sGpl+s6onPK8xJhYr296R/vUBnz1+id16NVqNf9z5aR076OGcpGHCuiTuy4E05oQ==",
       "requires": {
         "jquery": ">=1.7"
       }
@@ -8463,11 +8463,11 @@
       }
     },
     "datatables.net-bs4": {
-      "version": "1.10.25",
-      "resolved": "https://registry.npmjs.org/datatables.net-bs4/-/datatables.net-bs4-1.10.25.tgz",
-      "integrity": "sha512-leoiWJWxoPKHBNC9dkFRE84PRybQcAI2Aw4UiS5zisROcYRx8YG1uQOTtID4jbqakmbwwXap/c2eH+sdVP5t2w==",
+      "version": "1.11.3",
+      "resolved": "https://registry.npmjs.org/datatables.net-bs4/-/datatables.net-bs4-1.11.3.tgz",
+      "integrity": "sha512-UPT2F1nvZZzKJSSHb+3+bTeQy1ULLMT1BexBHCkh5PhMnAZNPbTEZD+6To1RCBfUF1rtPwIJTwJ+Jjjxy86xRw==",
       "requires": {
-        "datatables.net": "1.10.25",
+        "datatables.net": ">=1.10.25",
         "jquery": ">=1.7"
       }
     },
