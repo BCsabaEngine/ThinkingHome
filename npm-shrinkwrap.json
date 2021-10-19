@@ -13,7 +13,7 @@
         "admin-lte": "^3.1.0",
         "axios": "^0.22.0",
         "body-parser": "^1.19.0",
-        "bootstrap-icons": "^1.5.0",
+        "bootstrap-icons": "^1.6.1",
         "chalk": "^4.1.2",
         "clipboard": "^2.0.8",
         "color": "^4.0.1",
@@ -1008,9 +1008,9 @@
       }
     },
     "node_modules/bootstrap-icons": {
-      "version": "1.5.0",
-      "resolved": "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.5.0.tgz",
-      "integrity": "sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA==",
+      "version": "1.6.1",
+      "resolved": "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.6.1.tgz",
+      "integrity": "sha512-MNpF89+njCdVJePDRbCd2DrUusqIyNsPlBrdKqBEXAvFZpwb+Gc8k2VlyF2ueiDQn1PoeTSg9UqQNgx8tGqHAA==",
       "engines": {
         "node": ">=10"
       }
@@ -7891,9 +7891,9 @@
       }
     },
     "bootstrap-icons": {
-      "version": "1.5.0",
-      "resolved": "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.5.0.tgz",
-      "integrity": "sha512-44feMc7DE1Ccpsas/1wioN8ewFJNquvi5FewA06wLnqct7CwMdGDVy41ieHaacogzDqLfG8nADIvMNp9e4bfbA=="
+      "version": "1.6.1",
+      "resolved": "https://registry.npmjs.org/bootstrap-icons/-/bootstrap-icons-1.6.1.tgz",
+      "integrity": "sha512-MNpF89+njCdVJePDRbCd2DrUusqIyNsPlBrdKqBEXAvFZpwb+Gc8k2VlyF2ueiDQn1PoeTSg9UqQNgx8tGqHAA=="
     },
     "bootstrap-slider": {
       "version": "11.0.2",
