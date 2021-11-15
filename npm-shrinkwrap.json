@@ -50,7 +50,7 @@
         "sharp": "^0.29.1",
         "subnet-check": "^1.10.1",
         "suncalc": "^1.8.0",
-        "systeminformation": "^5.9.7",
+        "systeminformation": "^5.9.13",
         "telegraf": "^4.4.2",
         "vis-network": "^9.1.0",
         "wakeonlan": "^0.1.0",
@@ -6307,9 +6307,9 @@
       }
     },
     "node_modules/systeminformation": {
-      "version": "5.9.7",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.9.7.tgz",
-      "integrity": "sha512-Vcmc8HaWPMFM4DoasuKN2lpvIwS2AqaoPuEGZc4HCT6tlRJH+IQ5GhA2BrUgjpBDJjFMj2Bti6qLOzP3T1arCw==",
+      "version": "5.9.13",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.9.13.tgz",
+      "integrity": "sha512-AGL34jWboB7bjmNYIcJ5hbYEVYXQuLPbIq7bJg3rJJNHYZvZkQC9hH15KpH9CPg9ZxCsTqAfUNyGMv1jmv78Tw==",
       "os": [
         "darwin",
         "linux",
@@ -6323,7 +6323,7 @@
         "systeminformation": "lib/cli.js"
       },
       "engines": {
-        "node": ">=4.0.0"
+        "node": ">=8.0.0"
       },
       "funding": {
         "type": "Buy me a coffee",
@@ -12020,9 +12020,9 @@
       "integrity": "sha512-oNe+md5tmmS3fGfVHa7gVPlun7Td2oANSacnZCeghnrr3OHBi6UPVPU+GFrymwaDqwQspACilLRmRnM7aTjNPA=="
     },
     "systeminformation": {
-      "version": "5.9.7",
-      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.9.7.tgz",
-      "integrity": "sha512-Vcmc8HaWPMFM4DoasuKN2lpvIwS2AqaoPuEGZc4HCT6tlRJH+IQ5GhA2BrUgjpBDJjFMj2Bti6qLOzP3T1arCw=="
+      "version": "5.9.13",
+      "resolved": "https://registry.npmjs.org/systeminformation/-/systeminformation-5.9.13.tgz",
+      "integrity": "sha512-AGL34jWboB7bjmNYIcJ5hbYEVYXQuLPbIq7bJg3rJJNHYZvZkQC9hH15KpH9CPg9ZxCsTqAfUNyGMv1jmv78Tw=="
     },
     "table": {
       "version": "6.7.1",
