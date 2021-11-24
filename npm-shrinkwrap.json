@@ -54,7 +54,7 @@
         "telegraf": "^4.4.2",
         "vis-network": "^9.1.0",
         "wakeonlan": "^0.1.0",
-        "ws": "^8.2.3",
+        "ws": "^8.3.0",
         "yaml": "^2.0.0-8"
       },
       "devDependencies": {
@@ -6942,9 +6942,9 @@
       "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
     },
     "node_modules/ws": {
-      "version": "8.2.3",
-      "resolved": "https://registry.npmjs.org/ws/-/ws-8.2.3.tgz",
-      "integrity": "sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==",
+      "version": "8.3.0",
+      "resolved": "https://registry.npmjs.org/ws/-/ws-8.3.0.tgz",
+      "integrity": "sha512-Gs5EZtpqZzLvmIM59w4igITU57lrtYVFneaa434VROv4thzJyV6UjIL3D42lslWlI+D4KzLYnxSwtfuiO79sNw==",
       "engines": {
         "node": ">=10.0.0"
       },
@@ -12497,9 +12497,9 @@
       "integrity": "sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8="
     },
     "ws": {
-      "version": "8.2.3",
-      "resolved": "https://registry.npmjs.org/ws/-/ws-8.2.3.tgz",
-      "integrity": "sha512-wBuoj1BDpC6ZQ1B7DWQBYVLphPWkm8i9Y0/3YdHjHKHiohOJ1ws+3OccDWtH+PoC9DZD5WOTrJvNbWvjS6JWaA==",
+      "version": "8.3.0",
+      "resolved": "https://registry.npmjs.org/ws/-/ws-8.3.0.tgz",
+      "integrity": "sha512-Gs5EZtpqZzLvmIM59w4igITU57lrtYVFneaa434VROv4thzJyV6UjIL3D42lslWlI+D4KzLYnxSwtfuiO79sNw==",
       "requires": {}
     },
     "xmldoc": {
