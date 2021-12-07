@@ -26,10 +26,10 @@
     "admin-lte": "^3.1.0",
     "axios": "^0.24.0",
     "body-parser": "^1.19.0",
-    "bootstrap-icons": "^1.7.1",
+    "bootstrap-icons": "^1.7.2",
     "chalk": "^5.0.0",
     "clipboard": "^2.0.8",
-    "color": "^4.0.2",
+    "color": "^4.1.0",
     "color-temp": "^0.0.2",
     "compression": "^1.7.4",
     "console-log-level": "^1.4.1",
@@ -55,7 +55,7 @@
     "mysql-plus": "^0.16.2",
     "node-schedule": "^2.1.0",
     "node-ssdp": "^4.0.1",
-    "oui": "^11.0.94",
+    "oui": "^11.0.95",
     "pug": "^3.0.2",
     "pwd-strength": "^1.1.2",
     "semver": "^7.3.5",
@@ -63,7 +63,7 @@
     "sharp": "^0.29.3",
     "subnet-check": "^1.10.1",
     "suncalc": "^1.8.0",
-    "systeminformation": "^5.9.15",
+    "systeminformation": "^5.9.17",
     "telegraf": "^4.4.2",
     "vis-network": "^9.1.0",
     "wakeonlan": "^0.1.0",
@@ -78,6 +78,6 @@
     "eslint-plugin-babel": "^5.3.1",
     "eslint-plugin-import": "^2.25.3",
     "eslint-plugin-node": "^11.1.0",
-    "eslint-plugin-promise": "^5.1.1"
+    "eslint-plugin-promise": "^5.2.0"
   }
 }
