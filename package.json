@@ -64,7 +64,7 @@
     "subnet-check": "^1.10.1",
     "suncalc": "^1.8.0",
     "systeminformation": "^5.9.17",
-    "telegraf": "^4.4.2",
+    "telegraf": "^4.5.2",
     "vis-network": "^9.1.0",
     "wakeonlan": "^0.1.0",
     "ws": "^8.3.0",
