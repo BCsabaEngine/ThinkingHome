@@ -68,7 +68,7 @@
     "vis-network": "^9.1.0",
     "wakeonlan": "^0.1.0",
     "ws": "^8.5.0",
-    "yaml": "^2.0.0-8"
+    "yaml": "^2.0.0-10"
   },
   "devDependencies": {
     "babel-eslint": "^10.1.0",
