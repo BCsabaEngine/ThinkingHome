@@ -51,7 +51,7 @@
     "lodash": "^4.17.21",
     "md5": "^2.3.0",
     "mousetrap": "^1.6.5",
-    "mqtt": "^4.3.4",
+    "mqtt": "^4.3.5",
     "mysql-plus": "^0.16.2",
     "node-schedule": "^2.1.0",
     "node-ssdp": "^4.0.1",

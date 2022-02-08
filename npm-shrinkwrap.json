@@ -38,7 +38,7 @@
         "lodash": "^4.17.21",
         "md5": "^2.3.0",
         "mousetrap": "^1.6.5",
-        "mqtt": "^4.3.4",
+        "mqtt": "^4.3.5",
         "mysql-plus": "^0.16.2",
         "node-schedule": "^2.1.0",
         "node-ssdp": "^4.0.1",
@@ -4664,9 +4664,9 @@
       "integrity": "sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA=="
     },
     "node_modules/mqtt": {
-      "version": "4.3.4",
-      "resolved": "https://registry.npmjs.org/mqtt/-/mqtt-4.3.4.tgz",
-      "integrity": "sha512-yAVDfVHz3Cjn6K68z54mf7fTni/AWsPhiEsRwZSvet2wO47R6NFUn2psWxYIph2JxWtL3ZKa/da8pjJKSaXPdQ==",
+      "version": "4.3.5",
+      "resolved": "https://registry.npmjs.org/mqtt/-/mqtt-4.3.5.tgz",
+      "integrity": "sha512-l29WGHAc0EayK1cjb6moozc+rlgK6YRCPbP3zB1CrJw84Bjk4kG9EJCXojdn4r29lA80SCqxRKq1QJ87+Xevng==",
       "dependencies": {
         "commist": "^1.0.0",
         "concat-stream": "^2.0.0",
@@ -10874,9 +10874,9 @@
       "integrity": "sha512-QNo4kEepaIBwiT8CDhP98umTetp+JNfQYBWvC1pc6/OAibuXtRcxZ58Qz8skvEHYvURne/7R8T5VoOI7rDsEUA=="
     },
     "mqtt": {
-      "version": "4.3.4",
-      "resolved": "https://registry.npmjs.org/mqtt/-/mqtt-4.3.4.tgz",
-      "integrity": "sha512-yAVDfVHz3Cjn6K68z54mf7fTni/AWsPhiEsRwZSvet2wO47R6NFUn2psWxYIph2JxWtL3ZKa/da8pjJKSaXPdQ==",
+      "version": "4.3.5",
+      "resolved": "https://registry.npmjs.org/mqtt/-/mqtt-4.3.5.tgz",
+      "integrity": "sha512-l29WGHAc0EayK1cjb6moozc+rlgK6YRCPbP3zB1CrJw84Bjk4kG9EJCXojdn4r29lA80SCqxRKq1QJ87+Xevng==",
       "requires": {
         "commist": "^1.0.0",
         "concat-stream": "^2.0.0",
