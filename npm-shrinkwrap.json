@@ -14,7 +14,7 @@
         "axios": "^0.26.0",
         "body-parser": "^1.19.2",
         "bootstrap-icons": "^1.8.1",
-        "chalk": "^5.0.0",
+        "chalk": "^5.0.1",
         "clipboard": "^2.0.10",
         "color": "^4.2.1",
         "color-temp": "^0.0.2",
@@ -26,7 +26,7 @@
         "error-stack-parser": "^2.0.7",
         "express": "^4.17.3",
         "express-session": "^1.17.2",
-        "fast-xml-parser": "^4.0.4",
+        "fast-xml-parser": "^4.0.6",
         "form-data": "^4.0.0",
         "glob": "^7.2.0",
         "got": "^12.0.1",
@@ -1309,9 +1309,9 @@
       }
     },
     "node_modules/chalk": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/chalk/-/chalk-5.0.0.tgz",
-      "integrity": "sha512-/duVOqst+luxCQRKEo4bNxinsOQtMP80ZYm7mMqzuh5PociNL0PvmHFvREJ9ueYL2TxlHjBcmLCdmocx9Vg+IQ==",
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/chalk/-/chalk-5.0.1.tgz",
+      "integrity": "sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w==",
       "engines": {
         "node": "^12.17.0 || ^14.13 || >=16.0.0"
       },
@@ -3186,9 +3186,9 @@
       }
     },
     "node_modules/fast-xml-parser": {
-      "version": "4.0.4",
-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.4.tgz",
-      "integrity": "sha512-3drDiRcLD22vJ95YH9yhPQaHA8JAWwfJDZhXIFxKYp32EuhACgnOdS5cQIGVtaCH2VvygmYFDk79QEaeskGlaA==",
+      "version": "4.0.6",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.6.tgz",
+      "integrity": "sha512-RHz47iX/DKT6BQwYQUmKG/1fuC5g2s/TibpxNvE+0ysnpSJxePFzsJvRDtfGhLRg3zdKMzO6EJn8n7+AJ6pSHg==",
       "dependencies": {
         "strnum": "^1.0.5"
       },
@@ -8130,9 +8130,9 @@
       "dev": true
     },
     "chalk": {
-      "version": "5.0.0",
-      "resolved": "https://registry.npmjs.org/chalk/-/chalk-5.0.0.tgz",
-      "integrity": "sha512-/duVOqst+luxCQRKEo4bNxinsOQtMP80ZYm7mMqzuh5PociNL0PvmHFvREJ9ueYL2TxlHjBcmLCdmocx9Vg+IQ=="
+      "version": "5.0.1",
+      "resolved": "https://registry.npmjs.org/chalk/-/chalk-5.0.1.tgz",
+      "integrity": "sha512-Fo07WOYGqMfCWHOzSXOt2CxDbC6skS/jO9ynEcmpANMoPrD+W1r1K6Vx7iNm+AQmETU1Xr2t+n8nzkV9t6xh3w=="
     },
     "char-spinner": {
       "version": "1.0.1",
@@ -9680,9 +9680,9 @@
       }
     },
     "fast-xml-parser": {
-      "version": "4.0.4",
-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.4.tgz",
-      "integrity": "sha512-3drDiRcLD22vJ95YH9yhPQaHA8JAWwfJDZhXIFxKYp32EuhACgnOdS5cQIGVtaCH2VvygmYFDk79QEaeskGlaA==",
+      "version": "4.0.6",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.6.tgz",
+      "integrity": "sha512-RHz47iX/DKT6BQwYQUmKG/1fuC5g2s/TibpxNvE+0ysnpSJxePFzsJvRDtfGhLRg3zdKMzO6EJn8n7+AJ6pSHg==",
       "requires": {
         "strnum": "^1.0.5"
       }
