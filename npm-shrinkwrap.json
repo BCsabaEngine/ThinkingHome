@@ -26,7 +26,7 @@
         "error-stack-parser": "^2.0.7",
         "express": "^4.17.3",
         "express-session": "^1.17.2",
-        "fast-xml-parser": "^4.0.4",
+        "fast-xml-parser": "^4.0.6",
         "form-data": "^4.0.0",
         "glob": "^7.2.0",
         "got": "^12.0.1",
@@ -3186,9 +3186,9 @@
       }
     },
     "node_modules/fast-xml-parser": {
-      "version": "4.0.4",
-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.4.tgz",
-      "integrity": "sha512-3drDiRcLD22vJ95YH9yhPQaHA8JAWwfJDZhXIFxKYp32EuhACgnOdS5cQIGVtaCH2VvygmYFDk79QEaeskGlaA==",
+      "version": "4.0.6",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.6.tgz",
+      "integrity": "sha512-RHz47iX/DKT6BQwYQUmKG/1fuC5g2s/TibpxNvE+0ysnpSJxePFzsJvRDtfGhLRg3zdKMzO6EJn8n7+AJ6pSHg==",
       "dependencies": {
         "strnum": "^1.0.5"
       },
@@ -9680,9 +9680,9 @@
       }
     },
     "fast-xml-parser": {
-      "version": "4.0.4",
-      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.4.tgz",
-      "integrity": "sha512-3drDiRcLD22vJ95YH9yhPQaHA8JAWwfJDZhXIFxKYp32EuhACgnOdS5cQIGVtaCH2VvygmYFDk79QEaeskGlaA==",
+      "version": "4.0.6",
+      "resolved": "https://registry.npmjs.org/fast-xml-parser/-/fast-xml-parser-4.0.6.tgz",
+      "integrity": "sha512-RHz47iX/DKT6BQwYQUmKG/1fuC5g2s/TibpxNvE+0ysnpSJxePFzsJvRDtfGhLRg3zdKMzO6EJn8n7+AJ6pSHg==",
       "requires": {
         "strnum": "^1.0.5"
       }
