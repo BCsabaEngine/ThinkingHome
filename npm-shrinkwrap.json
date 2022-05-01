@@ -47,7 +47,7 @@
         "pwd-strength": "^1.1.2",
         "semver": "^7.3.5",
         "serve-favicon": "^2.5.0",
-        "sharp": "^0.30.2",
+        "sharp": "^0.30.4",
         "subnet-check": "^1.10.1",
         "suncalc": "^1.9.0",
         "systeminformation": "^5.11.6",
@@ -1411,9 +1411,9 @@
       "integrity": "sha512-s6aac+DD+4O2u1aBmdxhB7yz2XU7tG3snOyQ05Kxifahz7hoxnfxIRHxiCSEv3TUC38dIVH8G+lZH9UWSfGQxA=="
     },
     "node_modules/color": {
-      "version": "4.2.1",
-      "resolved": "https://registry.npmjs.org/color/-/color-4.2.1.tgz",
-      "integrity": "sha512-MFJr0uY4RvTQUKvPq7dh9grVOTYSFeXja2mBXioCGjnjJoXrAp9jJ1NQTDR73c9nwBSAQiNKloKl5zq9WB9UPw==",
+      "version": "4.2.3",
+      "resolved": "https://registry.npmjs.org/color/-/color-4.2.3.tgz",
+      "integrity": "sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==",
       "dependencies": {
         "color-convert": "^2.0.1",
         "color-string": "^1.9.0"
@@ -5721,9 +5721,9 @@
       "integrity": "sha512-1JeB87s6oN/TDxQQYCvS5EFoQyvV6eYMZZ0AeA4tdFDYWN3BAGZ8npr17UBFddU0lgAt3H0yjX3X6/ekOj1yjw=="
     },
     "node_modules/semver": {
-      "version": "7.3.5",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.5.tgz",
-      "integrity": "sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==",
+      "version": "7.3.7",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.7.tgz",
+      "integrity": "sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==",
       "dependencies": {
         "lru-cache": "^6.0.0"
       },
@@ -5854,16 +5854,16 @@
       "integrity": "sha1-QV9CcC1z2BAzApLMXuhurhoRoXA="
     },
     "node_modules/sharp": {
-      "version": "0.30.2",
-      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.30.2.tgz",
-      "integrity": "sha512-mrMeKI5ECTdYhslPlA2TbBtU3nZXMEBcQwI6qYXjPlu1LpW4HBZLFm6xshMI1HpIdEEJ3UcYp5AKifLT/fEHZQ==",
+      "version": "0.30.4",
+      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.30.4.tgz",
+      "integrity": "sha512-3Onig53Y6lji4NIZo69s14mERXXY/GV++6CzOYx/Rd8bnTwbhFbL09WZd7Ag/CCnA0WxFID8tkY0QReyfL6v0Q==",
       "hasInstallScript": true,
       "dependencies": {
-        "color": "^4.2.1",
+        "color": "^4.2.3",
         "detect-libc": "^2.0.1",
         "node-addon-api": "^4.3.0",
         "prebuild-install": "^7.0.1",
-        "semver": "^7.3.5",
+        "semver": "^7.3.7",
         "simple-get": "^4.0.1",
         "tar-fs": "^2.1.1",
         "tunnel-agent": "^0.6.0"
@@ -8217,9 +8217,9 @@
       "integrity": "sha512-s6aac+DD+4O2u1aBmdxhB7yz2XU7tG3snOyQ05Kxifahz7hoxnfxIRHxiCSEv3TUC38dIVH8G+lZH9UWSfGQxA=="
     },
     "color": {
-      "version": "4.2.1",
-      "resolved": "https://registry.npmjs.org/color/-/color-4.2.1.tgz",
-      "integrity": "sha512-MFJr0uY4RvTQUKvPq7dh9grVOTYSFeXja2mBXioCGjnjJoXrAp9jJ1NQTDR73c9nwBSAQiNKloKl5zq9WB9UPw==",
+      "version": "4.2.3",
+      "resolved": "https://registry.npmjs.org/color/-/color-4.2.3.tgz",
+      "integrity": "sha512-1rXeuUUiGGrykh+CeBdu5Ie7OJwinCgQY0bc7GCRxy5xVHy+moaqkpL/jqQq0MtQOeYcrqEz4abc5f0KtU7W4A==",
       "requires": {
         "color-convert": "^2.0.1",
         "color-string": "^1.9.0"
@@ -11638,9 +11638,9 @@
       "integrity": "sha512-1JeB87s6oN/TDxQQYCvS5EFoQyvV6eYMZZ0AeA4tdFDYWN3BAGZ8npr17UBFddU0lgAt3H0yjX3X6/ekOj1yjw=="
     },
     "semver": {
-      "version": "7.3.5",
-      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.5.tgz",
-      "integrity": "sha512-PoeGJYh8HK4BTO/a9Tf6ZG3veo/A7ZVsYrSA6J8ny9nb3B1VrpkuN+z9OE5wfE5p6H4LchYZsegiQgbJD94ZFQ==",
+      "version": "7.3.7",
+      "resolved": "https://registry.npmjs.org/semver/-/semver-7.3.7.tgz",
+      "integrity": "sha512-QlYTucUYOews+WeEujDoEGziz4K6c47V/Bd+LjSSYcA94p+DmINdf7ncaUinThfvZyu13lN9OY1XDxt8C0Tw0g==",
       "requires": {
         "lru-cache": "^6.0.0"
       },
@@ -11758,15 +11758,15 @@
       "integrity": "sha1-QV9CcC1z2BAzApLMXuhurhoRoXA="
     },
     "sharp": {
-      "version": "0.30.2",
-      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.30.2.tgz",
-      "integrity": "sha512-mrMeKI5ECTdYhslPlA2TbBtU3nZXMEBcQwI6qYXjPlu1LpW4HBZLFm6xshMI1HpIdEEJ3UcYp5AKifLT/fEHZQ==",
+      "version": "0.30.4",
+      "resolved": "https://registry.npmjs.org/sharp/-/sharp-0.30.4.tgz",
+      "integrity": "sha512-3Onig53Y6lji4NIZo69s14mERXXY/GV++6CzOYx/Rd8bnTwbhFbL09WZd7Ag/CCnA0WxFID8tkY0QReyfL6v0Q==",
       "requires": {
-        "color": "^4.2.1",
+        "color": "^4.2.3",
         "detect-libc": "^2.0.1",
         "node-addon-api": "^4.3.0",
         "prebuild-install": "^7.0.1",
-        "semver": "^7.3.5",
+        "semver": "^7.3.7",
         "simple-get": "^4.0.1",
         "tar-fs": "^2.1.1",
         "tunnel-agent": "^0.6.0"
